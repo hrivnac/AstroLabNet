@@ -1,0 +1,2 @@
+/opt/spark/bin/spark-shell
+/opt/livy/bin/livy-server start

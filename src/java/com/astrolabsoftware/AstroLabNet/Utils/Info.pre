@@ -1,0 +1,16 @@
+package com.astrolabsoftware.AstroLabNet.Utils;
+
+public class Info {
+
+  /** Get builder version. 
+    * @return The version and build time of the package. */
+  public final static String release() {
+    return _version + " [" + _build + " by " + _builder + "]";
+    }
+
+
+  private static final String _version = "@version@";
+  private static final String _build   = "@TSTAMP@";
+  private static final String _builder = "@user.name@";
+
+  }
