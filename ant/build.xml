@@ -19,6 +19,7 @@
     <pathelement path="${httpclient.jar}"/>
     <pathelement path="${httpcore.jar}"/>
     <pathelement path="${logging.jar}"/>
+    <pathelement path="${orgjson.jar}"/>
     <fileset dir="../exelib">
       <include name="*.jar"/>
       </fileset>
@@ -108,6 +109,7 @@
       <zipfileset includes="**/*.class" src="${httpclient.jar}"/>
       <zipfileset includes="**/*.class" src="${httpcore.jar}"/>
       <zipfileset includes="**/*.class" src="${logging.jar}"/>
+      <zipfileset includes="**/*.class" src="${orgjson.jar}"/>
       <manifest>
         <attribute name="Created-By" value="${user.name}"/>
         <attribute name="AppName"    value="AstroLabNet"/>
@@ -174,15 +176,17 @@
       <doctitle><![CDATA[<u>]]>AstroLabNet<![CDATA[</u>]]></doctitle>
       <Header><![CDATA[<center>]]>AstroLabNet version: ${version}<![CDATA[</center>]]></Header>
       <Footer><![CDATA[<center>Written by: <a href='http://cern.ch/hrivnac'>J.Hrivnac</a></center>]]></Footer>
-      <bottom><![CDATA[<a href='https://astrolabsoftware.github.io/'>Documentation</a>]]> built ${TODAY} on ${os.name} by ${user.name}</bottom>
+      <bottom><![CDATA[<a href='https://astrolabsoftware.github.io'>Documentation</a>]]> built ${TODAY} on ${os.name} by ${user.name}</bottom>
       <group title="Browser" packages="com.astrolabsoftware.AstroLabNet.Browser*"/>
       <group title="Utils"   packages="com.astrolabsoftware.AstroLabNet.Utils*"/>
       <group title="Livyser" packages="com.astrolabsoftware.AstroLabNet.Livyser*"/>
+      <group title="DB" packages="com.astrolabsoftware.AstroLabNet.DB*"/>
       <link href="http://docs.oracle.com/javase/8/docs/api"/>
       <link href="http://www.beanshell.org/javadoc/"/>
       <link href="https://logging.apache.org/log4j/1.2/apidocs"/>
       <link href="https://livy.incubator.apache.org/docs/latest/api/java"/>
       <link href="https://hc.apache.org/httpcomponents-client-ga/httpclient/apidocs"/>
+      <link href="http://stleary.github.io/JSON-java/index.html"/>
       <classpath>
         <path refid="classpath.run"/>
         </classpath>

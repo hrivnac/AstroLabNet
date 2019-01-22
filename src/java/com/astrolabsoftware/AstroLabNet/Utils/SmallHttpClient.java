@@ -81,8 +81,10 @@ public class SmallHttpClient {
     DefaultHttpClient client = new DefaultHttpClient();
     HttpGet get = new HttpGet(question);
     get.addHeader("Accept-Encoding", "gzip");
-    for (Map.Entry<String, String> entry : headers.entrySet()) {
-      get.addHeader(entry.getKey(), entry.getValue());
+    if (headers != null) {
+      for (Map.Entry<String, String> entry : headers.entrySet()) {
+        get.addHeader(entry.getKey(), entry.getValue());
+        }
       }
     try {
       HttpResponse response = client.execute(get);
@@ -117,8 +119,10 @@ public class SmallHttpClient {
     DefaultHttpClient client = new DefaultHttpClient();
     HttpPost post = new HttpPost(url);
     post.addHeader("Accept-Encoding", "gzip");
-    for (Map.Entry<String, String> entry : headers.entrySet()) {
-      post.addHeader(entry.getKey(), entry.getValue());
+    if (headers != null) {
+      for (Map.Entry<String, String> entry : headers.entrySet()) {
+        post.addHeader(entry.getKey(), entry.getValue());
+        }
       }
     List<NameValuePair> nameValuePairs = new ArrayList<>();
     for (Map.Entry<String, String> entry : params.entrySet()) {
@@ -165,8 +169,10 @@ public class SmallHttpClient {
     post.addHeader("Accept-Encoding", "gzip");
     post.addHeader("Content-Type", "application/json");
     post.addHeader("Accept", "application/json");
-    for (Map.Entry<String, String> entry : headers.entrySet()) {
-      post.addHeader(entry.getKey(), entry.getValue());
+    if (headers != null) {
+      for (Map.Entry<String, String> entry : headers.entrySet()) {
+        post.addHeader(entry.getKey(), entry.getValue());
+        }
       }
     try {
       post.setEntity(new StringEntity(json));

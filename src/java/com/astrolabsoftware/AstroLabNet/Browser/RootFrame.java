@@ -2,6 +2,10 @@ package com.astrolabsoftware.AstroLabNet.Browser;
 
 import com.astrolabsoftware.AstroLabNet.Livyser.LivyRI;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
+import com.astrolabsoftware.AstroLabNet.Utils.StringFile;
+import com.astrolabsoftware.AstroLabNet.DB.ServerNode;
+import com.astrolabsoftware.AstroLabNet.DB.SessionNode;
+import com.astrolabsoftware.AstroLabNet.DB.TreeNode;
 
 // AWT
 import java.awt.Font;
@@ -34,6 +38,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 // Java
 import java.io.StringWriter;
 import java.io.PrintWriter;
+import java.util.Enumeration;
 
 // Bean Shell
 import bsh.Interpreter;
@@ -55,18 +60,43 @@ public class RootFrame extends JFrame {
   /** Open and initialise. */
   public RootFrame() {
     super("AstroLabNet Browser");
+    setupContent();
+    setupGUI();
+    }
+    
+  /** TBD */
+  private void setupContent() {
+    // Console
+    _console.setWaitFeedback(true);
+    _interpreter = new Interpreter(_console);
+    try {
+      _interpreter.set("w", this);
+      _interpreter.eval("import com.astrolabsoftware.AstroLabNet.DB.*");
+      _interpreter.eval(new StringFile("init.bsh").toString());
+      }
+    catch (EvalError e) {
+      reportException("Can't evaluate standard BeanShell expression", e, log);
+      }
+    // Servers & Sessions
+    ServerNode serverNode;
+    for (Enumeration<ServerNode> it = _servers.children(); it.hasMoreElements();) {
+      serverNode = it.nextElement();
+      for (int id : _livy.getSessions(serverNode.url())) {
+        serverNode.add(new SessionNode(id));
+        }
+      }
+    }
+    
+  /** TBD */
+  private void setupGUI() {
     // Global Options
     JPopupMenu.setDefaultLightWeightPopupEnabled(false);
     ToolTipManager.sharedInstance().setLightWeightPopupEnabled(false);
     UIManager.put("ToolTip.font",       new Font("Dialog", Font.PLAIN, 12));
     UIManager.put("ToolTip.foreground", new ColorUIResource(Color.red));
-    UIManager.put("ToolTip.background", new ColorUIResource(0.95f, 0.95f, 0.3f));
-    
-    ActionListener actionListener = new RootActionListener(this);
-
-    LivyRI livy = new LivyRI();
-    log.info(livy.sendCommand("xxx"));
-    
+    UIManager.put("ToolTip.background", new ColorUIResource(0.95f, 0.95f, 0.3f));    
+    // Listeners
+    ActionListener actionListener = new RootActionListener(this);    
     // Tools
     JToolBar north = new JToolBar();
     north.add(new AboutLabel());
@@ -79,51 +109,20 @@ public class RootFrame extends JFrame {
                                actionListener));
     north.setFloatable(false);
     north.setLayout(new BoxLayout(north, BoxLayout.X_AXIS));
-
     // Catalog
     DefaultMutableTreeNode root = new DefaultMutableTreeNode("Root");
     _catalog = new JTree(root);
-    DefaultMutableTreeNode livys = new DefaultMutableTreeNode("Livy Servers");
-    DefaultMutableTreeNode livy1 = new DefaultMutableTreeNode("Livy Server 1");
-    DefaultMutableTreeNode livy2 = new DefaultMutableTreeNode("Livy Server 2");
-    livys.add(livy1);
-    livys.add(livy2);
-    livy1.add(new DefaultMutableTreeNode("Context 1"));
-    livy1.add(new DefaultMutableTreeNode("Context 2"));
-    livy2.add(new DefaultMutableTreeNode("Context 1"));
-    livy2.add(new DefaultMutableTreeNode("Context 2"));
-    DefaultMutableTreeNode datas = new DefaultMutableTreeNode("Data");
-    datas.add(new DefaultMutableTreeNode("Dataset 1"));
-    datas.add(new DefaultMutableTreeNode("Dataset 2"));
-    root.add(livys);
-    root.add(datas);
-    
+    root.add(_servers);    
     // Results
     _results    = new JTabbedPane();    
     JComponent result1 = new JTextArea("Result 1", 40, 80);
     _results.addTab("Result 1", Icons.ASTROLAB, result1, "Does nothing");
     JComponent result2 = new JTextArea("Result 2", 40, 80);
     _results.addTab("Result 2", Icons.ASTROLAB, result2, "Does twice as much nothing");
- 
-    // Feedback
-    
-    // Console
-    _console.setWaitFeedback(true);
-    //_console.setNameCompletion(...);
-    _interpreter = new Interpreter(_console);
-    try {
-      _interpreter.set("w", this);
-      _interpreter.eval("import org.apache.livy.*");
-       }
-    catch (EvalError e) {
-      reportException("Can't evaluate standard BeanShell expression", e, log);
-      }
-
     // Panels
-    JSplitPane splitPaneN = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, _catalog,    _results);
+    JSplitPane splitPaneN = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new TreePanel(_catalog),    _results);
     JSplitPane splitPaneS = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, _feedback, _console);
-    JSplitPane splitPane  = new JSplitPane(JSplitPane.VERTICAL_SPLIT, splitPaneN, splitPaneS);
-    
+    JSplitPane splitPane  = new JSplitPane(JSplitPane.VERTICAL_SPLIT, splitPaneN, splitPaneS);    
     // Packing
     getContentPane().add(north, BorderLayout.NORTH);
     getContentPane().add(splitPane, BorderLayout.CENTER);
@@ -171,18 +170,28 @@ public class RootFrame extends JFrame {
     _feedback.append(text);
     }
     
+  /** TBD */
+  public void addServer(ServerNode node) {
+    log.info("Adding Livy server " + node); 
+    _servers.add(node);
+    }
+ 
   /** Close. */
   public void close() {
     System.exit(0);
     }  
+
+  private LivyRI _livy = new LivyRI();
     
+  private TreeNode _servers = new TreeNode("Livy Servers");
+
   private static JTextArea _feedback = new JTextArea("Feedback", 2, 20);
   
-  private JComponent _catalog;
+  private JTree _catalog;
   
   private JTabbedPane _results;
   
-  private static JConsole _console = new JConsole();
+  private static Console _console = new Console();
 
   private Interpreter _interpreter;
     
