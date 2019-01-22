@@ -6,7 +6,12 @@ import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.spi.LoggingEvent;
 
 /** <code>RootFrameAppender</code> appends Log4J messages
-  * to the {@link RootFrame}. */
+  * to the {@link RootFrame}.
+  * @opt attributes
+  * @opt operations
+  * @opt types
+  * @opt visibility
+  * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public class RootFrameAppender extends AppenderSkeleton {
 
   /** Append {@link LoggingEvent} to the {@link RootFrame}.

@@ -3,6 +3,12 @@ package com.astrolabsoftware.AstroLabNet.Browser.Components;
 // Swing
 import javax.swing.ImageIcon;
 
+/** <code>Icons</code> contains standard {@link Icon}s.
+  * @opt attributes
+  * @opt operations
+  * @opt types
+  * @opt visibility
+  * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public final class Icons {
   
   private static final ClassLoader myLoader = (new Icons()).getClass().getClassLoader();

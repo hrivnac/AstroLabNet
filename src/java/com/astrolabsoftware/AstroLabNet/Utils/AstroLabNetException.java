@@ -4,6 +4,13 @@ package com.astrolabsoftware.AstroLabNet.Utils;
 import java.io.StringWriter;
 import java.io.PrintWriter;
 
+/** <code>AstroLabNetException</code> provides the customised
+  * {@link Exception} behaviour for <em>AstroLabNet</em>.
+  * @opt attributes
+  * @opt operations
+  * @opt types
+  * @opt visibility
+  * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public class AstroLabNetException extends Exception {
 
   public AstroLabNetException() {

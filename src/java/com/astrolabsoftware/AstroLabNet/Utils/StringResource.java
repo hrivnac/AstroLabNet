@@ -19,8 +19,8 @@ public class StringResource {
     
   /** Create.
     * @param resource The resource path. 
-    * @throws EIHadoopException If resource can't be read. */      
-  public StringResource(String resource) throws EIHadoopException {
+    * @throws AstroLabNetException If resource can't be read. */      
+  public StringResource(String resource) throws AstroLabNetException {
     InputStream       is  = StringResource.class.getClassLoader().getResourceAsStream(resource);
     InputStreamReader isr = new InputStreamReader(is);
     BufferedReader    br  = new BufferedReader(isr);
@@ -34,7 +34,7 @@ public class StringResource {
       is.close();
       }
     catch (IOException e) {
-      throw new EIHadoopException("Resource " + resource + " cannot be read !", e);
+      throw new AstroLabNetException("Resource " + resource + " cannot be read !", e);
       }
     _content = buffer.toString();
     }
@@ -47,8 +47,8 @@ public class StringResource {
 
   /** Write the contained {@link String} to a file.
     * @param fn The filename to write the content 
-    * @throws EIHadoopException If resource can't be read. */      
-  public void toFile(String fn) throws EIHadoopException {
+    * @throws AstroLabNetException If resource can't be read. */      
+  public void toFile(String fn) throws AstroLabNetException {
     try {
       FileWriter fstream = new FileWriter(fn);
       BufferedWriter out = new BufferedWriter(fstream);
@@ -56,7 +56,7 @@ public class StringResource {
       out.close();
       }
     catch (Exception e){
-      throw new EIHadoopException("Cannot write into file " + fn + " !", e);
+      throw new AstroLabNetException("Cannot write into file " + fn + " !", e);
       }
     }
      

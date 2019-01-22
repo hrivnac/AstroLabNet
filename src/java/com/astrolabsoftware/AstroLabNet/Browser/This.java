@@ -20,8 +20,15 @@ import javax.swing.JSplitPane;
 // Log4J
 import org.apache.log4j.Logger;
 
+/** <code>This</code> starts <em>AstroLabNet</code> client browser.
+  * @opt attributes
+  * @opt operations
+  * @opt types
+  * @opt visibility
+  * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 class This {
 
+  /** Initialise and start client browser.*/
   public static void main(String[] args) {
     Init.init();
     new RootFrame();

@@ -21,6 +21,13 @@ import java.awt.event.ActionListener;
 // Log4J
 import org.apache.log4j.Logger;
 
+/** <code>RootActionListener</code> mediates {@link ActionEvent}s
+  * on {@link RootFrame}.
+  * @opt attributes
+  * @opt operations
+  * @opt types
+  * @opt visibility
+  * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public final class RootActionListener implements ActionListener {
 
   public RootActionListener(RootFrame frame) {

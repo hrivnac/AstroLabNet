@@ -15,6 +15,7 @@ import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.entity.StringEntity;
 
 // Java
 import java.security.Security;
@@ -87,7 +88,7 @@ public class SmallHttpClient {
       HttpResponse response = client.execute(get);
       StatusLine statusLine = response.getStatusLine();
       int statusCode = statusLine.getStatusCode();
-      if (statusCode != HttpStatus.SC_OK) {
+      if (statusCode != HttpStatus.SC_OK && statusCode != HttpStatus.SC_CREATED) {
         throw new AstroLabNetException("Call to " + question + " failed: " + statusLine.getReasonPhrase());
         }
       else {
@@ -133,7 +134,7 @@ public class SmallHttpClient {
       HttpResponse response = client.execute(post);
       StatusLine statusLine = response.getStatusLine();
       int statusCode = statusLine.getStatusCode();
-      if (statusCode != HttpStatus.SC_OK) {
+      if (statusCode != HttpStatus.SC_OK && statusCode != HttpStatus.SC_CREATED) {
         throw new AstroLabNetException("Post to " + url + " " + params + " failed: " + statusLine.getReasonPhrase());
         }
       else {
@@ -142,6 +143,50 @@ public class SmallHttpClient {
       }
     catch (Exception e) {
       throw new AstroLabNetException("Post to " + url + " " + params + " failed", e);
+      }
+    finally {
+      post.releaseConnection();
+      }  
+    return answer;
+    }
+    
+  /** Make http post call. It accepts gzipped results.
+    * @param url The http url.
+    * @param json  The request parameters as JSON string.
+    * @param headers The additional headers.
+    * @return         The answer.
+    * @throws AstroLabNetException If anything goes wrong. */
+  public static String post(String              url,
+                            String              json,
+                            Map<String, String> headers) throws AstroLabNetException {
+    String answer = "";
+    DefaultHttpClient client = new DefaultHttpClient();
+    HttpPost post = new HttpPost(url);
+    post.addHeader("Accept-Encoding", "gzip");
+    post.addHeader("Content-Type", "application/json");
+    post.addHeader("Accept", "application/json");
+    for (Map.Entry<String, String> entry : headers.entrySet()) {
+      post.addHeader(entry.getKey(), entry.getValue());
+      }
+    try {
+      post.setEntity(new StringEntity(json));
+      }
+    catch (UnsupportedEncodingException e) {
+      log.warn("Cannot encode nameValuePairs", e);
+      }      
+    try {
+      HttpResponse response = client.execute(post);
+      StatusLine statusLine = response.getStatusLine();
+      int statusCode = statusLine.getStatusCode();
+      if (statusCode != HttpStatus.SC_OK && statusCode != HttpStatus.SC_CREATED) {
+        throw new AstroLabNetException("Post to " + url + " " + json + " failed: " + statusLine.getReasonPhrase());
+        }
+      else {
+        answer = getResponseBody(response);   
+        }
+      }
+    catch (Exception e) {
+      throw new AstroLabNetException("Post to " + url + " " + json + " failed", e);
       }
     finally {
       post.releaseConnection();

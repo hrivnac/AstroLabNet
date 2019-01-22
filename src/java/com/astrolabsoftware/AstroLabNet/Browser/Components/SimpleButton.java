@@ -10,6 +10,12 @@ import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+/** <code>Fonts</code> provides standard {@link JButton}s.
+  * @opt attributes
+  * @opt operations
+  * @opt types
+  * @opt visibility
+  * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public final class SimpleButton extends JButton {
 
   public SimpleButton(String name,
