@@ -14,6 +14,11 @@
 
   <path id="classpath.build">
     <pathelement path="${log4j.jar}"/>
+    <pathelement path="${bsh.jar}"/>
+    <pathelement path="${livy.jar}"/>
+    <pathelement path="${httpclient.jar}"/>
+    <pathelement path="${httpcore.jar}"/>
+    <pathelement path="${logging.jar}"/>
     <fileset dir="../exelib">
       <include name="*.jar"/>
       </fileset>
@@ -98,6 +103,11 @@
       <fileset dir="../src/java" includes="com/astrolabsoftware/AstroLabNet/**/*.png"/>
       <fileset dir="../src/java" includes="com/astrolabsoftware/AstroLabNet/**/*.gif"/>
       <zipfileset includes="**/*.class" src="${log4j.jar}"/>
+      <zipfileset includes="**/*.class" src="${bsh.jar}"/>
+      <zipfileset includes="**/*.class" src="${livy.jar}"/>
+      <zipfileset includes="**/*.class" src="${httpclient.jar}"/>
+      <zipfileset includes="**/*.class" src="${httpcore.jar}"/>
+      <zipfileset includes="**/*.class" src="${logging.jar}"/>
       <manifest>
         <attribute name="Created-By" value="${user.name}"/>
         <attribute name="AppName"    value="AstroLabNet"/>
@@ -161,13 +171,18 @@
              source="1.8"
              Overview="../src/java/com/astrolabsoftware/AstroLabNet/Browser/overview.html"
              windowtitle="AstroLabNet">
-      <doctitle><![CDATA[<u>]]>Atlas GraphDB<![CDATA[</u>]]></doctitle>
+      <doctitle><![CDATA[<u>]]>AstroLabNet<![CDATA[</u>]]></doctitle>
       <Header><![CDATA[<center>]]>AstroLabNet version: ${version}<![CDATA[</center>]]></Header>
       <Footer><![CDATA[<center>Written by: <a href='http://cern.ch/hrivnac'>J.Hrivnac</a></center>]]></Footer>
       <bottom><![CDATA[<a href='https://astrolabsoftware.github.io/'>Documentation</a>]]> built ${TODAY} on ${os.name} by ${user.name}</bottom>
       <group title="Browser" packages="com.astrolabsoftware.AstroLabNet.Browser*"/>
       <group title="Utils"   packages="com.astrolabsoftware.AstroLabNet.Utils*"/>
+      <group title="Livyser" packages="com.astrolabsoftware.AstroLabNet.Livyser*"/>
       <link href="http://docs.oracle.com/javase/8/docs/api"/>
+      <link href="http://www.beanshell.org/javadoc/"/>
+      <link href="https://logging.apache.org/log4j/1.2/apidocs"/>
+      <link href="https://livy.incubator.apache.org/docs/latest/api/java"/>
+      <link href="https://hc.apache.org/httpcomponents-client-ga/httpclient/apidocs"/>
       <classpath>
         <path refid="classpath.run"/>
         </classpath>
