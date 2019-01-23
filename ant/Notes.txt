@@ -4,5 +4,7 @@
 ToDo
 ----
 - ToolTips
+- barvy v ToolTips
+- sizes in ToolTips
 - special Tree icons
 - better GUI domensions

@@ -101,6 +101,7 @@
     <jar jarfile="../lib/AstroLabNet.exe.jar" index="yes">
       <fileset dir="../build"    includes="com/astrolabsoftware/AstroLabNet/**/*.class"/>
       <fileset dir="../src/java" includes="com/astrolabsoftware/AstroLabNet/**/*.properties"/>
+      <fileset dir="../src/java" includes="com/astrolabsoftware/AstroLabNet/**/*.txt"/>
       <fileset dir="../src/java" includes="com/astrolabsoftware/AstroLabNet/**/*.png"/>
       <fileset dir="../src/java" includes="com/astrolabsoftware/AstroLabNet/**/*.gif"/>
       <zipfileset includes="**/*.class" src="${log4j.jar}"/>
@@ -177,16 +178,19 @@
       <Header><![CDATA[<center>]]>AstroLabNet version: ${version}<![CDATA[</center>]]></Header>
       <Footer><![CDATA[<center>Written by: <a href='http://cern.ch/hrivnac'>J.Hrivnac</a></center>]]></Footer>
       <bottom><![CDATA[<a href='https://astrolabsoftware.github.io'>Documentation</a>]]> built ${TODAY} on ${os.name} by ${user.name}</bottom>
-      <group title="Browser" packages="com.astrolabsoftware.AstroLabNet.Browser*"/>
-      <group title="Utils"   packages="com.astrolabsoftware.AstroLabNet.Utils*"/>
-      <group title="Livyser" packages="com.astrolabsoftware.AstroLabNet.Livyser*"/>
-      <group title="DB" packages="com.astrolabsoftware.AstroLabNet.DB*"/>
+      <group title="Browser"            packages="com.astrolabsoftware.AstroLabNet.Browser*"/>
+      <group title="Browser Components" packages="com.astrolabsoftware.AstroLabNet.Browser.Components*"/>
+      <group title="Browser Actions"    packages="com.astrolabsoftware.AstroLabNet.Browser.Actions*"/>
+      <group title="Utils"              packages="com.astrolabsoftware.AstroLabNet.Utils*"/>
+      <group title="Livyser"            packages="com.astrolabsoftware.AstroLabNet.Livyser*"/>
+      <group title="DB"                 packages="com.astrolabsoftware.AstroLabNet.DB*"/>
       <link href="http://docs.oracle.com/javase/8/docs/api"/>
       <link href="http://www.beanshell.org/javadoc/"/>
       <link href="https://logging.apache.org/log4j/1.2/apidocs"/>
       <link href="https://livy.incubator.apache.org/docs/latest/api/java"/>
       <link href="https://hc.apache.org/httpcomponents-client-ga/httpclient/apidocs"/>
       <link href="http://stleary.github.io/JSON-java/index.html"/>
+      <link href="https://docs.oracle.com/javase/8/javafx/api"/>
       <classpath>
         <path refid="classpath.run"/>
         </classpath>
