@@ -21,7 +21,7 @@ public class Init {
   public static void init() {
     PropertyConfigurator.configure(Init.class.getClassLoader().getResource("com/astrolabsoftware/AstroLabNet/Utils/log4j.properties"));
     fixLog4J();
-    log.info("Initialised, version: " + Info.release());
+    //log.info("Initialised, version: " + Info.release());
     }
     
   /** Modify the default Log4J setup for external packages. */

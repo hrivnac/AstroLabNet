@@ -1,7 +1,9 @@
 package com.astrolabsoftware.AstroLabNet.Browser.Components;
 
-// AWT
-import java.awt.Font;
+// JavaFX
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 
 /** <code>Fonts</code> contains standard {@link Font}s.
   * @opt attributes
@@ -11,12 +13,12 @@ import java.awt.Font;
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public final class Fonts {
 
-  public static final Font SMALL = new Font("Helvetica", Font.PLAIN, 5);
-
-  public static final Font PLAIN = new Font("Helvetica", Font.PLAIN, 10);
-
-  public static final Font BOLD  = new Font("Helvetica", Font.BOLD,  10);
-
-  public static final Font NONE  = new Font("Helvetica", Font.PLAIN,  0);
+  public static final Font SMALL = Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR,  5);
+                                   
+  public static final Font PLAIN = Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR, 10);
+                                   
+  public static final Font BOLD  = Font.font("Helvetica", FontWeight.BOLD,   FontPosture.REGULAR, 10);
+                                   
+  public static final Font NONE  = Font.font("Helvetica", FontWeight.NORMAL, FontPosture.REGULAR,  0);
 
   }

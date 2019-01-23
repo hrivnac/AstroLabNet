@@ -23,11 +23,12 @@ public final class Console extends JConsole {
 
   /** TBD */
   public Console() {
-    setFont(new Font("Helvetica", Font.PLAIN, 10));
+    setFont(new Font("Helvetica", Font.PLAIN, 30));
     setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
     setBorder(BorderFactory.createEtchedBorder());
-    print("Welcome to AstroLabNet " + Info.release() + "\n", new Font("Helvetica", Font.BOLD, 12), Color.red);
-    print("https://astrolabsoftware.github.io\n", new Font("Helvetica", Font.PLAIN, 10), Color.red);
+    //setSize(400, 400);
+    print("Welcome to AstroLabNet " + Info.release() + "\n", new Font("Helvetica", Font.BOLD, 32), Color.red);
+    print("https://astrolabsoftware.github.io\n", new Font("Helvetica", Font.PLAIN, 30), Color.red);
     }
 
   }

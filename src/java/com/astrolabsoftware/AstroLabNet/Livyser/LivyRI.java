@@ -1,6 +1,6 @@
 package com.astrolabsoftware.AstroLabNet.Livyser;
 
-import com.astrolabsoftware.AstroLabNet.Browser.RootFrame;
+import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
 import com.astrolabsoftware.AstroLabNet.Utils.SmallHttpClient;
 import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
 
@@ -36,11 +36,12 @@ public class LivyRI {
       }
     catch (AstroLabNetException e) {
       log.info(e);
-      RootFrame.reportException("Request has failed", e, log);
+      BrowserWindow.reportException("Request has failed", e, log);
       return 0;
       }
     return new JSONObject(result).getInt("id");
     }
+    
   /** TBD */
   public Integer[] getSessions(String url) {
     String result = "";
@@ -49,7 +50,7 @@ public class LivyRI {
       }
     catch (AstroLabNetException e) {
       log.info(e);
-      RootFrame.reportException("Request has failed", e, log);
+      BrowserWindow.reportException("Request has failed", e, log);
       return new Integer[0];
       }
     JSONArray sessions = new JSONObject(result).getJSONArray("sessions");
@@ -76,7 +77,7 @@ public class LivyRI {
       }
     catch (AstroLabNetException e) {
       log.info(e);
-      RootFrame.reportException("Request has failed", e, log);
+      BrowserWindow.reportException("Request has failed", e, log);
     }
     return result;
     }

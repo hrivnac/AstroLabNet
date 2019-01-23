@@ -5,14 +5,14 @@ import org.apache.log4j.Level;
 import org.apache.log4j.AppenderSkeleton;
 import org.apache.log4j.spi.LoggingEvent;
 
-/** <code>RootFrameAppender</code> appends Log4J messages
-  * to the {@link RootFrame}.
+/** <code>WindowAppender</code> appends Log4J messages
+  * to the {@link BrowserWindow}.
   * @opt attributes
   * @opt operations
   * @opt types
   * @opt visibility
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
-public class RootFrameAppender extends AppenderSkeleton {
+public class WindowAppender extends AppenderSkeleton {
 
   /** Append {@link LoggingEvent} to the {@link RootFrame}.
     * @param event The {@link RootFrame} to append. */
@@ -20,10 +20,10 @@ public class RootFrameAppender extends AppenderSkeleton {
     String loggerName = event.getLoggerName();
     loggerName = loggerName.substring(loggerName.lastIndexOf(".") + 1, loggerName.length());
     if (event.getLevel().equals(Level.INFO)) {
-      RootFrame.setText(loggerName + ": " + event.getMessage().toString());
+      BrowserWindow.setText(loggerName + ": " + event.getMessage().toString());
       }
     else if (event.getLevel().isGreaterOrEqual(Level.WARN)) {
-      RootFrame.setError(loggerName + ": " + event.getMessage().toString());
+      BrowserWindow.setError(loggerName + ": " + event.getMessage().toString());
       }
     }
 

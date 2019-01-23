@@ -1,9 +1,12 @@
 package com.astrolabsoftware.AstroLabNet.Browser.Components;
 
-// Swing
-import javax.swing.JLabel;
-
-public final class AboutLabel extends JLabel {
+// JavaFX
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.control.Tooltip;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+import javafx.scene.control.ContentDisplay;
 
 /** <code>AboutLabel</code> of <em>AstroLabNet</em>.
   * @opt attributes
@@ -11,12 +14,14 @@ public final class AboutLabel extends JLabel {
   * @opt types
   * @opt visibility
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
+public final class AboutLabel extends Label {
+
   public AboutLabel() {
-    super("");
-    setIcon(Icons.ASTROLAB);
-    setToolTipText("<html><h1> AstroLabNet </h1>"
-                 + "<h2>Frond end for the AstroLabNet</h2>"
-                 + "<h3>https://astrolabsoftware.github.io/</h3></html>");
+    super();
+    setGraphic(new ImageView(Images.ASTROLAB));
+    new ToolTipper(this, "<html><h1> AstroLabNet </h1>"
+                       + "<h2>Frond end for the AstroLab</h2>"
+                       + "<h3>https://astrolabsoftware.github.io</h3></html>");
     }
 
   }
