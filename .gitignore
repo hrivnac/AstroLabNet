@@ -1,5 +1,7 @@
 /lib/*
 /build/*
 /run/*
+/dosrc/*
 *~
+*.log
 .zshhistory
