@@ -65,7 +65,7 @@ public class SmallHttpClient {
     * @param params The request parameters.
     * @return       The answer.
     * @throws AstroLabNetException If anything goes wrong. */
-  public static String post(String question,
+  public static String post(String              question,
                             Map<String, String> params) throws AstroLabNetException {
     return post(question, params, null);
     }
@@ -107,10 +107,10 @@ public class SmallHttpClient {
     }
     
   /** Make http post call. It accepts gzipped results.
-    * @param url The http url.
+    * @param url     The http url.
     * @param params  The request parameters.
     * @param headers The additional headers.
-    * @return         The answer.
+    * @return        The answer.
     * @throws AstroLabNetException If anything goes wrong. */
   public static String post(String              url,
                             Map<String, String> params,
@@ -155,10 +155,10 @@ public class SmallHttpClient {
     }
     
   /** Make http post call. It accepts gzipped results.
-    * @param url The http url.
-    * @param json  The request parameters as JSON string.
+    * @param url     The http url.
+    * @param json    The request parameters as JSON string.
     * @param headers The additional headers.
-    * @return         The answer.
+    * @return        The answer.
     * @throws AstroLabNetException If anything goes wrong. */
   public static String post(String              url,
                             String              json,

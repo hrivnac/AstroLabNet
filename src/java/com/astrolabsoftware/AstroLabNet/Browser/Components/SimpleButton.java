@@ -6,7 +6,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 import javafx.event.EventHandler;
 
-/** <code>Fonts</code> provides standard {@link Button}s.
+/** <code>SimpleButton</code> provides standard {@link Button}s.
   * @opt attributes
   * @opt operations
   * @opt types
@@ -33,39 +33,4 @@ public final class SimpleButton extends Button {
     setOnAction(handler);
     }
 
-/*    
-    
-  public SimpleButton(String name,
-                      int alignment,
-                      Font font,
-                      String tip,
-                      ActionListener listener) {
-    super(name);
-    setHorizontalTextPosition(AbstractButton.CENTER);
-    setFont(font);
-    if (tip != null) {
-      setToolTipText(tip);
-      }
-	  addActionListener(listener);
-    }
-
-  public SimpleButton(String name,
-                      ImageIcon icon,
-                      int alignment,
-                      Font font,
-                      Dimension size,
-                      String tip,
-                      ActionListener listener) {
-    super(name, icon); 
-    setHorizontalTextPosition(AbstractButton.CENTER);
-    setForeground(getBackground()); 
-    setMinimumSize(size);
-    setMaximumSize(size);
-    setFont(font);
-    if (tip != null) {
-      setToolTipText(tip);
-      }
-	  addActionListener(listener);
-    }
-*/
   }

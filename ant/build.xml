@@ -158,6 +158,12 @@
  		<copy todir="../doc">
 			<fileset dir="../src" includes="*.html"/>
       </copy>
+ 		<copy todir="../doc/docsrc">
+			<fileset dir="../docsrc" includes="*"/>
+      </copy>
+ 		<copy todir="../doc/dist">
+			<fileset dir="../lib" includes="*.exe.jar"/>
+      </copy>
  		<copy todir="../doc/JavaDoc">
 			<fileset dir="../src/java" includes="**/doc-files/*"/>
       </copy>
@@ -189,7 +195,7 @@
       <link href="https://logging.apache.org/log4j/1.2/apidocs"/>
       <link href="https://livy.incubator.apache.org/docs/latest/api/java"/>
       <link href="https://hc.apache.org/httpcomponents-client-ga/httpclient/apidocs"/>
-      <link href="http://stleary.github.io/JSON-java/index.html"/>
+      <link href="http://stleary.github.io/JSON-java"/>
       <link href="https://docs.oracle.com/javase/8/javafx/api"/>
       <classpath>
         <path refid="classpath.run"/>

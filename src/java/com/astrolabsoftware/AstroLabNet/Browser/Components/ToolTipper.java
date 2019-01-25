@@ -17,6 +17,9 @@ import javafx.scene.Node;
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public final class ToolTipper {
 
+  /** Add a tooltip to the {@link Node}.
+    * @param node The {@link Node} to receive the tooltip.
+    * @param text The text of the tooltip, can contain HTML. */
   public ToolTipper(Node node,
                     String text) {
     WebView webView = new WebView();

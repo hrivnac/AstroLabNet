@@ -8,3 +8,5 @@ ToDo
 - sizes in ToolTips
 - special Tree icons
 - better GUI domensions
+- splash window
+- notifier

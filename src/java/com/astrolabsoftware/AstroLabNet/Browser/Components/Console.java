@@ -21,7 +21,6 @@ import bsh.util.JConsole;
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public final class Console extends JConsole {
 
-  /** TBD */
   public Console() {
     setFont(new Font("Helvetica", Font.PLAIN, 30));
     setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);

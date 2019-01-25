@@ -26,7 +26,8 @@ import org.apache.log4j.Logger;
 public class LivyRI {
   
   /** Initiate session on the server.
-    * TBD */
+    * @param url The url of the server.
+    * @return    The new session number. */
   public int initSession(String url) {
     Map<String, String> params = new HashMap<>();
     params.put("kind", "spark");
@@ -42,7 +43,9 @@ public class LivyRI {
     return new JSONObject(result).getInt("id");
     }
     
-  /** TBD */
+  /** Get list of opened sessions.
+    * @param  url The url of the server.
+    * @return     The list of open session numbers. */
   public Integer[] getSessions(String url) {
     String result = "";
     try {
@@ -62,9 +65,12 @@ public class LivyRI {
     }
   
   /** Send command to the server.
-    * TBD */
+    * @param  url  The url of the server.
+    * @param  id   The existing sessin number.
+    * @param  code The <em>scala</code> to be run on the server.
+    * @return      The command result, in <em>json</em>. */
   public String sendCommand(String url,
-                            int sessionId,
+                            int id,
                             String code) {
     Map<String, String> params = new HashMap<>();
     params.put("kind", "spark");

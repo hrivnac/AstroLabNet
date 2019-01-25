@@ -11,19 +11,16 @@ import org.apache.log4j.Logger;
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public class Server extends Element {
   
-  /** TBD */
   public Server(String name,
                 String url) {
     super(name);
     _url  = url;
     }
         
-  /** TBD */
   public String url() {
     return _url;
     }
   
-  /** TBD */
   public String toString() {
     return name() + " : " + _url;
     }

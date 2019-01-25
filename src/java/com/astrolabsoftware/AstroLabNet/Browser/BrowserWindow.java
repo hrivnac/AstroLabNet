@@ -45,7 +45,8 @@ import javafx.scene.web.WebView;
 import javafx.scene.web.WebEngine;
 import javafx.scene.text.Text; 
 import javafx.scene.text.TextAlignment; 
-import javafx.scene.text.TextFlow; 
+import javafx.scene.text.TextFlow;
+import javafx.geometry.Pos;
 
 // Java
 import java.io.StringWriter;
@@ -76,9 +77,10 @@ public class BrowserWindow extends Application {
   
   @Override
   public void start(Stage stage) {
-    setupContent();
+    //setupContent();
     setupGUI(stage);
-    new Thread(_interpreter).start();
+    Thread t  = new Thread(_interpreter);
+    t.start();
     }
     
   /** TBD */
@@ -138,7 +140,7 @@ public class BrowserWindow extends Application {
       }
     TextFlow help = new TextFlow(); 
     help.setTextAlignment(TextAlignment.JUSTIFY); 
-    help.setPrefSize(600, 300); 
+    //help.setPrefSize(600, 300); 
     help.setLineSpacing(5.0); 
     ObservableList helpList = help.getChildren();       
     helpList.addAll(helpText);              
@@ -149,13 +151,13 @@ public class BrowserWindow extends Application {
     _results.getSelectionModel().select(0);
     _results.getTabs().addAll(tab);  
     // Console
-    SwingNode swingNode = new SwingNode();
-    createSwingContent(swingNode, _console);
-    StackPane console = new StackPane();
-    console.getChildren().add(swingNode);   
+    setupContent();
+    SwingNode console = new SwingNode();
+    createSwingContent(console, _console);
+    //console.setContent(_console);
     // Center = Results + Console
     VBox center = new VBox();    
-    center.setSpacing(10);    
+    center.setSpacing(10);  
     center.setMargin(_results, new Insets(2, 2, 2, 2)); 
     center.setMargin(console, new Insets(2, 2, 2, 2)); 
     ObservableList centerList = center.getChildren();  
@@ -221,7 +223,7 @@ public class BrowserWindow extends Application {
   /** TBD */
   public void addServer(String name,
                         String url) {
-    setText("Adding Livy server " + name + " (" + url + ")");
+    log.info("Adding Livy server " + name + " (" + url + ")");
     Server server = new Server(name, url);
     _servers.getChildren().add(new TreeItem<Element>(server));
     }
