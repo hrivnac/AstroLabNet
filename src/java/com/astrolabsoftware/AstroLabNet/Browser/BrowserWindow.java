@@ -137,19 +137,16 @@ public class BrowserWindow extends Application {
                               _actions,
                               _jobs);
     // Help
-    Text helpText = new Text("HELP !");
+    String helpText = "HELP !";
     try {
-      helpText = new Text(new StringResource("com/astrolabsoftware/AstroLabNet/Browser/Components/Help.txt").toString());
+      helpText = new StringResource("com/astrolabsoftware/AstroLabNet/Browser/Components/Help.txt").toString();
       }
     catch (AstroLabNetException e) {
       log.error("Cannot load help page !", e);
       }
-    TextFlow help = new TextFlow(); 
-    help.setTextAlignment(TextAlignment.JUSTIFY); 
-    //help.setPrefSize(600, 300); 
-    help.setLineSpacing(5.0); 
-    ObservableList helpList = help.getChildren();       
-    helpList.addAll(helpText);              
+    WebView help = new WebView();
+    WebEngine engine = help.getEngine();
+    engine.loadContent(helpText);
     // Results = Help
     Tab tab = new Tab();
     tab.setText("Help");
