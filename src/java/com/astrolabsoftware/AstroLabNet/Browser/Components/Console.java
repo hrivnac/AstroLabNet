@@ -22,12 +22,12 @@ import bsh.util.JConsole;
 public final class Console extends JConsole {
 
   public Console() {
-    setFont(new Font("Helvetica", Font.PLAIN, 30));
+    setFont(new Font("Helvetica", Font.PLAIN, 15));
     setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
     setBorder(BorderFactory.createEtchedBorder());
     //setSize(400, 400);
-    print("Welcome to AstroLabNet " + Info.release() + "\n", new Font("Helvetica", Font.BOLD, 32), Color.red);
-    print("https://astrolabsoftware.github.io\n", new Font("Helvetica", Font.PLAIN, 30), Color.red);
+    print("Welcome to AstroLabNet " + Info.release() + "\n", new Font("Helvetica", Font.BOLD, 15), Color.red);
+    print("https://astrolabsoftware.github.io\n", new Font("Helvetica", Font.PLAIN, 15), Color.red);
     }
 
   }

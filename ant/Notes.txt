@@ -10,3 +10,4 @@ ToDo
 - better GUI domensions
 - splash window
 - notifier
+- handle init.bsh

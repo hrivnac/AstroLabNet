@@ -7,12 +7,26 @@
 <body>
 
 <table><tr>
-<td><img src="JavaDoc/com/astrolabsoftware/AstroLabNet/Browser/doc-files/AstroLab.png" width="50" height="50"/></td>
+<td><img src="JavaDoc/com/astrolabsoftware/AstroLabNet/Browser/doc-files/AstroLab.png" width="100"/></td>
 <td><h1>AstroLabNet</h1>
 <h2>@VERSION@ [@BUILD@]</h2>
 </tr></table>
 <hr/>
-<img src="JavaDoc/com/astrolabsoftware/AstroLabNet/Browser/doc-files/Architecture.jpg" width="500">
+<b>AstroLabNet</b> is a front-end to the archipel
+of <em>Spark</em> services. 
+<br/>
+It allows to
+<ul>
+<li>Access distributed data.</li>
+<li>Deploy jobs to data.</li>
+<li>Move data between servers.</li>
+<li>Arrange data streaming and updating.</li>
+</ul>
+Full functionality is available via CLI, GUI and WS.
+<br/>
+<img src="JavaDoc/com/astrolabsoftware/AstroLabNet/Browser/doc-files/Architecture.jpg" width="800">
+<br/>
+<img src="JavaDoc/com/astrolabsoftware/AstroLabNet/Browser/doc-files/Browser.png" width="800">
 <hr/>
 After direct download from 
 <a href="dist/AstroLabNet.exe.jar">AstroLabNet.exe.jar</a>,
@@ -26,7 +40,15 @@ java -jar AstroLabNet.exe.jar
 <li><a href="Src">Source</a></li>
 <li><a href="build.jpg">Ant build dependencies</a></li>
 <li><a href="https://github.com/hrivnac/AstroLabNet.git">https://github.com/hrivnac/AstroLabNet.git</a></li>
+<li>Externals:
+    <a href="https://www.java.com">Java</a>,
+    <a href="https://openjfx.io">JavaFX</a>,
+    <a href="https://github.com/beanshell/beanshell">BeanShell</a>,
+    <a href="https://livy.incubator.apache.org">Livy</a>,
+    <a href="https://hc.apache.org/httpcomponents-client-ga">HttpClient</a>,
+    <a href="https://www.baeldung.com/java-org-json">org.json</a></li>
 </ul>
+<a href="index.jpg"><img src="index.jpg" width="800"></a>
 <hr/>
 <h4><a name="Bugs-ToDos">Bugs and ToDos</a></h4>
 <b><u>Bugs</u></b>
@@ -35,7 +57,10 @@ java -jar AstroLabNet.exe.jar
 </ul>
 <b><u>ToDos</u></b>
 <ul>
-<li>...</li>
+<li>Treat entities and data as a graph (network).</li>
+<li>Interface to LSST Alert system.</li>
+<li>Intercace to LSST Catalog and data system.</li>
+<li>Wrap in a Web Service.</li>
 </ul>
 <hr/>
 <h4><a name="Releases">Release History</a></h4>
@@ -52,7 +77,7 @@ java -jar AstroLabNet.exe.jar
 
 <h4>Related Documentation</h4>
 <ul>
-<li>...</li> 
+<li><a href="https://astrolabsoftware.github.io">AstroLab software</a></li> 
 </ul>
 
 <h4><a name="Presentations">Presentations</a></h4>

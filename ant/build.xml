@@ -196,7 +196,6 @@
       <link href="https://livy.incubator.apache.org/docs/latest/api/java"/>
       <link href="https://hc.apache.org/httpcomponents-client-ga/httpclient/apidocs"/>
       <link href="http://stleary.github.io/JSON-java"/>
-      <link href="https://docs.oracle.com/javase/8/javafx/api"/>
       <classpath>
         <path refid="classpath.run"/>
         </classpath>
@@ -222,6 +221,16 @@
 		  <fileset dir="../build" includes="**/*.java"/>
 		  <javadoc localRef="${javadoc}" httpRef="http://docs.oracle.com/javase/8/docs/api"/>
 	    </java2html>
+    </target>
+
+  <!-- Publish ==============================================================-->
+
+  <target name="publish"
+          depends="init"
+          description="Publish documentation">
+ 		<copy todir="${doc}">
+			<fileset dir="../doc" includes="**/*"/>
+      </copy>
     </target>
 
   <!-- Viz ==================================================================-->
