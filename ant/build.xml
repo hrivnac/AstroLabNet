@@ -125,6 +125,9 @@
   <target name="check"
            description="Check">
     <echo>Browser Check</echo>
+ 		<copy todir=".">
+			<fileset dir="../src/java/com/astrolabsoftware/AstroLabNet/Browser" includes="init.bsh"/>
+      </copy>
     <java jar="../lib/AstroLabNet.exe.jar"
           fork="true"
           failonerror="true">

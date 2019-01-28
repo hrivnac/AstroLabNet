@@ -75,7 +75,7 @@ public class BrowserWindow extends Application {
   
   @Override
   public void start(Stage stage) {
-    //setupContent();
+    setupContent();
     setupGUI(stage);
     Thread t  = new Thread(_interpreter);
     t.start();
@@ -156,7 +156,6 @@ public class BrowserWindow extends Application {
     _results.getSelectionModel().select(0);
     _results.getTabs().addAll(tab);  
     // Console
-    setupContent();
     SwingNode console = new SwingNode();
     createSwingContent(console, _console);
     //console.setContent(_console);
