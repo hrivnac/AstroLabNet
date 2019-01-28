@@ -1,6 +1,7 @@
 /lib/*
 /build/*
 /run/*
+/doc/*
 /dosrc/*
 *~
 *.log
