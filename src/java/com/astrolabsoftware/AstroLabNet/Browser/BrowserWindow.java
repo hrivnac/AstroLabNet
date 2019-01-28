@@ -134,6 +134,7 @@ public class BrowserWindow extends Application {
                               _data,
                               _dataSources,
                               _channels,
+                              _actions,
                               _jobs);
     // Help
     Text helpText = new Text("HELP !");
@@ -271,6 +272,7 @@ public class BrowserWindow extends Application {
   private TreeItem<Element> _data        = new TreeItem<>(new Element("Data"));
   private TreeItem<Element> _dataSources = new TreeItem<>(new Element("Data Sources"));
   private TreeItem<Element> _channels    = new TreeItem<>(new Element("Data Channels"));
+  private TreeItem<Element> _actions     = new TreeItem<>(new Element("Actions"));
   private TreeItem<Element> _jobs        = new TreeItem<>(new Element("Jobs"));
   
   private static Console _console;

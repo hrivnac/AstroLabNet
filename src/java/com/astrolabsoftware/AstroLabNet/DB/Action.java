@@ -3,17 +3,17 @@ package com.astrolabsoftware.AstroLabNet.DB;
 // Log4J
 import org.apache.log4j.Logger;
 
-/** <code>Job</code> represents running <em>Spark</em> job
-  * transfer.
+/** <code>Action</code> represents <em>Spark</em> job or transfer
+  * ready to run.
   * @opt attributes
   * @opt operations
   * @opt types
   * @opt visibility
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
-public class Job extends Element {
+public class Action extends Element {
   
   /** TBD */
-  public Job(String name) {
+  public Action(String name) {
     super(name);
     }
 
@@ -23,6 +23,6 @@ public class Job extends Element {
     }
   
   /** Logging . */
-  private static Logger log = Logger.getLogger(Job.class);
+  private static Logger log = Logger.getLogger(Action.class);
 
   }
