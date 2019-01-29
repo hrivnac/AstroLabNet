@@ -207,6 +207,31 @@
     <replace file="../doc/index.html" token="@BUILD@"   value="${TSTAMP} by ${user.name}"/>
   </target>
 
+  <!-- Publish ==============================================================-->
+
+  <target name="publish"
+          depends="init"
+          description="Publish documentation">
+ 		<copy todir="${doc}">
+			<fileset dir="../doc" includes="**/*"/>
+      </copy>
+    </target>
+
+  <!-- JDepend ==============================================================-->
+
+  <target name="jdepend"
+          depends="init"
+          description="Analyse dependencies">
+    <java classname="jdepend.swingui.JDepend"
+          fork="true"
+          failonerror="true">
+      <arg value="../build"/>
+      <classpath>
+        <pathelement location="../exelib/jdepend-2.9.5.jar"/>
+        </classpath>
+      </java>
+    </target>
+
   <!-- j2h ==================================================================-->
 
   <target name="j2h"
@@ -224,16 +249,6 @@
 		  <fileset dir="../build" includes="**/*.java"/>
 		  <javadoc localRef="${javadoc}" httpRef="http://docs.oracle.com/javase/8/docs/api"/>
 	    </java2html>
-    </target>
-
-  <!-- Publish ==============================================================-->
-
-  <target name="publish"
-          depends="init"
-          description="Publish documentation">
- 		<copy todir="${doc}">
-			<fileset dir="../doc" includes="**/*"/>
-      </copy>
     </target>
 
   <!-- Viz ==================================================================-->

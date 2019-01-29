@@ -3,7 +3,6 @@ package com.astrolabsoftware.AstroLabNet.Browser;
 import com.astrolabsoftware.AstroLabNet.Livyser.LivyRI;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
 import com.astrolabsoftware.AstroLabNet.Browser.Actions.*;
-import com.astrolabsoftware.AstroLabNet.Utils.Init;
 import com.astrolabsoftware.AstroLabNet.Utils.StringFile;
 import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
 import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
@@ -15,41 +14,27 @@ import javax.swing.SwingUtilities;
 
 // JavaFX
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
-import javafx.scene.control.TextField; 
 import javafx.scene.layout.BorderPane; 
 import javafx.scene.layout.HBox; 
 import javafx.scene.layout.VBox; 
-import javafx.collections.ObservableList; 
-import javafx.geometry.Insets; 
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
-import javafx.embed.swing.SwingNode;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.web.WebView;
 import javafx.scene.web.WebEngine;
-import javafx.scene.text.Text; 
-import javafx.scene.text.TextAlignment; 
-import javafx.scene.text.TextFlow;
-import javafx.geometry.Pos;
+import javafx.stage.Stage;
+import javafx.embed.swing.SwingNode;
+import javafx.geometry.Insets; 
+import javafx.collections.ObservableList; 
 
 // Java
 import java.io.StringWriter;
 import java.io.PrintWriter;
-import java.util.Enumeration;
 
 // Bean Shell
 import bsh.Interpreter;

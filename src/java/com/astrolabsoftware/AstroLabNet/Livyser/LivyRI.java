@@ -29,8 +29,6 @@ public class LivyRI {
     * @param url The url of the server.
     * @return    The new session number. */
   public int initSession(String url) {
-    Map<String, String> params = new HashMap<>();
-    params.put("kind", "spark");
     String result = "";
     try {
       result = SmallHttpClient.post(url + "/sessions", "{\"kind\":\"spark\"}", null);
@@ -73,8 +71,6 @@ public class LivyRI {
                             int id,
                             String code) {
     Map<String, String> params = new HashMap<>();
-    params.put("kind", "spark");
-    //params.put("code", "1+1");
     Map<String, String> headers = new HashMap<>();
     String result = "";
     try {
