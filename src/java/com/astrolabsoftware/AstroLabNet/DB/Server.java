@@ -12,20 +12,28 @@ import org.apache.log4j.Logger;
 public class Server extends Element {
   
   public Server(String name,
-                String url) {
+                String urlLivy,
+                String urlSpark) {
     super(name);
-    _url  = url;
+    _urlLivy   = urlLivy;
+    _urlSpark  = urlSpark;
     }
         
-  public String url() {
-    return _url;
+  public String urlLivy() {
+    return _urlLivy;
+    }
+        
+  public String urlSpark() {
+    return _urlSpark;
     }
   
   public String toString() {
-    return name() + " : " + _url;
+    return name() + " (Livy = " + _urlLivy + ", Spark = " + _urlSpark + ")";
     }
     
-  private String _url;
+  private String _urlLivy;
+  
+  private String _urlSpark;
   
   /** Logging . */
   private static Logger log = Logger.getLogger(Server.class);

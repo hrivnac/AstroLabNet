@@ -20,14 +20,16 @@ import org.apache.log4j.Logger;
 public class StringFile {
     
   /** Create.
-    * @param fn The file path. */    
-  public StringFile(String fn) {
+    * @param fn The file path.
+    * @throws AstroLabNetException If file can't be read. */      
+  public StringFile(String fn) throws AstroLabNetException {
     this(new File(fn));
     }
     
   /** Create.
-    * @param file The file. */    
-  public StringFile(File file) {
+    * @param file The file.
+    * @throws AstroLabNetException If file can't be read. */      
+  public StringFile(File file) throws AstroLabNetException {
     FileInputStream     fis = null;
     BufferedInputStream bis = null;
     DataInputStream     dis = null;
@@ -45,12 +47,10 @@ public class StringFile {
       _content = buffer.toString();
       }
     catch (FileNotFoundException e) {
-      log.error("File " + file.getPath() + " not found !");
-      return;
+      throw new AstroLabNetException("File " + file.getPath() + " not found !", e);
       }
     catch (IOException e) {
-      log.error("File " + file.getPath() + " cannot be read !");
-      return;
+      throw new AstroLabNetException("File " + file.getPath() + " cannot be read !", e);
       }
     }
 

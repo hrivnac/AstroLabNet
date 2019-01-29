@@ -80,16 +80,24 @@ public class BrowserWindow extends Application {
     t.start();
     }
     
-  /** TBD */
+  /** Connect to servers and populate GUI. */
   private void setupContent() {
     // Console
     _console = new Console();
     _console.setWaitFeedback(true);
     _interpreter = new Interpreter(_console);
+    String init = "w.addServer(\"Local Host\", \"http://localhost:8998\", \"http://localhost:4040\")";
+    try {
+      init = new StringFile("init.bsh").toString();
+      }
+    catch (AstroLabNetException e) {
+      log.warn("init.bsh file cannot be read, the default setup with Local Host server is used.");
+      log.debug("init.bsh file cannot be read, the default setup with Local Host server is used.", e);
+      }
     try {
       _interpreter.set("w", this);
       _interpreter.eval("import com.astrolabsoftware.AstroLabNet.DB.*");
-      _interpreter.eval(new StringFile("init.bsh").toString());
+      _interpreter.eval(init);
       }
     catch (EvalError e) {
       reportException("Can't evaluate standard BeanShell expression", e, log);
@@ -98,21 +106,39 @@ public class BrowserWindow extends Application {
     for (TreeItem<Element> serverItem : _servers.getChildren()) {
       if (serverItem.getValue() instanceof Server) {
         Server server = (Server)(serverItem.getValue());
-        WebView view = new WebView();
-        WebEngine engine = view.getEngine();
-        engine.load(server.url());
-        Tab tab = new Tab();
-        tab.setText(server.name() + " : " + server.url());
-        tab.setContent(view);   
-        _results.getTabs().addAll(tab);
-        for (int id : _livy.getSessions(server.url())) {
-          serverItem.getChildren().add(new TreeItem<Element>(new Session("Session", id)));
+        if (server.urlLivy() == null) {
+          log.warn("Livy url for " + server.name() + " is not defined !");
+          }
+        else {
+          WebView viewLivy = new WebView();
+          WebEngine engineLivy = viewLivy.getEngine();
+          engineLivy.load(server.urlLivy());
+          Tab tabLivy = new Tab();
+          tabLivy.setText(server.name() + " : Livy : " + server.urlLivy());
+          tabLivy.setContent(viewLivy); 
+          _results.getTabs().addAll(tabLivy);
+          for (int id : _livy.getSessions(server.urlLivy())) {
+            serverItem.getChildren().add(new TreeItem<Element>(new Session("Session", id)));
+            }
+          }
+        if (server.urlSpark() == null) {
+          log.warn("Spark url for " + server.name() + " is not defined !");
+          }
+        else {
+          WebView viewSpark = new WebView();
+          WebEngine engineSpark = viewSpark.getEngine();
+          engineSpark.load(server.urlSpark());
+          Tab tabSpark = new Tab();
+          tabSpark.setText(server.name() + " : Spark : " + server.urlSpark());
+          tabSpark.setContent(viewSpark);   
+          _results.getTabs().addAll(tabSpark);
           }
         }
       }
     }
     
-  /** TBD */
+  /** Create GUI.
+    * @param stage The GUI {@link Stage}. */
   private void setupGUI(Stage stage) {
     // About
     Label about = new AboutLabel();       
@@ -175,8 +201,11 @@ public class BrowserWindow extends Application {
     stage.show(); 
     }
     
-  private void createSwingContent(SwingNode swingNode,
-                                  Console   component) {
+  /** Wrap <em>Swing</em> {@link JComponent} in <em>JavaFX</em>.
+    * @param swingNode The wrapping {@link SwingNode}.
+    * @param component The wrapped <em>Swing</em> {@link JComponent}. */
+  private void createSwingContent(SwingNode  swingNode,
+                                  JComponent component) {
     SwingUtilities.invokeLater(new Runnable() {
       @Override
       public void run() {
@@ -221,39 +250,55 @@ public class BrowserWindow extends Application {
     l.debug(sw.toString());
     }
     
-  /** TBD */
+  /** Add {@link Server}.
+    * @param name     The {@link Server} name.
+    * @param urlLivy  The url of the <em>Livy</em> server. May be <tt>null</tt>.
+    * @param urlSpark The url of the <em>Spark</em> server. May be <tt>null</tt>. */
   public void addServer(String name,
-                        String url) {
-    log.info("Adding Livy server " + name + " (" + url + ")");
-    Server server = new Server(name, url);
+                        String urlLivy,
+                        String urlSpark) {
+    Server server = new Server(name, urlLivy, urlSpark);
+    log.info("Adding Server " + server);
     _servers.getChildren().add(new TreeItem<Element>(server));
     }
  
-  /** TBD */
+  /** Add {@link Data}.
+    * @param name The {@link Data} name. */
   public void addData(String name) {
-    log.info("Adding Data " + name);
     Data data = new Data(name);
+    log.info("Adding Data " + data);
     _data.getChildren().add(new TreeItem<Element>(data));
     }
     
-  /** TBD */
+  /** Add {@link DataSource}.
+    * @param name The {@link DataSource} name. */
   public void addDataSource(String name) {
-    log.info("Adding Data Source " + name);
     DataSource dataSource = new DataSource(name);
+    log.info("Adding Data Source " + dataSource);
     _dataSources.getChildren().add(new TreeItem<Element>(dataSource));
     }
 
-  /** TBD */
+  /** Add {@link Channel}.
+    * @param name The {@link Channel} name. */
   public void addChannel(String name) {
-    log.info("Adding Channel " + name);
     Channel channel = new Channel(name);
+    log.info("Adding Channel " + channel);
     _channels.getChildren().add(new TreeItem<Element>(channel));
     }
     
-  /** TBD */
+  /** Add {@link Action}.
+    * @param name The {@link Action} name. */
+  public void addAction(String name) {
+    Action action = new Action(name);
+    log.info("Adding Action " + action);
+    _actions.getChildren().add(new TreeItem<Element>(action));
+    }
+    
+  /** Add {@link Job}.
+    * @param name The {@link Job} name. */
   public void addJob(String name) {
-    log.info("Adding Job " + name);
     Job job = new Job(name);
+    log.info("Adding Job " + job);
     _jobs.getChildren().add(new TreeItem<Element>(job));
     }
  
