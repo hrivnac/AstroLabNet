@@ -213,7 +213,7 @@
           depends="init"
           description="Construct source documentation">
     <taskdef name="java2html" classname="com.java2html.Java2HTMLTask"/>
-	  <java2html title="GraphDB" 
+	  <java2html title="AstroLabNet" 
                simple="no"
              	 tabsize="4"
 		           marginsize="2"
@@ -296,7 +296,7 @@
         <path refid="classpath.run"/>
         </auxClasspath>
       <sourcePath path="../src" />
-      <class location="../lib/GraphDB.jar" />
+      <class location="../lib/AstroLabNet.exe.jar" />
       </findbugs>   
     </target>
 
