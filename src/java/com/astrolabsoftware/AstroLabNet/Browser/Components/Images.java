@@ -13,7 +13,9 @@ import javafx.scene.Node;
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public final class Images {
   
-  /** TBD */
+  /** Create {@link Node} from {@link Image}.
+    * @param image The original {@link Image}.
+    * @return      The result {@link Node}. */
   public static Node icon(Image image) {
     return new ImageView(image);
     }
