@@ -207,11 +207,11 @@
     <replace file="../doc/index.html" token="@BUILD@"   value="${TSTAMP} by ${user.name}"/>
   </target>
 
-  <!-- Publish ==============================================================-->
+  <!-- Post =================================================================-->
 
-  <target name="publish"
+  <target name="post"
           depends="init"
-          description="Publish documentation">
+          description="Post documentation">
  		<copy todir="${doc}">
 			<fileset dir="../doc" includes="**/*"/>
       </copy>
@@ -227,8 +227,8 @@
           failonerror="true">
       <arg value="../build"/>
       <classpath>
-        <pathelement location="../exelib/jdepend-2.9.5.jar"/>
-        </classpath>
+          <pathelement location="../exelib/jdepend-2.9.5.jar"/>
+          </classpath>
       </java>
     </target>
 
