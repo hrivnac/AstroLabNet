@@ -1,5 +1,8 @@
 package com.astrolabsoftware.AstroLabNet.Browser;
 
+import com.astrolabsoftware.AstroLabNet.Utils.Init;
+import com.astrolabsoftware.AstroLabNet.Utils.Notifier;
+
 // JavaFX
 import javafx.application.Application;
 
@@ -11,8 +14,10 @@ import javafx.application.Application;
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public class This {
   
-  /** Open the browser. */
+  /** Initialise and open the browser. */
   public static void main(String[] args) {
+    Init.init();
+    Notifier.notify("Started");
     Application.launch(BrowserWindow.class, args);
     }
   

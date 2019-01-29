@@ -1,1 +1,2 @@
 w.addServer("Local Host", "http://localhost:8998");
+//w.addServer("LAL", "http://vm-75222:8998");

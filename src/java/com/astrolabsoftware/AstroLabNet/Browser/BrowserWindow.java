@@ -70,7 +70,6 @@ public class BrowserWindow extends Application {
 
   @Override
   public void init() {
-    Init.init();
     }
   
   @Override

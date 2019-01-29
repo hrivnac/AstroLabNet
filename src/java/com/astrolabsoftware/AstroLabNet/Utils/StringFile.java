@@ -8,6 +8,9 @@ import java.io.DataInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+// Log4J
+import org.apache.log4j.Logger;
+
 /** <code>StringFile</code> gives File as String.
   * @opt attributes
   * @opt operations
@@ -42,11 +45,11 @@ public class StringFile {
       _content = buffer.toString();
       }
     catch (FileNotFoundException e) {
-      System.err.println("File " + file.getPath() + " not found !");
+      log.error("File " + file.getPath() + " not found !");
       return;
       }
     catch (IOException e) {
-      System.err.println("File " + file.getPath() + " cannot be read !");
+      log.error("File " + file.getPath() + " cannot be read !");
       return;
       }
     }
@@ -56,5 +59,8 @@ public class StringFile {
     }
      
   private String _content = "";   
+
+  /** Logging . */
+  private static Logger log = Logger.getLogger(StringFile.class);
                                                 
   }

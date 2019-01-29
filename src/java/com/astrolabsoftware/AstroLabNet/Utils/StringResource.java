@@ -8,6 +8,9 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
+// Log4J
+import org.apache.log4j.Logger;
+
 /** <code>StringResource</code> gives Resource as String.
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a>
   * @opt attributes
@@ -61,5 +64,8 @@ public class StringResource {
     }
      
   private String _content = "";   
+
+  /** Logging . */
+  private static Logger log = Logger.getLogger(StringResource.class);
                                                 
   }
