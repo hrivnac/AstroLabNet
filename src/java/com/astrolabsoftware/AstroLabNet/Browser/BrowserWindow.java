@@ -102,39 +102,6 @@ public class BrowserWindow extends Application {
     catch (EvalError e) {
       reportException("Can't evaluate standard BeanShell expression", e, log);
       }
-    // Servers & Sessions
-    for (TreeItem<Element> serverItem : _servers.getChildren()) {
-      if (serverItem.getValue() instanceof Server) {
-        Server server = (Server)(serverItem.getValue());
-        if (server.urlLivy() == null) {
-          log.warn("Livy url for " + server.name() + " is not defined !");
-          }
-        else {
-          WebView viewLivy = new WebView();
-          WebEngine engineLivy = viewLivy.getEngine();
-          engineLivy.load(server.urlLivy());
-          Tab tabLivy = new Tab();
-          tabLivy.setText(server.name() + " : Livy : " + server.urlLivy());
-          tabLivy.setContent(viewLivy); 
-          _results.getTabs().addAll(tabLivy);
-          for (int id : _livy.getSessions(server.urlLivy())) {
-            serverItem.getChildren().add(new TreeItem<Element>(new Session("Session", id)));
-            }
-          }
-        if (server.urlSpark() == null) {
-          log.warn("Spark url for " + server.name() + " is not defined !");
-          }
-        else {
-          WebView viewSpark = new WebView();
-          WebEngine engineSpark = viewSpark.getEngine();
-          engineSpark.load(server.urlSpark());
-          Tab tabSpark = new Tab();
-          tabSpark.setText(server.name() + " : Spark : " + server.urlSpark());
-          tabSpark.setContent(viewSpark);   
-          _results.getTabs().addAll(tabSpark);
-          }
-        }
-      }
     }
     
   /** Create GUI.
@@ -175,6 +142,7 @@ public class BrowserWindow extends Application {
     // Results = Help
     Tab tab = new Tab();
     tab.setText("Help");
+    tab.setGraphic(Images.icon(Images.HELP));
     tab.setContent(help);    
     _results.getSelectionModel().select(0);
     _results.getTabs().addAll(tab);  
@@ -259,7 +227,37 @@ public class BrowserWindow extends Application {
                         String urlSpark) {
     Server server = new Server(name, urlLivy, urlSpark);
     log.info("Adding Server " + server);
-    _servers.getChildren().add(new TreeItem<Element>(server));
+    TreeItem<Element> serverItem = new TreeItem<Element>(server, Images.icon(Images.LIVY));
+    _servers.getChildren().add(serverItem);
+    if (server.urlLivy() == null) {
+      log.warn("Livy url for " + server.name() + " is not defined !");
+      }
+    else {
+      WebView viewLivy = new WebView();
+      WebEngine engineLivy = viewLivy.getEngine();
+      engineLivy.load(server.urlLivy());
+      Tab tabLivy = new Tab();
+      tabLivy.setText(server.name() + " : Livy : " + server.urlLivy());
+      tabLivy.setGraphic(Images.icon(Images.LIVY));
+      tabLivy.setContent(viewLivy); 
+      _results.getTabs().addAll(tabLivy);
+      for (int id : _livy.getSessions(server.urlLivy())) {
+        serverItem.getChildren().add(new TreeItem<Element>(new Session("Session", id)));
+        }
+      }
+    if (server.urlSpark() == null) {
+      log.warn("Spark url for " + server.name() + " is not defined !");
+      }
+    else {
+      WebView viewSpark = new WebView();
+      WebEngine engineSpark = viewSpark.getEngine();
+      engineSpark.load(server.urlSpark());
+      Tab tabSpark = new Tab();
+      tabSpark.setText(server.name() + " : Spark : " + server.urlSpark());
+      tabSpark.setGraphic(Images.icon(Images.SPARK));
+      tabSpark.setContent(viewSpark);   
+      _results.getTabs().addAll(tabSpark);
+      }
     }
  
   /** Add {@link Data}.
