@@ -12,14 +12,10 @@ import org.apache.log4j.Logger;
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public class Job extends Element {
   
-  /** TBD */
+  /** Create new Job.
+    * @param name The Job name. */
   public Job(String name) {
     super(name);
-    }
-
-  /** TBD */
-  public String toString() {
-    return name();
     }
   
   /** Logging . */

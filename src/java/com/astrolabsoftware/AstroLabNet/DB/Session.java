@@ -11,19 +11,22 @@ import org.apache.log4j.Logger;
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public class Session extends Element {
   
-  /** TBD */
+  /** Create new Session.
+    * @param name The Session name.
+    * @param id   The Session id. */
   public Session(String name,
                  int id) {
     super(name);
     _id = id;
     }
     
-  /** TBD */
+  /** Give the Session id.
+    * @return The Sesiion id. */
   public int id() {
     return _id;
     }
 
-  /** TBD */
+  @Override
   public String toString() {
     return name() + " : " + _id;
     }

@@ -19,7 +19,9 @@ import javafx.util.Callback;
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public final class TreeCellCallback implements Callback<TreeView<Element>, TreeCell<Element>> {
   
-  /** TBD */
+  /** Return {@link TreeCell} corresponding to {@link TreeView}.
+    * @param tv The {@link TreeView}.
+    * @return   The corresponding {@link TreeCell}. */
   @Override
   public TreeCell<Element> call(TreeView<Element> tv) {
     return new TreeCellImpl(tv);

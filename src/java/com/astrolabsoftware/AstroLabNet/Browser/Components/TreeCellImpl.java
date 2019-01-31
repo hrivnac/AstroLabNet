@@ -18,7 +18,8 @@ import javafx.scene.control.cell.TextFieldTreeCell;
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public final class TreeCellImpl extends TextFieldTreeCell<Element> {
 
-  /** TBD */
+  /** Create. Add {@link ContextMenu}.
+    * @param treeView The original {@link TreeView}. */
   public TreeCellImpl(TreeView<Element> treeView) {
     super();
     ContextMenu menu = new ContextMenu();

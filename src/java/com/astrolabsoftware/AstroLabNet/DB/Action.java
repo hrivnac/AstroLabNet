@@ -12,14 +12,10 @@ import org.apache.log4j.Logger;
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public class Action extends Element {
   
-  /** TBD */
+  /** Create new Action.
+    * @param name The Action name. */
   public Action(String name) {
     super(name);
-    }
-
-  /** TBD */
-  public String toString() {
-    return name();
     }
   
   /** Logging . */

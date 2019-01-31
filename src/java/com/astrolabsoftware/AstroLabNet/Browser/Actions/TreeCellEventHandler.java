@@ -27,12 +27,14 @@ import org.apache.log4j.Logger;
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public final class TreeCellEventHandler implements EventHandler {
 
-  /** TBD */
+  /** Create.
+    * @param treeView The associated {@link TreeView}. */
   public TreeCellEventHandler(TreeView<Element> treeView) {
     _treeView = treeView;
     }
     
-  /** TBD */
+  /** Handle {@link Event}.
+    * @param event The {@link Event} to be handled. */
   @Override
   public void handle(Event event) {
     Element element = _treeView.getFocusModel().getFocusedItem().getValue();

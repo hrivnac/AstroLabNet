@@ -11,14 +11,10 @@ import org.apache.log4j.Logger;
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public class DataSource extends Element {
   
-  /** TBD */
+  /** Create new DataSource.
+    * @param name The DataSource name. */
   public DataSource(String name) {
     super(name);
-    }
-
-  /** TBD */
-  public String toString() {
-    return name();
     }
   
   /** Logging . */

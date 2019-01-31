@@ -11,14 +11,10 @@ import org.apache.log4j.Logger;
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public class Channel extends Element {
   
-  /** TBD */
+  /** Create new Channel.
+    * @param name The Channel name. */
   public Channel(String name) {
     super(name);
-    }
-
-  /** TBD */
-  public String toString() {
-    return name();
     }
   
   /** Logging . */

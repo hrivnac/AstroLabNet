@@ -11,14 +11,10 @@ import org.apache.log4j.Logger;
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public class Data extends Element {
   
-  /** TBD */
+  /** Create new Data.
+    * @param name The Data name. */
   public Data(String name) {
     super(name);
-    }
-
-  /** TBD */
-  public String toString() {
-    return name();
     }
   
   /** Logging . */
