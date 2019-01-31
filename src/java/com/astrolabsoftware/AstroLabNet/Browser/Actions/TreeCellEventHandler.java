@@ -3,6 +3,8 @@ package com.astrolabsoftware.AstroLabNet.Browser.Actions;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
 import com.astrolabsoftware.AstroLabNet.Browser.Actions.*;
 import com.astrolabsoftware.AstroLabNet.DB.*;
+import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
+import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
 
 // JavaFX
 import javafx.scene.control.TreeCell;
@@ -40,6 +42,25 @@ public final class TreeCellEventHandler implements EventHandler {
       action = ((MenuItem)target).getText();
       }
     log.info("Executing " + action + "  on " + element);
+    String elementName = element.getClass().getSimpleName();
+    switch (action) {
+      case "Help":
+        String helpText = "No Help is available";
+        try {
+          helpText = new StringResource("com/astrolabsoftware/AstroLabNet/DB/Help" + elementName + ".txt").toString();
+          }
+        catch (AstroLabNetException e) {
+          log.error("Cannot load help page for " + elementName);
+          log.debug("Cannot load help page for " + elementName, e);
+          }
+        log.info(helpText);
+        break;
+      case "Use":
+        break;
+      default: 
+        log.error("Unknown action " + action);
+        break;
+       }
     }
 
   private TreeView<Element> _treeView;

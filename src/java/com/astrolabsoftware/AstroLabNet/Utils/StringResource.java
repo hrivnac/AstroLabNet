@@ -24,22 +24,22 @@ public class StringResource {
     * @param resource The resource path. 
     * @throws AstroLabNetException If resource can't be read. */      
   public StringResource(String resource) throws AstroLabNetException {
-    InputStream       is  = StringResource.class.getClassLoader().getResourceAsStream(resource);
-    InputStreamReader isr = new InputStreamReader(is);
-    BufferedReader    br  = new BufferedReader(isr);
-    StringBuffer buffer = new StringBuffer();
     try {
+      InputStream       is  = StringResource.class.getClassLoader().getResourceAsStream(resource);
+      InputStreamReader isr = new InputStreamReader(is);
+      BufferedReader    br  = new BufferedReader(isr);
+      StringBuffer buffer = new StringBuffer();
       while (br.ready()) {
         buffer.append(br.readLine() + "\n");
         }
       br.close();
       isr.close();
       is.close();
+      _content = buffer.toString();
       }
-    catch (IOException e) {
+    catch (IOException | NullPointerException e) {
       throw new AstroLabNetException("Resource " + resource + " cannot be read !", e);
       }
-    _content = buffer.toString();
     }
 
   /** Give the contained {@link String}.

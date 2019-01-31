@@ -1,0 +1,2 @@
+Server represents a Spark Server behind Livy Server.
+You can create a new Session on it.
