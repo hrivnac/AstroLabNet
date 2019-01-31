@@ -41,7 +41,7 @@ public final class TreeCellEventHandler implements EventHandler {
     if (target instanceof MenuItem) {
       action = ((MenuItem)target).getText();
       }
-    log.info("Executing " + action + "  on " + element);
+    log.info("Executing " + action + " on " + element);
     String elementName = element.getClass().getSimpleName();
     switch (action) {
       case "Help":
@@ -56,6 +56,7 @@ public final class TreeCellEventHandler implements EventHandler {
         log.info(helpText);
         break;
       case "Use":
+        element.use();
         break;
       default: 
         log.error("Unknown action " + action);

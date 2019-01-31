@@ -5,7 +5,6 @@ import com.astrolabsoftware.AstroLabNet.Browser.Actions.*;
 import com.astrolabsoftware.AstroLabNet.DB.*;
 
 // JavaFX
-import javafx.scene.Node;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;

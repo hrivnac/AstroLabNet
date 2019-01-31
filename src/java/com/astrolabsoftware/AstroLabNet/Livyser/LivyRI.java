@@ -25,29 +25,36 @@ import org.apache.log4j.Logger;
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public class LivyRI {
   
+  /** Connect to the server.
+    * @param url The url of the server. */
+  public LivyRI(String url) {
+    log.info("Connecting to Livy Server " + url);
+    _url = url;
+    }
+  
   /** Initiate session on the server.
-    * @param url The url of the server.
-    * @return    The new session number. */
-  public int initSession(String url) {
+    * @return The new session number. */
+  public int initSession() {
+    log.info("Creating Session");
     String result = "";
     try {
-      result = SmallHttpClient.post(url + "/sessions", "{\"kind\":\"spark\"}", null);
+      result = SmallHttpClient.post(_url + "/sessions", "{\"kind\":\"spark\"}", null);
       }
     catch (AstroLabNetException e) {
       log.info(e);
       BrowserWindow.reportException("Request has failed", e, log);
       return 0;
       }
+    log.info("Result: + " + result);
     return new JSONObject(result).getInt("id");
     }
     
   /** Get list of opened sessions.
-    * @param  url The url of the server.
     * @return     The list of open session numbers. */
-  public Integer[] getSessions(String url) {
+  public Integer[] getSessions() {
     String result = "";
     try {
-      result = SmallHttpClient.get(url + "/sessions", null);
+      result = SmallHttpClient.get(_url + "/sessions", null);
       }
     catch (AstroLabNetException e) {
       log.info(e);
@@ -63,14 +70,12 @@ public class LivyRI {
     }
   
   /** Send command to the server.
-    * @param  url  The url of the server.
     * @param  id   The existing sessin number.
     * @param  code The <em>scala</code> to be run on the server.
     * @return      The command result, in <em>json</em>. */
-  public String sendCommand(String url,
-                            int id,
+  public String sendCommand(int id,
                             String code) {
-    Map<String, String> params = new HashMap<>();
+    Map<String, String> params  = new HashMap<>();
     Map<String, String> headers = new HashMap<>();
     String result = "";
     try {
@@ -80,11 +85,13 @@ public class LivyRI {
     catch (AstroLabNetException e) {
       log.info(e);
       BrowserWindow.reportException("Request has failed", e, log);
-    }
+      }
     return result;
     }
+    
+  private String _url;
 
-    /** Logging . */
+  /** Logging . */
   private static Logger log = Logger.getLogger(LivyRI.class);
 
   }

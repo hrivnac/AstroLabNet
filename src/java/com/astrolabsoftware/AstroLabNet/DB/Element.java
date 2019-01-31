@@ -22,6 +22,10 @@ public class Element {
     return _name;
     }
   
+  public void use() {
+    log.error("Nothing can be done !");
+    }
+    
   public String toString() {
     return _name;
     }

@@ -1,6 +1,5 @@
 package com.astrolabsoftware.AstroLabNet.Browser;
 
-import com.astrolabsoftware.AstroLabNet.Livyser.LivyRI;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
 import com.astrolabsoftware.AstroLabNet.Browser.Actions.*;
 import com.astrolabsoftware.AstroLabNet.Utils.StringFile;
@@ -214,7 +213,7 @@ public class BrowserWindow extends Application {
                         String urlSpark) {
     Server server = new Server(name, urlLivy, urlSpark);
     log.info("Adding Server " + server);
-    TreeItem<Element> serverItem = new TreeItem<Element>(server, Images.icon(Images.LIVY));
+    TreeItem<Element> serverItem = server.item();
     _servers.getChildren().add(serverItem);
     if (server.urlLivy() == null) {
       log.warn("Livy url for " + server.name() + " is not defined !");
@@ -228,9 +227,7 @@ public class BrowserWindow extends Application {
       tabLivy.setGraphic(Images.icon(Images.LIVY));
       tabLivy.setContent(viewLivy); 
       _results.getTabs().addAll(tabLivy);
-      for (int id : _livy.getSessions(server.urlLivy())) {
-        serverItem.getChildren().add(new TreeItem<Element>(new Session("Session", id)));
-        }
+      server.updateSessions();
       }
     if (server.urlSpark() == null) {
       log.warn("Spark url for " + server.name() + " is not defined !");
@@ -246,7 +243,7 @@ public class BrowserWindow extends Application {
       _results.getTabs().addAll(tabSpark);
       }
     }
- 
+    
   /** Add {@link Data}.
     * @param name The {@link Data} name. */
   public void addData(String name) {
@@ -291,8 +288,6 @@ public class BrowserWindow extends Application {
   public void close() {
     System.exit(0);
     }  
-
-  private LivyRI _livy = new LivyRI();
     
   private TreeItem<Element> _servers     = new TreeItem<>(new Element("Servers"));
   private TreeItem<Element> _data        = new TreeItem<>(new Element("Data"));

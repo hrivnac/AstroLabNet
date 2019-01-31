@@ -8,7 +8,6 @@ import com.astrolabsoftware.AstroLabNet.DB.*;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.TreeCell;
-import javafx.event.Event;
 import javafx.util.Callback;
 
 /** <code>TreeCellCallback</code> handles {@link Callback}s
