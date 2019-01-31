@@ -107,6 +107,8 @@ public class BrowserWindow extends Application {
     TreeItem<Element> root = new TreeItem<>(new Element("/"));
     root.setExpanded(true);
     TreeView<Element> tree = new TreeView<>(root);
+    TreeCellCallback callback = new TreeCellCallback();
+    tree.setCellFactory(callback);
     root.getChildren().addAll(_servers,
                               _data,
                               _dataSources,
@@ -307,5 +309,5 @@ public class BrowserWindow extends Application {
     
   /** Logging . */
   private static Logger log = Logger.getLogger(BrowserWindow.class);
-
+  
   }

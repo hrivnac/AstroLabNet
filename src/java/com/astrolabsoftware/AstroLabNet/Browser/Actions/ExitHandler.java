@@ -17,10 +17,13 @@ import org.apache.log4j.Logger;
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public final class ExitHandler implements EventHandler<ActionEvent> {
 
+  /** TBD */
   public ExitHandler(BrowserWindow w) {
     super();
     _w = w;
     }
+    
+  /** TBD */
   @Override
   public void handle(ActionEvent event) {
     _w.close();
