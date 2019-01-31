@@ -2,6 +2,10 @@ package com.astrolabsoftware.AstroLabNet.DB;
 
 import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
 import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
+import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
+
+// JavaFX
+import javafx.scene.control.TreeItem;
 
 // Log4J
 import org.apache.log4j.Logger;
@@ -18,6 +22,7 @@ public class Element {
     * @param name The Element name. */
   public Element(String name) {
     _name = name;
+    _item = new TreeItem<Element>(this, Images.icon(Images.LIVY));
     }
     
   /** Give the Element name.
@@ -33,12 +38,20 @@ public class Element {
     log.error("Nothing can be done !");
     }
     
+  /** Give associated {@link TreeItem}.
+    * @return The associated {@link TreeItem}. */
+  public TreeItem<Element> item() {
+    return _item;
+    }
+    
   @Override
   public String toString() {
     return _name;
     }
           
   private String _name;
+  
+  private TreeItem<Element> _item;
   
   /** Logging . */
   private static Logger log = Logger.getLogger(Element.class);

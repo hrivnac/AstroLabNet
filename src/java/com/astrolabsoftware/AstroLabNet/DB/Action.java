@@ -14,9 +14,29 @@ public class Action extends Element {
   
   /** Create new Action.
     * @param name The Action name. */
-  public Action(String name) {
+  public Action(String   name,
+                String   cmd,
+                Language language) {
     super(name);
+    _cmd      = cmd;
+    _language = language;
     }
+    
+  /** TBD */  
+  public enum Language {
+    PYTHON,
+    JAVA,
+    SCALA;
+    }   
+
+  @Override
+  public String toString() {
+    return name() + " (Language = " + _language + "): " + _cmd;
+    }
+
+  private String _cmd;
+  
+  private Language _language;
   
   /** Logging . */
   private static Logger log = Logger.getLogger(Action.class);

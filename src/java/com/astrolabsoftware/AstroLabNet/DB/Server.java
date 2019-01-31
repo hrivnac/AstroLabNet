@@ -1,11 +1,10 @@
 package com.astrolabsoftware.AstroLabNet.DB;
 
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
+import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
 import com.astrolabsoftware.AstroLabNet.Livyser.LivyRI;
 import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
 import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
-
-import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
 
 // JavaFX
 import javafx.scene.control.TreeItem;
@@ -21,6 +20,10 @@ import org.apache.log4j.Logger;
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public class Server extends Element {
   
+  /** Create new Spark and Livy Server.
+    * @param name The Server name.
+    * @param urlLivy  The url of the Spark Server Livy interface.
+    * @param urlSpark The url of the Spark Server. */
   public Server(String        name,
                 String        urlLivy,
                 String        urlSpark) {
@@ -28,22 +31,28 @@ public class Server extends Element {
     _urlLivy    = urlLivy;
     _urlSpark   = urlSpark;
     _livy       = new LivyRI(urlLivy);
-    _item       = new TreeItem<Element>(this, Images.icon(Images.LIVY));
     }
         
+  /** Give Spark Server Livy interface url.
+    * @return The Spark Server Livy interface url. */
   public String urlLivy() {
     return _urlLivy;
     }
         
+  /** Give Spark Server url.
+    * @return The Spark Server url. */
   public String urlSpark() {
     return _urlSpark;
     }  
     
+  /** Create new Spark {@link Session}. */
+  @Override
   public void use() {
     _livy.initSession();
     updateSessions();
     }
 
+  /** Update list of dependent {@link Session}s. */
   public void updateSessions() {
     item().getChildren().clear();
     for (int id : _livy.getSessions()) {
@@ -51,10 +60,7 @@ public class Server extends Element {
       }
     }
     
-  public TreeItem<Element> item() {
-    return _item;
-    }
-    
+  @Override
   public String toString() {
     return name() + " (Livy = " + _urlLivy + ", Spark = " + _urlSpark + ")";
     }
@@ -62,8 +68,6 @@ public class Server extends Element {
   private String _urlLivy;
   
   private String _urlSpark;
-  
-  private TreeItem<Element> _item;
   
   private LivyRI _livy;
   
