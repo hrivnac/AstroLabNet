@@ -6,6 +6,7 @@ import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
 
 // JavaFX
 import javafx.scene.control.TreeItem;
+import javafx.scene.image.Image;
 
 // Log4J
 import org.apache.log4j.Logger;
@@ -22,7 +23,16 @@ public class Element {
     * @param name The Element name. */
   public Element(String name) {
     _name = name;
-    _item = new TreeItem<Element>(this, Images.icon(Images.LIVY));
+    _item = new TreeItem<Element>(this);
+    }
+     
+  /** Create new Element with an icon.
+    * @param name The Element name.
+    * @param icon The {@link Image} of icon. */
+  public Element(String name,
+                 Image  icon) {
+    _name = name;
+    _item = new TreeItem<Element>(this, Images.icon(icon));
     }
     
   /** Give the Element name.

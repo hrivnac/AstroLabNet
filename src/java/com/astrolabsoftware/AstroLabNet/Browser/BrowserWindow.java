@@ -278,7 +278,7 @@ public class BrowserWindow extends Application {
                         Action.Language language) {
     Action action = new Action(name, cmd, language);
     log.info("Adding Action " + action);
-    _actions.getChildren().add(new TreeItem<Element>(action));
+    _actions.getChildren().add(action.item());
     }
     
   /** Add {@link Job}.

@@ -1,5 +1,7 @@
 package com.astrolabsoftware.AstroLabNet.DB;
 
+import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
+
 // Log4J
 import org.apache.log4j.Logger;
 
@@ -17,7 +19,7 @@ public class Action extends Element {
   public Action(String   name,
                 String   cmd,
                 Language language) {
-    super(name);
+    super(name, Images.ACTION);
     _cmd      = cmd;
     _language = language;
     }

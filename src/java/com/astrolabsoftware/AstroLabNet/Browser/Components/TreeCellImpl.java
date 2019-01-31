@@ -24,7 +24,7 @@ public final class TreeCellImpl extends TextFieldTreeCell<Element> {
     super();
     ContextMenu menu = new ContextMenu();
     MenuItem help = new MenuItem("Help", Images.icon(Images.HELP));
-    MenuItem use  = new MenuItem("Use");
+    MenuItem use  = new MenuItem("Use",  Images.icon(Images.USE));
     menu.getItems().addAll(help, use);
     setContextMenu(menu);
     menu.setOnAction(new TreeCellEventHandler(treeView));

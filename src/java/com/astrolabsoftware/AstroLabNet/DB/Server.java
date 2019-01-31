@@ -12,6 +12,9 @@ import javafx.scene.control.TreeItem;
 // Log4J
 import org.apache.log4j.Logger;
 
+// JavaFX
+import javafx.scene.image.Image;
+
 /** <code>Server</code> represents <em>Livy</em> server.
   * @opt attributes
   * @opt operations
@@ -27,7 +30,7 @@ public class Server extends Element {
   public Server(String        name,
                 String        urlLivy,
                 String        urlSpark) {
-    super(name);
+    super(name, Images.LIVY);
     _urlLivy    = urlLivy;
     _urlSpark   = urlSpark;
     _livy       = new LivyRI(urlLivy);
