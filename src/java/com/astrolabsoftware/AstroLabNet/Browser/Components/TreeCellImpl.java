@@ -10,6 +10,9 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.cell.TextFieldTreeCell;
 
+// Java
+import java.util.List;
+
 /** <code>TreeCellImpl</code> implements {@link TextFieldTreeCell}.
   * @opt attributes
   * @opt operations
@@ -22,12 +25,15 @@ public final class TreeCellImpl extends TextFieldTreeCell<Element> {
     * @param treeView The original {@link TreeView}. */
   public TreeCellImpl(TreeView<Element> treeView) {
     super();
-    ContextMenu menu = new ContextMenu();
-    MenuItem help = new MenuItem("Help", Images.icon(Images.HELP));
-    MenuItem use  = new MenuItem("Use",  Images.icon(Images.USE));
-    menu.getItems().addAll(help, use);
-    setContextMenu(menu);
-    menu.setOnAction(new TreeCellEventHandler(treeView));
+    setContextMenu(_menu);
+    setOnContextMenuRequested(new TreeCellEventHandler(treeView, this));
+    _menu.setOnAction(new TreeCellContextMenuEventHandler(treeView));
     }
+    
+  public void setMenuItems(List<MenuItem> menuItems) {
+    _menu.getItems().setAll(menuItems);
+    }
+    
+  private ContextMenu _menu = new ContextMenu();
     
   }

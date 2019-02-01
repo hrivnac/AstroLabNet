@@ -4,6 +4,9 @@ import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
 import com.astrolabsoftware.AstroLabNet.Utils.SmallHttpClient;
 import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
 
+// JavaFX
+import javafx.util.Pair;
+
 // org.json
 import org.json.JSONObject;
 import org.json.JSONArray;
@@ -23,6 +26,7 @@ import org.apache.log4j.Logger;
   * @opt types
   * @opt visibility
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
+// TBD: handle full answer, check for errors
 public class LivyRI {
   
   /** Connect to the server.
@@ -33,12 +37,13 @@ public class LivyRI {
     }
   
   /** Initiate session on the server.
+    * @param language The {@link Language} of the {@link Session}.
     * @return The new session number. */
-  public int initSession() {
-    log.info("Creating Session");
+  public int initSession(Language language) {
+    log.info("Creating Session in " + language);
     String result = "";
     try {
-      result = SmallHttpClient.post(_url + "/sessions", "{\"kind\":\"spark\"}", null);
+      result = SmallHttpClient.post(_url + "/sessions", "{\"kind\":\"" + language.asSpark() + "\"}", null);
       }
     catch (AstroLabNetException e) {
       log.info(e);
@@ -50,8 +55,9 @@ public class LivyRI {
     }
     
   /** Get list of opened sessions.
-    * @return     The list of open session numbers. */
-  public Integer[] getSessions() {
+    * @return The array of open session numbers. */
+  public List<Pair<Integer, Language>> getSessions() {
+    List<Pair<Integer, Language>> ss = new ArrayList<>();
     String result = "";
     try {
       result = SmallHttpClient.get(_url + "/sessions", null);
@@ -59,14 +65,14 @@ public class LivyRI {
     catch (AstroLabNetException e) {
       log.info(e);
       BrowserWindow.reportException("Request has failed", e, log);
-      return new Integer[0];
+      return ss;
       }
     JSONArray sessions = new JSONObject(result).getJSONArray("sessions");
-    List<Integer> ids = new ArrayList<>();
     for (int i = 0; i < sessions.length(); i++) {
-      ids.add(sessions.getJSONObject(i).getInt("id"));
+      ss.add(new Pair<Integer, Language>(sessions.getJSONObject(i).getInt("id"),
+                                         Language.fromSpark(sessions.getJSONObject(i).getString("kind"))));
       }
-    return ids.toArray(new Integer[0]);
+    return ss;
     }
   
   /** Send command to the server.
@@ -75,17 +81,32 @@ public class LivyRI {
     * @return      The command result, in <em>json</em>. */
   public String sendCommand(int id,
                             String code) {
-    Map<String, String> params  = new HashMap<>();
-    Map<String, String> headers = new HashMap<>();
     String result = "";
     try {
-      result = SmallHttpClient.post("http://localhost:8998/sessions", "{\"kind\":\"spark\"}", headers);
-      //result = SmallHttpClient.get("http://localhost:8998/sessions?kind=spark", headers);
+      result = SmallHttpClient.post(_url + "/sessions/" + id + "/statements", "{\"code\":\"" + code + "\"}", null);
       }
     catch (AstroLabNetException e) {
       log.info(e);
       BrowserWindow.reportException("Request has failed", e, log);
       }
+    log.info("Result: + " + result);
+    return result;
+    }
+    
+  /** Send command to the server.
+    * @param  id   The existing sessin number.
+    * @param  code The <em>scala</code> to be run on the server.
+    * @return      The command result, in <em>json</em>. */
+  public String checkProgress(int id) {
+    String result = "";
+    try {
+      result = SmallHttpClient.get(_url + "/sessions/" + id + "/statements/0", null);
+      }
+    catch (AstroLabNetException e) {
+      log.info(e);
+      BrowserWindow.reportException("Request has failed", e, log);
+      }
+    log.info("Result: + " + result);
     return result;
     }
     

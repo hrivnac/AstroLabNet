@@ -1,5 +1,7 @@
 package com.astrolabsoftware.AstroLabNet.DB;
 
+import com.astrolabsoftware.AstroLabNet.Livyser.Language;
+
 // Log4J
 import org.apache.log4j.Logger;
 
@@ -15,23 +17,33 @@ public class Session extends Element {
     * @param name The Session name.
     * @param id   The Session id. */
   public Session(String name,
-                 int id) {
+                 int id,
+                 Language language) {
     super(name);
-    _id = id;
+    _id       = id;
+    _language = language;
     }
     
   /** Give the Session id.
-    * @return The Sesiion id. */
+    * @return The Session id. */
   public int id() {
     return _id;
+    }
+    
+  /** Give the Session {@link Language}.
+    * @return The Session {@link Language}. */
+  public Language language() {
+    return _language;
     }
 
   @Override
   public String toString() {
-    return name() + " : " + _id;
+    return name() + " : " + _id + " in " + _language;
     }
     
   private int _id;
+  
+  private Language _language;
   
   /** Logging . */
   private static Logger log = Logger.getLogger(Session.class);

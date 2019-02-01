@@ -6,7 +6,12 @@ import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
 
 // JavaFX
 import javafx.scene.control.TreeItem;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
+
+// Java
+import java.util.List;
+import java.util.ArrayList;
 
 // Log4J
 import org.apache.log4j.Logger;
@@ -41,11 +46,11 @@ public class Element {
     return _name;
     }
   
-  /** Execute an operation associated with this Element.
-    * It can require additional data.
-    * The default operation does nothing. */
-  public void use() {
-    log.error("Nothing can be done !");
+  /** TBD */
+  public List<MenuItem> menuItems() {
+    List<MenuItem> menuItems = new ArrayList<>();
+    menuItems.add(new MenuItem("Help", Images.icon(Images.HELP)));
+    return menuItems;
     }
     
   /** Give associated {@link TreeItem}.

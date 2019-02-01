@@ -3,17 +3,23 @@ package com.astrolabsoftware.AstroLabNet.DB;
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
 import com.astrolabsoftware.AstroLabNet.Livyser.LivyRI;
+import com.astrolabsoftware.AstroLabNet.Livyser.Language;
 import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
 import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
 
 // JavaFX
 import javafx.scene.control.TreeItem;
+import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
+import javafx.event.EventHandler;
+import javafx.event.ActionEvent;
+import javafx.util.Pair;
+
+// Java
+import java.util.List;
 
 // Log4J
 import org.apache.log4j.Logger;
-
-// JavaFX
-import javafx.scene.image.Image;
 
 /** <code>Server</code> represents <em>Livy</em> server.
   * @opt attributes
@@ -48,18 +54,54 @@ public class Server extends Element {
     return _urlSpark;
     }  
     
-  /** Create new Spark {@link Session}. */
+  /** TBD */
   @Override
-  public void use() {
-    _livy.initSession();
-    updateSessions();
+  public List<MenuItem> menuItems() {
+    List<MenuItem> menuItems = super.menuItems();
+    MenuItem pythonSession = new MenuItem("Python Session",  Images.icon(Images.USE));
+    MenuItem scalaSession  = new MenuItem("Scala Session",  Images.icon(Images.USE));
+    MenuItem rSession      = new MenuItem("R Session",  Images.icon(Images.USE));
+    MenuItem sqlSession    = new MenuItem("SQL Session",  Images.icon(Images.USE));
+    pythonSession.setOnAction(new EventHandler<ActionEvent>() {
+                                @Override
+                                public void handle(ActionEvent event) {
+                                  _livy.initSession(Language.PYTHON);
+                                  updateSessions();
+                                  }
+                                });
+    scalaSession.setOnAction(new EventHandler<ActionEvent>() {
+                                @Override
+                                public void handle(ActionEvent event) {
+                                  _livy.initSession(Language.SCALA);
+                                  updateSessions();
+                                  }
+                                });
+    rSession.setOnAction(new EventHandler<ActionEvent>() {
+                                @Override
+                                public void handle(ActionEvent event) {
+                                  _livy.initSession(Language.R);
+                                  updateSessions();
+                                  }
+                                });
+    sqlSession.setOnAction(new EventHandler<ActionEvent>() {
+                                @Override
+                                public void handle(ActionEvent event) {
+                                  _livy.initSession(Language.SQL);
+                                  updateSessions();
+                                  }
+                                });
+    menuItems.add(pythonSession);
+    menuItems.add(scalaSession);
+    menuItems.add(rSession);
+    menuItems.add(sqlSession);
+    return menuItems;
     }
 
   /** Update list of dependent {@link Session}s. */
   public void updateSessions() {
     item().getChildren().clear();
-    for (int id : _livy.getSessions()) {
-      item().getChildren().add(new TreeItem<Element>(new Session("Session", id)));
+    for (Pair<Integer, Language> p : _livy.getSessions()) {
+      item().getChildren().add(new TreeItem<Element>(new Session("Session", p.getKey(), p.getValue())));
       }
     }
     

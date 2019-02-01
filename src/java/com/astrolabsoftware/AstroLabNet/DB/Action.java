@@ -1,6 +1,7 @@
 package com.astrolabsoftware.AstroLabNet.DB;
 
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
+import com.astrolabsoftware.AstroLabNet.Livyser.Language;
 
 // Log4J
 import org.apache.log4j.Logger;
@@ -23,13 +24,6 @@ public class Action extends Element {
     _cmd      = cmd;
     _language = language;
     }
-    
-  /** TBD */  
-  public enum Language {
-    PYTHON,
-    JAVA,
-    SCALA;
-    }   
 
   @Override
   public String toString() {

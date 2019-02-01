@@ -6,6 +6,7 @@ import com.astrolabsoftware.AstroLabNet.Utils.StringFile;
 import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
 import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
 import com.astrolabsoftware.AstroLabNet.DB.*;
+import com.astrolabsoftware.AstroLabNet.Livyser.Language;
 
 // Swing
 import javax.swing.JComponent;
@@ -60,7 +61,7 @@ public class BrowserWindow extends Application {
   public void start(Stage stage) {
     setupContent();
     setupGUI(stage);
-    addAction("Test Action", "1+1", Action.Language.PYTHON);
+    addAction("Test Action", "1+1", Language.PYTHON);
     Thread t  = new Thread(_interpreter);
     t.start();
     }
@@ -272,10 +273,10 @@ public class BrowserWindow extends Application {
   /** Add {@link Action}.
     * @param name     The {@link Action} name.
     * @param cmd      The command to execute.
-    * @param language The {@link Action.Language} of the command. */
-  public void addAction(String          name,
-                        String          cmd,
-                        Action.Language language) {
+    * @param language The {@link Language} of the command. */
+  public void addAction(String   name,
+                        String   cmd,
+                        Language language) {
     Action action = new Action(name, cmd, language);
     log.info("Adding Action " + action);
     _actions.getChildren().add(action.item());

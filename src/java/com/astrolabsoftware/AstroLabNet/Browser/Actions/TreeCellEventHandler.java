@@ -1,71 +1,46 @@
 package com.astrolabsoftware.AstroLabNet.Browser.Actions;
 
+import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
-import com.astrolabsoftware.AstroLabNet.Browser.Actions.*;
 import com.astrolabsoftware.AstroLabNet.DB.*;
-import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
-import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
 
 // JavaFX
-import javafx.scene.control.TreeCell;
-import javafx.scene.control.TreeView;
-import javafx.scene.control.TreeCell;
-import javafx.scene.control.MenuItem;
-import javafx.event.Event;
-import javafx.event.EventTarget;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.control.TreeView;
+import javafx.scene.control.MenuItem;
 
 // Log4J
 import org.apache.log4j.Logger;
 
-/** <code>TreeCellEventHandler</code> handles {@link Event}s
-  * on {@link TreeCell}.
+/** <code>TreeEventHandler</code> handles {@link ActionEvent}s
+  * on tree cell.
   * @opt attributes
   * @opt operations
   * @opt types
   * @opt visibility
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
-public final class TreeCellEventHandler implements EventHandler {
+public final class TreeCellEventHandler implements EventHandler<ContextMenuEvent> {
 
   /** Create.
-    * @param treeView The associated {@link TreeView}. */
-  public TreeCellEventHandler(TreeView<Element> treeView) {
+    * @param treeView The associated {@link TreeView}.
+    * TBD */
+  public TreeCellEventHandler(TreeView<Element> treeView,
+                              TreeCellImpl treeCell) {
     _treeView = treeView;
+    _treeCell = treeCell;
     }
     
-  /** Handle {@link Event}.
-    * @param event The {@link Event} to be handled. */
+  /** TBD */
   @Override
-  public void handle(Event event) {
+  public void handle(ContextMenuEvent event) {
     Element element = _treeView.getFocusModel().getFocusedItem().getValue();
-    String action = null;
-    EventTarget target = event.getTarget();
-    if (target instanceof MenuItem) {
-      action = ((MenuItem)target).getText();
-      }
-    log.info("Executing " + action + " on " + element);
-    String elementName = element.getClass().getSimpleName();
-    switch (action) {
-      case "Help":
-        String helpText = "No Help is available";
-        try {
-          helpText = new StringResource("com/astrolabsoftware/AstroLabNet/DB/Help" + elementName + ".txt").toString();
-          }
-        catch (AstroLabNetException e) {
-          log.error("Cannot load help page for " + elementName);
-          log.debug("Cannot load help page for " + elementName, e);
-          }
-        log.info(helpText);
-        break;
-      case "Use":
-        element.use();
-        break;
-      default: 
-        log.error("Unknown action " + action);
-        break;
-       }
+    _treeCell.setMenuItems(element.menuItems());
     }
 
+  private TreeCellImpl _treeCell;
+    
   private TreeView<Element> _treeView;
   
   /** Logging . */
