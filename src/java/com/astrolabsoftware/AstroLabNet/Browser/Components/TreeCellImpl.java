@@ -30,6 +30,8 @@ public final class TreeCellImpl extends TextFieldTreeCell<Element> {
     _menu.setOnAction(new TreeCellContextMenuEventHandler(treeView));
     }
     
+  /** Set {@link MenuItem}s.
+    * @param menuItems The {@link MenuItem}s to be set. */
   public void setMenuItems(List<MenuItem> menuItems) {
     _menu.getItems().setAll(menuItems);
     }

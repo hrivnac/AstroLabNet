@@ -46,7 +46,9 @@ public class Element {
     return _name;
     }
   
-  /** TBD */
+  /** Create appropriate {@link MenuItem}s.
+    * Subclasses will add their own {@link MenuItem}s.
+    * @return The created {@link MenuItem}s. */
   public List<MenuItem> menuItems() {
     List<MenuItem> menuItems = new ArrayList<>();
     menuItems.add(new MenuItem("Help", Images.icon(Images.HELP)));

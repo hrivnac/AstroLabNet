@@ -14,7 +14,7 @@ import javafx.scene.control.MenuItem;
 // Log4J
 import org.apache.log4j.Logger;
 
-/** <code>TreeEventHandler</code> handles {@link ActionEvent}s
+/** <code>TreeCellEventHandler</code> handles {@link ContextMenuEvent}s
   * on tree cell.
   * @opt attributes
   * @opt operations
@@ -25,14 +25,15 @@ public final class TreeCellEventHandler implements EventHandler<ContextMenuEvent
 
   /** Create.
     * @param treeView The associated {@link TreeView}.
-    * TBD */
+    * @param treeCell The associated {@link TreeCell}.  */
   public TreeCellEventHandler(TreeView<Element> treeView,
-                              TreeCellImpl treeCell) {
+                              TreeCellImpl      treeCell) {
     _treeView = treeView;
     _treeCell = treeCell;
     }
     
-  /** TBD */
+  /** Handle {@link ContextMenuEvent}. Create {@link MenuItem}s.
+    * Handling is forwarded to appropriate {@link TreeCell#setMenuItems}. */
   @Override
   public void handle(ContextMenuEvent event) {
     Element element = _treeView.getFocusModel().getFocusedItem().getValue();

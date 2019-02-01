@@ -54,7 +54,6 @@ public class Server extends Element {
     return _urlSpark;
     }  
     
-  /** TBD */
   @Override
   public List<MenuItem> menuItems() {
     List<MenuItem> menuItems = super.menuItems();

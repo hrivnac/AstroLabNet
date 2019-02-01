@@ -33,7 +33,7 @@ public final class TreeCellContextMenuEventHandler implements EventHandler {
     _treeView = treeView;
     }
     
-  /** Handle {@link Event}.
+  /** Handle global {@link Event}.
     * @param event The {@link Event} to be handled. */
   @Override
   public void handle(Event event) {

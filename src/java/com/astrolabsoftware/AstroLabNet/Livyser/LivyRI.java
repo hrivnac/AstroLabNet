@@ -55,7 +55,7 @@ public class LivyRI {
     }
     
   /** Get list of opened sessions.
-    * @return The array of open session numbers. */
+    * @return The {@link List} of {@link Pair}s of open session numbers and languages. */
   public List<Pair<Integer, Language>> getSessions() {
     List<Pair<Integer, Language>> ss = new ArrayList<>();
     String result = "";
