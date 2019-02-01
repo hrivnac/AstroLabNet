@@ -41,7 +41,7 @@ public class Element {
     * @param icon    The {@link Image} of icon. */
   public Element(String        name,
                  BrowserWindow browser,
-                 Image         icon) {System.out.println(browser);
+                 Image         icon) {
     _name = name;
     _browser = browser;
     _item = new TreeItem<Element>(this, Images.icon(icon));

@@ -59,14 +59,14 @@ public class Server extends Element {
   @Override
   public List<MenuItem> menuItems() {
     List<MenuItem> menuItems = super.menuItems();
-    MenuItem pythonSession = new MenuItem("Python Session",  Images.icon(Images.USE));
+    MenuItem pythonSession = new MenuItem("Python Session", Images.icon(Images.USE));
     MenuItem scalaSession  = new MenuItem("Scala Session",  Images.icon(Images.USE));
-    MenuItem rSession      = new MenuItem("R Session",  Images.icon(Images.USE));
-    MenuItem sqlSession    = new MenuItem("SQL Session",  Images.icon(Images.USE));
+    MenuItem rSession      = new MenuItem("R Session",      Images.icon(Images.USE));
+    MenuItem sqlSession    = new MenuItem("SQL Session",    Images.icon(Images.USE));
     pythonSession.setOnAction(new ServerEventHandler(Language.PYTHON, this, _livy));
-    pythonSession.setOnAction(new ServerEventHandler(Language.SCALA,  this, _livy));
-    pythonSession.setOnAction(new ServerEventHandler(Language.R,      this, _livy));
-    pythonSession.setOnAction(new ServerEventHandler(Language.SQL,    this, _livy));
+    scalaSession.setOnAction( new ServerEventHandler(Language.SCALA,  this, _livy));
+    rSession.setOnAction(     new ServerEventHandler(Language.R,      this, _livy));
+    sqlSession.setOnAction(   new ServerEventHandler(Language.SQL,    this, _livy));
     menuItems.add(pythonSession);
     menuItems.add(scalaSession);
     menuItems.add(rSession);
