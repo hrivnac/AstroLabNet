@@ -1,5 +1,6 @@
 package com.astrolabsoftware.AstroLabNet.DB;
 
+import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
 import com.astrolabsoftware.AstroLabNet.Livyser.Language;
 
@@ -16,11 +17,15 @@ import org.apache.log4j.Logger;
 public class Action extends Element {
   
   /** Create new Action.
-    * @param name The Action name. */
-  public Action(String   name,
-                String   cmd,
-                Language language) {
-    super(name, Images.ACTION);
+    * @param name     The Action name.
+    * @param browser  The {@link BrowserWindow}.
+    * @param cmd      The command.
+    * @param language The {@link Language} od the command. */
+  public Action(String        name,
+                BrowserWindow browser,
+                String        cmd,
+                Language      language) {
+    super(name, browser, Images.ACTION);
     _cmd      = cmd;
     _language = language;
     }

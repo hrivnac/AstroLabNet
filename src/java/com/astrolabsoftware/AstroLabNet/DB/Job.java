@@ -1,5 +1,7 @@
 package com.astrolabsoftware.AstroLabNet.DB;
 
+import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
+
 // Log4J
 import org.apache.log4j.Logger;
 
@@ -13,9 +15,11 @@ import org.apache.log4j.Logger;
 public class Job extends Element {
   
   /** Create new Job.
-    * @param name The Job name. */
-  public Job(String name) {
-    super(name);
+    * @param name    The Job name.
+    * @param browser The {@link BrowserWindow}. */
+  public Job(String        name,
+             BrowserWindow browser) {
+    super(name, browser);
     }
   
   /** Logging . */

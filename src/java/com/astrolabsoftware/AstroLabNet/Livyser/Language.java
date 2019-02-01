@@ -36,7 +36,11 @@ import org.apache.log4j.Logger;
       };
 
   /** Create from the Spark language name.
-    * @param spark The Spark language name. */    
+    * @param spark The Spark language name. */
+  Language(String spark){
+    _spark = spark;
+    }
+    
   public static Language fromSpark(String spark) {
     switch (spark) {
       case "pyspark":

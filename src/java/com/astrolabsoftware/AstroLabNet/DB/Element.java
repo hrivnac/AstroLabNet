@@ -2,6 +2,7 @@ package com.astrolabsoftware.AstroLabNet.DB;
 
 import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
 import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
+import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
 
 // JavaFX
@@ -25,18 +26,24 @@ import org.apache.log4j.Logger;
 public class Element {
   
   /** Create new Element.
-    * @param name The Element name. */
-  public Element(String name) {
-    _name = name;
-    _item = new TreeItem<Element>(this);
+    * @param name    The Element name.
+    * @param browser The {@link BrowserWindow}. */
+  public Element(String        name,
+                 BrowserWindow browser) {
+    _name    = name;
+    _browser = browser;
+    _item    = new TreeItem<Element>(this);
     }
      
   /** Create new Element with an icon.
-    * @param name The Element name.
-    * @param icon The {@link Image} of icon. */
-  public Element(String name,
-                 Image  icon) {
+    * @param name    The Element name.
+    * @param browser The {@link BrowserWindow}.
+    * @param icon    The {@link Image} of icon. */
+  public Element(String        name,
+                 BrowserWindow browser,
+                 Image         icon) {System.out.println(browser);
     _name = name;
+    _browser = browser;
     _item = new TreeItem<Element>(this, Images.icon(icon));
     }
     
@@ -44,6 +51,12 @@ public class Element {
     * @return The Element name. */
   public String name() {
     return _name;
+    }
+    
+  /** Give the {@link BrowserWindow}.
+    * @return The {@link BrowserWindow}. */
+  public BrowserWindow browser() {
+    return _browser;
     }
   
   /** Create appropriate {@link MenuItem}s.
@@ -67,6 +80,8 @@ public class Element {
     }
           
   private String _name;
+  
+  private BrowserWindow _browser;
   
   private TreeItem<Element> _item;
   

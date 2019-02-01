@@ -14,6 +14,7 @@ import javax.swing.SwingUtilities;
 
 // JavaFX
 import javafx.application.Application;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane; 
 import javafx.scene.layout.HBox; 
@@ -27,6 +28,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.paint.Color;
 import javafx.scene.web.WebView;
 import javafx.scene.web.WebEngine;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.embed.swing.SwingNode;
 import javafx.geometry.Insets; 
@@ -105,7 +107,7 @@ public class BrowserWindow extends Application {
     ObservableList menuList = menu.getChildren();  
     menuList.addAll(about, exit);           
     // Tree
-    TreeItem<Element> root = new TreeItem<>(new Element("/"));
+    TreeItem<Element> root = new TreeItem<>(new Element("/", this));
     root.setExpanded(true);
     TreeView<Element> tree = new TreeView<>(root);
     TreeCellCallback callback = new TreeCellCallback();
@@ -128,12 +130,7 @@ public class BrowserWindow extends Application {
     WebEngine engine = help.getEngine();
     engine.loadContent(helpText);
     // Results = Help
-    Tab tab = new Tab();
-    tab.setText("Help");
-    tab.setGraphic(Images.icon(Images.HELP));
-    tab.setContent(help);    
-    _results.getSelectionModel().select(0);
-    _results.getTabs().addAll(tab);  
+    addTab(help, "Help", Images.HELP);
     // Console
     SwingNode console = new SwingNode();
     createSwingContent(console, _console);
@@ -172,6 +169,19 @@ public class BrowserWindow extends Application {
     
   @Override
   public void stop() {
+    }
+    
+  /** TBD */
+  public void addTab(Node node,
+                     String title,
+                     Image icon) {
+    Tab tab = new Tab();
+    tab.setText(title);
+    if (icon != null) {
+      tab.setGraphic(Images.icon(icon));
+      }
+    tab.setContent(node); 
+    _results.getTabs().addAll(tab);
     }
     
   /** Add text to {@link JConsole}.
@@ -213,7 +223,7 @@ public class BrowserWindow extends Application {
   public void addServer(String name,
                         String urlLivy,
                         String urlSpark) {
-    Server server = new Server(name, urlLivy, urlSpark);
+    Server server = new Server(name, this, urlLivy, urlSpark);
     log.info("Adding Server " + server);
     TreeItem<Element> serverItem = server.item();
     _servers.getChildren().add(serverItem);
@@ -224,11 +234,7 @@ public class BrowserWindow extends Application {
       WebView viewLivy = new WebView();
       WebEngine engineLivy = viewLivy.getEngine();
       engineLivy.load(server.urlLivy());
-      Tab tabLivy = new Tab();
-      tabLivy.setText(server.name() + " : Livy : " + server.urlLivy());
-      tabLivy.setGraphic(Images.icon(Images.LIVY));
-      tabLivy.setContent(viewLivy); 
-      _results.getTabs().addAll(tabLivy);
+      addTab(viewLivy, server.name() + " : Livy : " + server.urlLivy(), Images.LIVY);
       server.updateSessions();
       }
     if (server.urlSpark() == null) {
@@ -238,18 +244,14 @@ public class BrowserWindow extends Application {
       WebView viewSpark = new WebView();
       WebEngine engineSpark = viewSpark.getEngine();
       engineSpark.load(server.urlSpark());
-      Tab tabSpark = new Tab();
-      tabSpark.setText(server.name() + " : Spark : " + server.urlSpark());
-      tabSpark.setGraphic(Images.icon(Images.SPARK));
-      tabSpark.setContent(viewSpark);   
-      _results.getTabs().addAll(tabSpark);
+      addTab(viewSpark, server.name() + " : Spark : " + server.urlSpark(), Images.SPARK);
       }
     }
     
   /** Add {@link Data}.
     * @param name The {@link Data} name. */
   public void addData(String name) {
-    Data data = new Data(name);
+    Data data = new Data(name, this);
     log.info("Adding Data " + data);
     _data.getChildren().add(new TreeItem<Element>(data));
     }
@@ -257,7 +259,7 @@ public class BrowserWindow extends Application {
   /** Add {@link DataSource}.
     * @param name The {@link DataSource} name. */
   public void addDataSource(String name) {
-    DataSource dataSource = new DataSource(name);
+    DataSource dataSource = new DataSource(name, this);
     log.info("Adding Data Source " + dataSource);
     _dataSources.getChildren().add(new TreeItem<Element>(dataSource));
     }
@@ -265,7 +267,7 @@ public class BrowserWindow extends Application {
   /** Add {@link Channel}.
     * @param name The {@link Channel} name. */
   public void addChannel(String name) {
-    Channel channel = new Channel(name);
+    Channel channel = new Channel(name, this);
     log.info("Adding Channel " + channel);
     _channels.getChildren().add(new TreeItem<Element>(channel));
     }
@@ -277,7 +279,7 @@ public class BrowserWindow extends Application {
   public void addAction(String   name,
                         String   cmd,
                         Language language) {
-    Action action = new Action(name, cmd, language);
+    Action action = new Action(name, this, cmd, language);
     log.info("Adding Action " + action);
     _actions.getChildren().add(action.item());
     }
@@ -285,7 +287,7 @@ public class BrowserWindow extends Application {
   /** Add {@link Job}.
     * @param name The {@link Job} name. */
   public void addJob(String name) {
-    Job job = new Job(name);
+    Job job = new Job(name, this);
     log.info("Adding Job " + job);
     _jobs.getChildren().add(new TreeItem<Element>(job));
     }
@@ -295,12 +297,12 @@ public class BrowserWindow extends Application {
     System.exit(0);
     }  
     
-  private TreeItem<Element> _servers     = new TreeItem<>(new Element("Servers"));
-  private TreeItem<Element> _data        = new TreeItem<>(new Element("Data"));
-  private TreeItem<Element> _dataSources = new TreeItem<>(new Element("Data Sources"));
-  private TreeItem<Element> _channels    = new TreeItem<>(new Element("Data Channels"));
-  private TreeItem<Element> _actions     = new TreeItem<>(new Element("Actions"));
-  private TreeItem<Element> _jobs        = new TreeItem<>(new Element("Jobs"));
+  private TreeItem<Element> _servers     = new TreeItem<>(new Element("Servers",       this));
+  private TreeItem<Element> _data        = new TreeItem<>(new Element("Data",          this));
+  private TreeItem<Element> _dataSources = new TreeItem<>(new Element("Data Sources",  this));
+  private TreeItem<Element> _channels    = new TreeItem<>(new Element("Data Channels", this));
+  private TreeItem<Element> _actions     = new TreeItem<>(new Element("Actions",       this));
+  private TreeItem<Element> _jobs        = new TreeItem<>(new Element("Jobs",          this));
   
   private static Console _console;
 

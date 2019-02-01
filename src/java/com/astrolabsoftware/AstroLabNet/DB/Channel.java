@@ -1,5 +1,7 @@
 package com.astrolabsoftware.AstroLabNet.DB;
 
+import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
+
 // Log4J
 import org.apache.log4j.Logger;
 
@@ -12,9 +14,11 @@ import org.apache.log4j.Logger;
 public class Channel extends Element {
   
   /** Create new Channel.
-    * @param name The Channel name. */
-  public Channel(String name) {
-    super(name);
+    * @param name    The Channel name.
+    * @param browser The {@link BrowserWindow}. */
+  public Channel(String        name,
+                 BrowserWindow browser) {
+    super(name, browser);
     }
   
   /** Logging . */

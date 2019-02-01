@@ -30,13 +30,15 @@ import org.apache.log4j.Logger;
 public class Server extends Element {
   
   /** Create new Spark and Livy Server.
-    * @param name The Server name.
+    * @param name    The Server name.
+    * @param browser  The {@link BrowserWindow}.
     * @param urlLivy  The url of the Spark Server Livy interface.
     * @param urlSpark The url of the Spark Server. */
   public Server(String        name,
+                BrowserWindow browser,
                 String        urlLivy,
                 String        urlSpark) {
-    super(name, Images.LIVY);
+    super(name, browser, Images.LIVY);
     _urlLivy    = urlLivy;
     _urlSpark   = urlSpark;
     _livy       = new LivyRI(urlLivy);
@@ -61,38 +63,15 @@ public class Server extends Element {
     MenuItem scalaSession  = new MenuItem("Scala Session",  Images.icon(Images.USE));
     MenuItem rSession      = new MenuItem("R Session",  Images.icon(Images.USE));
     MenuItem sqlSession    = new MenuItem("SQL Session",  Images.icon(Images.USE));
-    pythonSession.setOnAction(new EventHandler<ActionEvent>() {
-                                @Override
-                                public void handle(ActionEvent event) {
-                                  _livy.initSession(Language.PYTHON);
-                                  updateSessions();
-                                  }
-                                });
-    scalaSession.setOnAction(new EventHandler<ActionEvent>() {
-                                @Override
-                                public void handle(ActionEvent event) {
-                                  _livy.initSession(Language.SCALA);
-                                  updateSessions();
-                                  }
-                                });
-    rSession.setOnAction(new EventHandler<ActionEvent>() {
-                                @Override
-                                public void handle(ActionEvent event) {
-                                  _livy.initSession(Language.R);
-                                  updateSessions();
-                                  }
-                                });
-    sqlSession.setOnAction(new EventHandler<ActionEvent>() {
-                                @Override
-                                public void handle(ActionEvent event) {
-                                  _livy.initSession(Language.SQL);
-                                  updateSessions();
-                                  }
-                                });
+    pythonSession.setOnAction(new ServerEventHandler(Language.PYTHON, this, _livy));
+    pythonSession.setOnAction(new ServerEventHandler(Language.SCALA,  this, _livy));
+    pythonSession.setOnAction(new ServerEventHandler(Language.R,      this, _livy));
+    pythonSession.setOnAction(new ServerEventHandler(Language.SQL,    this, _livy));
     menuItems.add(pythonSession);
     menuItems.add(scalaSession);
     menuItems.add(rSession);
     menuItems.add(sqlSession);
+    updateSessions();
     return menuItems;
     }
 
@@ -100,7 +79,7 @@ public class Server extends Element {
   public void updateSessions() {
     item().getChildren().clear();
     for (Pair<Integer, Language> p : _livy.getSessions()) {
-      item().getChildren().add(new TreeItem<Element>(new Session("Session", p.getKey(), p.getValue())));
+      item().getChildren().add(new TreeItem<Element>(new Session("Session", browser(), p.getKey(), p.getValue())));
       }
     }
     

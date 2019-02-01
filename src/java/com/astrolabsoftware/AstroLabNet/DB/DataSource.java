@@ -1,5 +1,7 @@
 package com.astrolabsoftware.AstroLabNet.DB;
 
+import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
+
 // Log4J
 import org.apache.log4j.Logger;
 
@@ -12,9 +14,11 @@ import org.apache.log4j.Logger;
 public class DataSource extends Element {
   
   /** Create new DataSource.
-    * @param name The DataSource name. */
-  public DataSource(String name) {
-    super(name);
+    * @param name    The DataSource name.
+    * @param browser The {@link BrowserWindow}. */
+  public DataSource(String        name,
+                    BrowserWindow browser) {
+    super(name, browser);
     }
   
   /** Logging . */
