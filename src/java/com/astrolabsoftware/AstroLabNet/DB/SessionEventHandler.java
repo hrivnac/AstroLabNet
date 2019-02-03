@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
@@ -58,12 +59,22 @@ public class SessionEventHandler implements EventHandler<ActionEvent> {
     grid.add(desc, 0, 0);
     TextField cmd = new TextField();
     grid.add(cmd, 0, 1);
-    Button btn = new Button("Execute");
-    HBox hbBtn = new HBox(10);
-    hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
-    hbBtn.getChildren().add(btn);
-    grid.add(hbBtn, 0, 2);
+    Button button = new Button("Execute");
+    HBox buttonBox = new HBox(10);
+    buttonBox.setAlignment(Pos.BOTTOM_RIGHT);
+    buttonBox.getChildren().add(button);
+    grid.add(buttonBox, 0, 2);
+    Text actiontarget = new Text("Fill in or select Action");
+    grid.add(actiontarget, 1, 2);
+    button.setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent e) {
+        actiontarget.setFill(Color.FIREBRICK);
+        actiontarget.setText("Command send to Session");
+        }
+      });
     _browser.addTab(grid, _title, Images.USE);
+    _browser.registerSessionCmd(cmd);
     }
     
   private String _title;

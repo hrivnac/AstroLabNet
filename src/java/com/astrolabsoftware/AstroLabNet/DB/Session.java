@@ -63,7 +63,7 @@ public class Session extends Element {
   @Override
   public List<MenuItem> menuItems() {
     List<MenuItem> menuItems = super.menuItems();
-    MenuItem execute = new MenuItem("Execute",  Images.icon(Images.USE));
+    MenuItem execute = new MenuItem("Prepare for Execution",  Images.icon(Images.USE));
     String tit = toString();
     execute.setOnAction(new SessionEventHandler(toString(), _language, browser()));
     menuItems.add(execute);

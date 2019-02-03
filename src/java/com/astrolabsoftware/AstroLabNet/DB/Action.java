@@ -4,6 +4,16 @@ import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
 import com.astrolabsoftware.AstroLabNet.Livyser.Language;
 
+// JavaFX
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
+import javafx.event.EventHandler;
+import javafx.event.ActionEvent;
+
+// Java
+import java.util.List;
+
 // Log4J
 import org.apache.log4j.Logger;
 
@@ -29,7 +39,23 @@ public class Action extends Element {
     _cmd      = cmd;
     _language = language;
     }
+    
+  @Override
+  public List<MenuItem> menuItems() {
+    List<MenuItem> menuItems = super.menuItems();
+    // TBD: check for opened Session
+    MenuItem execute = new MenuItem("Use for Session",  Images.icon(Images.USE));
+    String tit = toString();
+    execute.setOnAction(new ActionEventHandler(this, browser()));
+    menuItems.add(execute);
+    return menuItems;
+    }
 
+  /** TBD */
+  public String cmd() {
+    return _cmd;
+    }
+    
   @Override
   public String toString() {
     return name() + " (Language = " + _language + "): " + _cmd;

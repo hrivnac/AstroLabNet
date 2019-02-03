@@ -23,6 +23,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.paint.Color;
@@ -171,7 +172,11 @@ public class BrowserWindow extends Application {
   public void stop() {
     }
     
-  /** TBD */
+  /** Add new {@link Tab}.
+    * @param node  The {@link Node} to embed in the {@link Tab}.
+    * @param title The {@link Tab} title.
+    * @param icon  The {@link Tab} title icon. */
+  // TBD: focus on this tab
   public void addTab(Node node,
                      String title,
                      Image icon) {
@@ -292,6 +297,24 @@ public class BrowserWindow extends Application {
     _jobs.getChildren().add(new TreeItem<Element>(job));
     }
  
+  /** TBD */
+  public void registerSessionCmd(TextField cmd) {
+    _sessionCmd = cmd;
+    }
+    
+  /** TBD */
+  public void setSessionCmd(String txt) {
+    _sessionCmd.setText(txt);
+    }
+    
+  /** TBD */
+  public String sessionCmd() {
+    if (_sessionCmd == null) {
+      return null;
+      }
+    return _sessionCmd.getText();
+    }
+    
   /** Close. */
   public void close() {
     System.exit(0);
@@ -303,6 +326,8 @@ public class BrowserWindow extends Application {
   private TreeItem<Element> _channels    = new TreeItem<>(new Element("Data Channels", this));
   private TreeItem<Element> _actions     = new TreeItem<>(new Element("Actions",       this));
   private TreeItem<Element> _jobs        = new TreeItem<>(new Element("Jobs",          this));
+  
+  private TextField _sessionCmd;
   
   private static Console _console;
 
