@@ -22,6 +22,9 @@ import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.geometry.Insets;
 
+// org.json
+import org.json.JSONObject;
+
 // Java
 import java.util.List;
 
@@ -64,7 +67,9 @@ public class SessionEventHandler implements EventHandler<ActionEvent> {
       @Override
       public void handle(ActionEvent e) {
         actionTarget.setFill(Color.FIREBRICK);
-        _session.server().livy().sendCommand(_session.id(), cmd.getText());
+        String result = _session.server().livy().sendCommand(_session.id(), cmd.getText());
+        int id = new JSONObject(result).getInt("id");;
+        _session.browser().addJob(_session.server().urlLivy() + "/" + _session.id() + "/" + id, _session, id);
         actionTarget.setText("Command send to Session");
         }
       });

@@ -290,9 +290,13 @@ public class BrowserWindow extends Application {
     }
     
   /** Add {@link Job}.
-    * @param name The {@link Job} name. */
-  public void addJob(String name) {
-    Job job = new Job(name, this);
+    * @param name    The {@link Job} name.
+    * @param session The hosting {@link Session}.
+    * @param id      The statement id. */
+  public void addJob(String  name,
+                     Session session,
+                     int     id) {
+    Job job = new Job(name, session, id, this);
     log.info("Adding Job " + job);
     _jobs.getChildren().add(new TreeItem<Element>(job));
     }

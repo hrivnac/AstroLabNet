@@ -45,7 +45,6 @@ public class Action extends Element {
     List<MenuItem> menuItems = super.menuItems();
     // TBD: check for opened Session
     MenuItem execute = new MenuItem("Use for Session",  Images.icon(Images.USE));
-    String tit = toString();
     execute.setOnAction(new ActionEventHandler(this));
     menuItems.add(execute);
     return menuItems;

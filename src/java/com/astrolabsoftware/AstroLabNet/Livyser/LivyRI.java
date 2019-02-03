@@ -94,13 +94,14 @@ public class LivyRI {
     }
     
   /** Send command to the server.
-    * @param  id   The existing sessin number.
-    * @param  code The <em>scala</code> to be run on the server.
-    * @return      The command result, in <em>json</em>. */
-  public String checkProgress(int id) {
+    * @param  idSession   The existing session number.
+    * @param  idStatement The statement number.
+    * @return             The command result, in <em>json</em>. */
+  public String checkProgress(int idSession,
+                              int idStatement) {
     String result = "";
     try {
-      result = SmallHttpClient.get(_url + "/sessions/" + id + "/statements/0", null);
+      result = SmallHttpClient.get(_url + "/sessions/" + idSession + "/statements/" + idStatement, null);
       }
     catch (AstroLabNetException e) {
       log.info(e);
