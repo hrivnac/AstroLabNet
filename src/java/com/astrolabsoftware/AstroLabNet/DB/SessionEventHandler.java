@@ -14,6 +14,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -74,8 +75,8 @@ public class SessionEventHandler implements EventHandler<ActionEvent> {
         }
       });
     _session.setResultRef(actionTarget);
-    _session.browser().addTab(grid, _session.toString(), Images.USE);
-    _session.browser().registerSessionCmd(cmd);
+    Tab tab = _session.browser().addTab(grid, _session.toString(), Images.USE);
+    _session.browser().registerSessionTab(_session, tab);
     }
     
   private Session _session;  

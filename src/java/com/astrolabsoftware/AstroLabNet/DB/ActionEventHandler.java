@@ -38,12 +38,7 @@ public class ActionEventHandler implements EventHandler<ActionEvent> {
  
   @Override
   public void handle(ActionEvent event) {
-    if (_action.browser().sessionCmd() == null) {
-      log.error("No Session is opened");
-      }
-    else {
-      _action.browser().setSessionCmd(_action.cmd());
-      }
+    _action.browser().setSessionCmd(_action.cmd());
     }
  
   private Action _action;  

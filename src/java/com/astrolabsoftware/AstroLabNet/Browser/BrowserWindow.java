@@ -16,9 +16,11 @@ import javax.swing.SwingUtilities;
 import javafx.application.Application;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.text.Text;
 import javafx.scene.layout.BorderPane; 
 import javafx.scene.layout.HBox; 
 import javafx.scene.layout.VBox; 
+import javafx.scene.layout.GridPane;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
@@ -36,6 +38,8 @@ import javafx.geometry.Insets;
 import javafx.collections.ObservableList; 
 
 // Java
+import java.util.Map;
+import java.util.HashMap;
 import java.io.StringWriter;
 import java.io.PrintWriter;
 
@@ -175,11 +179,11 @@ public class BrowserWindow extends Application {
   /** Add new {@link Tab}.
     * @param node  The {@link Node} to embed in the {@link Tab}.
     * @param title The {@link Tab} title.
-    * @param icon  The {@link Tab} title icon. */
-  // TBD: focus on this tab
-  public void addTab(Node node,
-                     String title,
-                     Image icon) {
+    * @param icon  The {@link Tab} title icon.
+    * @return      The created {@link Tab}. */
+  public Tab addTab(Node node,
+                    String title,
+                    Image icon) {
     Tab tab = new Tab();
     tab.setText(title);
     if (icon != null) {
@@ -188,6 +192,7 @@ public class BrowserWindow extends Application {
     tab.setContent(node); 
     _results.getTabs().addAll(tab);
     _results.getSelectionModel().select(tab);
+    return tab;
     }
     
   /** Add text to {@link JConsole}.
@@ -304,26 +309,31 @@ public class BrowserWindow extends Application {
  
   /** Register the {@link Session} command, so that it can be filled
     * by {@link Action}.
-    * @param cmd The {@link Session} {@link TextField} with command text. */
-  public void registerSessionCmd(TextField cmd) {
-    _sessionCmd = cmd;
+    * @param session The related {@link Session}.
+    * @param tab     The {@link Tab} containing the {@link Session}. */
+  public void registerSessionTab(Session session,
+                                 Tab     tab) {
+    _sessionTabs.put(session, tab);
     }
     
   /** Set the {@link Session} command text. To be called from {@link Action}.
     * @param txt The text to fill in the {@link Session} command. */
   public void setSessionCmd(String txt) {
-    _sessionCmd.setText(txt);
+    boolean done = false;
+    for (Map.Entry<Session, Tab> entry : _sessionTabs.entrySet()) {
+      if (entry.getValue().isSelected()) {
+        GridPane grid = (GridPane)(entry.getValue().getContent());
+        TextField actionTarget = (TextField)(grid.getChildren().get(1));
+        actionTarget.setText(txt);
+        done = true;
+        break;
+        }
+      }
+    if (!done) {
+      log.error("No Session tab selected for Use");
+      }
     }
     
-  /** Give the {@link Session} command.
-    * @return The {@link Session} {@link TextField} for command text.
-    *         <tt>null</tt> if no {@link Session} registered. */
-  public String sessionCmd() {
-    if (_sessionCmd == null) {
-      return null;
-      }
-    return _sessionCmd.getText();
-    }
     
   /** Close. */
   public void close() {
@@ -337,7 +347,7 @@ public class BrowserWindow extends Application {
   private TreeItem<Element> _actions     = new TreeItem<>(new Element("Actions",       this));
   private TreeItem<Element> _jobs        = new TreeItem<>(new Element("Jobs",          this));
   
-  private TextField _sessionCmd;
+  private Map<Session, Tab> _sessionTabs = new HashMap<>();
   
   private static Console _console;
 
