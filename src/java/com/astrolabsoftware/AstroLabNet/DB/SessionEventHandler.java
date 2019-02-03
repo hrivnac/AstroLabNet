@@ -5,6 +5,7 @@ import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
 
 // JavaFX
+import javafx.scene.Node;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -62,17 +63,17 @@ public class SessionEventHandler implements EventHandler<ActionEvent> {
     buttonBox.getChildren().add(button);
     grid.add(buttonBox, 0, 2);
     Text actionTarget = new Text("Fill in or select Action");
-    grid.add(actionTarget, 1, 2);
+    grid.add(actionTarget, 0, 3);
     button.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent e) {
-        actionTarget.setFill(Color.FIREBRICK);
         String result = _session.server().livy().sendCommand(_session.id(), cmd.getText());
         int id = new JSONObject(result).getInt("id");;
         _session.browser().addJob(_session.server().urlLivy() + "/" + _session.id() + "/" + id, _session, id);
         actionTarget.setText("Command send to Session");
         }
       });
+    _session.setResultRef(actionTarget);
     _session.browser().addTab(grid, _session.toString(), Images.USE);
     _session.browser().registerSessionCmd(cmd);
     }

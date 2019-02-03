@@ -187,6 +187,7 @@ public class BrowserWindow extends Application {
       }
     tab.setContent(node); 
     _results.getTabs().addAll(tab);
+    _results.getSelectionModel().select(tab);
     }
     
   /** Add text to {@link JConsole}.
