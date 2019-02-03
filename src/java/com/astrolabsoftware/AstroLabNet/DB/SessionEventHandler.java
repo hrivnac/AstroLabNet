@@ -58,13 +58,14 @@ public class SessionEventHandler implements EventHandler<ActionEvent> {
     buttonBox.setAlignment(Pos.BOTTOM_RIGHT);
     buttonBox.getChildren().add(button);
     grid.add(buttonBox, 0, 2);
-    Text actiontarget = new Text("Fill in or select Action");
-    grid.add(actiontarget, 1, 2);
+    Text actionTarget = new Text("Fill in or select Action");
+    grid.add(actionTarget, 1, 2);
     button.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent e) {
-        actiontarget.setFill(Color.FIREBRICK);
-        actiontarget.setText("Command send to Session");
+        actionTarget.setFill(Color.FIREBRICK);
+        _session.server().livy().sendCommand(_session.id(), cmd.getText());
+        actionTarget.setText("Command send to Session");
         }
       });
     _session.browser().addTab(grid, _session.toString(), Images.USE);

@@ -38,14 +38,17 @@ public class Session extends Element {
   /** Create new Session.
     * @param name    The Session name.
     * @param browser The {@link BrowserWindow}.
-    * @param id      The Session id. */
+    * @param id      The Session id.
+    * @param sefrver The {@link Server} keeping this Session. */
   public Session(String        name,
                  BrowserWindow browser,
                  int           id,
-                 Language      language) {
+                 Language      language,
+                 Server        server) {
     super(name, browser);
     _id       = id;
     _language = language;
+    _server   = server;
     }
     
   /** Give the Session id.
@@ -58,6 +61,12 @@ public class Session extends Element {
     * @return The Session {@link Language}. */
   public Language language() {
     return _language;
+    }
+    
+  /** Give the keeping {@link Server}.
+    * @return The keeping {@link Server}. */
+  public Server server() {
+    return _server;
     }
     
   @Override
@@ -78,6 +87,8 @@ public class Session extends Element {
   private int _id;
   
   private Language _language;
+  
+  private Server _server;
   
   /** Logging . */
   private static Logger log = Logger.getLogger(Session.class);

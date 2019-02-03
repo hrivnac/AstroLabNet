@@ -84,7 +84,7 @@ public class Server extends Element {
   public void updateSessions() {
     item().getChildren().clear();
     for (Pair<Integer, Language> p : _livy.getSessions()) {
-      item().getChildren().add(new TreeItem<Element>(new Session("Session", browser(), p.getKey(), p.getValue())));
+      item().getChildren().add(new TreeItem<Element>(new Session("Session", browser(), p.getKey(), p.getValue(), this)));
       }
     }
     
