@@ -297,17 +297,22 @@ public class BrowserWindow extends Application {
     _jobs.getChildren().add(new TreeItem<Element>(job));
     }
  
-  /** TBD */
+  /** Register the {@link Session} command, so that it can be filled
+    * by {@link Action}.
+    * @param cmd The {@link Session} {@link TextField} with command text. */
   public void registerSessionCmd(TextField cmd) {
     _sessionCmd = cmd;
     }
     
-  /** TBD */
+  /** Set the {@link Session} command text. To be called from {@link Action}.
+    * @param txt The text to fill in the {@link Session} command. */
   public void setSessionCmd(String txt) {
     _sessionCmd.setText(txt);
     }
     
-  /** TBD */
+  /** Give the {@link Session} command.
+    * @return The {@link Session} {@link TextField} for command text.
+    *         <tt>null</tt> if no {@link Session} registered. */
   public String sessionCmd() {
     if (_sessionCmd == null) {
       return null;

@@ -1,11 +1,9 @@
 package com.astrolabsoftware.AstroLabNet.Browser.Actions;
 
-import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
 import com.astrolabsoftware.AstroLabNet.DB.*;
 
 // JavaFX
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.control.TreeView;

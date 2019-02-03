@@ -51,7 +51,8 @@ public class Action extends Element {
     return menuItems;
     }
 
-  /** TBD */
+  /** Give the associated command text.
+    * @return The associated command text. */
   public String cmd() {
     return _cmd;
     }
