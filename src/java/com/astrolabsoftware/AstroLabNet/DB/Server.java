@@ -56,6 +56,11 @@ public class Server extends Element {
     return _urlSpark;
     }  
     
+  /** TBD */
+  public LivyRI livy() {
+    return _livy;
+    }
+    
   @Override
   public List<MenuItem> menuItems() {
     List<MenuItem> menuItems = super.menuItems();
@@ -63,10 +68,10 @@ public class Server extends Element {
     MenuItem scalaSession  = new MenuItem("Scala Session",  Images.icon(Images.USE));
     MenuItem rSession      = new MenuItem("R Session",      Images.icon(Images.USE));
     MenuItem sqlSession    = new MenuItem("SQL Session",    Images.icon(Images.USE));
-    pythonSession.setOnAction(new ServerEventHandler(Language.PYTHON, this, _livy));
-    scalaSession.setOnAction( new ServerEventHandler(Language.SCALA,  this, _livy));
-    rSession.setOnAction(     new ServerEventHandler(Language.R,      this, _livy));
-    sqlSession.setOnAction(   new ServerEventHandler(Language.SQL,    this, _livy));
+    pythonSession.setOnAction(new ServerEventHandler(this, Language.PYTHON));
+    scalaSession.setOnAction( new ServerEventHandler(this, Language.SCALA ));
+    rSession.setOnAction(     new ServerEventHandler(this, Language.R     ));
+    sqlSession.setOnAction(   new ServerEventHandler(this, Language.SQL   ));
     menuItems.add(pythonSession);
     menuItems.add(scalaSession);
     menuItems.add(rSession);

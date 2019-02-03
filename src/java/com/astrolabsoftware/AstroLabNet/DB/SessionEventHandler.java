@@ -38,15 +38,9 @@ import org.apache.log4j.Logger;
 public class SessionEventHandler implements EventHandler<ActionEvent> {
   
   /** Create.
-    * @param title    The title of the {@link Tab}.
-    * @param language The {@link Language} of {@link Session}.
-    * @param browser  The {@link WindowBrowser} to use. */
-  public SessionEventHandler(String        title,
-                             Language      language,
-                             BrowserWindow browser) {
-    _title    = title;
-    _language = language;
-    _browser  = browser;
+    * @param session  The associated {@link Session}. */
+  public SessionEventHandler(Session session) {
+    _session = session;
     }
     
   @Override
@@ -55,7 +49,7 @@ public class SessionEventHandler implements EventHandler<ActionEvent> {
     grid.setAlignment(Pos.CENTER);
     grid.setHgap(10);
     grid.setVgap(10);
-    Label desc = new Label("Command in " + _language + ":");
+    Label desc = new Label("Command in " + _session.language() + ":");
     grid.add(desc, 0, 0);
     TextField cmd = new TextField();
     grid.add(cmd, 0, 1);
@@ -73,14 +67,10 @@ public class SessionEventHandler implements EventHandler<ActionEvent> {
         actiontarget.setText("Command send to Session");
         }
       });
-    _browser.addTab(grid, _title, Images.USE);
-    _browser.registerSessionCmd(cmd);
+    _session.browser().addTab(grid, _session.toString(), Images.USE);
+    _session.browser().registerSessionCmd(cmd);
     }
     
-  private String _title;
-  
-  private Language _language;
-  
-  private BrowserWindow _browser;
+  private Session _session;  
 
   }

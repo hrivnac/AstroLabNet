@@ -31,28 +31,22 @@ import org.apache.log4j.Logger;
 public class ActionEventHandler implements EventHandler<ActionEvent> {
 
   /** Create.
-    * @param language The {@link Language} of new {@link Session}.
-    * @param action   The {@link Server} to run on.
-    * @param livy     The {@LivyRI} server. */
-  public ActionEventHandler(Action        action,
-                            BrowserWindow browser) {
-    _action  = action;
-    _browser = browser;
+    * @param action The {@link Server} to run on. */
+  public ActionEventHandler(Action action) {
+    _action = action;
     }
  
   @Override
   public void handle(ActionEvent event) {
-    if (_browser.sessionCmd() == null) {
+    if (_action.browser().sessionCmd() == null) {
       log.error("No Session is opened");
       }
     else {
-      _browser.setSessionCmd(_action.cmd());
+      _action.browser().setSessionCmd(_action.cmd());
       }
     }
  
   private Action _action;  
-  
-  private BrowserWindow _browser;
     
   /** Logging . */
   private static Logger log = Logger.getLogger(ActionEventHandler.class);

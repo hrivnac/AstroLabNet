@@ -31,27 +31,22 @@ import org.apache.log4j.Logger;
 public class ServerEventHandler implements EventHandler<ActionEvent> {
 
   /** Create.
-    * @param language The {@link Language} of new {@link Session}.
-    * @param server   The {@link Server} to run on.
-    * @param livy     The {@LivyRI} server. */
-  public ServerEventHandler(Language language,
-                            Server   server,
-                            LivyRI   livy) {
-    _language = language;
+    * @param server The associated {@link Server}.
+    * @param language The {@link Language} of this {@link EventHandler}. */
+  public ServerEventHandler(Server   server,
+                            Language language) {
     _server   = server;
-    _livy     = livy;
+    _language = language;
     }
  
   @Override
   public void handle(ActionEvent event) {
-    _livy.initSession(_language);
+    _server.livy().initSession(_language);
     _server.updateSessions();
     }
  
   private Language _language;  
   
   private Server _server;
-  
-  private LivyRI _livy;
     
   }

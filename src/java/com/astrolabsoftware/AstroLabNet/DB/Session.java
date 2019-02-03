@@ -65,11 +65,11 @@ public class Session extends Element {
     List<MenuItem> menuItems = super.menuItems();
     MenuItem execute = new MenuItem("Prepare for Execution",  Images.icon(Images.USE));
     String tit = toString();
-    execute.setOnAction(new SessionEventHandler(toString(), _language, browser()));
+    execute.setOnAction(new SessionEventHandler(this));
     menuItems.add(execute);
     return menuItems;
     }
-
+    
   @Override
   public String toString() {
     return name() + " : " + _id + " in " + _language;
