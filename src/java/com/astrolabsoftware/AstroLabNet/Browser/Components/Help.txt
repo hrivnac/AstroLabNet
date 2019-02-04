@@ -8,12 +8,10 @@
 
 <h2>How to execute an Action ?</h2>
 <ol>
-<li>Select one or several parts of <b>Data</b>, <b>Data Source</b> or <b>Data Channel</b> on the top/left tree.</li>
+<li>Select <b>Session</b> in which you want to run.</li>
+<li>(If needed) Select one or several parts of <b>Data</b>, <b>Data Source</b> or <b>Data Channel</b> on the top/left tree.</li>
 <li>Select <b>Action</b> on the top/left tree.</li>
 <li>A form will appear in the central pane - fill missing fields.</li>
 <li>Send the command - it will appear as a <b>Job</b> and/or <b>Session</b>.</li>
 </ol>
-
-<h2>How to create a new Action ?</h2>
-TBD
 

@@ -49,13 +49,13 @@ public final class TreeCellContextMenuEventHandler implements EventHandler {
       case "Help":
         String helpText = "No Help is available";
         try {
-          helpText = new StringResource("com/astrolabsoftware/AstroLabNet/DB/Help" + elementName + ".txt").toString();
+          helpText = new StringResource("com/astrolabsoftware/AstroLabNet/DB/" + elementName + "Help.txt").toString();
           }
         catch (AstroLabNetException e) {
           log.error("Cannot load help page for " + elementName);
           log.debug("Cannot load help page for " + elementName, e);
           }
-        log.info(helpText);
+        log.info("\n" + helpText);
         break;
       default: 
         log.debug("Not global action " + action);

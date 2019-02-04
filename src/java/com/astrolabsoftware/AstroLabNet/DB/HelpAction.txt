@@ -1,3 +1,0 @@
-Action represents an action to be executes on a Spark Server behind Livy Server.
-You can send it to a Session, creating a Job.
-

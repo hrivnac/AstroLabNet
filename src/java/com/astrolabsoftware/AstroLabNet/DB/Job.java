@@ -26,6 +26,9 @@ import javafx.geometry.Insets;
 import org.json.JSONObject;
 import org.json.JSONArray;
 
+// Java
+import java.util.List;
+
 // Log4J
 import org.apache.log4j.Logger;
 
@@ -48,7 +51,8 @@ public class Job extends Element {
              Session       session,
              int           id,
              BrowserWindow browser) {
-    super(name, browser);
+    super(name, browser, Images.ACTION); // BUG: doesn't show icon
+    _session = session;
     Thread thread = new Thread() {
       // check periodically status, untill progress = 1.0
       // then leave the thread and report results
@@ -87,7 +91,23 @@ public class Job extends Element {
       };
     thread.start();
     }
+    
+  @Override
+  public List<MenuItem> menuItems() {
+    List<MenuItem> menuItems = super.menuItems();
+    MenuItem show = new MenuItem("Show Session",  Images.icon(Images.USE));
+    show.setOnAction(new JobEventHandler(this));
+    menuItems.add(show);
+    return menuItems;
+    }
   
+  /** TBD */
+  public Session session() {
+    return _session;
+    }
+    
+  private Session _session;  
+    
   /** Logging . */
   private static Logger log = Logger.getLogger(Job.class);
 

@@ -1,0 +1,3 @@
+Job represents an running on a Spark Server behind Livy Server.
+You can see its status and results.
+

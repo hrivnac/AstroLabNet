@@ -125,12 +125,19 @@ public class BrowserWindow extends Application {
                               _actions,
                               _jobs);
     // Help
-    String helpText = "HELP !";
-    try {
-      helpText = new StringResource("com/astrolabsoftware/AstroLabNet/Browser/Components/Help.txt").toString();
-      }
-    catch (AstroLabNetException e) {
-      log.error("Cannot load help page !", e);
+    String helpText = "";
+    for (String helpPage : new String[] {"Browser/Components/",
+                                         "DB/Server",
+                                         "DB/Session",
+                                         "DB/Action",
+                                         "DB/Job"}) {
+      try {
+        helpText += new StringResource("com/astrolabsoftware/AstroLabNet/" + helpPage + "Help.txt").toString();
+        }
+      catch (AstroLabNetException e) {
+        log.error("Cannot load help page " + helpPage, e);
+        }
+      helpText += "<hr/>";
       }
     WebView help = new WebView();
     WebEngine engine = help.getEngine();
@@ -336,7 +343,11 @@ public class BrowserWindow extends Application {
       }
     }
     
-    
+  /** TBD */
+  public void selectTab(Session session) {
+    _results.getSelectionModel().select(_sessionTabs.get(session));
+  }
+  
   /** Close. */
   public void close() {
     System.exit(0);
