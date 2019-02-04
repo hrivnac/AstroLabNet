@@ -104,6 +104,7 @@
       <fileset dir="../src/java" includes="com/astrolabsoftware/AstroLabNet/**/*.txt"/>
       <fileset dir="../src/java" includes="com/astrolabsoftware/AstroLabNet/**/*.png"/>
       <fileset dir="../src/java" includes="com/astrolabsoftware/AstroLabNet/**/*.gif"/>
+      <fileset dir="../src/java" includes="com/astrolabsoftware/AstroLabNet/**/*.css"/>
       <zipfileset includes="**/*.class" src="${log4j.jar}"/>
       <zipfileset includes="**/*.class" src="${bsh.jar}"/>
       <zipfileset includes="**/*.class" src="${livy.jar}"/>

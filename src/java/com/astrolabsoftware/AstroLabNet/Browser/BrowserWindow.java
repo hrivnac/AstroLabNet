@@ -115,6 +115,7 @@ public class BrowserWindow extends Application {
     TreeItem<Element> root = new TreeItem<>(new Element("/", this));
     root.setExpanded(true);
     TreeView<Element> tree = new TreeView<>(root);
+    new ToolTipper(tree, "Right-click on elements will show available operations");
     TreeCellCallback callback = new TreeCellCallback();
     tree.setCellFactory(callback);
     root.getChildren().addAll(_servers,
@@ -151,9 +152,10 @@ public class BrowserWindow extends Application {
     BorderPane content = new BorderPane();   
     content.setTop(menu); 
     content.setLeft(tree); 
-    content.setCenter(center); 
+    content.setCenter(center);
     // Scene
-    Scene scene = new Scene(content);  
+    Scene scene = new Scene(content);
+    scene.getStylesheets().add("com/astrolabsoftware/AstroLabNet/Browser/BrowserWindow.css"); 
     stage.setTitle("AstroLabNet Browser"); 
     stage.setScene(scene);          
     stage.show(); 

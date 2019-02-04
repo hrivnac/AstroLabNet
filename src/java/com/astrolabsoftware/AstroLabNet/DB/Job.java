@@ -50,6 +50,8 @@ public class Job extends Element {
              BrowserWindow browser) {
     super(name, browser);
     Thread thread = new Thread() {
+      // check periodically status, untill progress = 1.0
+      // then leave the thread and report results
       @Override
       public void run() {
         String resultString;
