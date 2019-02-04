@@ -79,7 +79,7 @@ public class LivyRI {
     * @param  id   The existing sessin number.
     * @param  code The <em>scala</code> to be run on the server.
     * @return      The command result, in <em>json</em>. */
-  public String sendCommand(int id,
+  public String sendCommand(int    id,
                             String code) {
     String result = "";
     try {

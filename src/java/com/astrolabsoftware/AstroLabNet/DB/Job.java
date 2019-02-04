@@ -70,7 +70,7 @@ public class Job extends Element {
             if (progress == 1.0) {
               break;
               }
-            Thread.sleep(10000);
+            Thread.sleep(5000); // 5s
             }
           catch (InterruptedException e) {
             Thread.currentThread().interrupt();
@@ -78,13 +78,23 @@ public class Job extends Element {
           }
         JSONObject output = result.getJSONObject("output");
         String status = output.getString("status");
-        JSONObject data = output.getJSONObject("data");
-        log.info(status + " : " + data);
+        JSONObject data = null;
+        if (status.equals("ok")) {
+          data = output.getJSONObject("data");
+          }
+        else if (status.equals("error")) {
+          data = output;
+          }
+        else {
+          log.error("Unknown status " + status);
+          }
+        JSONObject d = data;
+        log.info(status + " : " + d);
         // to synchronise threads
         Platform.runLater(new Runnable() {
           @Override
           public void run() {
-            session.setResult("status = " + status + "\n\n" + data);
+            session.setResult("status = " + status + "\n\n" + d.toString(2));
             }
           });
         }

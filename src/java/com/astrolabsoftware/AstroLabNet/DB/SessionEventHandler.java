@@ -10,6 +10,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Label;
@@ -56,7 +57,7 @@ public class SessionEventHandler implements EventHandler<ActionEvent> {
     grid.setVgap(10);
     Label desc = new Label("Command in " + _session.language() + ":");
     grid.add(desc, 0, 0);
-    TextField cmd = new TextField();
+    TextArea cmd = new TextArea();
     grid.add(cmd, 0, 1);
     Button button = new Button("Execute");
     HBox buttonBox = new HBox(10);

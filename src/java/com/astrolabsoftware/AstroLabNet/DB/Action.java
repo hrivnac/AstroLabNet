@@ -58,7 +58,7 @@ public class Action extends Element {
     
   @Override
   public String toString() {
-    return name() + " (Language = " + _language + "): " + _cmd;
+    return name() + " (" + _language + ")";
     }
 
   private String _cmd;

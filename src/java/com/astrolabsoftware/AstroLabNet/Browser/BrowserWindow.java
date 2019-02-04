@@ -26,6 +26,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.paint.Color;
@@ -68,9 +69,43 @@ public class BrowserWindow extends Application {
   public void start(Stage stage) {
     setupContent();
     setupGUI(stage);
-    addAction("Test Action", "1+1", Language.PYTHON);
+    readActions();
     Thread t  = new Thread(_interpreter);
     t.start();
+    }
+    
+  /** TBD */
+  public void readActions() {
+    addAction("Test", "1+1", Language.PYTHON);
+    String ext;
+    Language lang = Language.PYTHON;
+    for (String actionTxt : new String[] {"pi.py",
+                                          "pi.scala",
+                                          "pi.r"}) {
+      try {
+        ext = actionTxt.substring(actionTxt.lastIndexOf(".") + 1);
+        switch (ext) { // TBD: put into Language
+          case "py":
+            lang = Language.PYTHON;
+            break;
+          case "scala":
+            lang = Language.SCALA;
+            break;
+           case "r":
+            lang = Language.R;
+            break;
+          case "sql":
+            lang = Language.SQL;
+            break;
+          default:
+            log.error("Unknown extension " + ext + ", supposing Python");
+          } 
+        addAction("pi", new StringResource("com/astrolabsoftware/AstroLabNet/DB/Actions/" + actionTxt).toString(), lang);
+        }
+      catch (AstroLabNetException e) {
+        log.error("Cannot load Action from " + actionTxt, e);
+        }
+      }
     }
     
   /** Connect to servers and populate GUI. */
@@ -332,7 +367,7 @@ public class BrowserWindow extends Application {
     for (Map.Entry<Session, Tab> entry : _sessionTabs.entrySet()) {
       if (entry.getValue().isSelected()) {
         GridPane grid = (GridPane)(entry.getValue().getContent());
-        TextField actionTarget = (TextField)(grid.getChildren().get(1));
+        TextArea actionTarget = (TextArea)(grid.getChildren().get(1));
         actionTarget.setText(txt);
         done = true;
         break;

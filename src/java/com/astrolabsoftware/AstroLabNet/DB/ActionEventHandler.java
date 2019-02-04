@@ -37,6 +37,7 @@ public class ActionEventHandler implements EventHandler<ActionEvent> {
     }
  
   @Override
+  // TBD: check language compatibility
   public void handle(ActionEvent event) {
     _action.browser().setSessionCmd(_action.cmd());
     }
