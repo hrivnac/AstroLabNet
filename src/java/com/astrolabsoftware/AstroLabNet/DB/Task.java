@@ -32,25 +32,24 @@ import java.util.List;
 // Log4J
 import org.apache.log4j.Logger;
 
-/** <code>Job</code> represents running <em>Spark</em> job
-  * transfer.
+/** <code>Task</code> represents running <em>Spark</em> task.
   * @opt attributes
   * @opt operations
   * @opt types
   * @opt visibility
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
-public class Job extends Element {
+public class Task extends Element {
   
-  /** Create new Job.
+  /** Create new Task.
     * Check the progress.
-    * @param name    The Job name.
+    * @param name    The Task name.
     * @param session The hosting {@link Session}.
     * @param id      The statement id.
     * @param browser The {@link BrowserWindow}. */
-  public Job(String        name,
-             Session       session,
-             int           id,
-             BrowserWindow browser) {
+  public Task(String        name,
+              Session       session,
+              int           id,
+              BrowserWindow browser) {
     super(name, browser, Images.ACTION); // BUG: doesn't show icon
     _session = session;
     Thread thread = new Thread() {
@@ -106,7 +105,7 @@ public class Job extends Element {
   public List<MenuItem> menuItems() {
     List<MenuItem> menuItems = super.menuItems();
     MenuItem show = new MenuItem("Show Session",  Images.icon(Images.USE));
-    show.setOnAction(new JobEventHandler(this));
+    show.setOnAction(new TaskEventHandler(this));
     menuItems.add(show);
     return menuItems;
     }
@@ -119,6 +118,6 @@ public class Job extends Element {
   private Session _session;  
     
   /** Logging . */
-  private static Logger log = Logger.getLogger(Job.class);
+  private static Logger log = Logger.getLogger(Task.class);
 
   }

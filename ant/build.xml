@@ -15,7 +15,9 @@
   <path id="classpath.build">
     <pathelement path="${log4j.jar}"/>
     <pathelement path="${bsh.jar}"/>
+    <pathelement path="${scala.jar}"/>
     <pathelement path="${livy.jar}"/>
+    <pathelement path="${spark.jar}"/>
     <pathelement path="${httpclient.jar}"/>
     <pathelement path="${httpcore.jar}"/>
     <pathelement path="${logging.jar}"/>
@@ -108,7 +110,9 @@
       <fileset dir="../src/java" includes="com/astrolabsoftware/AstroLabNet/DB/Actions/*"/>
       <zipfileset includes="**/*.class" src="${log4j.jar}"/>
       <zipfileset includes="**/*.class" src="${bsh.jar}"/>
+      <zipfileset includes="**/*.class" src="${scala.jar}"/>
       <zipfileset includes="**/*.class" src="${livy.jar}"/>
+      <zipfileset includes="**/*.class" src="${spark.jar}"/>
       <zipfileset includes="**/*.class" src="${httpclient.jar}"/>
       <zipfileset includes="**/*.class" src="${httpcore.jar}"/>
       <zipfileset includes="**/*.class" src="${logging.jar}"/>
@@ -195,12 +199,15 @@
       <group title="Utils"              packages="com.astrolabsoftware.AstroLabNet.Utils*"/>
       <group title="Livyser"            packages="com.astrolabsoftware.AstroLabNet.Livyser*"/>
       <group title="DB"                 packages="com.astrolabsoftware.AstroLabNet.DB*"/>
+      <group title="Jobs"               packages="com.astrolabsoftware.AstroLabNet.Jobs*"/>
       <link href="http://docs.oracle.com/javase/8/docs/api"/>
       <link href="http://www.beanshell.org/javadoc/"/>
       <link href="https://logging.apache.org/log4j/1.2/apidocs"/>
       <link href="https://livy.incubator.apache.org/docs/latest/api/java"/>
+      <link href="https://spark.apache.org/docs/2.3.1/api/java"/>
       <link href="https://hc.apache.org/httpcomponents-client-ga/httpclient/apidocs"/>
       <link href="http://stleary.github.io/JSON-java"/>
+      <!-- scala library -->
       <classpath>
         <path refid="classpath.run"/>
         </classpath>

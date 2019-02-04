@@ -156,14 +156,14 @@ public class BrowserWindow extends Application {
                               _dataSources,
                               _channels,
                               _actions,
-                              _jobs);
+                              _tasks);
     // Help
     String helpText = "";
     for (String helpPage : new String[] {"Browser/Components/",
                                          "DB/Server",
                                          "DB/Session",
                                          "DB/Action",
-                                         "DB/Job"}) {
+                                         "DB/Task"}) {
       try {
         helpText += new StringResource("com/astrolabsoftware/AstroLabNet/" + helpPage + "Help.txt").toString();
         }
@@ -337,16 +337,16 @@ public class BrowserWindow extends Application {
     _actions.getChildren().add(action.item());
     }
     
-  /** Add {@link Job}.
-    * @param name    The {@link Job} name.
+  /** Add {@link Task}.
+    * @param name    The {@link Task} name.
     * @param session The hosting {@link Session}.
     * @param id      The statement id. */
-  public void addJob(String  name,
-                     Session session,
-                     int     id) {
-    Job job = new Job(name, session, id, this);
-    log.info("Adding Job " + job);
-    _jobs.getChildren().add(new TreeItem<Element>(job));
+  public void addTask(String  name,
+                      Session session,
+                      int     id) {
+    Task task = new Task(name, session, id, this);
+    log.info("Adding Task " + task);
+    _tasks.getChildren().add(new TreeItem<Element>(task));
     }
  
   /** Register the {@link Session} command, so that it can be filled
@@ -391,7 +391,7 @@ public class BrowserWindow extends Application {
   private TreeItem<Element> _dataSources = new TreeItem<>(new Element("Data Sources",  this));
   private TreeItem<Element> _channels    = new TreeItem<>(new Element("Data Channels", this));
   private TreeItem<Element> _actions     = new TreeItem<>(new Element("Actions",       this));
-  private TreeItem<Element> _jobs        = new TreeItem<>(new Element("Jobs",          this));
+  private TreeItem<Element> _tasks       = new TreeItem<>(new Element("Tasks",         this));
   
   private Map<Session, Tab> _sessionTabs = new HashMap<>();
   

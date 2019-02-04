@@ -1,1 +1,0 @@
-Action represents an job running on a Spark Server behind Livy Server.

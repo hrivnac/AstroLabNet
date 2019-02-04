@@ -3,6 +3,7 @@ package com.astrolabsoftware.AstroLabNet.Livyser;
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
 import com.astrolabsoftware.AstroLabNet.Utils.SmallHttpClient;
 import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
+import com.astrolabsoftware.AstroLabNet.DB.Jobs.*;
 
 // JavaFX
 import javafx.util.Pair;
@@ -11,11 +12,17 @@ import javafx.util.Pair;
 import org.json.JSONObject;
 import org.json.JSONArray;
 
+// Livy
+import org.apache.livy.LivyClientBuilder;
+import org.apache.livy.LivyClient;
+
 // Java
 import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
+import java.net.URI;
+import java.io.File;
 
 // Log4J
 import org.apache.log4j.Logger;
@@ -28,6 +35,31 @@ import org.apache.log4j.Logger;
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 // TBD: handle full answer, check for errors
 public class LivyAPIClient {
+  
+  /** Selftest. */
+  public static void main(String[] args) {
+    String livyUrl ="x";
+    String piJar ="y";
+    int samples = 100;
+    LivyClient client = null;
+    try {
+      client = new LivyClientBuilder().setURI(new URI(livyUrl)).build();
+      System.err.printf("Uploading %s to the Spark context...\n", piJar);
+      client.uploadJar(new File(piJar)).get();
+      System.err.printf("Running PiJob with %d samples...\n", samples);
+      double pi = client.submit(new PiJob(samples)).get();
+      System.out.println("Pi is roughly: " + pi);
+      }
+    catch (Exception e) {
+      log.fatal("Cannot run test !");
+      log.debug("Cannot run test !", e);
+      }
+    finally {
+      if (client != null) {
+        client.stop(true);
+        }
+      } 
+    }
   
   /** Connect to the server.
     * @param url The url of the server. */

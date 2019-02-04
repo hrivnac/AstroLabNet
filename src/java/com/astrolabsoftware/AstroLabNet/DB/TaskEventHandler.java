@@ -21,29 +21,29 @@ import java.util.List;
 // Log4J
 import org.apache.log4j.Logger;
 
-/** <code>JobEventHandler</code> implements {@link EventHandler} for {@link Job}.
+/** <code>TaskEventHandler</code> implements {@link EventHandler} for {@link Task}.
   * It shows related {@link Session}.
   * @opt attributes
   * @opt operations
   * @opt types
   * @opt visibility
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
-public class JobEventHandler implements EventHandler<ActionEvent> {
+public class TaskEventHandler implements EventHandler<ActionEvent> {
 
   /** Create.
-    * @param job The {@link Job} to run on. */
-  public JobEventHandler(Job job) {
-    _job = job;
+    * @param task The {@link Task} to run on. */
+  public TaskEventHandler(Task task) {
+    _task = task;
     }
  
   @Override
   public void handle(ActionEvent event) {
-    _job.browser().selectTab(_job.session());
+    _task.browser().selectTab(_task.session());
     }
  
-  private Job _job;  
+  private Task _task;  
     
   /** Logging . */
-  private static Logger log = Logger.getLogger(JobEventHandler.class);
+  private static Logger log = Logger.getLogger(TaskEventHandler.class);
     
   }

@@ -71,7 +71,7 @@ public class SessionEventHandler implements EventHandler<ActionEvent> {
       public void handle(ActionEvent e) {
         String result = _session.server().livy().sendCommand(_session.id(), cmd.getText());
         int id = new JSONObject(result).getInt("id");;
-        _session.browser().addJob(_session.server().urlLivy() + "/" + _session.id() + "/" + id, _session, id);
+        _session.browser().addTask(_session.server().urlLivy() + "/" + _session.id() + "/" + id, _session, id);
         actionTarget.setText("Command send to Session");
         }
       });
