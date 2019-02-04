@@ -2,7 +2,7 @@ package com.astrolabsoftware.AstroLabNet.DB;
 
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
-import com.astrolabsoftware.AstroLabNet.Livyser.LivyRI;
+import com.astrolabsoftware.AstroLabNet.Livyser.LivyRESTClient;
 import com.astrolabsoftware.AstroLabNet.Livyser.Language;
 import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
 import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
@@ -41,7 +41,7 @@ public class Server extends Element {
     super(name, browser, Images.LIVY);
     _urlLivy    = urlLivy;
     _urlSpark   = urlSpark;
-    _livy       = new LivyRI(urlLivy);
+    _livy       = new LivyRESTClient(urlLivy);
     }
         
   /** Give Spark Server Livy interface url.
@@ -57,7 +57,7 @@ public class Server extends Element {
     }  
     
   /** TBD */
-  public LivyRI livy() {
+  public LivyRESTClient livy() {
     return _livy;
     }
     
@@ -97,7 +97,7 @@ public class Server extends Element {
   
   private String _urlSpark;
   
-  private LivyRI _livy;
+  private LivyRESTClient _livy;
   
   /** Logging . */
   private static Logger log = Logger.getLogger(Server.class);

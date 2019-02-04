@@ -2,7 +2,7 @@ package com.astrolabsoftware.AstroLabNet.DB;
 
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
-import com.astrolabsoftware.AstroLabNet.Livyser.LivyRI;
+import com.astrolabsoftware.AstroLabNet.Livyser.LivyRESTClient;
 import com.astrolabsoftware.AstroLabNet.Livyser.Language;
 import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
 import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;

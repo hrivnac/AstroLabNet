@@ -20,18 +20,18 @@ import java.util.ArrayList;
 // Log4J
 import org.apache.log4j.Logger;
 
-/** <code>LivyRI</code> is the bridge to the <em>Livy</em> service.
+/** <code>LivyRIESTCLient</code> is the bridge to the <em>Livy</em> REST service.
   * @opt attributes
   * @opt operations
   * @opt types
   * @opt visibility
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 // TBD: handle full answer, check for errors
-public class LivyRI {
+public class LivyRESTClient {
   
   /** Connect to the server.
     * @param url The url of the server. */
-  public LivyRI(String url) {
+  public LivyRESTClient(String url) {
     log.info("Connecting to Livy Server " + url);
     _url = url;
     }
@@ -114,6 +114,6 @@ public class LivyRI {
   private String _url;
 
   /** Logging . */
-  private static Logger log = Logger.getLogger(LivyRI.class);
+  private static Logger log = Logger.getLogger(LivyRESTClient.class);
 
   }
