@@ -1,6 +1,7 @@
 package com.astrolabsoftware.AstroLabNet.Livyser;
 
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
+import com.astrolabsoftware.AstroLabNet.Utils.Init;
 import com.astrolabsoftware.AstroLabNet.Utils.SmallHttpClient;
 import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
 import com.astrolabsoftware.AstroLabNet.DB.Jobs.*;
@@ -38,8 +39,9 @@ public class LivyAPIClient {
   
   /** Selftest. */
   public static void main(String[] args) {
-    String livyUrl ="x";
-    String piJar ="y";
+    Init.init(true);
+    String livyUrl ="http://localhost:8998";
+    String piJar ="../lib/PiJob.jar";
     int samples = 100;
     LivyClient client = null;
     try {

@@ -19,9 +19,20 @@ public class Init {
 
   /** Initialise <em>AstroLabNet</em>. */
   public static void init() {
-    PropertyConfigurator.configure(Init.class.getClassLoader().getResource("com/astrolabsoftware/AstroLabNet/Utils/log4j.properties"));
+    init(false);
+    }
+
+  /** Initialise <em>AstroLabNet</em>.
+    * @param minimal Whether to use minimal properties (without Browser). */
+  public static void init(boolean minimal) {
+    if (minimal) {
+      PropertyConfigurator.configure(Init.class.getClassLoader().getResource(PROPERTIES_MINIMAL));
+      }
+    else {
+      PropertyConfigurator.configure(Init.class.getClassLoader().getResource(PROPERTIES));
+      }
     fixLog4J();
-    //log.info("Initialised, version: " + Info.release());
+    log.info("Initialised, version: " + Info.release());
     }
     
   /** Modify the default Log4J setup for external packages. */
@@ -41,8 +52,11 @@ public class Init {
   private static String[] WARN = {"org.apache.zookeeper.ZooKeeper",
                                   "org.apache.zookeeper.ClientCnxn"};
           
-  private static String[] ERROR = {"org.apache.hadoop.hbase.HBaseConfiguration"
-                                   };
+  private static String[] ERROR = {"org.apache.hadoop.hbase.HBaseConfiguration"};
+  
+  private static String PROPERTIES         = "com/astrolabsoftware/AstroLabNet/Utils/log4j.properties";
+  private static String PROPERTIES_MINIMAL = "com/astrolabsoftware/AstroLabNet/Utils/log4j-minimal.properties";
+  
     
   /** Logging . */
   private static Logger log = Logger.getLogger(Init.class);

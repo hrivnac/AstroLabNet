@@ -124,13 +124,35 @@
         <attribute name="Main-Class" value="com.astrolabsoftware.AstroLabNet.Browser.This"/>
         </manifest>
       </jar>
+    <jar jarfile="../lib/PiJob.jar" index="yes">
+      <fileset dir="../build"    includes="com/astrolabsoftware/AstroLabNet/DB/Jobs/PiJob.class"/>
+      <manifest>
+        <attribute name="Created-By" value="${user.name}"/>
+        <attribute name="AppName"    value="AstroLabNet-PiJob"/>
+        <attribute name="AppVersion" value="${version} ${TSTAMP}"/>
+        </manifest>
+      </jar>
     </target>
        
+  <!-- Check ================================================================-->
+    
+  <target name="check-api"
+           description="Check API">
+    <echo>Check API</echo>
+    <java classname="com.astrolabsoftware.AstroLabNet.Livyser.LivyAPIClient"
+          fork="true"
+          failonerror="true">
+      <classpath>
+        <pathelement location="../lib/AstroLabNet.exe.jar"/>
+        </classpath>
+      </java>
+    </target>
+    
   <!-- Run ==================================================================-->
     
   <target name="run"
            description="Run">
-    <echo>Browser Check</echo>
+    <echo>Browser Run</echo>
  		<copy todir=".">
 			<fileset dir="../src/java/com/astrolabsoftware/AstroLabNet/Browser" includes="init.bsh"/>
       </copy>
