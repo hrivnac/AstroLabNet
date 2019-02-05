@@ -64,10 +64,10 @@ public class Server extends Element {
   @Override
   public List<MenuItem> menuItems() {
     List<MenuItem> menuItems = super.menuItems();
-    MenuItem pythonSession = new MenuItem("Python Session", Images.icon(Images.USE));
-    MenuItem scalaSession  = new MenuItem("Scala Session",  Images.icon(Images.USE));
-    MenuItem rSession      = new MenuItem("R Session",      Images.icon(Images.USE));
-    MenuItem sqlSession    = new MenuItem("SQL Session",    Images.icon(Images.USE));
+    MenuItem pythonSession = new MenuItem("Python Session", Images.icon(Images.SESSION));
+    MenuItem scalaSession  = new MenuItem("Scala Session",  Images.icon(Images.SESSION));
+    MenuItem rSession      = new MenuItem("R Session",      Images.icon(Images.SESSION));
+    MenuItem sqlSession    = new MenuItem("SQL Session",    Images.icon(Images.SESSION));
     pythonSession.setOnAction(new ServerEventHandler(this, Language.PYTHON));
     scalaSession.setOnAction( new ServerEventHandler(this, Language.SCALA ));
     rSession.setOnAction(     new ServerEventHandler(this, Language.R     ));

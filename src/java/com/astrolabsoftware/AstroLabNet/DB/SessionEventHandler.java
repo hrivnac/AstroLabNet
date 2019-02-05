@@ -72,7 +72,6 @@ public class SessionEventHandler implements EventHandler<ActionEvent> {
     resultText.getChildren().add(result0);
     ScrollPane scrollPane = new ScrollPane();
     scrollPane.setId("presentationScrollPane");
-    //scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
     scrollPane.setFitToWidth(true);
     scrollPane.setContent(resultText);
     grid.add(scrollPane, 0, 3);
@@ -86,7 +85,7 @@ public class SessionEventHandler implements EventHandler<ActionEvent> {
         }
       });
     _session.setResultRef(resultText);
-    Tab tab = _session.browser().addTab(grid, _session.toString(), Images.USE);
+    Tab tab = _session.browser().addTab(grid, _session.toString(), Images.SESSION);
     _session.browser().registerSessionTab(_session, tab);
     }
     

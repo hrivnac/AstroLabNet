@@ -43,8 +43,7 @@ public class Action extends Element {
   @Override
   public List<MenuItem> menuItems() {
     List<MenuItem> menuItems = super.menuItems();
-    // TBD: check for opened Session
-    MenuItem execute = new MenuItem("Use for Session",  Images.icon(Images.USE));
+    MenuItem execute = new MenuItem("Use for Session",  Images.icon(Images.SESSION));
     execute.setOnAction(new ActionEventHandler(this));
     menuItems.add(execute);
     return menuItems;
@@ -54,6 +53,12 @@ public class Action extends Element {
     * @return The associated command text. */
   public String cmd() {
     return _cmd;
+    }
+    
+  /** Give the Action {@link Language}.
+    * @return The Action {@link Language}. */
+  public Language language() {
+    return _language;
     }
     
   @Override

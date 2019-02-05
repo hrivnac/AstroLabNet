@@ -305,7 +305,7 @@ public class BrowserWindow extends Application {
   public void addData(String name) {
     Data data = new Data(name, this);
     log.info("Adding Data " + data);
-    _data.getChildren().add(new TreeItem<Element>(data));
+    _data.getChildren().add(data.item());
     }
     
   /** Add {@link DataSource}.
@@ -313,7 +313,7 @@ public class BrowserWindow extends Application {
   public void addDataSource(String name) {
     DataSource dataSource = new DataSource(name, this);
     log.info("Adding Data Source " + dataSource);
-    _dataSources.getChildren().add(new TreeItem<Element>(dataSource));
+    _dataSources.getChildren().add(dataSource.item());
     }
 
   /** Add {@link Channel}.
@@ -321,7 +321,7 @@ public class BrowserWindow extends Application {
   public void addChannel(String name) {
     Channel channel = new Channel(name, this);
     log.info("Adding Channel " + channel);
-    _channels.getChildren().add(new TreeItem<Element>(channel));
+    _channels.getChildren().add(channel.item());
     }
     
   /** Add {@link Action}.
@@ -345,7 +345,7 @@ public class BrowserWindow extends Application {
                       int     id) {
     Task task = new Task(name, session, id, this);
     log.info("Adding Task " + task);
-    _tasks.getChildren().add(new TreeItem<Element>(task));
+    _tasks.getChildren().add(task.item());
     }
  
   /** Register the {@link Session} command, so that it can be filled
@@ -375,7 +375,20 @@ public class BrowserWindow extends Application {
       }
     }
     
-  /** TBD */
+  /** Give selected {@link Session}.
+    * @return The selected {@link Session},
+    *         <tt>null</tt> if no {@link Session} is selected. */
+  public Session getSelectedSession() {
+    for (Map.Entry<Session, Tab> entry : _sessionTabs.entrySet()) {
+      if (entry.getValue().isSelected()) {
+        return entry.getKey();
+        }
+      }
+    return null;
+    }
+    
+  /** Select {@link Tab} with requested {@link Session}.
+    * @param session The  requested {@link Session} to be selected. */
   public void selectTab(Session session) {
     _results.getSelectionModel().select(_sessionTabs.get(session));
   }

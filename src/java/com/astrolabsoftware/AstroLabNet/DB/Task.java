@@ -50,7 +50,7 @@ public class Task extends Element {
               Session       session,
               int           id,
               BrowserWindow browser) {
-    super(name, browser, Images.ACTION); // BUG: doesn't show icon
+    super(name, browser, Images.TASK);
     _session = session;
     Thread thread = new Thread() {
       // check periodically status, untill progress = 1.0
@@ -108,13 +108,14 @@ public class Task extends Element {
   @Override
   public List<MenuItem> menuItems() {
     List<MenuItem> menuItems = super.menuItems();
-    MenuItem show = new MenuItem("Show Session",  Images.icon(Images.USE));
+    MenuItem show = new MenuItem("Show Session",  Images.icon(Images.SESSION));
     show.setOnAction(new TaskEventHandler(this));
     menuItems.add(show);
     return menuItems;
     }
   
-  /** TBD */
+  /** Give hosting {@link Session}.
+    * @return The hosting {@link Session}. */
   public Session session() {
     return _session;
     }

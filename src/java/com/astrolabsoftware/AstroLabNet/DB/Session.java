@@ -48,7 +48,7 @@ public class Session extends Element {
                  int           id,
                  Language      language,
                  Server        server) {
-    super(name, browser);
+    super(name, browser, Images.SESSION);
     _id       = id;
     _language = language;
     _server   = server;
@@ -75,7 +75,7 @@ public class Session extends Element {
   @Override
   public List<MenuItem> menuItems() {
     List<MenuItem> menuItems = super.menuItems();
-    MenuItem execute = new MenuItem("Prepare for Execution",  Images.icon(Images.USE));
+    MenuItem execute = new MenuItem("Prepare for Execution",  Images.icon(Images.SESSION));
     String tit = toString();
     execute.setOnAction(new SessionEventHandler(this));
     menuItems.add(execute);
