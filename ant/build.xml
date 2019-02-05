@@ -100,7 +100,7 @@
         </fileset>
       </path>
     <property name="classpath.libs" refid="libs"/>
-    <jar jarfile="../lib/AstroLabNet.exe.jar" index="yes">
+    <jar jarfile="../lib/AstroLabNet.jar" index="yes">
       <fileset dir="../build"    includes="com/astrolabsoftware/AstroLabNet/**/*.class"/>
       <fileset dir="../src/java" includes="com/astrolabsoftware/AstroLabNet/**/*.properties"/>
       <fileset dir="../src/java" includes="com/astrolabsoftware/AstroLabNet/**/*.txt"/>
@@ -108,15 +108,23 @@
       <fileset dir="../src/java" includes="com/astrolabsoftware/AstroLabNet/**/*.gif"/>
       <fileset dir="../src/java" includes="com/astrolabsoftware/AstroLabNet/**/*.css"/>
       <fileset dir="../src/java" includes="com/astrolabsoftware/AstroLabNet/DB/Actions/*"/>
-      <zipfileset includes="**/*.class" src="${log4j.jar}"/>
-      <zipfileset includes="**/*.class" src="${bsh.jar}"/>
-      <zipfileset includes="**/*.class" src="${scala.jar}"/>
-      <zipfileset includes="**/*.class" src="${livy.jar}"/>
-      <zipfileset includes="**/*.class" src="${spark.jar}"/>
-      <zipfileset includes="**/*.class" src="${httpclient.jar}"/>
-      <zipfileset includes="**/*.class" src="${httpcore.jar}"/>
-      <zipfileset includes="**/*.class" src="${logging.jar}"/>
-      <zipfileset includes="**/*.class" src="${orgjson.jar}"/>
+      <manifest>
+        <attribute name="Created-By" value="${user.name}"/>
+        <attribute name="AppName"    value="AstroLabNet-lib"/>
+        <attribute name="AppVersion" value="${version} ${TSTAMP}"/>
+        </manifest>
+      </jar>
+    <jar jarfile="../lib/AstroLabNet.exe.jar" index="yes">
+      <zipfileset includes="**/*" src="../lib/AstroLabNet.jar"/>
+      <zipfileset includes="**/*" src="${log4j.jar}"/>
+      <zipfileset includes="**/*" src="${bsh.jar}"/>
+      <zipfileset includes="**/*" src="${scala.jar}"/>
+      <zipfileset includes="**/*" src="${livy.jar}"/>
+      <zipfileset includes="**/*" src="${spark.jar}"/>
+      <zipfileset includes="**/*" src="${httpclient.jar}"/>
+      <zipfileset includes="**/*" src="${httpcore.jar}"/>
+      <zipfileset includes="**/*" src="${logging.jar}"/>
+      <zipfileset includes="**/*" src="${orgjson.jar}"/>
       <manifest>
         <attribute name="Created-By" value="${user.name}"/>
         <attribute name="AppName"    value="AstroLabNet"/>
@@ -142,9 +150,15 @@
     <java classname="com.astrolabsoftware.AstroLabNet.Livyser.LivyAPIClient"
           fork="true"
           failonerror="true">
+      <!-- TBD: should go via properties -->
       <classpath>
-        <pathelement location="../lib/AstroLabNet.exe.jar"/>
-        </classpath>
+        <fileset dir="../lib">
+          <include name="AstroLabNet.jar"/>
+          </fileset>
+        <fileset dir="/opt/livy/jars">
+          <include name="*.jar"/>
+          </fileset>
+         </classpath>
       </java>
     </target>
     

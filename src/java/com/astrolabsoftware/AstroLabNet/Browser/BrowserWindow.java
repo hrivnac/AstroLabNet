@@ -78,8 +78,7 @@ public class BrowserWindow extends Application {
     String ext;
     Language lang = Language.PYTHON;
     for (String actionTxt : new String[] {"pi.py",
-                                          "pi.scala",
-                                          "pi.r"}) {
+                                          "pi.scala"}) {
       try {
         ext = actionTxt.substring(actionTxt.lastIndexOf(".") + 1);
         switch (ext) { // TBD: put into Language

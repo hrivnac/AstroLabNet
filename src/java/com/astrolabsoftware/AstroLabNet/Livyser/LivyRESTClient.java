@@ -82,6 +82,9 @@ public class LivyRESTClient {
   public String sendCommand(int    id,
                             String code) {
     String result = "";
+    code = code.trim()
+               .replaceAll("\n", "\\\\n")
+               .replaceAll("\"", "\\\\\"");
     try {
       result = SmallHttpClient.post(_url + "/sessions/" + id + "/statements", "{\"code\":\"" + code + "\"}", null);
       }

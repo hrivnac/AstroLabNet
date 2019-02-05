@@ -40,8 +40,8 @@ public class LivyAPIClient {
   /** Selftest. */
   public static void main(String[] args) {
     Init.init(true);
-    String livyUrl ="http://localhost:8998";
-    String piJar ="../lib/PiJob.jar";
+    String livyUrl = "http://localhost:8998";
+    String piJar = "/home/hrivnac/work/LSST/AstroLabNet/lib/PiJob.jar"; // TBD: without abs path
     int samples = 100;
     LivyClient client = null;
     try {
@@ -53,7 +53,7 @@ public class LivyAPIClient {
       System.out.println("Pi is roughly: " + pi);
       }
     catch (Exception e) {
-      log.fatal("Cannot run test !");
+      log.fatal("Cannot run test !", e); // TBD: remove e
       log.debug("Cannot run test !", e);
       }
     finally {

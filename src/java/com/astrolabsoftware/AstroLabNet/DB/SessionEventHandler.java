@@ -7,6 +7,7 @@ import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
 // JavaFX
 import javafx.scene.Node;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.control.TextField;
@@ -16,6 +17,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -64,18 +66,26 @@ public class SessionEventHandler implements EventHandler<ActionEvent> {
     buttonBox.setAlignment(Pos.BOTTOM_RIGHT);
     buttonBox.getChildren().add(button);
     grid.add(buttonBox, 0, 2);
-    Text actionTarget = new Text("Fill in or select Action");
-    grid.add(actionTarget, 0, 3);
+    TextFlow resultText = new TextFlow(); 
+    Text result0 = new Text("Fill in or select Action\n\n");
+    result0.setFill(Color.DARKGREEN);
+    resultText.getChildren().add(result0);
+    ScrollPane scrollPane = new ScrollPane();
+    scrollPane.setId("presentationScrollPane");
+    //scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+    scrollPane.setFitToWidth(true);
+    scrollPane.setContent(resultText);
+    grid.add(scrollPane, 0, 3);
     button.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent e) {
         String result = _session.server().livy().sendCommand(_session.id(), cmd.getText());
         int id = new JSONObject(result).getInt("id");;
         _session.browser().addTask(_session.server().urlLivy() + "/" + _session.id() + "/" + id, _session, id);
-        actionTarget.setText("Command send to Session");
+        resultText.getChildren().add(new Text("Command send to Session\n\n"));
         }
       });
-    _session.setResultRef(actionTarget);
+    _session.setResultRef(resultText);
     Tab tab = _session.browser().addTab(grid, _session.toString(), Images.USE);
     _session.browser().registerSessionTab(_session, tab);
     }

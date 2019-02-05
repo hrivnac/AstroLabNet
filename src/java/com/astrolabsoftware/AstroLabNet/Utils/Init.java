@@ -32,7 +32,6 @@ public class Init {
       PropertyConfigurator.configure(Init.class.getClassLoader().getResource(PROPERTIES));
       }
     fixLog4J();
-    log.info("Initialised, version: " + Info.release());
     }
     
   /** Modify the default Log4J setup for external packages. */

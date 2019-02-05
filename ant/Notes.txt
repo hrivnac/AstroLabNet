@@ -1,2 +1,6 @@
 /opt/spark/bin/spark-shell
 /opt/livy/bin/livy-server start
+
+/usr/bin/curl -X POST --data '{"kind": "pyspark"}' -H "Content-Type: application/json" localhost:8998/sessions
+/usr/bin/curl -X POST --data '{"code": "1+1"}' -H "Content-Type: application/json" localhost:8998/sessions/6
+

@@ -7,6 +7,7 @@ import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
 // JavaFX
 import javafx.scene.Node;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.control.TextField;
@@ -83,15 +84,15 @@ public class Session extends Element {
     
   /** Set reference to result.
     * To be filled once available.
-    * @param resultRef The result {@link Text} shown in the {@link Session} tab.*/
-  public void setResultRef(Text resultRef) {
+    * @param resultRef The result {@link TextFlow} shown in the {@link Session} tab.*/
+  public void setResultRef(TextFlow resultRef) {
     _resultRef = resultRef;
     }
     
   /** Set result into result reference on the {@link Session} tab.
-    * @param result The result text. */
-  public void setResult(String result) {
-    _resultRef.setText(result);
+    * @param result The result {@link Text}. */
+  public void setResult(Text result) {
+    _resultRef.getChildren().add(result);
     }
     
   @Override
@@ -105,7 +106,7 @@ public class Session extends Element {
   
   private Server _server;
   
-  private Text _resultRef;
+  private TextFlow _resultRef;
   
   /** Logging . */
   private static Logger log = Logger.getLogger(Session.class);

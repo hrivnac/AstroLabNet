@@ -78,11 +78,14 @@ public class Task extends Element {
         JSONObject output = result.getJSONObject("output");
         String status = output.getString("status");
         JSONObject data = null;
+        Text text = new Text();
         if (status.equals("ok")) {
           data = output.getJSONObject("data");
+          text.setFill(Color.DARKBLUE);
           }
         else if (status.equals("error")) {
           data = output;
+          text.setFill(Color.DARKRED);
           }
         else {
           log.error("Unknown status " + status);
@@ -93,7 +96,8 @@ public class Task extends Element {
         Platform.runLater(new Runnable() {
           @Override
           public void run() {
-            session.setResult("status = " + status + "\n\n" + d.toString(2));
+            text.setText("status = " + status + "\n\noutput = " + output.toString(2).replaceAll("\\\\n", "") + "\n\n");
+            session.setResult(text);
             }
           });
         }
