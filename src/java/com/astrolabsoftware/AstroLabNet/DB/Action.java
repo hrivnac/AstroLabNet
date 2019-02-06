@@ -48,6 +48,20 @@ public class Action extends Element {
     menuItems.add(execute);
     return menuItems;
     }
+    
+  /** Activate {@link Session}. */
+  public void activate() {
+    Session selected = browser().getSelectedSession();
+    if (selected == null) {
+      log.error("No Session is selected");
+      }
+    else if (selected.language() != _language) {
+      log.error("Action language " + _language + " != Session language " + selected.language());
+      }
+    else {
+      browser().setSessionCmd(_cmd);
+      }
+    }
 
   /** Give the associated command text.
     * @return The associated command text. */

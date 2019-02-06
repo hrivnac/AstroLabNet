@@ -63,7 +63,6 @@ public class LivyRESTClient {
       result = SmallHttpClient.get(_url + "/sessions", null);
       }
     catch (AstroLabNetException e) {
-      log.info(e);
       BrowserWindow.reportException("Request has failed", e, log);
       return ss;
       }
@@ -71,22 +70,43 @@ public class LivyRESTClient {
     for (int i = 0; i < sessions.length(); i++) {
       ss.add(new Pair<Integer, Language>(sessions.getJSONObject(i).getInt("id"),
                                          Language.fromSpark(sessions.getJSONObject(i).getString("kind"))));
+      getStatements(sessions.getJSONObject(i).getInt("id"));
+      }
+    return ss;
+    }
+    
+  /** Get list of opened statements.
+    * @param  idSession The existing session number.
+    * @return           The {@link List} of {@link Integer}s of open statement numbers for a session. */
+  public List<Integer> getStatements(int idSession) {
+    List<Integer> ss = new ArrayList<>();
+    String result = "";
+    try {
+      result = SmallHttpClient.get(_url + "/sessions/" + idSession + "/statements", null);
+      }
+    catch (AstroLabNetException e) {
+      BrowserWindow.reportException("Request has failed", e, log);
+      return ss;
+      }
+    JSONArray statements = new JSONObject(result).getJSONArray("statements");
+    for (int i = 0; i < statements.length(); i++) {
+      ss.add(new Integer(statements.getJSONObject(i).getInt("id")));
       }
     return ss;
     }
   
   /** Send command to the server.
-    * @param  id   The existing sessin number.
-    * @param  code The <em>scala</code> to be run on the server.
-    * @return      The command result, in <em>json</em>. */
-  public String sendCommand(int    id,
+    * @param  idSession The existing session number.
+    * @param  code      The <em>scala</code> to be run on the server.
+    * @return           The command result, in <em>json</em>. */
+  public String sendCommand(int    idSession,
                             String code) {
     String result = "";
     code = code.trim()
                .replaceAll("\n", "\\\\n")
                .replaceAll("\"", "\\\\\"");
     try {
-      result = SmallHttpClient.post(_url + "/sessions/" + id + "/statements", "{\"code\":\"" + code + "\"}", null);
+      result = SmallHttpClient.post(_url + "/sessions/" + idSession + "/statements", "{\"code\":\"" + code + "\"}", null);
       }
     catch (AstroLabNetException e) {
       log.info(e);

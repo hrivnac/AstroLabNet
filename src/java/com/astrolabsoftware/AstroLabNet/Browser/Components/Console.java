@@ -5,6 +5,7 @@ import com.astrolabsoftware.AstroLabNet.Utils.Info;
 // AWT
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Dimension;
 
 // Swing
 import javax.swing.JScrollPane;
@@ -25,7 +26,8 @@ public final class Console extends JConsole {
     setFont(new Font("Helvetica", Font.PLAIN, 15));
     setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
     setBorder(BorderFactory.createEtchedBorder());
-    //setSize(400, 400);
+    setSize(                     Integer.MAX_VALUE, 200);
+    setMaximumSize(new Dimension(Integer.MAX_VALUE, 400));
     print("Welcome to AstroLabNet " + Info.release() + "\n", new Font("Helvetica", Font.BOLD, 15), Color.red);
     print("https://astrolabsoftware.github.io\n", new Font("Helvetica", Font.PLAIN, 15), Color.red);
     }

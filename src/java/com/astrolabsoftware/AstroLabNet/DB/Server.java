@@ -83,8 +83,15 @@ public class Server extends Element {
   /** Update list of dependent {@link Session}s. */
   public void updateSessions() {
     item().getChildren().clear();
+    int idSession;
+    Session session;
     for (Pair<Integer, Language> p : _livy.getSessions()) {
-      item().getChildren().add(new TreeItem<Element>(new Session("Session", browser(), p.getKey(), p.getValue(), this)));
+      idSession = p.getKey();
+      session = new Session("Session", browser(), idSession, p.getValue(), this);
+      item().getChildren().add(new TreeItem<Element>(session));
+      for (int idStatement : _livy.getStatements(idSession)) {
+        browser().addTask(_urlLivy + "/" + idSession + "/" + idStatement, session, idStatement);
+        }
       }
     }
     

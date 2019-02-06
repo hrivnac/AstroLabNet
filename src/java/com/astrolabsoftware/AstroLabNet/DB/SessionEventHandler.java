@@ -53,41 +53,9 @@ public class SessionEventHandler implements EventHandler<ActionEvent> {
     
   @Override
   public void handle(ActionEvent event) {
-    GridPane grid = new GridPane();
-    grid.setAlignment(Pos.CENTER);
-    grid.setHgap(10);
-    grid.setVgap(10);
-    Label desc = new Label("Command in " + _session.language() + ":");
-    grid.add(desc, 0, 0);
-    TextArea cmd = new TextArea();
-    grid.add(cmd, 0, 1);
-    Button button = new Button("Execute");
-    HBox buttonBox = new HBox(10);
-    buttonBox.setAlignment(Pos.BOTTOM_RIGHT);
-    buttonBox.getChildren().add(button);
-    grid.add(buttonBox, 0, 2);
-    TextFlow resultText = new TextFlow(); 
-    Text result0 = new Text("Fill in or select Action\n\n");
-    result0.setFill(Color.DARKGREEN);
-    resultText.getChildren().add(result0);
-    ScrollPane scrollPane = new ScrollPane();
-    scrollPane.setId("presentationScrollPane");
-    scrollPane.setFitToWidth(true);
-    scrollPane.setContent(resultText);
-    grid.add(scrollPane, 0, 3);
-    button.setOnAction(new EventHandler<ActionEvent>() {
-      @Override
-      public void handle(ActionEvent e) {
-        String result = _session.server().livy().sendCommand(_session.id(), cmd.getText());
-        int id = new JSONObject(result).getInt("id");;
-        _session.browser().addTask(_session.server().urlLivy() + "/" + _session.id() + "/" + id, _session, id);
-        resultText.getChildren().add(new Text("Command send to Session\n\n"));
-        }
-      });
-    _session.setResultRef(resultText);
-    Tab tab = _session.browser().addTab(grid, _session.toString(), Images.SESSION);
-    _session.browser().registerSessionTab(_session, tab);
+    _session.addTab();
     }
+    
     
   private Session _session;  
 

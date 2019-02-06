@@ -97,7 +97,7 @@ public class Task extends Element {
           @Override
           public void run() {
             text.setText("status = " + status + "\n\noutput = " + output.toString(2).replaceAll("\\\\n", "") + "\n\n");
-            session.setResult(text);
+            session.setResult(text); // check, if the selected tab is correct
             }
           });
         }

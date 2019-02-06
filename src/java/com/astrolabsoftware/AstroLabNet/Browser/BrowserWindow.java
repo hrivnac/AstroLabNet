@@ -270,11 +270,15 @@ public class BrowserWindow extends Application {
     
   /** Add {@link Server}.
     * @param name     The {@link Server} name.
-    * @param urlLivy  The url of the <em>Livy</em> server. May be <tt>null</tt>.
+    * @param urlLivy  The url of the <em>Livy</em> server. Should not be <tt>null</tt>.
     * @param urlSpark The url of the <em>Spark</em> server. May be <tt>null</tt>. */
   public void addServer(String name,
                         String urlLivy,
                         String urlSpark) {
+    if (urlLivy == null) {
+      log.warn("No Livy server defined for " + name);
+      return;
+      }
     Server server = new Server(name, this, urlLivy, urlSpark);
     log.info("Adding Server " + server);
     TreeItem<Element> serverItem = server.item();

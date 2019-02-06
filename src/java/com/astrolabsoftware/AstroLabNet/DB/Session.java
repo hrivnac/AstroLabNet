@@ -16,13 +16,20 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.control.ScrollPane;
 import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.geometry.Insets;
+
+// org.json
+import org.json.JSONObject;
 
 // Java
 import java.util.List;
@@ -92,7 +99,51 @@ public class Session extends Element {
   /** Set result into result reference on the {@link Session} tab.
     * @param result The result {@link Text}. */
   public void setResult(Text result) {
-    _resultRef.getChildren().add(result);
+    if (_resultRef == null) {
+      addTab();
+      }
+    else {
+      _resultRef.getChildren().add(result);
+      }
+    }
+    
+  /** Add {@link Tab} of this Session. */
+  public void addTab() {
+    GridPane grid = new GridPane();
+    grid.setAlignment(Pos.CENTER);
+    grid.setHgap(10);
+    grid.setVgap(10);
+    Label desc = new Label("Command in " + _language + ":");
+    grid.add(desc, 0, 0);
+    TextArea cmd = new TextArea();
+    grid.add(cmd, 0, 1);
+    Button button = new Button("Execute");
+    HBox buttonBox = new HBox(10);
+    buttonBox.setAlignment(Pos.BOTTOM_RIGHT);
+    buttonBox.getChildren().add(button);
+    grid.add(buttonBox, 0, 2);
+    TextFlow resultText = new TextFlow(); 
+    Text result0 = new Text("Fill in or select Action\n\n");
+    result0.setFill(Color.DARKGREEN);
+    resultText.getChildren().add(result0);
+    ScrollPane scrollPane = new ScrollPane();
+    scrollPane.setId("presentationScrollPane");
+    scrollPane.setFitToWidth(true);
+    scrollPane.setContent(resultText);
+    grid.add(scrollPane, 0, 3);
+    Session session = this;
+    button.setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent e) {
+        String result = _server.livy().sendCommand(_id, cmd.getText());
+        int id = new JSONObject(result).getInt("id");;
+        browser().addTask(_server.urlLivy() + "/" + _id + "/" + id, session, id);
+        resultText.getChildren().add(new Text("Command send to Session\n\n"));
+        }
+      });
+    setResultRef(resultText);
+    Tab tab = browser().addTab(grid, toString(), Images.SESSION);
+    browser().registerSessionTab(this, tab);
     }
     
   @Override

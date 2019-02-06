@@ -38,16 +38,7 @@ public class ActionEventHandler implements EventHandler<ActionEvent> {
  
   @Override
   public void handle(ActionEvent event) {
-    Session selected = _action.browser().getSelectedSession();
-    if (selected == null) {
-      log.error("No Session is selected");
-      }
-    else if (selected.language() != _action.language()) {
-      log.error("Action language " + _action.language() + " != Session language " + selected.language());
-      }
-    else {
-      _action.browser().setSessionCmd(_action.cmd());
-      }
+    _action.activate();
     }
  
   private Action _action;  
