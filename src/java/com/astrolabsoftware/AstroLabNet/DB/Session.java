@@ -10,6 +10,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TreeItem;
@@ -18,15 +19,18 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.control.ScrollPane;
 import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 
 // org.json
 import org.json.JSONObject;
@@ -109,28 +113,39 @@ public class Session extends Element {
     
   /** Add {@link Tab} of this Session. */
   public void addTab() {
-    GridPane grid = new GridPane();
-    grid.setAlignment(Pos.CENTER);
-    grid.setHgap(10);
-    grid.setVgap(10);
+    // Desc
     Label desc = new Label("Command in " + _language + ":");
-    grid.add(desc, 0, 0);
+    // Cmd
     TextArea cmd = new TextArea();
-    grid.add(cmd, 0, 1);
+    cmd.setPrefHeight(2000);
+    // Progress
+    _progress = new ProgressBar(0);
+    // Button
     Button button = new Button("Execute");
+    // ButtonBox = Progress + Button
     HBox buttonBox = new HBox(10);
-    buttonBox.setAlignment(Pos.BOTTOM_RIGHT);
-    buttonBox.getChildren().add(button);
-    grid.add(buttonBox, 0, 2);
+    buttonBox.setSpacing(5);
+    buttonBox.setAlignment(Pos.CENTER);
+    buttonBox.getChildren().addAll(_progress, button);
+    // CmdBox = Desc + Cmd + ButtonBox 
+    VBox cmdBox = new VBox();
+    cmdBox.setSpacing(5);
+    cmdBox.setAlignment(Pos.CENTER);
+    cmdBox.getChildren().addAll(desc, cmd, buttonBox);
+    // ResultText
     TextFlow resultText = new TextFlow(); 
     Text result0 = new Text("Fill in or select Action\n\n");
     result0.setFill(Color.DARKGREEN);
     resultText.getChildren().add(result0);
+    // ScrollPane = ResultText
     ScrollPane scrollPane = new ScrollPane();
-    scrollPane.setId("presentationScrollPane");
     scrollPane.setFitToWidth(true);
     scrollPane.setContent(resultText);
-    grid.add(scrollPane, 0, 3);
+    // Pane = Desc + Cmd + ButtonBox + ScrollPane
+    SplitPane pane = new SplitPane();
+    pane.setDividerPositions(0.5);
+    pane.setOrientation(Orientation.VERTICAL);
+    pane.getItems().addAll(cmdBox, scrollPane);
     Session session = this;
     button.setOnAction(new EventHandler<ActionEvent>() {
       @Override
@@ -142,9 +157,18 @@ public class Session extends Element {
         }
       });
     setResultRef(resultText);
-    Tab tab = browser().addTab(grid, toString(), Images.SESSION);
+    Tab tab = browser().addTab(pane, toString(), Images.SESSION);
     browser().registerSessionTab(this, tab);
     }
+    
+  /** Set {@link ProgressBar} value.
+    * @param p The {@link ProgressBar} value = &lt;0,1&gt;. */
+  public void setProgress(double p) {
+    if (_progress == null) {
+      return;
+      }
+    _progress.setProgress(p);
+    }   
     
   @Override
   public String toString() {
@@ -158,6 +182,8 @@ public class Session extends Element {
   private Server _server;
   
   private TextFlow _resultRef;
+  
+  private ProgressBar _progress;
   
   /** Logging . */
   private static Logger log = Logger.getLogger(Session.class);

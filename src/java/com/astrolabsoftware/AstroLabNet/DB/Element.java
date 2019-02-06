@@ -38,7 +38,7 @@ import org.apache.log4j.Logger;
   * @opt visibility
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public class Element {
-  
+
   /** Create new Element.
     * @param name    The Element name.
     * @param browser The {@link BrowserWindow}. */

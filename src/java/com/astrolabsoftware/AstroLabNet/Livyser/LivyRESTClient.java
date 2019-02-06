@@ -50,7 +50,7 @@ public class LivyRESTClient {
       BrowserWindow.reportException("Request has failed", e, log);
       return 0;
       }
-    log.info("Result: + " + result);
+    log.debug("Result:\n" + result.trim());
     return new JSONObject(result).getInt("id");
     }
     
@@ -112,7 +112,7 @@ public class LivyRESTClient {
       log.info(e);
       BrowserWindow.reportException("Request has failed", e, log);
       }
-    log.info("Result: + " + result);
+    log.debug("Result:\n" + result.trim());
     return result;
     }
     
@@ -130,7 +130,7 @@ public class LivyRESTClient {
       log.info(e);
       BrowserWindow.reportException("Request has failed", e, log);
       }
-    log.info("Result: + " + result);
+    log.debug("Result:\n" + result.trim());
     return result;
     }
     

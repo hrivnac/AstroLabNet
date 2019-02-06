@@ -19,7 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane; 
 import javafx.scene.layout.HBox; 
 import javafx.scene.layout.VBox; 
-import javafx.scene.layout.GridPane;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
@@ -33,7 +33,7 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.embed.swing.SwingNode;
-import javafx.geometry.Insets; 
+import javafx.geometry.Orientation;
 import javafx.collections.ObservableList; 
 
 // Java
@@ -72,7 +72,7 @@ public class BrowserWindow extends Application {
     t.start();
     }
     
-  /** TBD */
+  /** Fill the pre-defined {@link Action}s. */
   public void readActions() {
     addAction("Test", "1+1", Language.PYTHON);
     String ext;
@@ -138,9 +138,7 @@ public class BrowserWindow extends Application {
     Button exit = new SimpleButton("Exit", Images.EXIT, "Exit", new ExitHandler(this)); 
     // Menu = About + Exit
     HBox menu = new HBox();    
-    menu.setSpacing(10);    
-    menu.setMargin(about, new Insets(2, 2, 2, 2)); 
-    menu.setMargin(exit,  new Insets(2, 2, 2, 2)); 
+    menu.setSpacing(5);
     ObservableList menuList = menu.getChildren();  
     menuList.addAll(about, exit);           
     // Tree
@@ -181,19 +179,21 @@ public class BrowserWindow extends Application {
     createSwingContent(console, _console);
     //console.setContent(_console);
     // Center = Results + Console
-    VBox center = new VBox();    
-    center.setSpacing(10);  
-    center.setMargin(_results, new Insets(2, 2, 2, 2)); 
-    center.setMargin(console, new Insets(2, 2, 2, 2)); 
-    ObservableList centerList = center.getChildren();  
-    centerList.addAll(_results, console);  
-    // Content = Menu + Tree + Center
-    BorderPane content = new BorderPane();   
-    content.setTop(menu); 
-    content.setLeft(tree); 
-    content.setCenter(center);
+    SplitPane center = new SplitPane();
+    center.setDividerPositions(0.8);
+    center.setOrientation(Orientation.VERTICAL);
+    center.getItems().addAll(_results, console);
+    // Content = Tree + Center
+    SplitPane content = new SplitPane();
+    content.setDividerPositions(0.2);
+    content.setOrientation(Orientation.HORIZONTAL);
+    content.getItems().addAll(tree, center);
+    // All = Menu + Content
+    BorderPane all = new BorderPane();
+    all.setTop(menu);
+    all.setCenter(content);
     // Scene
-    Scene scene = new Scene(content);
+    Scene scene = new Scene(all);
     scene.getStylesheets().add("com/astrolabsoftware/AstroLabNet/Browser/BrowserWindow.css"); 
     stage.setTitle("AstroLabNet Browser"); 
     stage.setScene(scene);          
@@ -348,8 +348,6 @@ public class BrowserWindow extends Application {
                       Session session,
                       int     id) {
     Task task = Task.create(name, session, id, this, _tasks);
-    //log.info("Adding Task " + task);
-    //_tasks.getChildren().add(task.item());
     }
  
   /** Register the {@link Session} command, so that it can be filled
@@ -367,8 +365,9 @@ public class BrowserWindow extends Application {
     boolean done = false;
     for (Map.Entry<Session, Tab> entry : _sessionTabs.entrySet()) {
       if (entry.getValue().isSelected()) {
-        GridPane grid = (GridPane)(entry.getValue().getContent());
-        TextArea actionTarget = (TextArea)(grid.getChildren().get(1));
+        SplitPane pane = (SplitPane)(entry.getValue().getContent());
+        VBox vbox = (VBox)(pane.getItems().get(0));
+        TextArea actionTarget = (TextArea)(vbox.getChildren().get(1));
         actionTarget.setText(txt);
         done = true;
         break;

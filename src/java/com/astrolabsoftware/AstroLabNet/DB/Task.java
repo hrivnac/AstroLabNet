@@ -94,11 +94,12 @@ public class Task extends Element {
             resultString = session.server().livy().checkProgress(session.id(), id);
             result = new JSONObject(resultString);
             progress = result.getDouble("progress");
-            log.info("Progress = " + progress);
+            session.setProgress(progress);
+            log.debug("Progress = " + progress);
             if (progress == 1.0) {
               break;
               }
-            Thread.sleep(5000); // 5s
+            Thread.sleep(1000); // 1s
             }
           catch (InterruptedException e) {
             Thread.currentThread().interrupt();

@@ -27,7 +27,8 @@ public final class Console extends JConsole {
     setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
     setBorder(BorderFactory.createEtchedBorder());
     setSize(                     Integer.MAX_VALUE, 200);
-    setMaximumSize(new Dimension(Integer.MAX_VALUE, 400));
+    setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
+    setMinimumSize(new Dimension(200,               200));
     print("Welcome to AstroLabNet " + Info.release() + "\n", new Font("Helvetica", Font.BOLD, 15), Color.red);
     print("https://astrolabsoftware.github.io\n", new Font("Helvetica", Font.PLAIN, 15), Color.red);
     }
