@@ -28,6 +28,8 @@ import org.json.JSONArray;
 
 // Java
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 // Log4J
 import org.apache.log4j.Logger;
@@ -40,6 +42,33 @@ import org.apache.log4j.Logger;
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public class Task extends Element {
   
+  
+  /** Create new Task as a <em>Singleton</em>.
+    * @param name    The Task name.
+    * @param session  The hosting {@link Session}.
+    * @param id       The statement id.
+    * @param browser  The {@link BrowserWindow}.
+    * @param elements The mother {@link TreeItem}.
+    *                 Task will be added to it, if not yet present.*/
+  // TBD: do factory for other elements too
+  public static Task create(String            name,
+                            Session           session,
+                            int               id,
+                            BrowserWindow     browser,
+                            TreeItem<Element> elements) {
+    String regId = name + "_" + session + "_" + id;
+    Task task = _tasks.get(regId);
+    if (task == null) {
+     task = new Task(name, session, id, browser);
+     log.info("Adding Task " + task);
+      _tasks.put(regId, task);
+      elements.getChildren().add(task.item());
+      }
+    return task;
+    }
+  
+  private static Map<String, Task> _tasks = new HashMap<>();  
+    
   /** Create new Task.
     * Check the progress.
     * @param name    The Task name.
