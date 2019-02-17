@@ -21,6 +21,7 @@
     <pathelement path="${httpclient.jar}"/>
     <pathelement path="${httpcore.jar}"/>
     <pathelement path="${logging.jar}"/>
+    <pathelement path="${cli.jar}"/>
     <pathelement path="${orgjson.jar}"/>
     <fileset dir="../exelib">
       <include name="*.jar"/>
@@ -124,6 +125,7 @@
       <zipfileset includes="**/*" src="${httpclient.jar}"/>
       <zipfileset includes="**/*" src="${httpcore.jar}"/>
       <zipfileset includes="**/*" src="${logging.jar}"/>
+      <zipfileset includes="**/*" src="${cli.jar}"/>
       <zipfileset includes="**/*" src="${orgjson.jar}"/>
       <manifest>
         <attribute name="Created-By" value="${user.name}"/>
@@ -165,7 +167,7 @@
   <!-- Run ==================================================================-->
     
   <target name="run"
-           description="Run">
+           description="Run in Browser">
     <echo>Browser Run</echo>
  		<copy todir=".">
 			<fileset dir="../src/java/com/astrolabsoftware/AstroLabNet/Browser" includes="init.bsh"/>
@@ -173,9 +175,36 @@
     <java jar="../lib/AstroLabNet.exe.jar"
           fork="true"
           failonerror="true">
+      <arg value="-b"/>
+      </java>
+    </target>
+ 
+  <target name="run-cli"
+           description="Run as CLI">
+    <echo>CLI Run</echo>
+ 		<copy todir=".">
+			<fileset dir="../src/java/com/astrolabsoftware/AstroLabNet/Browser" includes="init.bsh"/>
+      </copy>
+    <java jar="../lib/AstroLabNet.exe.jar"
+          fork="true"
+          failonerror="true">
+      <arg value="-c"/>
       </java>
     </target>
     
+  <target name="run-help"
+           description="Run with help">
+    <echo>Help Run</echo>
+ 		<copy todir=".">
+			<fileset dir="../src/java/com/astrolabsoftware/AstroLabNet/Browser" includes="init.bsh"/>
+      </copy>
+    <java jar="../lib/AstroLabNet.exe.jar"
+          fork="true"
+          failonerror="true">
+      <arg value="-h"/>
+      </java>
+    </target>
+
   <!-- Clean ================================================================-->
 
   <target name="clean"
@@ -243,6 +272,7 @@
       <link href="https://spark.apache.org/docs/2.3.1/api/java"/>
       <link href="https://hc.apache.org/httpcomponents-client-ga/httpclient/apidocs"/>
       <link href="http://stleary.github.io/JSON-java"/>
+      <link href="https://commons.apache.org/proper/commons-cli/apidocs"/>
       <!-- scala library -->
       <classpath>
         <path refid="classpath.run"/>
