@@ -17,11 +17,7 @@ public class This {
   /** Initialise and open the browser. */
   public static void main(String[] args) {
     Init.init(args);
-    if (Init.asCLI()) {
-      }
-    else if (Init.asBrowser()) {
-      Application.launch(BrowserWindow.class, args);
-      }
+    Application.launch(BrowserWindow.class, args);
     }
   
   }

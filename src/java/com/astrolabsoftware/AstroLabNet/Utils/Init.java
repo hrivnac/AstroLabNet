@@ -89,15 +89,17 @@ public class Init {
       if (line.hasOption("browser")) {
         _asBrowser = true;
         }
-      if ((!_asCLI & !_asBrowser) | (_asCLI & _asBrowser)) {
-        _asBrowser = true;
+      if (line.hasOption("source")) {
+        _source = line.getOptionValue("source");
         }
       }
     catch (ParseException e) {
       new HelpFormatter().printHelp("java -jar AstroLabNet.exe.jar", options);
       System.exit(-1);
       }
-    
+    if ((!_asCLI & !_asBrowser) | (_asCLI & _asBrowser)) {
+      _asBrowser = true;
+      } 
     }
     
   /** Whether the application should start as a CLI.

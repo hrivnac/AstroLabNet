@@ -66,11 +66,12 @@ public class BrowserWindow extends Application {
   
   @Override
   public void start(Stage stage) {
-    setupContent();
-    setupGUI(stage);
+    _console = new Console(this, Init.asBrowser());
+    _console.init();
+    if (Init.asBrowser()) {
+      setupGUI(stage);
+      }
     readActions();
-    Thread t  = new Thread(_interpreter);
-    t.start();
     }
     
   /** Fill the pre-defined {@link Action}s. */
@@ -103,45 +104,6 @@ public class BrowserWindow extends Application {
       catch (AstroLabNetException e) {
         log.error("Cannot load Action from " + actionTxt, e);
         }
-      }
-    }
-    
-  /** Read initialisation, connect to servers and populate GUI. */
-  private void setupContent() {
-    // Console
-    _console = new Console();
-    _console.setWaitFeedback(true);
-    _interpreter = new Interpreter(_console);
-    String init = "";
-    if (Init.source() != null) {
-      log.info("Sourcing " + Init.source());
-      try {
-        init += new StringFile(Init.source()).toString();
-        }
-      catch (AstroLabNetException e) {
-        log.warn(Init.source() + " file cannot be read, the default setup with Local Host server is used.");
-        log.debug(Init.source() + " file cannot be read, the default setup with Local Host server is used.", e);
-        }
-      }
-    log.info("Sourcing init.bsh");
-    try {
-      init += new StringFile("init.bsh").toString();
-      }
-    catch (AstroLabNetException e) {
-      log.warn("init.bsh file cannot be read, the default setup with Local Host server is used.");
-      log.debug("init.bsh file cannot be read, the default setup with Local Host server is used.", e);
-      }
-    if (init.equals("")) {
-      log.warn("no suitable init bsh file found, the default setup with Local Host server will be used.");
-      init = "w.addServer(\"Local Host\", \"http://localhost:8998\", \"http://localhost:4040\")";
-      }
-    try {
-      _interpreter.set("w", this);
-      _interpreter.eval("import com.astrolabsoftware.AstroLabNet.DB.*");
-      _interpreter.eval(init);
-      }
-    catch (EvalError e) {
-      reportException("Can't evaluate standard BeanShell expression", e, log);
       }
     }
     
@@ -250,38 +212,6 @@ public class BrowserWindow extends Application {
     _results.getTabs().addAll(tab);
     _results.getSelectionModel().select(tab);
     return tab;
-    }
-    
-  /** Add text to {@link JConsole}.
-    * @param text The text to be added to  {@link JConsole}. */
-  public static void setText(String text) {
-    _console.print(text + "\n", new java.awt.Font("Helvetica", java.awt.Font.PLAIN, 20), java.awt.Color.blue);
-    }
-
-  /** Add error text to {@link JConsole}.
-    * @param text The error text to be added to  {@link JConsole}. */
-  public static void setError(String text) {
-    _console.print(text + "\n", new java.awt.Font("Helvetica", java.awt.Font.PLAIN, 20), java.awt.Color.red);
-    }
-
-  /** Add simple text to {@link JConsole}.
-    * @param text The simple text to be added to  {@link JConsole}. */
-  public static void setText(String text, java.awt.Color color) {
-    _console.print(text + "\n", new java.awt.Font("Helvetica", java.awt.Font.PLAIN, 20), color);
-    }
-
-  /** Report {@link Throwable} to the logging system.
-    * @param text The text to be reported.
-    * @param e    The associated {@link Throwable}.
-    * @param l    The {@link Logger} of the origin of the {@link Throwable} . */
-  public static void reportException(String text, Throwable e, Logger l) {
-    l.error(text + ", see AstroLabNet.log for details");
-    StringWriter sw = new StringWriter();
-    while (e != null) {
-      e.printStackTrace(new PrintWriter(sw));
-      e = e.getCause();
-      }
-    l.debug(sw.toString());
     }
     
   /** Add {@link Server}.
@@ -433,8 +363,6 @@ public class BrowserWindow extends Application {
   private Map<Session, Tab> _sessionTabs = new HashMap<>();
   
   private static Console _console;
-
-  private Interpreter _interpreter;
   
   private TabPane _results = new TabPane();
     

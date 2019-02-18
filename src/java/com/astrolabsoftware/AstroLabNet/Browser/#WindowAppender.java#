@@ -20,10 +20,10 @@ public class WindowAppender extends AppenderSkeleton {
     String loggerName = event.getLoggerName();
     loggerName = loggerName.substring(loggerName.lastIndexOf(".") + 1, loggerName.length());
     if (event.getLevel().equals(Level.INFO)) {
-      BrowserWindow.setText(loggerName + ": " + event.getMessage().toString());
+      Console.setText(loggerName + ": " + event.getMessage().toString());
       }
     else if (event.getLevel().isGreaterOrEqual(Level.WARN)) {
-      BrowserWindow.setError(loggerName + ": " + event.getMessage().toString());
+      Console.setError(loggerName + ": " + event.getMessage().toString());
       }
     }
 

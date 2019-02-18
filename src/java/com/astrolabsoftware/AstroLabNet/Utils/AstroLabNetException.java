@@ -4,6 +4,9 @@ package com.astrolabsoftware.AstroLabNet.Utils;
 import java.io.StringWriter;
 import java.io.PrintWriter;
 
+// Log4J
+import org.apache.log4j.Logger;
+
 /** <code>AstroLabNetException</code> provides the customised
   * {@link Exception} behaviour for <em>AstroLabNet</em>.
   * @opt attributes
@@ -26,7 +29,7 @@ public class AstroLabNetException extends Exception {
     }
 
   public AstroLabNetException(String msg,
-                           Throwable nested) {
+                              Throwable nested) {
     super(msg, nested);
     }
     
@@ -40,9 +43,23 @@ public class AstroLabNetException extends Exception {
     * @param e The {@link Exception}.
     * @return  The stack trace as a String. */
   public static String stackTrace2String(Exception e) {
-    StringWriter stack = new StringWriter(); 
-    e.printStackTrace(new PrintWriter(stack));
-    return stack.toString();
+    Throwable t = e;
+    StringWriter sw = new StringWriter(); 
+    while (t != null) {
+      t.printStackTrace(new PrintWriter(sw));
+      t = t.getCause();
+      }
+    return sw.toString();
     }
+
+  /** Report {@link Throwable} to the logging system.
+    * @param text The text to be reported.
+    * @param e    The associated {@link Exception}.
+    * @param l    The {@link Logger} of the origin of the {@link Throwable} . */
+  public static void reportException(String text, Exception e, Logger l) {
+    l.error(text + ", see AstroLabNet.log for details");
+    l.debug(stackTrace2String(e));
+    }
+    
     
   }

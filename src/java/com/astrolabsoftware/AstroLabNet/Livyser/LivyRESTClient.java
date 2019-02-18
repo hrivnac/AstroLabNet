@@ -47,7 +47,7 @@ public class LivyRESTClient {
       }
     catch (AstroLabNetException e) {
       log.info(e);
-      BrowserWindow.reportException("Request has failed", e, log);
+      AstroLabNetException.reportException("Request has failed", e, log);
       return 0;
       }
     log.debug("Result:\n" + result.trim());
@@ -63,7 +63,7 @@ public class LivyRESTClient {
       result = SmallHttpClient.get(_url + "/sessions", null);
       }
     catch (AstroLabNetException e) {
-      BrowserWindow.reportException("Request has failed", e, log);
+      AstroLabNetException.reportException("Request has failed", e, log);
       return ss;
       }
     JSONArray sessions = new JSONObject(result).getJSONArray("sessions");
@@ -85,7 +85,7 @@ public class LivyRESTClient {
       result = SmallHttpClient.get(_url + "/sessions/" + idSession + "/statements", null);
       }
     catch (AstroLabNetException e) {
-      BrowserWindow.reportException("Request has failed", e, log);
+      AstroLabNetException.reportException("Request has failed", e, log);
       return ss;
       }
     JSONArray statements = new JSONObject(result).getJSONArray("statements");
@@ -110,7 +110,7 @@ public class LivyRESTClient {
       }
     catch (AstroLabNetException e) {
       log.info(e);
-      BrowserWindow.reportException("Request has failed", e, log);
+      AstroLabNetException.reportException("Request has failed", e, log);
       }
     log.debug("Result:\n" + result.trim());
     return result;
@@ -128,7 +128,7 @@ public class LivyRESTClient {
       }
     catch (AstroLabNetException e) {
       log.info(e);
-      BrowserWindow.reportException("Request has failed", e, log);
+      AstroLabNetException.reportException("Request has failed", e, log);
       }
     log.debug("Result:\n" + result.trim());
     return result;
