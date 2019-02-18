@@ -1,6 +1,7 @@
-package com.astrolabsoftware.AstroLabNet.Browser;
+package com.astrolabsoftware.AstroLabNet.Core;
 
 import com.astrolabsoftware.AstroLabNet.Utils.Init;
+import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
 
 // JavaFX
 import javafx.application.Application;

@@ -17,6 +17,7 @@ import org.apache.commons.cli.ParseException;
 
 // Java
 import java.util.Enumeration;
+import java.util.Arrays;
 
 /** <code>Init></code> initialises <em>AstroLabNet</em>.
   * @opt attributes
@@ -25,7 +26,6 @@ import java.util.Enumeration;
   * @opt visibility
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 // TBD: not static
-// TBD: parse source file, ... init.bsh
 public class Init {
 
   /** Initialise <em>AstroLabNet</em>.
@@ -47,7 +47,7 @@ public class Init {
       PropertyConfigurator.configure(Init.class.getClassLoader().getResource(PROPERTIES));
       }
     fixLog4J();
-    Notifier.notify("Started");
+    Notifier.notify(Arrays.toString(args));
     }
     
   /** Modify the default Log4J setup for external packages. */
@@ -64,7 +64,8 @@ public class Init {
     //  }
     }
           
-  /** TBD */
+  /** Parse the cli arguments.
+    * @param args The cli arguments. */
   private static void parseArgs(String[] args) {
     CommandLineParser parser = new BasicParser();
     Options options = new Options();
@@ -72,7 +73,7 @@ public class Init {
     options.addOption("c", "cli", false, "start command line");
     options.addOption("b", "browser", false, "open graphical browser (default)");
     options.addOption(OptionBuilder.withLongOpt("source")
-                                   .withDescription("source bsh file")
+                                   .withDescription("source bsh file (init.bsh is also read)")
                                    .hasArg()
                                    .withArgName("file")
                                    .create("s"));
@@ -99,19 +100,29 @@ public class Init {
     
     }
     
-  /** TBD */
+  /** Whether the application should start as a CLI.
+    * @return Whether the application should start as a CLI. */
   public static boolean asCLI() {
     return _asCLI;
     }
     
-  /** TBD */
+  /** Whether the application should start in a browser.
+    * @return Whether the application should start in a browser. */
   public static boolean asBrowser() {
     return _asBrowser;
+    }
+    
+  /** The <em>BeanShell</em> script to be sourced.
+    * @return The <em>BeanShell</em> script to be sourced. May be <tt>null</tt>. */
+  public static String source() {
+    return _source;
     }
     
   private static boolean _asCLI = false;  
     
   private static boolean _asBrowser = false;  
+  
+  private static String _source = null;
     
   private static String[] WARN = {"org.apache.zookeeper.ZooKeeper",
                                   "org.apache.zookeeper.ClientCnxn"};

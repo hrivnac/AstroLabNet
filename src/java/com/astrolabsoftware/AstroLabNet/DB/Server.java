@@ -56,7 +56,8 @@ public class Server extends Element {
     return _urlSpark;
     }  
     
-  /** TBD */
+  /** Give Livy Server url.
+    * @return The Livy Server url. */
   public LivyRESTClient livy() {
     return _livy;
     }

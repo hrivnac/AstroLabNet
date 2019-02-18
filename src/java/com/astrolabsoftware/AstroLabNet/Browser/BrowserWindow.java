@@ -4,6 +4,7 @@ import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
 import com.astrolabsoftware.AstroLabNet.Browser.Actions.*;
 import com.astrolabsoftware.AstroLabNet.Utils.StringFile;
 import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
+import com.astrolabsoftware.AstroLabNet.Utils.Init;
 import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
 import com.astrolabsoftware.AstroLabNet.DB.*;
 import com.astrolabsoftware.AstroLabNet.Livyser.Language;
@@ -105,19 +106,34 @@ public class BrowserWindow extends Application {
       }
     }
     
-  /** Connect to servers and populate GUI. */
+  /** Read initialisation, connect to servers and populate GUI. */
   private void setupContent() {
     // Console
     _console = new Console();
     _console.setWaitFeedback(true);
     _interpreter = new Interpreter(_console);
-    String init = "w.addServer(\"Local Host\", \"http://localhost:8998\", \"http://localhost:4040\")";
+    String init = "";
+    if (Init.source() != null) {
+      log.info("Sourcing " + Init.source());
+      try {
+        init += new StringFile(Init.source()).toString();
+        }
+      catch (AstroLabNetException e) {
+        log.warn(Init.source() + " file cannot be read, the default setup with Local Host server is used.");
+        log.debug(Init.source() + " file cannot be read, the default setup with Local Host server is used.", e);
+        }
+      }
+    log.info("Sourcing init.bsh");
     try {
-      init = new StringFile("init.bsh").toString();
+      init += new StringFile("init.bsh").toString();
       }
     catch (AstroLabNetException e) {
       log.warn("init.bsh file cannot be read, the default setup with Local Host server is used.");
       log.debug("init.bsh file cannot be read, the default setup with Local Host server is used.", e);
+      }
+    if (init.equals("")) {
+      log.warn("no suitable init bsh file found, the default setup with Local Host server will be used.");
+      init = "w.addServer(\"Local Host\", \"http://localhost:8998\", \"http://localhost:4040\")";
       }
     try {
       _interpreter.set("w", this);

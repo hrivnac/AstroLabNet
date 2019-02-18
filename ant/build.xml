@@ -131,7 +131,7 @@
         <attribute name="Created-By" value="${user.name}"/>
         <attribute name="AppName"    value="AstroLabNet"/>
         <attribute name="AppVersion" value="${version} ${TSTAMP}"/>
-        <attribute name="Main-Class" value="com.astrolabsoftware.AstroLabNet.Browser.This"/>
+        <attribute name="Main-Class" value="com.astrolabsoftware.AstroLabNet.Core.This"/>
         </manifest>
       </jar>
     <jar jarfile="../lib/PiJob.jar" index="yes">
@@ -170,7 +170,7 @@
            description="Run in Browser">
     <echo>Browser Run</echo>
  		<copy todir=".">
-			<fileset dir="../src/java/com/astrolabsoftware/AstroLabNet/Browser" includes="init.bsh"/>
+			<fileset dir="../src/java/com/astrolabsoftware/AstroLabNet/Core" includes="init.bsh"/>
       </copy>
     <java jar="../lib/AstroLabNet.exe.jar"
           fork="true"
@@ -183,7 +183,7 @@
            description="Run as CLI">
     <echo>CLI Run</echo>
  		<copy todir=".">
-			<fileset dir="../src/java/com/astrolabsoftware/AstroLabNet/Browser" includes="init.bsh"/>
+			<fileset dir="../src/java/com/astrolabsoftware/AstroLabNet/Core" includes="init.bsh"/>
       </copy>
     <java jar="../lib/AstroLabNet.exe.jar"
           fork="true"
@@ -196,7 +196,7 @@
            description="Run with help">
     <echo>Help Run</echo>
  		<copy todir=".">
-			<fileset dir="../src/java/com/astrolabsoftware/AstroLabNet/Browser" includes="init.bsh"/>
+			<fileset dir="../src/java/com/astrolabsoftware/AstroLabNet/Core" includes="init.bsh"/>
       </copy>
     <java jar="../lib/AstroLabNet.exe.jar"
           fork="true"
@@ -258,6 +258,7 @@
       <Header><![CDATA[<center>]]>AstroLabNet version: ${version}<![CDATA[</center>]]></Header>
       <Footer><![CDATA[<center>Written by: <a href='http://cern.ch/hrivnac'>J.Hrivnac</a></center>]]></Footer>
       <bottom><![CDATA[<a href='https://astrolabsoftware.github.io'>Documentation</a>]]> built ${TODAY} on ${os.name} by ${user.name}</bottom>
+      <group title="Core"               packages="com.astrolabsoftware.AstroLabNet.Core*"/>
       <group title="Browser"            packages="com.astrolabsoftware.AstroLabNet.Browser*"/>
       <group title="Browser Components" packages="com.astrolabsoftware.AstroLabNet.Browser.Components*"/>
       <group title="Browser Actions"    packages="com.astrolabsoftware.AstroLabNet.Browser.Actions*"/>
