@@ -38,6 +38,8 @@ import org.json.JSONObject;
 
 // Java
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 // Log4J
 import org.apache.log4j.Logger;
@@ -49,6 +51,22 @@ import org.apache.log4j.Logger;
   * @opt visibility
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public class SessionRep extends ElementRep {
+  
+  /** Create new TaskRep as a <em>Singleton</em>.
+    * @param session    The original {@link Session}.
+    * @param browser    The {@link BrowserWindow}. */
+  public static SessionRep create(Session              session,
+                                  BrowserWindow        browser) {
+    SessionRep sessionRep = _sessionReps.get(session.toString());
+    if (sessionRep == null) {
+      sessionRep = new SessionRep(session, browser);
+      log.info("Adding Session " + sessionRep);
+      _sessionReps.put(session.toString(), sessionRep);
+      }
+    return sessionRep;
+    }
+  
+  private static Map<String, SessionRep> _sessionReps = new HashMap<>();  
   
   /** Create new SessionRep.
     * @param session   The represented {@link Session}.

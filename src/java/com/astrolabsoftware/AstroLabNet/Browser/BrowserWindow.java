@@ -325,7 +325,7 @@ public class BrowserWindow extends Application {
   public void addTask(String  name,
                       Session session,
                       int     id) {
-    TaskRep taskRep = TaskRep.create(name, session, id, this, _tasks);
+    TaskRep taskRep = TaskRep.create(new Task(name, session, id), this, _tasks);
     }
  
   /** Register the {@link SessionRep} command, so that it can be filled

@@ -44,25 +44,19 @@ import org.apache.log4j.Logger;
 public class TaskRep extends ElementRep {
   
   /** Create new TaskRep as a <em>Singleton</em>.
-    * @param name       The TaskRep name.
-    * @param session    The hosting {@link Session}.
-    * @param id         The statement id.
+    * @param task       The original {@link Task}.
     * @param browser    The {@link BrowserWindow}.
     * @param elements   The mother {@link TreeItem}.
     *                   TaskRep will be added to it, if not yet present.*/
   // TBD: do factory for other elements too
-  // TBD: put into Task
-  public static TaskRep create(String               name,
-                               Session              session,
-                               int                  id,
+  public static TaskRep create(Task                 task,
                                BrowserWindow        browser,
                                TreeItem<ElementRep> elements) {
-    String regId = name + "_" + session + "_" + id;
-    TaskRep taskRep = _taskReps.get(regId);
+    TaskRep taskRep = _taskReps.get(task.toString());
     if (taskRep == null) {
-      taskRep = new TaskRep(new Task(name, session, id), browser);
+      taskRep = new TaskRep(task, browser);
       log.info("Adding Task " + taskRep);
-      _taskReps.put(regId, taskRep);
+      _taskReps.put(task.toString(), taskRep);
       elements.getChildren().add(taskRep.item());
       }
     return taskRep;
@@ -77,7 +71,6 @@ public class TaskRep extends ElementRep {
   public TaskRep(Task          task,
                  BrowserWindow browser) {
     super(task, browser, Images.TASK);
-    SessionRep sessionRep = new SessionRep(task.session(), browser); // TBD: ???
     Thread thread = new Thread() {
       // check periodically status, untill progress = 1.0
       // then leave the thread and report results
@@ -88,10 +81,10 @@ public class TaskRep extends ElementRep {
         double progress;
         while (true) {
           try {
-            resultString = sessionRep.serverRep().livy().checkProgress(sessionRep.id(), task.id());
+            resultString = sessionRep().serverRep().livy().checkProgress(sessionRep().id(), task.id());
             result = new JSONObject(resultString);
             progress = result.getDouble("progress");
-            sessionRep.setProgress(progress);
+            sessionRep().setProgress(progress);
             log.debug("Progress = " + progress);
             if (progress == 1.0) {
               break;
@@ -124,7 +117,7 @@ public class TaskRep extends ElementRep {
           @Override
           public void run() {
             text.setText("status = " + status + "\n\noutput = " + output.toString(2).replaceAll("\\\\n", "") + "\n\n");
-            sessionRep.setResult(text); // check, if the selected tab is correct
+            sessionRep().setResult(text); // check, if the selected tab is correct
             }
           });
         }
@@ -144,7 +137,7 @@ public class TaskRep extends ElementRep {
   /** Give hosting {@link SessionRep}.
     * @return The hosting {@link SessionRep}. */
   public SessionRep sessionRep() {
-    return new SessionRep(task().session(), browser()); // TBD: ???
+    return SessionRep.create(task().session(), browser());
     }
     
   /** TBD */

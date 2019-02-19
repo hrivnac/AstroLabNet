@@ -65,7 +65,12 @@ public class Task extends Element {
   public int id() {
     return _id;
     }
-    
+     
+  @Override
+  public String toString() {
+    return name() + " in " + session() + "/" + id();
+    }
+   
   private Session _session;  
   
   private int _id;
