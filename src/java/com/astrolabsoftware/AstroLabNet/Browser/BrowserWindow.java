@@ -1,12 +1,12 @@
 package com.astrolabsoftware.AstroLabNet.Browser;
 
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
+import com.astrolabsoftware.AstroLabNet.Browser.Reps.*;
 import com.astrolabsoftware.AstroLabNet.Browser.Actions.*;
 import com.astrolabsoftware.AstroLabNet.Utils.StringFile;
 import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
 import com.astrolabsoftware.AstroLabNet.Utils.Init;
 import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
-import com.astrolabsoftware.AstroLabNet.DB.*;
 import com.astrolabsoftware.AstroLabNet.Livyser.Language;
 
 // Swing
@@ -126,9 +126,9 @@ public class BrowserWindow extends Application {
     ObservableList menuList = menu.getChildren();  
     menuList.addAll(about, exit);           
     // Tree
-    TreeItem<Element> root = new TreeItem<>(new Element("/", this));
+    TreeItem<ElementRep> root = new TreeItem<>(new ElementRep("/", this));
     root.setExpanded(true);
-    TreeView<Element> tree = new TreeView<>(root);
+    TreeView<ElementRep> tree = new TreeView<>(root);
     new ToolTipper(tree, "Right-click on elements will show available operations");
     TreeCellCallback callback = new TreeCellCallback();
     tree.setCellFactory(callback);
@@ -245,8 +245,8 @@ public class BrowserWindow extends Application {
     return tab;
     }
     
-  /** Add {@link Server}.
-    * @param name     The {@link Server} name.
+  /** Add {@link ServerRep}.
+    * @param name     The {@link ServerRep} name.
     * @param urlLivy  The url of the <em>Livy</em> server. Should not be <tt>null</tt>.
     * @param urlSpark The url of the <em>Spark</em> server. May be <tt>null</tt>. */
   public void addServer(String name,
@@ -256,91 +256,91 @@ public class BrowserWindow extends Application {
       log.warn("No Livy server defined for " + name);
       return;
       }
-    Server server = new Server(name, this, urlLivy, urlSpark);
-    log.info("Adding Server " + server);
-    TreeItem<Element> serverItem = server.item();
+    ServerRep serverRep = new ServerRep(name, this, urlLivy, urlSpark);
+    log.info("Adding Server " + serverRep);
+    TreeItem<ElementRep> serverItem = serverRep.item();
     _servers.getChildren().add(serverItem);
-    if (server.urlLivy() == null) {
-      log.warn("Livy url for " + server.name() + " is not defined !");
+    if (serverRep.urlLivy() == null) {
+      log.warn("Livy url for " + serverRep.name() + " is not defined !");
       }
     else {
       WebView viewLivy = new WebView();
       WebEngine engineLivy = viewLivy.getEngine();
-      engineLivy.load(server.urlLivy());
-      addTab(viewLivy, server.name() + " : Livy : " + server.urlLivy(), Images.LIVY);
-      server.updateSessions();
+      engineLivy.load(serverRep.urlLivy());
+      addTab(viewLivy, serverRep.name() + " : Livy : " + serverRep.urlLivy(), Images.LIVY);
+      serverRep.updateSessions();
       }
-    if (server.urlSpark() == null) {
-      log.warn("Spark url for " + server.name() + " is not defined !");
+    if (serverRep.urlSpark() == null) {
+      log.warn("Spark url for " + serverRep.name() + " is not defined !");
       }
     else {
       WebView viewSpark = new WebView();
       WebEngine engineSpark = viewSpark.getEngine();
-      engineSpark.load(server.urlSpark());
-      addTab(viewSpark, server.name() + " : Spark : " + server.urlSpark(), Images.SPARK);
+      engineSpark.load(serverRep.urlSpark());
+      addTab(viewSpark, serverRep.name() + " : Spark : " + serverRep.urlSpark(), Images.SPARK);
       }
     }
     
-  /** Add {@link Data}.
-    * @param name The {@link Data} name. */
+  /** Add {@link DataRep}.
+    * @param name The {@link DataRep} name. */
   public void addData(String name) {
-    Data data = new Data(name, this);
-    log.info("Adding Data " + data);
-    _data.getChildren().add(data.item());
+    DataRep dataRep = new DataRep(name, this);
+    log.info("Adding Data " + dataRep);
+    _data.getChildren().add(dataRep.item());
     }
     
-  /** Add {@link DataSource}.
-    * @param name The {@link DataSource} name. */
+  /** Add {@link DataSourceRep}.
+    * @param name The {@link DataSourceRep} name. */
   public void addDataSource(String name) {
-    DataSource dataSource = new DataSource(name, this);
-    log.info("Adding Data Source " + dataSource);
-    _dataSources.getChildren().add(dataSource.item());
+    DataSourceRep dataSourceRep = new DataSourceRep(name, this);
+    log.info("Adding Data Source " + dataSourceRep);
+    _dataSources.getChildren().add(dataSourceRep.item());
     }
 
-  /** Add {@link Channel}.
-    * @param name The {@link Channel} name. */
+  /** Add {@link ChannelRep}.
+    * @param name The {@link ChannelRep} name. */
   public void addChannel(String name) {
-    Channel channel = new Channel(name, this);
-    log.info("Adding Channel " + channel);
-    _channels.getChildren().add(channel.item());
+    ChannelRep channelRep = new ChannelRep(name, this);
+    log.info("Adding Channel " + channelRep);
+    _channels.getChildren().add(channelRep.item());
     }
     
-  /** Add {@link Action}.
-    * @param name     The {@link Action} name.
+  /** Add {@link ActionRep}.
+    * @param name     The {@link ActionRep} name.
     * @param cmd      The command to execute.
     * @param language The {@link Language} of the command. */
   public void addAction(String   name,
                         String   cmd,
                         Language language) {
-    Action action = new Action(name, this, cmd, language);
-    log.info("Adding Action " + action);
-    _actions.getChildren().add(action.item());
+    ActionRep actionRep = new ActionRep(name, this, cmd, language);
+    log.info("Adding Action " + actionRep);
+    _actions.getChildren().add(actionRep.item());
     }
     
-  /** Add {@link Task}.
-    * @param name    The {@link Task} name.
-    * @param session The hosting {@link Session}.
-    * @param id      The statement id. */
-  public void addTask(String  name,
-                      Session session,
-                      int     id) {
-    Task task = Task.create(name, session, id, this, _tasks);
+  /** Add {@link TaskRep}.
+    * @param name       The {@link TaskRep} name.
+    * @param sessionRep The hosting {@link SessionRep}.
+    * @param id         The statement id. */
+  public void addTask(String     name,
+                      SessionRep sessionRep,
+                      int        id) {
+    TaskRep taskRep = TaskRep.create(name, sessionRep, id, this, _tasks);
     }
  
-  /** Register the {@link Session} command, so that it can be filled
-    * by {@link Action}.
-    * @param session The related {@link Session}.
-    * @param tab     The {@link Tab} containing the {@link Session}. */
-  public void registerSessionTab(Session session,
-                                 Tab     tab) {
-    _sessionTabs.put(session, tab);
+  /** Register the {@link SessionRep} command, so that it can be filled
+    * by {@link ActionRep}.
+    * @param sessionRep The related {@link SessionRep}.
+    * @param tab        The {@link Tab} containing the {@link SessionRep}. */
+  public void registerSessionTab(SessionRep sessionRep,
+                                 Tab        tab) {
+    _sessionTabs.put(sessionRep, tab);
     }
     
-  /** Set the {@link Session} command text. To be called from {@link Action}.
-    * @param txt The text to fill in the {@link Session} command. */
+  /** Set the {@link SessionRep} command text. To be called from {@link ActionRep}.
+    * @param txt The text to fill in the {@link SessionRep} command. */
   public void setSessionCmd(String txt) {
     boolean done = false;
-    for (Map.Entry<Session, Tab> entry : _sessionTabs.entrySet()) {
+    for (Map.Entry<SessionRep, Tab> entry : _sessionTabs.entrySet()) {
       if (entry.getValue().isSelected()) {
         SplitPane pane = (SplitPane)(entry.getValue().getContent());
         VBox vbox = (VBox)(pane.getItems().get(0));
@@ -355,11 +355,11 @@ public class BrowserWindow extends Application {
       }
     }
     
-  /** Give selected {@link Session}.
-    * @return The selected {@link Session},
-    *         <tt>null</tt> if no {@link Session} is selected. */
-  public Session getSelectedSession() {
-    for (Map.Entry<Session, Tab> entry : _sessionTabs.entrySet()) {
+  /** Give selected {@link SessionRep}.
+    * @return The selected {@link SessionRep},
+    *         <tt>null</tt> if no {@link SessionRep} is selected. */
+  public SessionRep getSelectedSession() {
+    for (Map.Entry<SessionRep, Tab> entry : _sessionTabs.entrySet()) {
       if (entry.getValue().isSelected()) {
         return entry.getKey();
         }
@@ -367,16 +367,16 @@ public class BrowserWindow extends Application {
     return null;
     }
     
-  /** Select {@link Tab} with requested {@link Session}.
-    * @param session The  requested {@link Session} to be selected. */
-  public void selectTab(Session session) {
-    Tab tab = _sessionTabs.get(session);
+  /** Select {@link Tab} with requested {@link SessionRep}.
+    * @param sessionRep The  requested {@link SessionRep} to be selected. */
+  public void selectTab(SessionRep sessionRep) {
+    Tab tab = _sessionTabs.get(sessionRep);
     // re-attach if closed
     if (tab.tabPaneProperty().getValue() == null) {
       _results.getTabs().addAll(tab);
       _results.getSelectionModel().select(tab);
       }
-    _results.getSelectionModel().select(_sessionTabs.get(session));
+    _results.getSelectionModel().select(_sessionTabs.get(sessionRep));
     }
   
   /** Close. */
@@ -384,14 +384,14 @@ public class BrowserWindow extends Application {
     System.exit(0);
     }  
     
-  private TreeItem<Element> _servers     = new TreeItem<>(new Element("Servers",       this));
-  private TreeItem<Element> _data        = new TreeItem<>(new Element("Data",          this));
-  private TreeItem<Element> _dataSources = new TreeItem<>(new Element("Data Sources",  this));
-  private TreeItem<Element> _channels    = new TreeItem<>(new Element("Data Channels", this));
-  private TreeItem<Element> _actions     = new TreeItem<>(new Element("Actions",       this));
-  private TreeItem<Element> _tasks       = new TreeItem<>(new Element("Tasks",         this));
+  private TreeItem<ElementRep> _servers     = new TreeItem<>(new ElementRep("Servers",       this));
+  private TreeItem<ElementRep> _data        = new TreeItem<>(new ElementRep("Data",          this));
+  private TreeItem<ElementRep> _dataSources = new TreeItem<>(new ElementRep("Data Sources",  this));
+  private TreeItem<ElementRep> _channels    = new TreeItem<>(new ElementRep("Data Channels", this));
+  private TreeItem<ElementRep> _actions     = new TreeItem<>(new ElementRep("Actions",       this));
+  private TreeItem<ElementRep> _tasks       = new TreeItem<>(new ElementRep("Tasks",         this));
   
-  private Map<Session, Tab> _sessionTabs = new HashMap<>();
+  private Map<SessionRep, Tab> _sessionTabs = new HashMap<>();
   
   private static Console _console;
   

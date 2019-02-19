@@ -1,4 +1,4 @@
-package com.astrolabsoftware.AstroLabNet.DB;
+package com.astrolabsoftware.AstroLabNet.Browser.Reps;
 
 import com.astrolabsoftware.AstroLabNet.Livyser.Language;
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
@@ -41,46 +41,46 @@ import java.util.List;
 // Log4J
 import org.apache.log4j.Logger;
 
-/** <code>Session</code> represents <em>Livy</em> session.
+/** <code>SessionRep</code> is {@link BrowserWindow} representation of {@link Session}.
   * @opt attributes
   * @opt operations
   * @opt types
   * @opt visibility
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
-public class Session extends Element {
+public class SessionRep extends ElementRep {
   
-  /** Create new Session.
-    * @param name    The Session name.
+  /** Create new SessionRep.
+    * @param name    The SessionRep name.
     * @param browser The {@link BrowserWindow}.
     * @param id      The Session id.
-    * @param sefrver The {@link Server} keeping this Session. */
-  public Session(String        name,
-                 BrowserWindow browser,
-                 int           id,
-                 Language      language,
-                 Server        server) {
+    * @param sefrver The {@link ServerRep} keeping this SessionRep. */
+  public SessionRep(String        name,
+                    BrowserWindow browser,
+                    int           id,
+                    Language      language,
+                    ServerRep     serverRep) {
     super(name, browser, Images.SESSION);
-    _id       = id;
-    _language = language;
-    _server   = server;
+    _id        = id;
+    _language  = language;
+    _serverRep = serverRep;
     }
     
-  /** Give the Session id.
-    * @return The Session id. */
+  /** Give the SessionRep id.
+    * @return The SessionRep id. */
   public int id() {
     return _id;
     }
     
-  /** Give the Session {@link Language}.
-    * @return The Session {@link Language}. */
+  /** Give the SessionRep {@link Language}.
+    * @return The SessionRep {@link Language}. */
   public Language language() {
     return _language;
     }
     
-  /** Give the keeping {@link Server}.
-    * @return The keeping {@link Server}. */
-  public Server server() {
-    return _server;
+  /** Give the keeping {@link ServerRep}.
+    * @return The keeping {@link ServerRep}. */
+  public ServerRep serverRep() {
+    return _serverRep;
     }
     
   @Override
@@ -95,12 +95,12 @@ public class Session extends Element {
     
   /** Set reference to result.
     * To be filled once available.
-    * @param resultRef The result {@link TextFlow} shown in the {@link Session} tab.*/
+    * @param resultRef The result {@link TextFlow} shown in the {@link SessionRep} tab.*/
   public void setResultRef(TextFlow resultRef) {
     _resultRef = resultRef;
     }
     
-  /** Set result into result reference on the {@link Session} tab.
+  /** Set result into result reference on the {@link SessionRep} tab.
     * @param result The result {@link Text}. */
   public void setResult(Text result) {
     if (_resultRef == null) {
@@ -111,7 +111,7 @@ public class Session extends Element {
       }
     }
     
-  /** Add {@link Tab} of this Session. */
+  /** Add {@link Tab} of this SessionRep. */
   public void addTab() {
     // Desc
     Label desc = new Label("Command in " + _language + ":");
@@ -146,13 +146,13 @@ public class Session extends Element {
     pane.setDividerPositions(0.5);
     pane.setOrientation(Orientation.VERTICAL);
     pane.getItems().addAll(cmdBox, scrollPane);
-    Session session = this;
+    SessionRep sessionRep = this;
     button.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent e) {
-        String result = _server.livy().sendCommand(_id, cmd.getText());
+        String result = _serverRep.livy().sendCommand(_id, cmd.getText());
         int id = new JSONObject(result).getInt("id");;
-        browser().addTask(_server.urlLivy() + "/" + _id + "/" + id, session, id);
+        browser().addTask(_serverRep.urlLivy() + "/" + _id + "/" + id, sessionRep, id);
         resultText.getChildren().add(new Text("Command send to Session\n\n"));
         }
       });
@@ -179,13 +179,13 @@ public class Session extends Element {
   
   private Language _language;
   
-  private Server _server;
+  private ServerRep _serverRep;
   
   private TextFlow _resultRef;
   
   private ProgressBar _progress;
   
   /** Logging . */
-  private static Logger log = Logger.getLogger(Session.class);
+  private static Logger log = Logger.getLogger(SessionRep.class);
 
   }

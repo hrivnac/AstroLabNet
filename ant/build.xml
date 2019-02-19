@@ -71,14 +71,14 @@
   <target name="compile"
           depends="init,info"
           description="Compile sources">
-    <echo message="Using Java version ${ant.java.version}."/>
+    <echo message="Using Java version ${ant.java.version}(${java.version})."/>
     <javac destdir="../build"
            fork="yes"
            debug="yes"
            debuglevel="lines,vars,source"
            optimize="yes"
-           source="1.8"
-           target="1.8">
+           source="8"
+           target="8">
       <!--compilerarg value="-Xlint:unchecked"/-->
       <!--compilerarg value="-Xlint:deprecation"/-->
       <src path="../src/java/com/astrolabsoftware/AstroLabNet"/>
@@ -235,7 +235,7 @@
  		<copy todir="../doc/docsrc">
 			<fileset dir="../docsrc" includes="*"/>
       </copy>
- 		<copy todir="../doc/dist">
+    <copy todir="../doc/dist">
 			<fileset dir="../lib" includes="*.exe.jar"/>
       </copy>
  		<copy todir="../doc/JavaDoc">
@@ -262,6 +262,7 @@
       <group title="Browser"            packages="com.astrolabsoftware.AstroLabNet.Browser*"/>
       <group title="Browser Components" packages="com.astrolabsoftware.AstroLabNet.Browser.Components*"/>
       <group title="Browser Actions"    packages="com.astrolabsoftware.AstroLabNet.Browser.Actions*"/>
+      <group title="Browser Actions"    packages="com.astrolabsoftware.AstroLabNet.Browser.Reps*"/>
       <group title="Utils"              packages="com.astrolabsoftware.AstroLabNet.Utils*"/>
       <group title="Livyser"            packages="com.astrolabsoftware.AstroLabNet.Livyser*"/>
       <group title="DB"                 packages="com.astrolabsoftware.AstroLabNet.DB*"/>

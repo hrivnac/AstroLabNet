@@ -1,4 +1,4 @@
-package com.astrolabsoftware.AstroLabNet.DB;
+package com.astrolabsoftware.AstroLabNet.Browser.Reps;
 
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
@@ -21,23 +21,23 @@ import java.util.List;
 // Log4J
 import org.apache.log4j.Logger;
 
-/** <code>Server</code> represents <em>Livy</em> server.
+/** <code>ServerRep</code> is {@link BrowserWindow} representation of {@link Server}.
   * @opt attributes
   * @opt operations
   * @opt types
   * @opt visibility
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
-public class Server extends Element {
+public class ServerRep extends ElementRep {
   
   /** Create new Spark and Livy Server.
-    * @param name    The Server name.
+    * @param name    The ServerRep name.
     * @param browser  The {@link BrowserWindow}.
     * @param urlLivy  The url of the Spark Server Livy interface.
     * @param urlSpark The url of the Spark Server. */
-  public Server(String        name,
-                BrowserWindow browser,
-                String        urlLivy,
-                String        urlSpark) {
+  public ServerRep(String        name,
+                   BrowserWindow browser,
+                   String        urlLivy,
+                   String        urlSpark) {
     super(name, browser, Images.LIVY);
     _urlLivy    = urlLivy;
     _urlSpark   = urlSpark;
@@ -85,13 +85,13 @@ public class Server extends Element {
   public void updateSessions() {
     item().getChildren().clear();
     int idSession;
-    Session session;
+    SessionRep sessionRep;
     for (Pair<Integer, Language> p : _livy.getSessions()) {
       idSession = p.getKey();
-      session = new Session("Session", browser(), idSession, p.getValue(), this);
-      item().getChildren().add(new TreeItem<Element>(session));
+      sessionRep = new SessionRep("Session", browser(), idSession, p.getValue(), this);
+      item().getChildren().add(new TreeItem<ElementRep>(sessionRep));
       for (int idStatement : _livy.getStatements(idSession)) {
-        browser().addTask(_urlLivy + "/" + idSession + "/" + idStatement, session, idStatement);
+        browser().addTask(_urlLivy + "/" + idSession + "/" + idStatement, sessionRep, idStatement);
         }
       }
     }
@@ -108,6 +108,6 @@ public class Server extends Element {
   private LivyRESTClient _livy;
   
   /** Logging . */
-  private static Logger log = Logger.getLogger(Server.class);
+  private static Logger log = Logger.getLogger(ServerRep.class);
 
   }

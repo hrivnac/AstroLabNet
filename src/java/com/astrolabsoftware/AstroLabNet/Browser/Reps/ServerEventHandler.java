@@ -1,4 +1,4 @@
-package com.astrolabsoftware.AstroLabNet.DB;
+package com.astrolabsoftware.AstroLabNet.Browser.Reps;
 
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
@@ -21,7 +21,7 @@ import java.util.List;
 // Log4J
 import org.apache.log4j.Logger;
 
-/** <code>ServerEventHandler</code> implements {@link EventHandler} for {@link Server}.
+/** <code>ServerEventHandler</code> implements {@link EventHandler} for {@link ServerRep}.
   * It creates new {@link Session}.
   * @opt attributes
   * @opt operations
@@ -31,22 +31,22 @@ import org.apache.log4j.Logger;
 public class ServerEventHandler implements EventHandler<ActionEvent> {
 
   /** Create.
-    * @param server The associated {@link Server}.
-    * @param language The {@link Language} of this {@link EventHandler}. */
-  public ServerEventHandler(Server   server,
-                            Language language) {
-    _server   = server;
-    _language = language;
+    * @param serverRep The associated {@link ServerRep}.
+    * @param language  The {@link Language} of this {@link EventHandler}. */
+  public ServerEventHandler(ServerRep serverRep,
+                            Language  language) {
+    _serverRep = serverRep;
+    _language  = language;
     }
  
   @Override
   public void handle(ActionEvent event) {
-    _server.livy().initSession(_language);
-    _server.updateSessions();
+    _serverRep.livy().initSession(_language);
+    _serverRep.updateSessions();
     }
  
   private Language _language;  
   
-  private Server _server;
+  private ServerRep _serverRep;
     
   }

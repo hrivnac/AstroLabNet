@@ -2,7 +2,7 @@ package com.astrolabsoftware.AstroLabNet.Browser.Components;
 
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
 import com.astrolabsoftware.AstroLabNet.Browser.Actions.*;
-import com.astrolabsoftware.AstroLabNet.DB.*;
+import com.astrolabsoftware.AstroLabNet.Browser.Reps.*;
 
 // JavaFX
 import javafx.scene.control.TreeView;
@@ -19,11 +19,11 @@ import java.util.List;
   * @opt types
   * @opt visibility
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
-public final class TreeCellImpl extends TextFieldTreeCell<Element> {
+public final class TreeCellImpl extends TextFieldTreeCell<ElementRep> {
 
   /** Create. Add {@link ContextMenu}.
     * @param treeView The original {@link TreeView}. */
-  public TreeCellImpl(TreeView<Element> treeView) {
+  public TreeCellImpl(TreeView<ElementRep> treeView) {
     super();
     setContextMenu(_menu);
     setOnContextMenuRequested(new TreeCellEventHandler(treeView, this));

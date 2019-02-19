@@ -1,4 +1,4 @@
-package com.astrolabsoftware.AstroLabNet.DB;
+package com.astrolabsoftware.AstroLabNet.Browser.Reps;
 
 import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
 import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
@@ -31,38 +31,38 @@ import java.util.ArrayList;
 // Log4J
 import org.apache.log4j.Logger;
 
-/** <code>Element></code> is generic database object.
+/** <code>ElementRep</code> is {@link BrowserWindow} representation of {@link Element}.
   * @opt attributes
   * @opt operations
   * @opt types
   * @opt visibility
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
-public class Element {
+public class ElementRep {
 
-  /** Create new Element.
-    * @param name    The Element name.
+  /** Create new ElementRep.
+    * @param name    The ElementRep name.
     * @param browser The {@link BrowserWindow}. */
-  public Element(String        name,
-                 BrowserWindow browser) {
+  public ElementRep(String        name,
+                    BrowserWindow browser) {
     _name    = name;
     _browser = browser;
-    _item    = new TreeItem<Element>(this);
+    _item    = new TreeItem<ElementRep>(this);
     }
      
-  /** Create new Element with an icon.
-    * @param name    The Element name.
+  /** Create new ElementRep with an icon.
+    * @param name    The ElementRep name.
     * @param browser The {@link BrowserWindow}.
     * @param icon    The {@link Image} of icon. */
-  public Element(String        name,
-                 BrowserWindow browser,
-                 Image         icon) {
+  public ElementRep(String        name,
+                    BrowserWindow browser,
+                    Image         icon) {
     _name = name;
     _browser = browser;
-    _item = new TreeItem<Element>(this, Images.icon(icon));
+    _item = new TreeItem<ElementRep>(this, Images.icon(icon));
     }
     
-  /** Give the Element name.
-    * @return The Element name. */
+  /** Give the ElementRep name.
+    * @return The ElementRep name. */
   public String name() {
     return _name;
     }
@@ -84,7 +84,7 @@ public class Element {
     
   /** Give associated {@link TreeItem}.
     * @return The associated {@link TreeItem}. */
-  public TreeItem<Element> item() {
+  public TreeItem<ElementRep> item() {
     return _item;
     }
     
@@ -97,9 +97,9 @@ public class Element {
   
   private BrowserWindow _browser;
   
-  private TreeItem<Element> _item;
+  private TreeItem<ElementRep> _item;
   
   /** Logging . */
-  private static Logger log = Logger.getLogger(Element.class);
+  private static Logger log = Logger.getLogger(ElementRep.class);
 
   }

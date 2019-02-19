@@ -41,14 +41,14 @@ public final class Console extends JConsole {
   public Console(BrowserWindow browser,
                  boolean       graphical) {
     _browser = browser;
-    setFont(new Font("Helvetica", Font.PLAIN, 15));
-    setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-    setBorder(BorderFactory.createEtchedBorder());
-    setSize(                     Integer.MAX_VALUE, 200);
-    setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
-    setMinimumSize(new Dimension(200,               200));
-    setWaitFeedback(true);
     if (graphical) {
+      setFont(new Font("Helvetica", Font.PLAIN, 15));
+      setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+      setBorder(BorderFactory.createEtchedBorder());
+      setSize(                     Integer.MAX_VALUE, 200);
+      setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
+      setMinimumSize(new Dimension(200,               200));
+      setWaitFeedback(true);
       _interpreter = new Interpreter(this);
       }
     else {

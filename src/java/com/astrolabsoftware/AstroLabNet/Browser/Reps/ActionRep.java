@@ -1,4 +1,4 @@
-package com.astrolabsoftware.AstroLabNet.DB;
+package com.astrolabsoftware.AstroLabNet.Browser.Reps;
 
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
@@ -17,24 +17,23 @@ import java.util.List;
 // Log4J
 import org.apache.log4j.Logger;
 
-/** <code>Action</code> represents <em>Spark</em> job or transfer
-  * ready to run.
+/** <code>ActionRep</code> is {@link BrowserWindow} representation of {@link Action}.
   * @opt attributes
   * @opt operations
   * @opt types
   * @opt visibility
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
-public class Action extends Element {
+public class ActionRep extends ElementRep {
   
-  /** Create new Action.
-    * @param name     The Action name.
+  /** Create new ActionRep.
+    * @param name     The ActionRep name.
     * @param browser  The {@link BrowserWindow}.
     * @param cmd      The command.
     * @param language The {@link Language} od the command. */
-  public Action(String        name,
-                BrowserWindow browser,
-                String        cmd,
-                Language      language) {
+  public ActionRep(String        name,
+                   BrowserWindow browser,
+                   String        cmd,
+                   Language      language) {
     super(name, browser, Images.ACTION);
     _cmd      = cmd;
     _language = language;
@@ -51,7 +50,7 @@ public class Action extends Element {
     
   /** Activate {@link Session}. */
   public void activate() {
-    Session selected = browser().getSelectedSession();
+    SessionRep selected = browser().getSelectedSession();
     if (selected == null) {
       log.error("No Session is selected");
       }
@@ -85,6 +84,6 @@ public class Action extends Element {
   private Language _language;
   
   /** Logging . */
-  private static Logger log = Logger.getLogger(Action.class);
+  private static Logger log = Logger.getLogger(ActionRep.class);
 
   }

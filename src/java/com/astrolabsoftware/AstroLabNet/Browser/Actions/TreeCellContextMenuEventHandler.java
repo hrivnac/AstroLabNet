@@ -2,7 +2,7 @@ package com.astrolabsoftware.AstroLabNet.Browser.Actions;
 
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
 import com.astrolabsoftware.AstroLabNet.Browser.Actions.*;
-import com.astrolabsoftware.AstroLabNet.DB.*;
+import com.astrolabsoftware.AstroLabNet.Browser.Reps.*;
 import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
 import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
 
@@ -29,7 +29,7 @@ public final class TreeCellContextMenuEventHandler implements EventHandler {
 
   /** Create.
     * @param treeView The associated {@link TreeView}. */
-  public TreeCellContextMenuEventHandler(TreeView<Element> treeView) {
+  public TreeCellContextMenuEventHandler(TreeView<ElementRep> treeView) {
     _treeView = treeView;
     }
     
@@ -37,19 +37,19 @@ public final class TreeCellContextMenuEventHandler implements EventHandler {
     * @param event The {@link Event} to be handled. */
   @Override
   public void handle(Event event) {
-    Element element = _treeView.getFocusModel().getFocusedItem().getValue();
+    ElementRep elementRep = _treeView.getFocusModel().getFocusedItem().getValue();
     String action = null;
     EventTarget target = event.getTarget();
     if (target instanceof MenuItem) {
       action = ((MenuItem)target).getText();
       }
-    log.info("Executing " + action + " on " + element);
-    String elementName = element.getClass().getSimpleName();
+    log.info("Executing " + action + " on " + elementRep);
+    String elementName = elementRep.getClass().getSimpleName();
     switch (action) {
       case "Help":
         String helpText = "No Help is available";
         try {
-          helpText = new StringResource("com/astrolabsoftware/AstroLabNet/DB/" + elementName + "Help.txt").toString();
+          helpText = new StringResource("com/astrolabsoftware/AstroLabNet/DB/" + elementName.replaceAll("Rep", "") + "Help.txt").toString();
           }
         catch (AstroLabNetException e) {
           log.error("Cannot load help page for " + elementName);
@@ -63,7 +63,7 @@ public final class TreeCellContextMenuEventHandler implements EventHandler {
        }
     }
 
-  private TreeView<Element> _treeView;
+  private TreeView<ElementRep> _treeView;
   
   /** Logging . */
   private static Logger log = Logger.getLogger(TreeCellContextMenuEventHandler.class);

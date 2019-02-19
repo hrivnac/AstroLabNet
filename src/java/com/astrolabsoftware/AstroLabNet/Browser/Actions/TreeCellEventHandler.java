@@ -1,7 +1,7 @@
 package com.astrolabsoftware.AstroLabNet.Browser.Actions;
 
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
-import com.astrolabsoftware.AstroLabNet.DB.*;
+import com.astrolabsoftware.AstroLabNet.Browser.Reps.*;
 
 // JavaFX
 import javafx.event.EventHandler;
@@ -24,8 +24,8 @@ public final class TreeCellEventHandler implements EventHandler<ContextMenuEvent
   /** Create.
     * @param treeView The associated {@link TreeView}.
     * @param treeCell The associated {@link TreeCell}.  */
-  public TreeCellEventHandler(TreeView<Element> treeView,
-                              TreeCellImpl      treeCell) {
+  public TreeCellEventHandler(TreeView<ElementRep> treeView,
+                              TreeCellImpl         treeCell) {
     _treeView = treeView;
     _treeCell = treeCell;
     }
@@ -34,13 +34,13 @@ public final class TreeCellEventHandler implements EventHandler<ContextMenuEvent
     * Handling is forwarded to appropriate {@link TreeCell#setMenuItems}. */
   @Override
   public void handle(ContextMenuEvent event) {
-    Element element = _treeView.getFocusModel().getFocusedItem().getValue();
-    _treeCell.setMenuItems(element.menuItems());
+    ElementRep elementRep = _treeView.getFocusModel().getFocusedItem().getValue();
+    _treeCell.setMenuItems(elementRep.menuItems());
     }
 
   private TreeCellImpl _treeCell;
     
-  private TreeView<Element> _treeView;
+  private TreeView<ElementRep> _treeView;
   
   /** Logging . */
   private static Logger log = Logger.getLogger(TreeCellEventHandler.class);

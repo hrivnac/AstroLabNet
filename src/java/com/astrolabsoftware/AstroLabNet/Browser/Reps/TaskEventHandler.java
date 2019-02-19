@@ -1,4 +1,4 @@
-package com.astrolabsoftware.AstroLabNet.DB;
+package com.astrolabsoftware.AstroLabNet.Browser.Reps;
 
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
@@ -21,29 +21,29 @@ import java.util.List;
 // Log4J
 import org.apache.log4j.Logger;
 
-/** <code>ActionEventHandler</code> implements {@link EventHandler} for {@link Action}.
-  * It fills existing {@link Session}.
+/** <code>TaskEventHandler</code> implements {@link EventHandler} for {@link TaskRep}.
+  * It shows related {@link Session}.
   * @opt attributes
   * @opt operations
   * @opt types
   * @opt visibility
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
-public class ActionEventHandler implements EventHandler<ActionEvent> {
+public class TaskEventHandler implements EventHandler<ActionEvent> {
 
   /** Create.
-    * @param action The {@link Server} to run on. */
-  public ActionEventHandler(Action action) {
-    _action = action;
+    * @param taskRep The {@link TaskRep} to run on. */
+  public TaskEventHandler(TaskRep taskRep) {
+    _taskRep = taskRep;
     }
  
   @Override
   public void handle(ActionEvent event) {
-    _action.activate();
+    _taskRep.browser().selectTab(_taskRep.sessionRep());
     }
  
-  private Action _action;  
+  private TaskRep _taskRep;  
     
   /** Logging . */
-  private static Logger log = Logger.getLogger(ActionEventHandler.class);
+  private static Logger log = Logger.getLogger(TaskEventHandler.class);
     
   }

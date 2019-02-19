@@ -1,4 +1,4 @@
-package com.astrolabsoftware.AstroLabNet.DB;
+package com.astrolabsoftware.AstroLabNet.Browser.Reps;
 
 import com.astrolabsoftware.AstroLabNet.Livyser.Language;
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
@@ -36,7 +36,7 @@ import java.util.List;
 // Log4J
 import org.apache.log4j.Logger;
 
-/** <code>SessionEventHandler</code> implements {@link EventHandler} for {@link Session}.
+/** <code>SessionEventHandler</code> implements {@link EventHandler} for {@link SessionRep}.
   * It executes {@link Action}.
   * @opt attributes
   * @opt operations
@@ -46,17 +46,16 @@ import org.apache.log4j.Logger;
 public class SessionEventHandler implements EventHandler<ActionEvent> {
   
   /** Create.
-    * @param session  The associated {@link Session}. */
-  public SessionEventHandler(Session session) {
-    _session = session;
+    * @param sessionRep The associated {@link SessionRep}. */
+  public SessionEventHandler(SessionRep sessionRep) {
+    _sessionRep = sessionRep;
     }
     
   @Override
   public void handle(ActionEvent event) {
-    _session.addTab();
+    _sessionRep.addTab();
     }
     
-    
-  private Session _session;  
+  private SessionRep _sessionRep;  
 
   }
