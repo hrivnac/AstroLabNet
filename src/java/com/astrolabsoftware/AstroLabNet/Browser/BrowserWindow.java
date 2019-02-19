@@ -3,6 +3,7 @@ package com.astrolabsoftware.AstroLabNet.Browser;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
 import com.astrolabsoftware.AstroLabNet.Browser.Reps.*;
 import com.astrolabsoftware.AstroLabNet.Browser.Actions.*;
+import com.astrolabsoftware.AstroLabNet.DB.*;
 import com.astrolabsoftware.AstroLabNet.Utils.StringFile;
 import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
 import com.astrolabsoftware.AstroLabNet.Utils.Init;
@@ -126,7 +127,7 @@ public class BrowserWindow extends Application {
     ObservableList menuList = menu.getChildren();  
     menuList.addAll(about, exit);           
     // Tree
-    TreeItem<ElementRep> root = new TreeItem<>(new ElementRep("/", this));
+    TreeItem<ElementRep> root = new TreeItem<>(new ElementRep(new Element("/"), this));
     root.setExpanded(true);
     TreeView<ElementRep> tree = new TreeView<>(root);
     new ToolTipper(tree, "Right-click on elements will show available operations");
@@ -256,7 +257,7 @@ public class BrowserWindow extends Application {
       log.warn("No Livy server defined for " + name);
       return;
       }
-    ServerRep serverRep = new ServerRep(name, this, urlLivy, urlSpark);
+    ServerRep serverRep = new ServerRep(new Server(name, urlLivy, urlSpark), this);
     log.info("Adding Server " + serverRep);
     TreeItem<ElementRep> serverItem = serverRep.item();
     _servers.getChildren().add(serverItem);
@@ -284,7 +285,7 @@ public class BrowserWindow extends Application {
   /** Add {@link DataRep}.
     * @param name The {@link DataRep} name. */
   public void addData(String name) {
-    DataRep dataRep = new DataRep(name, this);
+    DataRep dataRep = new DataRep(new Data(name), this);
     log.info("Adding Data " + dataRep);
     _data.getChildren().add(dataRep.item());
     }
@@ -292,7 +293,7 @@ public class BrowserWindow extends Application {
   /** Add {@link DataSourceRep}.
     * @param name The {@link DataSourceRep} name. */
   public void addDataSource(String name) {
-    DataSourceRep dataSourceRep = new DataSourceRep(name, this);
+    DataSourceRep dataSourceRep = new DataSourceRep(new DataSource(name), this);
     log.info("Adding Data Source " + dataSourceRep);
     _dataSources.getChildren().add(dataSourceRep.item());
     }
@@ -300,7 +301,7 @@ public class BrowserWindow extends Application {
   /** Add {@link ChannelRep}.
     * @param name The {@link ChannelRep} name. */
   public void addChannel(String name) {
-    ChannelRep channelRep = new ChannelRep(name, this);
+    ChannelRep channelRep = new ChannelRep(new Channel(name), this);
     log.info("Adding Channel " + channelRep);
     _channels.getChildren().add(channelRep.item());
     }
@@ -312,19 +313,19 @@ public class BrowserWindow extends Application {
   public void addAction(String   name,
                         String   cmd,
                         Language language) {
-    ActionRep actionRep = new ActionRep(name, this, cmd, language);
+    ActionRep actionRep = new ActionRep(new Action(name, cmd, language), this);
     log.info("Adding Action " + actionRep);
     _actions.getChildren().add(actionRep.item());
     }
     
   /** Add {@link TaskRep}.
-    * @param name       The {@link TaskRep} name.
-    * @param sessionRep The hosting {@link SessionRep}.
-    * @param id         The statement id. */
-  public void addTask(String     name,
-                      SessionRep sessionRep,
-                      int        id) {
-    TaskRep taskRep = TaskRep.create(name, sessionRep, id, this, _tasks);
+    * @param name    The {@link TaskRep} name.
+    * @param session The hosting {@link Session}.
+    * @param id      The statement id. */
+  public void addTask(String  name,
+                      Session session,
+                      int     id) {
+    TaskRep taskRep = TaskRep.create(name, session, id, this, _tasks);
     }
  
   /** Register the {@link SessionRep} command, so that it can be filled
@@ -384,12 +385,12 @@ public class BrowserWindow extends Application {
     System.exit(0);
     }  
     
-  private TreeItem<ElementRep> _servers     = new TreeItem<>(new ElementRep("Servers",       this));
-  private TreeItem<ElementRep> _data        = new TreeItem<>(new ElementRep("Data",          this));
-  private TreeItem<ElementRep> _dataSources = new TreeItem<>(new ElementRep("Data Sources",  this));
-  private TreeItem<ElementRep> _channels    = new TreeItem<>(new ElementRep("Data Channels", this));
-  private TreeItem<ElementRep> _actions     = new TreeItem<>(new ElementRep("Actions",       this));
-  private TreeItem<ElementRep> _tasks       = new TreeItem<>(new ElementRep("Tasks",         this));
+  private TreeItem<ElementRep> _servers     = new TreeItem<>(new ElementRep(new Element("Servers"),       this));
+  private TreeItem<ElementRep> _data        = new TreeItem<>(new ElementRep(new Element("Data"),          this));
+  private TreeItem<ElementRep> _dataSources = new TreeItem<>(new ElementRep(new Element("Data Sources"),  this));
+  private TreeItem<ElementRep> _channels    = new TreeItem<>(new ElementRep(new Element("Data Channels"), this));
+  private TreeItem<ElementRep> _actions     = new TreeItem<>(new ElementRep(new Element("Actions"),       this));
+  private TreeItem<ElementRep> _tasks       = new TreeItem<>(new ElementRep(new Element("Tasks"),         this));
   
   private Map<SessionRep, Tab> _sessionTabs = new HashMap<>();
   

@@ -3,6 +3,7 @@ package com.astrolabsoftware.AstroLabNet.Browser.Reps;
 import com.astrolabsoftware.AstroLabNet.Livyser.Language;
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
+import com.astrolabsoftware.AstroLabNet.DB.*;
 
 // JavaFX
 import javafx.scene.Node;
@@ -50,37 +51,29 @@ import org.apache.log4j.Logger;
 public class SessionRep extends ElementRep {
   
   /** Create new SessionRep.
-    * @param name    The SessionRep name.
-    * @param browser The {@link BrowserWindow}.
-    * @param id      The Session id.
-    * @param sefrver The {@link ServerRep} keeping this SessionRep. */
-  public SessionRep(String        name,
-                    BrowserWindow browser,
-                    int           id,
-                    Language      language,
-                    ServerRep     serverRep) {
-    super(name, browser, Images.SESSION);
-    _id        = id;
-    _language  = language;
-    _serverRep = serverRep;
+    * @param session   The represented {@link Session}.
+    * @param browser   The {@link BrowserWindow}. */
+  public SessionRep(Session session,
+                    BrowserWindow browser) {
+    super(session, browser, Images.SESSION);
     }
     
   /** Give the SessionRep id.
     * @return The SessionRep id. */
   public int id() {
-    return _id;
+    return session().id();
     }
     
   /** Give the SessionRep {@link Language}.
     * @return The SessionRep {@link Language}. */
   public Language language() {
-    return _language;
+    return session().language();
     }
     
   /** Give the keeping {@link ServerRep}.
     * @return The keeping {@link ServerRep}. */
   public ServerRep serverRep() {
-    return _serverRep;
+    return new ServerRep(session().server(), browser()); // TBD: ???
     }
     
   @Override
@@ -114,7 +107,7 @@ public class SessionRep extends ElementRep {
   /** Add {@link Tab} of this SessionRep. */
   public void addTab() {
     // Desc
-    Label desc = new Label("Command in " + _language + ":");
+    Label desc = new Label("Command in " + language() + ":");
     // Cmd
     TextArea cmd = new TextArea();
     cmd.setPrefHeight(2000);
@@ -150,9 +143,9 @@ public class SessionRep extends ElementRep {
     button.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent e) {
-        String result = _serverRep.livy().sendCommand(_id, cmd.getText());
-        int id = new JSONObject(result).getInt("id");;
-        browser().addTask(_serverRep.urlLivy() + "/" + _id + "/" + id, sessionRep, id);
+        String result = serverRep().livy().sendCommand(id(), cmd.getText());
+        int id = new JSONObject(result).getInt("id");
+        browser().addTask(serverRep().urlLivy() + "/" + id() + "/" + id, sessionRep.session(), id);
         resultText.getChildren().add(new Text("Command send to Session\n\n"));
         }
       });
@@ -169,17 +162,16 @@ public class SessionRep extends ElementRep {
       }
     _progress.setProgress(p);
     }   
-    
+ 
+  /** TBD */
+  public Session session() {
+    return (Session)element();
+    }
+   
   @Override
   public String toString() {
-    return name() + " : " + _id + " in " + _language;
+    return session().toString();
     }
-    
-  private int _id;
-  
-  private Language _language;
-  
-  private ServerRep _serverRep;
   
   private TextFlow _resultRef;
   

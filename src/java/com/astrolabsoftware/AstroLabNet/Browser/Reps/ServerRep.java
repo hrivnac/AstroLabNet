@@ -6,6 +6,7 @@ import com.astrolabsoftware.AstroLabNet.Livyser.LivyRESTClient;
 import com.astrolabsoftware.AstroLabNet.Livyser.Language;
 import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
 import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
+import com.astrolabsoftware.AstroLabNet.DB.*;
 
 // JavaFX
 import javafx.scene.control.TreeItem;
@@ -30,36 +31,29 @@ import org.apache.log4j.Logger;
 public class ServerRep extends ElementRep {
   
   /** Create new Spark and Livy Server.
-    * @param name    The ServerRep name.
-    * @param browser  The {@link BrowserWindow}.
-    * @param urlLivy  The url of the Spark Server Livy interface.
-    * @param urlSpark The url of the Spark Server. */
-  public ServerRep(String        name,
-                   BrowserWindow browser,
-                   String        urlLivy,
-                   String        urlSpark) {
-    super(name, browser, Images.LIVY);
-    _urlLivy    = urlLivy;
-    _urlSpark   = urlSpark;
-    _livy       = new LivyRESTClient(urlLivy);
+    * @param server   The represented {@link Server}.
+    * @param browser  The {@link BrowserWindow}. */
+  public ServerRep(Server        server,
+                   BrowserWindow browser) {
+    super(server, browser, Images.LIVY);
     }
         
   /** Give Spark Server Livy interface url.
     * @return The Spark Server Livy interface url. */
   public String urlLivy() {
-    return _urlLivy;
+    return server().urlLivy();
     }
         
   /** Give Spark Server url.
     * @return The Spark Server url. */
   public String urlSpark() {
-    return _urlSpark;
+    return server().urlSpark();
     }  
     
   /** Give Livy Server url.
     * @return The Livy Server url. */
   public LivyRESTClient livy() {
-    return _livy;
+    return server().livy();
     }
     
   @Override
@@ -86,26 +80,25 @@ public class ServerRep extends ElementRep {
     item().getChildren().clear();
     int idSession;
     SessionRep sessionRep;
-    for (Pair<Integer, Language> p : _livy.getSessions()) {
+    for (Pair<Integer, Language> p : server().livy().getSessions()) {
       idSession = p.getKey();
-      sessionRep = new SessionRep("Session", browser(), idSession, p.getValue(), this);
+      sessionRep = new SessionRep(new Session("Session",  idSession, p.getValue(), server()), browser());
       item().getChildren().add(new TreeItem<ElementRep>(sessionRep));
-      for (int idStatement : _livy.getStatements(idSession)) {
-        browser().addTask(_urlLivy + "/" + idSession + "/" + idStatement, sessionRep, idStatement);
+      for (int idStatement : server().livy().getStatements(idSession)) {
+        browser().addTask(server().urlLivy() + "/" + idSession + "/" + idStatement, sessionRep.session(), idStatement);
         }
       }
     }
     
-  @Override
-  public String toString() {
-    return name() + " (Livy = " + _urlLivy + ", Spark = " + _urlSpark + ")";
+  /** TBD */
+  public Server server() {
+    return (Server)element();
     }
     
-  private String _urlLivy;
-  
-  private String _urlSpark;
-  
-  private LivyRESTClient _livy;
+  @Override
+  public String toString() {
+    return server().toString();
+    }
   
   /** Logging . */
   private static Logger log = Logger.getLogger(ServerRep.class);

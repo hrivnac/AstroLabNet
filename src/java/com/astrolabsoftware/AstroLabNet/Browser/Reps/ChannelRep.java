@@ -1,6 +1,7 @@
 package com.astrolabsoftware.AstroLabNet.Browser.Reps;
 
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
+import com.astrolabsoftware.AstroLabNet.DB.*;
 
 // Log4J
 import org.apache.log4j.Logger;
@@ -14,11 +15,21 @@ import org.apache.log4j.Logger;
 public class ChannelRep extends ElementRep {
   
   /** Create new ChannelRep.
-    * @param name    The ChannelRep name.
+    * @param channel The represennted {@link Channel}.
     * @param browser The {@link BrowserWindow}. */
-  public ChannelRep(String        name,
+  public ChannelRep(Channel       channel,
                     BrowserWindow browser) {
-    super(name, browser);
+    super(channel, browser);
+    }
+    
+  /** TBD */
+  public Channel channel() {
+    return (Channel)element();
+    }
+    
+  @Override
+  public String toString() {
+    return channel().toString();
     }
   
   /** Logging . */

@@ -2,6 +2,7 @@ package com.astrolabsoftware.AstroLabNet.Browser.Reps;
 
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
+import com.astrolabsoftware.AstroLabNet.DB.*;
 
 // JavaFX
 import javafx.application.Platform;
@@ -42,25 +43,25 @@ import org.apache.log4j.Logger;
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public class TaskRep extends ElementRep {
   
-  
   /** Create new TaskRep as a <em>Singleton</em>.
     * @param name       The TaskRep name.
-    * @param sessionRep The hosting {@link SessionRep}.
+    * @param session    The hosting {@link Session}.
     * @param id         The statement id.
     * @param browser    The {@link BrowserWindow}.
     * @param elements   The mother {@link TreeItem}.
     *                   TaskRep will be added to it, if not yet present.*/
   // TBD: do factory for other elements too
+  // TBD: put into Task
   public static TaskRep create(String               name,
-                               SessionRep           sessionRep,
+                               Session              session,
                                int                  id,
                                BrowserWindow        browser,
                                TreeItem<ElementRep> elements) {
-    String regId = name + "_" + sessionRep + "_" + id;
+    String regId = name + "_" + session + "_" + id;
     TaskRep taskRep = _taskReps.get(regId);
     if (taskRep == null) {
-     taskRep = new TaskRep(name, sessionRep, id, browser);
-     log.info("Adding TaskRep " + taskRep);
+      taskRep = new TaskRep(new Task(name, session, id), browser);
+      log.info("Adding Task " + taskRep);
       _taskReps.put(regId, taskRep);
       elements.getChildren().add(taskRep.item());
       }
@@ -71,16 +72,12 @@ public class TaskRep extends ElementRep {
     
   /** Create new TaskRep.
     * Check the progress.
-    * @param name       The TaskRep name.
-    * @param sessionRep The hosting {@link SessionRep}.
-    * @param id         The statement id.
+    * @param name       The represented {@link Task}.
     * @param browser    The {@link BrowserWindow}. */
-  public TaskRep(String        name,
-                 SessionRep    sessionRep,
-                 int           id,
+  public TaskRep(Task          task,
                  BrowserWindow browser) {
-    super(name, browser, Images.TASK);
-    _sessionRep = sessionRep;
+    super(task, browser, Images.TASK);
+    SessionRep sessionRep = new SessionRep(task.session(), browser); // TBD: ???
     Thread thread = new Thread() {
       // check periodically status, untill progress = 1.0
       // then leave the thread and report results
@@ -91,7 +88,7 @@ public class TaskRep extends ElementRep {
         double progress;
         while (true) {
           try {
-            resultString = sessionRep.serverRep().livy().checkProgress(sessionRep.id(), id);
+            resultString = sessionRep.serverRep().livy().checkProgress(sessionRep.id(), task.id());
             result = new JSONObject(resultString);
             progress = result.getDouble("progress");
             sessionRep.setProgress(progress);
@@ -147,10 +144,18 @@ public class TaskRep extends ElementRep {
   /** Give hosting {@link SessionRep}.
     * @return The hosting {@link SessionRep}. */
   public SessionRep sessionRep() {
-    return _sessionRep;
+    return new SessionRep(task().session(), browser()); // TBD: ???
     }
     
-  private SessionRep _sessionRep;  
+  /** TBD */
+  public Task task() {
+    return (Task)element();
+    }
+    
+  @Override
+  public String toString() {
+    return task().toString();
+    }
     
   /** Logging . */
   private static Logger log = Logger.getLogger(TaskRep.class);

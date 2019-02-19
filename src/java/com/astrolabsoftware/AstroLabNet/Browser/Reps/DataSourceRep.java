@@ -1,6 +1,7 @@
 package com.astrolabsoftware.AstroLabNet.Browser.Reps;
 
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
+import com.astrolabsoftware.AstroLabNet.DB.*;
 
 // Log4J
 import org.apache.log4j.Logger;
@@ -14,11 +15,11 @@ import org.apache.log4j.Logger;
 public class DataSourceRep extends ElementRep {
   
   /** Create new DataSourceRep.
-    * @param name    The DataSourceRep name.
+    * @param dataSource The represented {@link DataSource}.
     * @param browser The {@link BrowserWindow}. */
-  public DataSourceRep(String        name,
+  public DataSourceRep(DataSource    dataSource,
                        BrowserWindow browser) {
-    super(name, browser);
+    super(dataSource, browser);
     }
   
   /** Logging . */

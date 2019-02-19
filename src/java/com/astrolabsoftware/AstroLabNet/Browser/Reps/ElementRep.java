@@ -4,6 +4,7 @@ import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
 import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
+import com.astrolabsoftware.AstroLabNet.DB.*;
 
 // JavaFX
 import javafx.application.Platform;
@@ -40,31 +41,31 @@ import org.apache.log4j.Logger;
 public class ElementRep {
 
   /** Create new ElementRep.
-    * @param name    The ElementRep name.
+    * @param element The represented {@link Element}.
     * @param browser The {@link BrowserWindow}. */
-  public ElementRep(String        name,
+  public ElementRep(Element       element,
                     BrowserWindow browser) {
-    _name    = name;
+    _element = element;
     _browser = browser;
     _item    = new TreeItem<ElementRep>(this);
     }
      
   /** Create new ElementRep with an icon.
-    * @param name    The ElementRep name.
+    * @param element The represented {@link Element}.
     * @param browser The {@link BrowserWindow}.
     * @param icon    The {@link Image} of icon. */
-  public ElementRep(String        name,
+  public ElementRep(Element       element,
                     BrowserWindow browser,
                     Image         icon) {
-    _name = name;
+    _element = element;
     _browser = browser;
     _item = new TreeItem<ElementRep>(this, Images.icon(icon));
     }
     
-  /** Give the ElementRep name.
-    * @return The ElementRep name. */
+  /** Give the Element name.
+    * @return The Element name. */
   public String name() {
-    return _name;
+    return _element.name();
     }
     
   /** Give the {@link BrowserWindow}.
@@ -88,12 +89,17 @@ public class ElementRep {
     return _item;
     }
     
+  /** TBD */
+  public Element element() {
+    return _element;
+    }
+    
   @Override
   public String toString() {
-    return _name;
+    return element().name();
     }
           
-  private String _name;
+  private Element _element;
   
   private BrowserWindow _browser;
   

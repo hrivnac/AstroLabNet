@@ -3,6 +3,7 @@ package com.astrolabsoftware.AstroLabNet.Browser.Reps;
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
 import com.astrolabsoftware.AstroLabNet.Livyser.Language;
+import com.astrolabsoftware.AstroLabNet.DB.*;
 
 // JavaFX
 import javafx.scene.control.TreeItem;
@@ -26,17 +27,11 @@ import org.apache.log4j.Logger;
 public class ActionRep extends ElementRep {
   
   /** Create new ActionRep.
-    * @param name     The ActionRep name.
-    * @param browser  The {@link BrowserWindow}.
-    * @param cmd      The command.
-    * @param language The {@link Language} od the command. */
-  public ActionRep(String        name,
-                   BrowserWindow browser,
-                   String        cmd,
-                   Language      language) {
-    super(name, browser, Images.ACTION);
-    _cmd      = cmd;
-    _language = language;
+    * @param action   The represented {@link Action}.
+    * @param browser  The {@link BrowserWindow}. */
+  public ActionRep(Action        action,
+                   BrowserWindow browser) {
+    super(action, browser, Images.ACTION);
     }
     
   @Override
@@ -54,34 +49,35 @@ public class ActionRep extends ElementRep {
     if (selected == null) {
       log.error("No Session is selected");
       }
-    else if (selected.language() != _language) {
-      log.error("Action language " + _language + " != Session language " + selected.language());
+    else if (selected.language() != action().language()) {
+      log.error("Action language " + action().language() + " != Session language " + selected.language());
       }
     else {
-      browser().setSessionCmd(_cmd);
+      browser().setSessionCmd(action().cmd());
       }
     }
 
   /** Give the associated command text.
     * @return The associated command text. */
   public String cmd() {
-    return _cmd;
+    return action().cmd();
     }
     
   /** Give the Action {@link Language}.
     * @return The Action {@link Language}. */
   public Language language() {
-    return _language;
+    return action().language();
+    }
+    
+  /** TBD */
+  public Action action() {
+    return (Action)element();
     }
     
   @Override
   public String toString() {
-    return name() + " (" + _language + ")";
+    return action().toString();
     }
-
-  private String _cmd;
-  
-  private Language _language;
   
   /** Logging . */
   private static Logger log = Logger.getLogger(ActionRep.class);
