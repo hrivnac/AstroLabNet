@@ -13,8 +13,13 @@ import com.astrolabsoftware.AstroLabNet.Livyser.Language;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 
+// AWT
+import java.awt.event.FocusListener;
+import java.awt.event.FocusEvent;
+
 // JavaFX
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane; 
@@ -36,6 +41,7 @@ import javafx.stage.Stage;
 import javafx.embed.swing.SwingNode;
 import javafx.geometry.Orientation;
 import javafx.collections.ObservableList; 
+import javafx.event.ActionEvent;
 
 // Java
 import java.util.Map;
@@ -184,10 +190,35 @@ public class BrowserWindow extends Application {
   private void createSwingContent(SwingNode  swingNode,
                                   JComponent component) {
     SwingUtilities.invokeLater(new Runnable() {
+    //Platform.runLater(new Runnable() {
       @Override
       public void run() {
-        swingNode.setContent(component);        
+        swingNode.setContent(component);      
         }                                                                             
+      });
+    }
+   
+  /** Wrap <em>Swing</em> {@link JComponent} in <em>JavaFX</em>.
+    * @param swingNode The wrapping {@link SwingNode}.
+    * @param component The wrapped <em>Swing</em> {@link JComponent}. */
+  private void createSwingContentNew(SwingNode  swingNode,
+                                  JComponent component) {
+    SwingUtilities.invokeLater(new Runnable() {
+      @Override
+      public void run() {
+        swingNode.setContent(component);
+        component.addFocusListener(new FocusListener() {
+          @Override
+          public void focusGained(FocusEvent e) {
+            Platform.runLater(new Runnable() {
+              @Override
+              public void run() {} 
+              });
+            }
+          @Override
+          public void focusLost(FocusEvent e) {}
+          });
+        }
       });
     }
     

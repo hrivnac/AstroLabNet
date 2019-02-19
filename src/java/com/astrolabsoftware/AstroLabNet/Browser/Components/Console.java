@@ -120,6 +120,10 @@ public final class Console extends JConsole {
       }
     }
     
+  public Interpreter interpreter() {
+    return _interpreter;
+    }
+    
   private Interpreter _interpreter;  
   
   private BrowserWindow _browser;
