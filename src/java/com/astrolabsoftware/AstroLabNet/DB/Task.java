@@ -61,7 +61,8 @@ public class Task extends Element {
     return _session;
     }
     
-  /** TBD */
+  /** Give the hosting {@link Session} id.
+    * @return The hosting {@link Session} id. */
   public int id() {
     return _id;
     }

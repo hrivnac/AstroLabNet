@@ -22,7 +22,8 @@ public class ChannelRep extends ElementRep {
     super(channel, browser);
     }
     
-  /** TBD */
+  /** Give the referenced {@link Channel}.
+    * @return The referenced {@link Channel}. */
   public Channel channel() {
     return (Channel)element();
     }

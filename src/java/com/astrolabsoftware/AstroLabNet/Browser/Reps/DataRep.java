@@ -22,7 +22,8 @@ public class DataRep extends ElementRep {
     super(data, browser);
     }
     
-  /** TBD */
+  /** Give the referenced {@link Data}.
+    * @return The referenced {@link Data}. */
   public Data data() {
     return (Data)element();
     }

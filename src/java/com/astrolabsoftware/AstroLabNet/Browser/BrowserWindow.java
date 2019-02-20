@@ -257,8 +257,7 @@ public class BrowserWindow extends Application {
       log.warn("No Livy server defined for " + name);
       return;
       }
-    ServerRep serverRep = new ServerRep(new Server(name, urlLivy, urlSpark), this);
-    log.info("Adding Server " + serverRep);
+    ServerRep serverRep = ServerRep.create(new Server(name, urlLivy, urlSpark), this);
     TreeItem<ElementRep> serverItem = serverRep.item();
     _servers.getChildren().add(serverItem);
     if (serverRep.urlLivy() == null) {
@@ -325,7 +324,9 @@ public class BrowserWindow extends Application {
   public void addTask(String  name,
                       Session session,
                       int     id) {
-    TaskRep taskRep = TaskRep.create(new Task(name, session, id), this, _tasks);
+    TaskRep taskRep = TaskRep.create(new Task(name, session, id), this);
+    TreeItem<ElementRep> taskItem = taskRep.item();
+    _tasks.getChildren().add(taskItem);
     }
  
   /** Register the {@link SessionRep} command, so that it can be filled

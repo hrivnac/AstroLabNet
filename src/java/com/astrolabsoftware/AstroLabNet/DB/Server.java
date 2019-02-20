@@ -38,8 +38,8 @@ public class Server extends Element {
     return _urlSpark;
     }  
     
-  /** Give Livy Server url.
-    * @return The Livy Server url. */
+  /** Give {@link LivyRESTClient}.
+    * @return The {@link LivyRESTClient}. */
   public LivyRESTClient livy() {
     return _livy;
     }

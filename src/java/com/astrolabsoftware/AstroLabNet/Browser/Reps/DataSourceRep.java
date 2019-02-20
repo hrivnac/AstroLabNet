@@ -21,7 +21,18 @@ public class DataSourceRep extends ElementRep {
                        BrowserWindow browser) {
     super(dataSource, browser);
     }
-  
+    
+  /** Give the referenced {@link DataSource}.
+    * @return The referenced {@link DataSource}. */
+  public DataSource dataSource() {
+    return (DataSource)element();
+    }
+    
+  @Override
+  public String toString() {
+    return dataSource().toString();
+    }
+   
   /** Logging . */
   private static Logger log = Logger.getLogger(DataSourceRep.class);
 

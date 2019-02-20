@@ -62,18 +62,6 @@ public class ElementRep {
     _item = new TreeItem<ElementRep>(this, Images.icon(icon));
     }
     
-  /** Give the Element name.
-    * @return The Element name. */
-  public String name() {
-    return _element.name();
-    }
-    
-  /** Give the {@link BrowserWindow}.
-    * @return The {@link BrowserWindow}. */
-  public BrowserWindow browser() {
-    return _browser;
-    }
-  
   /** Create appropriate {@link MenuItem}s.
     * Subclasses will add their own {@link MenuItem}s.
     * @return The created {@link MenuItem}s. */
@@ -88,8 +76,21 @@ public class ElementRep {
   public TreeItem<ElementRep> item() {
     return _item;
     }
+
+    /** Give the Element name.
+    * @return The Element name. */
+  public String name() {
+    return _element.name();
+    }
     
-  /** TBD */
+  /** Give the {@link BrowserWindow}.
+    * @return The {@link BrowserWindow}. */
+  public BrowserWindow browser() {
+    return _browser;
+    }
+    
+  /** Give the referenced {@link Element}.
+    * @return The referenced {@link Element}. */
   public Element element() {
     return _element;
     }

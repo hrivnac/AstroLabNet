@@ -18,6 +18,8 @@ import javafx.util.Pair;
 
 // Java
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 // Log4J
 import org.apache.log4j.Logger;
@@ -30,30 +32,28 @@ import org.apache.log4j.Logger;
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public class ServerRep extends ElementRep {
   
+  /** Create new ServerRep as a <em>Singleton</em>.
+    * @param server  The original {@link Server}.
+    * @param browser The {@link BrowserWindow}. */
+  public static ServerRep create(Server         server,
+                                  BrowserWindow browser) {
+    ServerRep serverRep = _serverReps.get(server.toString());
+    if (serverRep == null) {
+      serverRep = new ServerRep(server, browser);
+      log.info("Adding Server " + serverRep);
+      _serverReps.put(server.toString(), serverRep);
+      }
+    return serverRep;
+    }
+  
+  private static Map<String, ServerRep> _serverReps = new HashMap<>();  
+  
   /** Create new Spark and Livy Server.
     * @param server   The represented {@link Server}.
     * @param browser  The {@link BrowserWindow}. */
   public ServerRep(Server        server,
                    BrowserWindow browser) {
     super(server, browser, Images.LIVY);
-    }
-        
-  /** Give Spark Server Livy interface url.
-    * @return The Spark Server Livy interface url. */
-  public String urlLivy() {
-    return server().urlLivy();
-    }
-        
-  /** Give Spark Server url.
-    * @return The Spark Server url. */
-  public String urlSpark() {
-    return server().urlSpark();
-    }  
-    
-  /** Give Livy Server url.
-    * @return The Livy Server url. */
-  public LivyRESTClient livy() {
-    return server().livy();
     }
     
   @Override
@@ -80,19 +80,38 @@ public class ServerRep extends ElementRep {
     item().getChildren().clear();
     int idSession;
     SessionRep sessionRep;
-    for (Pair<Integer, Language> p : server().livy().getSessions()) {
+    for (Pair<Integer, Language> p : livy().getSessions()) {
       idSession = p.getKey();
       sessionRep = SessionRep.create(new Session("Session",  idSession, p.getValue(), server()), browser());
       item().getChildren().add(new TreeItem<ElementRep>(sessionRep));
-      for (int idStatement : server().livy().getStatements(idSession)) {
-        browser().addTask(server().urlLivy() + "/" + idSession + "/" + idStatement, sessionRep.session(), idStatement);
+      for (int idStatement : livy().getStatements(idSession)) {
+        browser().addTask(urlLivy() + "/" + idSession + "/" + idStatement, sessionRep.session(), idStatement);
         }
       }
     }
     
-  /** TBD */
+  /** Give the referenced {@link Server}.
+    * @return The referenced {@link Server}. */
   public Server server() {
     return (Server)element();
+    }
+        
+  /** Give Spark Server Livy interface url.
+    * @return The Spark Server Livy interface url. */
+  public String urlLivy() {
+    return server().urlLivy();
+    }
+        
+  /** Give Spark Server url.
+    * @return The Spark Server url. */
+  public String urlSpark() {
+    return server().urlSpark();
+    }  
+    
+  /** Give Livy Server url.
+    * @return The Livy Server url. */
+  public LivyRESTClient livy() {
+    return server().livy();
     }
     
   @Override

@@ -49,11 +49,11 @@ public class ActionRep extends ElementRep {
     if (selected == null) {
       log.error("No Session is selected");
       }
-    else if (selected.language() != action().language()) {
-      log.error("Action language " + action().language() + " != Session language " + selected.language());
+    else if (selected.language() != language()) {
+      log.error("Action language " + language() + " != Session language " + selected.language());
       }
     else {
-      browser().setSessionCmd(action().cmd());
+      browser().setSessionCmd(cmd());
       }
     }
 
@@ -69,7 +69,8 @@ public class ActionRep extends ElementRep {
     return action().language();
     }
     
-  /** TBD */
+  /** Give the referenced {@link Action}.
+    * @return The referenced {@link Action}. */
   public Action action() {
     return (Action)element();
     }

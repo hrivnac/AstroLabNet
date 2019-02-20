@@ -52,11 +52,11 @@ import org.apache.log4j.Logger;
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public class SessionRep extends ElementRep {
   
-  /** Create new TaskRep as a <em>Singleton</em>.
-    * @param session    The original {@link Session}.
-    * @param browser    The {@link BrowserWindow}. */
-  public static SessionRep create(Session              session,
-                                  BrowserWindow        browser) {
+  /** Create new SessionRep as a <em>Singleton</em>.
+    * @param session The original {@link Session}.
+    * @param browser The {@link BrowserWindow}. */
+  public static SessionRep create(Session        session,
+                                  BrowserWindow  browser) {
     SessionRep sessionRep = _sessionReps.get(session.toString());
     if (sessionRep == null) {
       sessionRep = new SessionRep(session, browser);
@@ -76,22 +76,10 @@ public class SessionRep extends ElementRep {
     super(session, browser, Images.SESSION);
     }
     
-  /** Give the SessionRep id.
-    * @return The SessionRep id. */
-  public int id() {
-    return session().id();
-    }
-    
-  /** Give the SessionRep {@link Language}.
-    * @return The SessionRep {@link Language}. */
-  public Language language() {
-    return session().language();
-    }
-    
   /** Give the keeping {@link ServerRep}.
     * @return The keeping {@link ServerRep}. */
   public ServerRep serverRep() {
-    return new ServerRep(session().server(), browser()); // TBD: ???
+    return ServerRep.create(server(), browser());
     }
     
   @Override
@@ -180,8 +168,27 @@ public class SessionRep extends ElementRep {
       }
     _progress.setProgress(p);
     }   
+    
+  /** Give the SessionRep id.
+    * @return The SessionRep id. */
+  public int id() {
+    return session().id();
+    }
+    
+  /** Give the SessionRep {@link Language}.
+    * @return The SessionRep {@link Language}. */
+  public Language language() {
+    return session().language();
+    }
+    
+  /** Give the SessionRep keeping {@link Server}.
+    * @return The SessionRep keeping {@link Server}. */
+  public Server server() {
+    return session().server();
+    }
  
-  /** TBD */
+  /** Give the referenced {@link Session}.
+    * @return The referenced {@link Session}. */
   public Session session() {
     return (Session)element();
     }

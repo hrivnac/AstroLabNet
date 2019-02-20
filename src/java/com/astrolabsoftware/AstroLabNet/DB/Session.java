@@ -14,8 +14,9 @@ import org.apache.log4j.Logger;
 public class Session extends Element {
   
   /** Create new Session.
-    * @param name   The Session name.
-    * @param id     The Session id.
+    * @param name     The Session name.
+    * @param id       The Session id.
+    * @param language The Session {@link Language}.
     * @param server The {@link Server} keeping this Session. */
   public Session(String   name,
                  int      id,

@@ -45,19 +45,15 @@ public class TaskRep extends ElementRep {
   
   /** Create new TaskRep as a <em>Singleton</em>.
     * @param task       The original {@link Task}.
-    * @param browser    The {@link BrowserWindow}.
-    * @param elements   The mother {@link TreeItem}.
-    *                   TaskRep will be added to it, if not yet present.*/
+    * @param browser    The {@link BrowserWindow}. */
   // TBD: do factory for other elements too
-  public static TaskRep create(Task                 task,
-                               BrowserWindow        browser,
-                               TreeItem<ElementRep> elements) {
+  public static TaskRep create(Task           task,
+                               BrowserWindow  browser) {
     TaskRep taskRep = _taskReps.get(task.toString());
     if (taskRep == null) {
       taskRep = new TaskRep(task, browser);
       log.info("Adding Task " + taskRep);
       _taskReps.put(task.toString(), taskRep);
-      elements.getChildren().add(taskRep.item());
       }
     return taskRep;
     }
@@ -137,10 +133,23 @@ public class TaskRep extends ElementRep {
   /** Give hosting {@link SessionRep}.
     * @return The hosting {@link SessionRep}. */
   public SessionRep sessionRep() {
-    return SessionRep.create(task().session(), browser());
+    return SessionRep.create(session(), browser());
     }
     
-  /** TBD */
+  /** Give the associated hosting {@link Session}.
+    * @return The associsted hosting {@link Session}. */
+  public Session session() {
+    return task().session();
+    }
+
+  /** Give the associated hosting {@link Session} id.
+    * @return The associated hosting {@link Session} id. */
+  public int id() {
+    return task().id();
+    }
+    
+  /** Give the referenced {@link Task}.
+    * @return The referenced {@link Task}. */
   public Task task() {
     return (Task)element();
     }
