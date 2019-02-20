@@ -36,65 +36,29 @@ import org.apache.log4j.Logger;
 public final class Console extends JConsole {
 
   /** Create.
-    * @param browser The hosting {@link BrowserWindow}.
-    * @param graphical Whether {@link BrowserWindow} is visible. */
-  public Console(BrowserWindow browser,
-                 boolean       graphical) {
+    * @param browser The hosting {@link BrowserWindow}. */
+  public Console(BrowserWindow browser) {
     _browser = browser;
-    if (graphical) {
-      setFont(new Font("Helvetica", Font.PLAIN, 15));
-      setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-      setBorder(BorderFactory.createEtchedBorder());
-      setSize(                     Integer.MAX_VALUE, 200);
-      setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
-      setMinimumSize(new Dimension(200,               200));
-      setWaitFeedback(true);
-      _interpreter = new Interpreter(this);
+    setFont(new Font("Helvetica", Font.PLAIN, 15));
+    setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+    setBorder(BorderFactory.createEtchedBorder());
+    setSize(                     Integer.MAX_VALUE, 200);
+    setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
+    setMinimumSize(new Dimension(200,               200));
+    setWaitFeedback(true);
+    _interpreter = new Interpreter(this);
+    try {
+      _interpreter.set("w", _browser);
       }
-    else {
-     _interpreter = new Interpreter(new InputStreamReader(System.in), System.out, System.err, true);
-     }
+    catch (EvalError e) {
+      log.error("Can't set Browser reference", e);
+      }
     print("Welcome to AstroLabNet " + Info.release() + "\n", new Font("Helvetica", Font.BOLD, 15), Color.red);
     print("https://astrolabsoftware.github.io\n", new Font("Helvetica", Font.PLAIN, 15), Color.red);
     Thread t  = new Thread(_interpreter);
     t.start();
     _this = this;
     }    
-    
-  /** Load standard init files and setup standard environment. */
-  public void init() {
-    String init = "";
-    if (Init.source() != null) {
-      log.info("Sourcing " + Init.source());
-      try {
-        init += new StringFile(Init.source()).toString();
-        }
-      catch (AstroLabNetException e) {
-        log.warn(Init.source() + " file cannot be read, the default setup with Local Host server is used.");
-        log.debug(Init.source() + " file cannot be read, the default setup with Local Host server is used.", e);
-        }
-      }
-    log.info("Sourcing init.bsh");
-    try {
-      init += new StringFile("init.bsh").toString();
-      }
-    catch (AstroLabNetException e) {
-      log.warn("init.bsh file cannot be read, the default setup with Local Host server is used.");
-      log.debug("init.bsh file cannot be read, the default setup with Local Host server is used.", e);
-      }
-    if (init.equals("")) {
-      log.warn("no suitable init bsh file found, the default setup with Local Host server will be used.");
-      init = "w.addServer(\"Local Host\", \"http://localhost:8998\", \"http://localhost:4040\")";
-      }
-    try {
-      _interpreter.set("w", _browser);
-      _interpreter.eval("import com.astrolabsoftware.AstroLabNet.DB.*");
-      _interpreter.eval(init);
-      }
-    catch (EvalError e) {
-      log.error("Can't evaluate standard BeanShell expression", e);
-      }
-    }
     
   /** Add text to {@link JConsole}.
     * Write to <em>stdout</em> if {@link JConsole} not yet initialised.
@@ -120,6 +84,8 @@ public final class Console extends JConsole {
       }
     }
     
+  /** Give embedded {@link Interpreter}.
+    * @return The embedded {@link Interpreter}. */
   public Interpreter interpreter() {
     return _interpreter;
     }

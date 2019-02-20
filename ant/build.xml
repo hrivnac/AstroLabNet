@@ -259,6 +259,7 @@
       <Footer><![CDATA[<center>Written by: <a href='http://cern.ch/hrivnac'>J.Hrivnac</a></center>]]></Footer>
       <bottom><![CDATA[<a href='https://astrolabsoftware.github.io'>Documentation</a>]]> built ${TODAY} on ${os.name} by ${user.name}</bottom>
       <group title="Core"               packages="com.astrolabsoftware.AstroLabNet.Core*"/>
+      <group title="Browser"            packages="com.astrolabsoftware.AstroLabNet.CLI*"/>
       <group title="Browser"            packages="com.astrolabsoftware.AstroLabNet.Browser*"/>
       <group title="Browser Components" packages="com.astrolabsoftware.AstroLabNet.Browser.Components*"/>
       <group title="Browser Actions"    packages="com.astrolabsoftware.AstroLabNet.Browser.Actions*"/>

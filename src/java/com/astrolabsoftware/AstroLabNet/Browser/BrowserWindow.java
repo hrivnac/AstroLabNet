@@ -73,11 +73,9 @@ public class BrowserWindow extends Application {
   
   @Override
   public void start(Stage stage) {
-    _console = new Console(this, Init.asBrowser());
-    _console.init();
-    if (Init.asBrowser()) {
-      setupGUI(stage);
-      }
+    _console = new Console(this);
+    Init.init(_console.interpreter());
+    setupGUI(stage);
     readActions();
     }
     

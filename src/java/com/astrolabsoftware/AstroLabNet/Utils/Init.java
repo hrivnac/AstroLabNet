@@ -15,6 +15,12 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.ParseException;
 
+// Bean Shell
+import bsh.util.JConsole;
+import bsh.Interpreter;
+import bsh.util.JConsole;
+import bsh.EvalError;
+
 // Java
 import java.util.Enumeration;
 import java.util.Arrays;
@@ -101,6 +107,41 @@ public class Init {
       _asBrowser = true;
       } 
     }
+     
+  /** Load standard init files and setup standard environment.
+    * @param interpreter The embedded {@link Interpreter}. */
+  public static void init(Interpreter interpreter) {
+    String init = "";
+    if (Init.source() != null) {
+      log.info("Sourcing " + Init.source());
+      try {
+        init += new StringFile(Init.source()).toString();
+        }
+      catch (AstroLabNetException e) {
+        log.warn(Init.source() + " file cannot be read, the default setup with Local Host server is used.");
+        log.debug(Init.source() + " file cannot be read, the default setup with Local Host server is used.", e);
+        }
+      }
+    log.info("Sourcing init.bsh");
+    try {
+      init += new StringFile("init.bsh").toString();
+      }
+    catch (AstroLabNetException e) {
+      log.warn("init.bsh file cannot be read, the default setup with Local Host server is used.");
+      log.debug("init.bsh file cannot be read, the default setup with Local Host server is used.", e);
+      }
+    if (init.equals("")) {
+      log.warn("no suitable init bsh file found, the default setup with Local Host server will be used.");
+      init = "w.addServer(\"Local Host\", \"http://localhost:8998\", \"http://localhost:4040\")";
+      }
+    try {
+      interpreter.eval("import com.astrolabsoftware.AstroLabNet.DB.*");
+      interpreter.eval(init);
+      }
+    catch (EvalError e) {
+      log.error("Can't evaluate standard BeanShell expression", e);
+      }
+    }    
     
   /** Whether the application should start as a CLI.
     * @return Whether the application should start as a CLI. */
