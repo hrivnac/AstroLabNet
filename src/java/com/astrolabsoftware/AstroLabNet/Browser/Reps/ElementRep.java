@@ -1,29 +1,13 @@
 package com.astrolabsoftware.AstroLabNet.Browser.Reps;
 
-import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
-import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
 import com.astrolabsoftware.AstroLabNet.DB.*;
 
 // JavaFX
-import javafx.application.Platform;
-import javafx.scene.text.Text;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.Label;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
-import javafx.event.EventHandler;
-import javafx.event.ActionEvent;
-import javafx.geometry.Pos;
-import javafx.geometry.Insets;
 
 // Java
 import java.util.List;

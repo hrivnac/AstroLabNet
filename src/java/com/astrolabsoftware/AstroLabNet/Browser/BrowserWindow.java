@@ -4,13 +4,8 @@ import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
 import com.astrolabsoftware.AstroLabNet.Browser.Reps.*;
 import com.astrolabsoftware.AstroLabNet.Browser.Actions.*;
 import com.astrolabsoftware.AstroLabNet.DB.*;
-import com.astrolabsoftware.AstroLabNet.Utils.StringFile;
 import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
-import com.astrolabsoftware.AstroLabNet.Utils.Init;
 import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
-import com.astrolabsoftware.AstroLabNet.Livyser.Language;
-import com.astrolabsoftware.AstroLabNet.Core.Interacter;
-import com.astrolabsoftware.AstroLabNet.Core.InteracterHelper;
 
 // Swing
 import javax.swing.JComponent;
@@ -36,7 +31,6 @@ import javafx.scene.control.TreeView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.paint.Color;
 import javafx.scene.web.WebView;
 import javafx.scene.web.WebEngine;
 import javafx.scene.image.Image;
@@ -44,18 +38,12 @@ import javafx.stage.Stage;
 import javafx.embed.swing.SwingNode;
 import javafx.geometry.Orientation;
 import javafx.collections.ObservableList; 
-import javafx.event.ActionEvent;
 
 // Java
 import java.util.Map;
 import java.util.HashMap;
-import java.io.StringWriter;
-import java.io.PrintWriter;
 
 // Bean Shell
-import bsh.Interpreter;
-import bsh.util.JConsole;
-import bsh.EvalError;
 
 // Log4J
 import org.apache.log4j.Logger;

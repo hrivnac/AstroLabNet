@@ -4,16 +4,11 @@ import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
 import com.astrolabsoftware.AstroLabNet.Livyser.LivyRESTClient;
 import com.astrolabsoftware.AstroLabNet.Livyser.Language;
-import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
-import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
 import com.astrolabsoftware.AstroLabNet.DB.*;
 
 // JavaFX
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.MenuItem;
-import javafx.scene.image.Image;
-import javafx.event.EventHandler;
-import javafx.event.ActionEvent;
 import javafx.util.Pair;
 
 // Java

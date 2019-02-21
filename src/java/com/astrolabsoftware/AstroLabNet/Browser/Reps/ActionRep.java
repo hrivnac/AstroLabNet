@@ -6,11 +6,7 @@ import com.astrolabsoftware.AstroLabNet.Livyser.Language;
 import com.astrolabsoftware.AstroLabNet.DB.*;
 
 // JavaFX
-import javafx.scene.control.TreeItem;
 import javafx.scene.control.MenuItem;
-import javafx.scene.image.Image;
-import javafx.event.EventHandler;
-import javafx.event.ActionEvent;
 
 // Java
 import java.util.List;

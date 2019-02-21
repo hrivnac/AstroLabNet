@@ -1,25 +1,15 @@
 package com.astrolabsoftware.AstroLabNet.Browser.Reps;
 
-import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
-import com.astrolabsoftware.AstroLabNet.Livyser.LivyRESTClient;
 import com.astrolabsoftware.AstroLabNet.Livyser.Language;
-import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
-import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
 
 // JavaFX
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.MenuItem;
-import javafx.scene.image.Image;
 import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
-import javafx.util.Pair;
 
 // Java
-import java.util.List;
 
 // Log4J
-import org.apache.log4j.Logger;
 
 /** <code>ServerEventHandler</code> implements {@link EventHandler} for {@link ServerRep}.
   * It creates new {@link Session}.

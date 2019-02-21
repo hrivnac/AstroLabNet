@@ -2,9 +2,6 @@ package com.astrolabsoftware.AstroLabNet.Browser.Components;
 
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
 import com.astrolabsoftware.AstroLabNet.Utils.Info;
-import com.astrolabsoftware.AstroLabNet.Utils.Init;
-import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
-import com.astrolabsoftware.AstroLabNet.Utils.StringFile;
 
 // AWT
 import java.awt.Color;
@@ -19,10 +16,8 @@ import javax.swing.BorderFactory;
 import bsh.util.JConsole;
 import bsh.Interpreter;
 import bsh.util.JConsole;
-import bsh.EvalError;
 
 // Java
-import java.io.InputStreamReader;
 
 // Log4J
 import org.apache.log4j.Logger;
