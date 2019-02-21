@@ -60,15 +60,14 @@ import bsh.EvalError;
 // Log4J
 import org.apache.log4j.Logger;
 
-/** <code>BrowserWindow</code> is the root browser for the
+/** <code>BrowserWindow</code> is the root browser window for the
   * <em>AstroLabNet</em>.
   * @opt attributes
   * @opt operations
   * @opt types
   * @opt visibility
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
-public class BrowserWindow extends Application 
-                           implements Interacter{
+public class BrowserWindow extends Application {
 
   @Override
   public void init() {
@@ -77,14 +76,8 @@ public class BrowserWindow extends Application
   @Override
   public void start(Stage stage) {
     _console = new Console(this);
-    Init.init(_console.interpreter());
+    _command = new BrowserCommand(this);
     setupGUI(stage);
-    readActions();
-    }
-    
-  @Override
-  public void readActions() {
-    InteracterHelper.readActions(this);
     }
     
   /** Create GUI.
@@ -106,12 +99,12 @@ public class BrowserWindow extends Application
     new ToolTipper(tree, "Right-click on elements will show available operations");
     TreeCellCallback callback = new TreeCellCallback();
     tree.setCellFactory(callback);
-    root.getChildren().addAll(_servers,
-                              _datas,
-                              _dataSources,
-                              _dataChannels,
-                              _actions,
-                              _tasks);
+    root.getChildren().addAll(_command.serverReps(),
+                              _command.dataReps(),
+                              _command.dataSourceReps(),
+                              _command.dataChannelReps(),
+                              _command.actionReps(),
+                              _command.taskReps());
     // Help
     String helpText = "";
     for (String helpPage : new String[] {"Browser/Components/",
@@ -219,17 +212,9 @@ public class BrowserWindow extends Application
     return tab;
     }
     
-  @Override
-  public void addServer(String name,
-                        String urlLivy,
-                        String urlSpark) {
-    if (urlLivy == null) {
-      log.warn("No Livy server defined for " + name);
-      return;
-      }
-    ServerRep serverRep = ServerRep.create(new Server(name, urlLivy, urlSpark), this);
-    TreeItem<ElementRep> serverItem = serverRep.item();
-    _servers.getChildren().add(serverItem);
+  /** Show {@link Server} in the window.
+    * @param serverRep The {@link ServerRep} to be shown. */
+  public void showServer(ServerRep serverRep) {
     if (serverRep.urlLivy() == null) {
       log.warn("Livy url for " + serverRep.name() + " is not defined !");
       }
@@ -250,46 +235,7 @@ public class BrowserWindow extends Application
       addTab(viewSpark, serverRep.name() + " : Spark : " + serverRep.urlSpark(), Images.SPARK);
       }
     }
-    
-  @Override
-  public void addData(String name) {
-    DataRep dataRep = new DataRep(new Data(name), this);
-    log.info("Adding Data " + dataRep);
-    _datas.getChildren().add(dataRep.item());
-    }
-    
-  @Override
-  public void addDataSource(String name) {
-    DataSourceRep dataSourceRep = new DataSourceRep(new DataSource(name), this);
-    log.info("Adding Data Source " + dataSourceRep);
-    _dataSources.getChildren().add(dataSourceRep.item());
-    }
-
-  @Override
-  public void addDataChannel(String name) {
-    DataChannelRep dataChannelRep = new DataChannelRep(new DataChannel(name), this);
-    log.info("Adding DataChannel " + dataChannelRep);
-    _dataChannels.getChildren().add(dataChannelRep.item());
-    }
-    
-  @Override
-  public void addAction(String   name,
-                        String   cmd,
-                        Language language) {
-    ActionRep actionRep = new ActionRep(new Action(name, cmd, language), this);
-    log.info("Adding Action " + actionRep);
-    _actions.getChildren().add(actionRep.item());
-    }
-    
-  @Override
-  public void addTask(String  name,
-                      Session session,
-                      int     id) {
-    TaskRep taskRep = TaskRep.create(new Task(name, session, id), this);
-    TreeItem<ElementRep> taskItem = taskRep.item();
-    _tasks.getChildren().add(taskItem);
-    }
- 
+  
   /** Register the {@link SessionRep} command, so that it can be filled
     * by {@link ActionRep}.
     * @param sessionRep The related {@link SessionRep}.
@@ -343,16 +289,24 @@ public class BrowserWindow extends Application
     }
   
   /** Close. */
+  // TBD: merge with stop()
   public void close() {
     System.exit(0);
     }  
     
-  private TreeItem<ElementRep> _servers      = new TreeItem<>(new ElementRep(new Element("Servers"),       this));
-  private TreeItem<ElementRep> _datas        = new TreeItem<>(new ElementRep(new Element("Data"),          this));
-  private TreeItem<ElementRep> _dataSources  = new TreeItem<>(new ElementRep(new Element("Data Sources"),  this));
-  private TreeItem<ElementRep> _dataChannels = new TreeItem<>(new ElementRep(new Element("Data Channels"), this));
-  private TreeItem<ElementRep> _actions      = new TreeItem<>(new ElementRep(new Element("Actions"),       this));
-  private TreeItem<ElementRep> _tasks        = new TreeItem<>(new ElementRep(new Element("Tasks"),         this));
+  /** Give embedded {@link Console}.
+    * @return The embedded {@link Console}. */
+  public Console console() {
+    return _console;
+    }
+    
+  /** Give associated {@link BrowserCommand}.
+    * @return The associated {@link BrowserCommand}. */
+  public BrowserCommand command() {
+    return _command;
+    }
+    
+  private BrowserCommand _command;  
   
   private Map<SessionRep, Tab> _sessionTabs = new HashMap<>();
   

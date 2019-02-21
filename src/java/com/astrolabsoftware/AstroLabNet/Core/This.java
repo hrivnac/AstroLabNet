@@ -22,7 +22,7 @@ public class This {
       Application.launch(BrowserWindow.class, args);
       }
     else if (Init.asCLI()) {
-      new CommandLine();
+      new CommandLine(args);
       }
     else {
       System.err.println("None of Browser or CLI chosen.");

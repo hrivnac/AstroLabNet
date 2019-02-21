@@ -85,7 +85,7 @@ public class ServerRep extends ElementRep {
       sessionRep = SessionRep.create(new Session("Session",  idSession, p.getValue(), server()), browser());
       item().getChildren().add(new TreeItem<ElementRep>(sessionRep));
       for (int idStatement : livy().getStatements(idSession)) {
-        browser().addTask(urlLivy() + "/" + idSession + "/" + idStatement, sessionRep.session(), idStatement);
+        browser().command().addTask(urlLivy() + "/" + idSession + "/" + idStatement, sessionRep.session(), idStatement);
         }
       }
     }

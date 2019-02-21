@@ -151,7 +151,7 @@ public class SessionRep extends ElementRep {
       public void handle(ActionEvent e) {
         String result = serverRep().livy().sendCommand(id(), cmd.getText());
         int id = new JSONObject(result).getInt("id");
-        browser().addTask(serverRep().urlLivy() + "/" + id() + "/" + id, sessionRep.session(), id);
+        browser().command().addTask(serverRep().urlLivy() + "/" + id() + "/" + id, sessionRep.session(), id);
         resultText.getChildren().add(new Text("Command send to Session\n\n"));
         }
       });
