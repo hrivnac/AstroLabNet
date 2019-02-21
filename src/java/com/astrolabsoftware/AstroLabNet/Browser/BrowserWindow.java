@@ -107,9 +107,9 @@ public class BrowserWindow extends Application
     TreeCellCallback callback = new TreeCellCallback();
     tree.setCellFactory(callback);
     root.getChildren().addAll(_servers,
-                              _data,
+                              _datas,
                               _dataSources,
-                              _channels,
+                              _dataChannels,
                               _actions,
                               _tasks);
     // Help
@@ -251,28 +251,25 @@ public class BrowserWindow extends Application
       }
     }
     
-  /** Add {@link DataRep}.
-    * @param name The {@link DataRep} name. */
+  @Override
   public void addData(String name) {
     DataRep dataRep = new DataRep(new Data(name), this);
     log.info("Adding Data " + dataRep);
-    _data.getChildren().add(dataRep.item());
+    _datas.getChildren().add(dataRep.item());
     }
     
-  /** Add {@link DataSourceRep}.
-    * @param name The {@link DataSourceRep} name. */
+  @Override
   public void addDataSource(String name) {
     DataSourceRep dataSourceRep = new DataSourceRep(new DataSource(name), this);
     log.info("Adding Data Source " + dataSourceRep);
     _dataSources.getChildren().add(dataSourceRep.item());
     }
 
-  /** Add {@link ChannelRep}.
-    * @param name The {@link ChannelRep} name. */
-  public void addChannel(String name) {
-    ChannelRep channelRep = new ChannelRep(new Channel(name), this);
-    log.info("Adding Channel " + channelRep);
-    _channels.getChildren().add(channelRep.item());
+  @Override
+  public void addDataChannel(String name) {
+    DataChannelRep dataChannelRep = new DataChannelRep(new DataChannel(name), this);
+    log.info("Adding DataChannel " + dataChannelRep);
+    _dataChannels.getChildren().add(dataChannelRep.item());
     }
     
   @Override
@@ -284,10 +281,7 @@ public class BrowserWindow extends Application
     _actions.getChildren().add(actionRep.item());
     }
     
-  /** Add {@link TaskRep}.
-    * @param name    The {@link TaskRep} name.
-    * @param session The hosting {@link Session}.
-    * @param id      The statement id. */
+  @Override
   public void addTask(String  name,
                       Session session,
                       int     id) {
@@ -353,12 +347,12 @@ public class BrowserWindow extends Application
     System.exit(0);
     }  
     
-  private TreeItem<ElementRep> _servers     = new TreeItem<>(new ElementRep(new Element("Servers"),       this));
-  private TreeItem<ElementRep> _data        = new TreeItem<>(new ElementRep(new Element("Data"),          this));
-  private TreeItem<ElementRep> _dataSources = new TreeItem<>(new ElementRep(new Element("Data Sources"),  this));
-  private TreeItem<ElementRep> _channels    = new TreeItem<>(new ElementRep(new Element("Data Channels"), this));
-  private TreeItem<ElementRep> _actions     = new TreeItem<>(new ElementRep(new Element("Actions"),       this));
-  private TreeItem<ElementRep> _tasks       = new TreeItem<>(new ElementRep(new Element("Tasks"),         this));
+  private TreeItem<ElementRep> _servers      = new TreeItem<>(new ElementRep(new Element("Servers"),       this));
+  private TreeItem<ElementRep> _datas        = new TreeItem<>(new ElementRep(new Element("Data"),          this));
+  private TreeItem<ElementRep> _dataSources  = new TreeItem<>(new ElementRep(new Element("Data Sources"),  this));
+  private TreeItem<ElementRep> _dataChannels = new TreeItem<>(new ElementRep(new Element("Data Channels"), this));
+  private TreeItem<ElementRep> _actions      = new TreeItem<>(new ElementRep(new Element("Actions"),       this));
+  private TreeItem<ElementRep> _tasks        = new TreeItem<>(new ElementRep(new Element("Tasks"),         this));
   
   private Map<SessionRep, Tab> _sessionTabs = new HashMap<>();
   

@@ -30,12 +30,32 @@ public interface Interacter {
                         String urlLivy,
                         String urlSpark);
   
-  /** Add {@link ActionRep}.
-    * @param name     The {@link ActionRep} name.
+  /** Add {@link Action}.
+    * @param name     The {@link Action} name.
     * @param cmd      The command to execute.
     * @param language The {@link Language} of the command. */
   public void addAction(String   name,
                         String   cmd,
                         Language language);
+  
+  /** Add {@link Data}.
+    * @param name The {@link Data} name. */
+  public void addData(String name);
+  
+  /** Add {@link DataSource}.
+    * @param name The {@link DataSource} name. */
+  public void addDataSource(String name);
+  
+  /** Add {@link DataChannel}.
+    * @param name The {@link DataChannel} name. */
+  public void addDataChannel(String name);
+  
+  /** Add {@link Task}.
+    * @param name    The {@link Task} name.
+    * @param session The hosting {@link Session}.
+    * @param id      The statement id. */
+  public void addTask(String  name,
+                      Session session,
+                      int     id);
   
   }
