@@ -39,6 +39,7 @@ public final class Console extends JConsole {
     * @param browser The hosting {@link BrowserWindow}. */
   public Console(BrowserWindow browser) {
     _browser = browser;
+    _this = this;
     setFont(new Font("Helvetica", Font.PLAIN, 15));
     setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
     setBorder(BorderFactory.createEtchedBorder());
@@ -55,9 +56,7 @@ public final class Console extends JConsole {
       }
     print("Welcome to AstroLabNet " + Info.release() + "\n", new Font("Helvetica", Font.BOLD, 15), Color.red);
     print("https://astrolabsoftware.github.io\n", new Font("Helvetica", Font.PLAIN, 15), Color.red);
-    Thread t  = new Thread(_interpreter);
-    t.start();
-    _this = this;
+    new Thread(_interpreter).start();
     }    
     
   /** Add text to {@link JConsole}.

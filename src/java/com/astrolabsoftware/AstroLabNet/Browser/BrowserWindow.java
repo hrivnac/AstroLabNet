@@ -9,6 +9,8 @@ import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
 import com.astrolabsoftware.AstroLabNet.Utils.Init;
 import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
 import com.astrolabsoftware.AstroLabNet.Livyser.Language;
+import com.astrolabsoftware.AstroLabNet.Core.Interacter;
+import com.astrolabsoftware.AstroLabNet.Core.InteracterHelper;
 
 // Swing
 import javax.swing.JComponent;
@@ -65,7 +67,8 @@ import org.apache.log4j.Logger;
   * @opt types
   * @opt visibility
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
-public class BrowserWindow extends Application {
+public class BrowserWindow extends Application 
+                           implements Interacter{
 
   @Override
   public void init() {
@@ -79,37 +82,9 @@ public class BrowserWindow extends Application {
     readActions();
     }
     
-  /** Fill the pre-defined {@link Action}s. */
+  @Override
   public void readActions() {
-    addAction("Test", "1+1", Language.PYTHON);
-    String ext;
-    Language lang = Language.PYTHON;
-    for (String actionTxt : new String[] {"pi.py",
-                                          "pi.scala"}) {
-      try {
-        ext = actionTxt.substring(actionTxt.lastIndexOf(".") + 1);
-        switch (ext) { // TBD: put into Language
-          case "py":
-            lang = Language.PYTHON;
-            break;
-          case "scala":
-            lang = Language.SCALA;
-            break;
-           case "r":
-            lang = Language.R;
-            break;
-          case "sql":
-            lang = Language.SQL;
-            break;
-          default:
-            log.error("Unknown extension " + ext + ", supposing Python");
-          } 
-        addAction("pi", new StringResource("com/astrolabsoftware/AstroLabNet/DB/Actions/" + actionTxt).toString(), lang);
-        }
-      catch (AstroLabNetException e) {
-        log.error("Cannot load Action from " + actionTxt, e);
-        }
-      }
+    InteracterHelper.readActions(this);
     }
     
   /** Create GUI.
@@ -244,10 +219,7 @@ public class BrowserWindow extends Application {
     return tab;
     }
     
-  /** Add {@link ServerRep}.
-    * @param name     The {@link ServerRep} name.
-    * @param urlLivy  The url of the <em>Livy</em> server. Should not be <tt>null</tt>.
-    * @param urlSpark The url of the <em>Spark</em> server. May be <tt>null</tt>. */
+  @Override
   public void addServer(String name,
                         String urlLivy,
                         String urlSpark) {
@@ -303,10 +275,7 @@ public class BrowserWindow extends Application {
     _channels.getChildren().add(channelRep.item());
     }
     
-  /** Add {@link ActionRep}.
-    * @param name     The {@link ActionRep} name.
-    * @param cmd      The command to execute.
-    * @param language The {@link Language} of the command. */
+  @Override
   public void addAction(String   name,
                         String   cmd,
                         Language language) {
