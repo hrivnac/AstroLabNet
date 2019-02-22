@@ -40,55 +40,35 @@ import javafx.collections.ObservableList;
 // Log4J
 import org.apache.log4j.Logger;
 
-/** <code>ActionsEventHandler</code> implements {@link EventHandler} for group of {@link ActionRep}s.
+/** <code>ServersEventHandler</code> implements {@link EventHandler} for group of {@link ServerRep}s.
   * @opt attributes
   * @opt operations
   * @opt types
   * @opt visibility
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
-public class ActionsEventHandler implements EventHandler<ActionEvent> {
+public class ServersEventHandler implements EventHandler<ActionEvent> {
 
   /** Create. */
-  public ActionsEventHandler(BrowserCommand command) {
+  public ServersEventHandler(BrowserCommand command) {
     _command = command;
     }
  
   @Override
   public void handle(ActionEvent event) {
     Stage dialog = new Stage();
-    Label titleLabel = new Label("Create New Action");
-    titleLabel.setGraphic(new ImageView(Images.ACTION));
+    Label titleLabel = new Label("Create New Server");
+    titleLabel.setGraphic(new ImageView(Images.SPARK));
     Label nameLabel = new Label("name:");
     TextField nameField = new TextField();
-    Button python = new Button("as Python");
-    python.setOnAction(new EventHandler() {
+    Label livyLabel = new Label("Livy Server:");
+    TextField livyField = new TextField("http://");
+    Label sparkLabel = new Label("Spark Server:");
+    TextField sparkField = new TextField("http://");
+    Button create = new Button("create");
+    create.setOnAction(new EventHandler() {
       @Override
       public void handle(Event event) {
-        _command.addAction(nameField.getText(), "", Language.PYTHON);
-        dialog.close();
-        }
-      });
-    Button scala = new Button("as Scala");
-    scala.setOnAction(new EventHandler() {
-      @Override
-      public void handle(Event event) {
-        _command.addAction(nameField.getText(), "", Language.SCALA);
-        dialog.close();
-        }
-      });
-    Button sql = new Button("as SQL");
-    sql.setOnAction(new EventHandler() {
-      @Override
-      public void handle(Event event) {
-        _command.addAction(nameField.getText(), "", Language.SQL);
-        dialog.close();
-        }
-      });
-    Button r = new Button("as R");
-    r.setOnAction(new EventHandler() {
-      @Override
-      public void handle(Event event) {
-        _command.addAction(nameField.getText(), "", Language.R);
+        _command.addServer(nameField.getText(), livyField.getText(), sparkField.getText());
         dialog.close();
         }
       });
@@ -101,10 +81,14 @@ public class ActionsEventHandler implements EventHandler<ActionEvent> {
       });
     HBox name = new HBox(8);
     name.getChildren().addAll(nameLabel, nameField);
+    HBox livy = new HBox(8);
+    livy.getChildren().addAll(livyLabel, livyField);
+    HBox spark = new HBox(8);
+    spark.getChildren().addAll(sparkLabel, sparkField);
     HBox buttons = new HBox(8);
-    buttons.getChildren().addAll(python, scala, sql, r);
+    buttons.getChildren().addAll(create, close);
     VBox root = new VBox(8);
-    root.getChildren().addAll(titleLabel, name, buttons, close);
+    root.getChildren().addAll(titleLabel, name, livy, spark, buttons);
     dialog.initStyle(StageStyle.UTILITY);
     Scene scene = new Scene(root);
     dialog.setScene(scene);
@@ -114,6 +98,6 @@ public class ActionsEventHandler implements EventHandler<ActionEvent> {
   private BrowserCommand _command;
     
   /** Logging . */
-  private static Logger log = Logger.getLogger(ActionsEventHandler.class);
+  private static Logger log = Logger.getLogger(ServersEventHandler.class);
     
   }

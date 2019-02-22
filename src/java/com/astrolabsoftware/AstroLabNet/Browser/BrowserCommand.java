@@ -28,11 +28,18 @@ public class BrowserCommand extends CommandLine {
     * @param window The connected {@link BrowserWindow}. */
   public BrowserCommand(BrowserWindow window) { 
     _window = window;
-    ElementRep elementRep = new ElementRep(new Element("Actions"), _window);
-    MenuItem create = new MenuItem("Create", Images.icon(Images.CREATE));
-    create.setOnAction(new ActionsEventHandler(this));
-    elementRep.addMenuItem(create);
-    _actionReps = new TreeItem<>(elementRep);
+    // Actions
+    ElementRep actionsRep = new ElementRep(new Element("Actions"), _window);
+    MenuItem createAction = new MenuItem("Create", Images.icon(Images.CREATE));
+    createAction.setOnAction(new ActionsEventHandler(this));
+    actionsRep.addMenuItem(createAction);
+    _actionReps = new TreeItem<>(actionsRep);
+    // Servers
+    ElementRep serversRep = new ElementRep(new Element("Servers"), _window);
+    MenuItem createServer = new MenuItem("Create", Images.icon(Images.CREATE));
+    createServer.setOnAction(new ServersEventHandler(this));
+    serversRep.addMenuItem(createServer);
+    _serverReps = new TreeItem<>(serversRep);
     }
     
   @Override
@@ -137,7 +144,7 @@ public class BrowserCommand extends CommandLine {
     
   private BrowserWindow _window;  
     
-  private TreeItem<ElementRep> _serverReps      = new TreeItem<>(new ElementRep(new Element("Servers"),       _window));
+  private TreeItem<ElementRep> _serverReps;
   private TreeItem<ElementRep> _actionReps;
   private TreeItem<ElementRep> _dataReps        = new TreeItem<>(new ElementRep(new Element("Data"),          _window));
   private TreeItem<ElementRep> _dataSourceReps  = new TreeItem<>(new ElementRep(new Element("Data Sources"),  _window));
