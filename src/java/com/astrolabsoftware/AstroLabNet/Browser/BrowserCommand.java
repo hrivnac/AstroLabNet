@@ -30,7 +30,7 @@ public class BrowserCommand extends CommandLine {
     _window = window;
     ElementRep elementRep = new ElementRep(new Element("Actions"), _window);
     MenuItem create = new MenuItem("Create", Images.icon(Images.CREATE));
-    create.setOnAction(new ActionsEventHandler());
+    create.setOnAction(new ActionsEventHandler(this));
     elementRep.addMenuItem(create);
     _actionReps = new TreeItem<>(elementRep);
     }

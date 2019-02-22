@@ -1,12 +1,40 @@
 package com.astrolabsoftware.AstroLabNet.Browser.Reps;
 
+import com.astrolabsoftware.AstroLabNet.Browser.BrowserCommand;
+import com.astrolabsoftware.AstroLabNet.Livyser.Language;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
 
 // JavaFX
 import javafx.event.EventHandler;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
-
-// Java
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane; 
+import javafx.scene.layout.GridPane; 
+import javafx.scene.layout.HBox; 
+import javafx.scene.layout.VBox; 
+import javafx.scene.control.SplitPane;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.web.WebView;
+import javafx.scene.web.WebEngine;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.embed.swing.SwingNode;
+import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
+import javafx.collections.ObservableList;
 
 // Log4J
 import org.apache.log4j.Logger;
@@ -21,13 +49,64 @@ import org.apache.log4j.Logger;
 public class ActionsEventHandler implements EventHandler<ActionEvent> {
 
   /** Create. */
-  public ActionsEventHandler() {
+  public ActionsEventHandler(BrowserCommand command) {
+    _command = command;
     }
  
   @Override
   public void handle(ActionEvent event) {
-    log.info("Create");
+    Stage dialog = new Stage();
+    Label titleLabel = new Label("Create New Action");
+    Label nameLabel = new Label("name:");
+    TextField nameField = new TextField();
+    Button python = new Button("as Python");
+    python.setOnAction(new EventHandler() {
+      @Override
+      public void handle(Event event) {
+        _command.addAction(nameField.getText(), "", Language.PYTHON);
+        }
+      });
+    Button scala = new Button("as Scala");
+    scala.setOnAction(new EventHandler() {
+      @Override
+      public void handle(Event event) {
+        _command.addAction(nameField.getText(), "", Language.SCALA);
+        }
+      });
+    Button sql = new Button("as SQL");
+    sql.setOnAction(new EventHandler() {
+      @Override
+      public void handle(Event event) {
+        _command.addAction(nameField.getText(), "", Language.SQL);
+        }
+      });
+    Button r = new Button("as R");
+    r.setOnAction(new EventHandler() {
+      @Override
+      public void handle(Event event) {
+        _command.addAction(nameField.getText(), "", Language.R);
+        }
+      });
+    Button close = new Button("Close");
+    close.setOnAction(new EventHandler() {
+      @Override
+      public void handle(Event event) {
+        dialog.close();
+        }
+      });
+    HBox name = new HBox(8);
+    name.getChildren().addAll(nameLabel, nameField);
+    HBox buttons = new HBox(8);
+    buttons.getChildren().addAll(python, scala, sql, r);
+    VBox root = new VBox(8);
+    root.getChildren().addAll(titleLabel, name, buttons, close);
+    dialog.initStyle(StageStyle.UTILITY);
+    Scene scene = new Scene(root);
+    dialog.setScene(scene);
+    dialog.show();       
     }
+    
+  private BrowserCommand _command;
     
   /** Logging . */
   private static Logger log = Logger.getLogger(ActionsEventHandler.class);
