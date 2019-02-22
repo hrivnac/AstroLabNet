@@ -11,29 +11,25 @@ import javafx.event.ActionEvent;
 // Log4J
 import org.apache.log4j.Logger;
 
-/** <code>ActionEventHandler</code> implements {@link EventHandler} for {@link ActionRep}.
+/** <code>ActionsEventHandler</code> implements {@link EventHandler} for group of {@link ActionRep}s.
   * It fills existing {@link SessionRep}.
   * @opt attributes
   * @opt operations
   * @opt types
   * @opt visibility
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
-public class ActionEventHandler implements EventHandler<ActionEvent> {
+public class ActionsEventHandler implements EventHandler<ActionEvent> {
 
-  /** Create.
-    * @param actionRep The {@link ActionRep} to run on. */
-  public ActionEventHandler(ActionRep actionRep) {
-    _actionRep = actionRep;
+  /** Create. */
+  public ActionsEventHandler() {
     }
  
   @Override
   public void handle(ActionEvent event) {
-    _actionRep.activate();
+    log.info("Create");
     }
- 
-  private ActionRep _actionRep;  
     
   /** Logging . */
-  private static Logger log = Logger.getLogger(ActionEventHandler.class);
+  private static Logger log = Logger.getLogger(ActionsEventHandler.class);
     
   }

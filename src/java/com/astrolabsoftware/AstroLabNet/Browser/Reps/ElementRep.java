@@ -52,7 +52,15 @@ public class ElementRep {
   public List<MenuItem> menuItems() {
     List<MenuItem> menuItems = new ArrayList<>();
     menuItems.add(new MenuItem("Help", Images.icon(Images.HELP)));
+    menuItems.addAll(_menuItems);
     return menuItems;
+    }
+    
+  /** Add a {@link MenuItem}.
+    * Subclasses should <em>Override</em> <tt>menuItems(...)</tt> method instead.
+    * @param menuItem The new {@link MenuItem}. */ 
+  public void addMenuItem(MenuItem menuItem) {
+    _menuItems.add(menuItem);
     }
     
   /** Give associated {@link TreeItem}.
@@ -89,7 +97,9 @@ public class ElementRep {
   private BrowserWindow _browser;
   
   private TreeItem<ElementRep> _item;
-  
+     
+  private List<MenuItem> _menuItems = new ArrayList<>();
+ 
   /** Logging . */
   private static Logger log = Logger.getLogger(ElementRep.class);
 

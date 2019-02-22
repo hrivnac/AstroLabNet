@@ -29,6 +29,7 @@ public final class Images {
   public static final Image SESSION  = new Image(myLoader.getResourceAsStream("com/astrolabsoftware/AstroLabNet/Browser/Components/images/Session.png"));
   public static final Image TASK     = new Image(myLoader.getResourceAsStream("com/astrolabsoftware/AstroLabNet/Browser/Components/images/Task.png"));
   public static final Image EXIT     = new Image(myLoader.getResourceAsStream("com/astrolabsoftware/AstroLabNet/Browser/Components/images/Exit.png"));
+  public static final Image CREATE   = new Image(myLoader.getResourceAsStream("com/astrolabsoftware/AstroLabNet/Browser/Components/images/Create.png"));
   public static final Image HELP     = new Image(myLoader.getResourceAsStream("com/astrolabsoftware/AstroLabNet/Browser/Components/images/Help.png"));
 
   }

@@ -9,6 +9,8 @@ import com.astrolabsoftware.AstroLabNet.CLI.CommandLine;
 
 // JavaFX
 import javafx.scene.control.TreeItem;
+import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
 
 // Log4J
 import org.apache.log4j.Logger;
@@ -26,6 +28,11 @@ public class BrowserCommand extends CommandLine {
     * @param window The connected {@link BrowserWindow}. */
   public BrowserCommand(BrowserWindow window) { 
     _window = window;
+    ElementRep elementRep = new ElementRep(new Element("Actions"), _window);
+    MenuItem create = new MenuItem("Create", Images.icon(Images.CREATE));
+    create.setOnAction(new ActionsEventHandler());
+    elementRep.addMenuItem(create);
+    _actionReps = new TreeItem<>(elementRep);
     }
     
   @Override
@@ -131,7 +138,7 @@ public class BrowserCommand extends CommandLine {
   private BrowserWindow _window;  
     
   private TreeItem<ElementRep> _serverReps      = new TreeItem<>(new ElementRep(new Element("Servers"),       _window));
-  private TreeItem<ElementRep> _actionReps      = new TreeItem<>(new ElementRep(new Element("Actions"),       _window));
+  private TreeItem<ElementRep> _actionReps;
   private TreeItem<ElementRep> _dataReps        = new TreeItem<>(new ElementRep(new Element("Data"),          _window));
   private TreeItem<ElementRep> _dataSourceReps  = new TreeItem<>(new ElementRep(new Element("Data Sources"),  _window));
   private TreeItem<ElementRep> _dataChannelReps = new TreeItem<>(new ElementRep(new Element("Data Channels"), _window));
