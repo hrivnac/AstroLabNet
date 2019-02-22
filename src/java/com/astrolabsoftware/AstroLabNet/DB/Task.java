@@ -69,7 +69,7 @@ public class Task extends Element {
      
   @Override
   public String toString() {
-    return name() + " in " + session() + "/" + id();
+    return name();
     }
    
   private Session _session;  

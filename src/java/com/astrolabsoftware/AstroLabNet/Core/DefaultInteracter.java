@@ -67,10 +67,12 @@ public abstract class DefaultInteracter implements Interacter {
   @Override
   public void setupInterpreter(Interpreter interpreter) {
     try {
+      interpreter.eval("import com.astrolabsoftware.AstroLabNet.DB.*");
+      interpreter.eval("import com.astrolabsoftware.AstroLabNet.Livyser.Language");
       interpreter.set("w", this);
       }
     catch (EvalError e) {
-      log.error("Can't set CommandLine reference", e);
+      log.error("Can't set CommandLine references", e);
       }
     String init = "";
     if (Init.source() != null) {
@@ -96,7 +98,6 @@ public abstract class DefaultInteracter implements Interacter {
       init = "w.addServer(\"Local Host\", \"http://localhost:8998\", \"http://localhost:4040\")";
       }
     try {
-      interpreter.eval("import com.astrolabsoftware.AstroLabNet.DB.*");
       interpreter.eval(init);
       }
     catch (EvalError e) {

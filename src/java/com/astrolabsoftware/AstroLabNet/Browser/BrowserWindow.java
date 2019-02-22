@@ -43,8 +43,6 @@ import javafx.collections.ObservableList;
 import java.util.Map;
 import java.util.HashMap;
 
-// Bean Shell
-
 // Log4J
 import org.apache.log4j.Logger;
 
@@ -65,6 +63,8 @@ public class BrowserWindow extends Application {
   public void start(Stage stage) {
     _console = new Console(this);
     _command = new BrowserCommand(this);
+    _command.setupInterpreter(_console.interpreter());
+    _command.readActions();
     setupGUI(stage);
     }
     

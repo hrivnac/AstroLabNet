@@ -241,7 +241,24 @@
  		<copy todir="../doc/JavaDoc">
 			<fileset dir="../src/java" includes="**/doc-files/*"/>
       </copy>
-   <javadoc packagenames="*"
+    <echo file="pre1.txt" append="false">&lt;pre&gt;</echo>
+    <echo file="pre2.txt" append="false">&lt;/pre&gt;</echo>
+    <echo file="hr.txt" append="false">&lt;hr/&gt;</echo>
+    <concat destfile="../doc/Help.html" append="false">
+      <filelist dir="../src/java/com/astrolabsoftware/AstroLabNet/Browser/Components" files="Help.txt"/>
+      <filelist dir="."                                                               files="hr.txt"/>
+      <filelist dir="."                                                               files="pre1.txt"/>
+      <filelist dir="../src/java/com/astrolabsoftware/AstroLabNet/DB"                 files="ServerHelp.txt"/>
+      <filelist dir="."                                                               files="hr.txt"/>
+      <filelist dir="../src/java/com/astrolabsoftware/AstroLabNet/DB"                 files="SessionHelp.txt"/>
+      <filelist dir="."                                                               files="hr.txt"/>
+      <filelist dir="../src/java/com/astrolabsoftware/AstroLabNet/DB"                 files="ActionHelp.txt"/>
+      <filelist dir="."                                                               files="hr.txt"/>
+      <filelist dir="../src/java/com/astrolabsoftware/AstroLabNet/DB"                 files="TaskHelp.txt"/>
+      <filelist dir="."                                                               files="hr.txt"/>
+      <filelist dir="."                                                               files="pre2.txt"/>
+      </concat>
+    <javadoc packagenames="*"
              doclet="org.jboss.apiviz.APIviz"
              docletpath="../exelib/apiviz-1.3.4.jar:../exelib/jdepend-2.9.5.jar:../exelib/tools-1.8.0.jar"
              sourcepath="../src/java:../build"

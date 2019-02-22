@@ -48,7 +48,7 @@ public class Session extends Element {
     
   @Override
   public String toString() {
-    return name() + " : " + _id + " in " + _language;
+    return name() + " : " + _id + " on " + _server.name() + " in " + _language;
     }
     
   private int _id;

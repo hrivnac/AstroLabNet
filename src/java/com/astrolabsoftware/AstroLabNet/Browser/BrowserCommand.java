@@ -7,16 +7,8 @@ import com.astrolabsoftware.AstroLabNet.DB.*;
 import com.astrolabsoftware.AstroLabNet.Livyser.Language;
 import com.astrolabsoftware.AstroLabNet.CLI.CommandLine;
 
-// Swing
-
-// AWT
-
 // JavaFX
 import javafx.scene.control.TreeItem;
-
-// Java
-
-// Bean Shell
 
 // Log4J
 import org.apache.log4j.Logger;
@@ -30,11 +22,10 @@ import org.apache.log4j.Logger;
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public class BrowserCommand extends CommandLine {
     
-  /** TBD */
+  /** Create and coonect to {@link BrowserWindow}.
+    * @param window The connected {@link BrowserWindow}. */
   public BrowserCommand(BrowserWindow window) { 
     _window = window;
-    setupInterpreter(window.console().interpreter());
-    readActions();
     }
     
   @Override
