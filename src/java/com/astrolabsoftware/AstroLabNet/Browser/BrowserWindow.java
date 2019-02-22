@@ -73,13 +73,15 @@ public class BrowserWindow extends Application {
   private void setupGUI(Stage stage) {
     // About
     Label about = new AboutLabel();       
+    // Script
+    Button script = new SimpleButton("Script", Images.SCRIPT, "Read BSH Script", new ReadScriptHandler(this));
     // Exit
     Button exit = new SimpleButton("Exit", Images.EXIT, "Exit", new ExitHandler(this)); 
-    // Menu = About + Exit
+    // Menu = About + Script + Exit
     HBox menu = new HBox();    
     menu.setSpacing(5);
     ObservableList menuList = menu.getChildren();  
-    menuList.addAll(about, exit);           
+    menuList.addAll(about, script, exit);           
     // Tree
     TreeItem<ElementRep> root = new TreeItem<>(new ElementRep(new Element("/"), this));
     root.setExpanded(true);

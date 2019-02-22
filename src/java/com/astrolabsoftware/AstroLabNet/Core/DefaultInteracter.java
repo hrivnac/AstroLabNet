@@ -66,6 +66,7 @@ public abstract class DefaultInteracter implements Interacter {
      
   @Override
   public void setupInterpreter(Interpreter interpreter) {
+    _interpreter = interpreter;
     try {
       interpreter.eval("import com.astrolabsoftware.AstroLabNet.DB.*");
       interpreter.eval("import com.astrolabsoftware.AstroLabNet.Livyser.Language");
@@ -192,6 +193,19 @@ public abstract class DefaultInteracter implements Interacter {
   public List<Task> tasks() {
     return _tasks;
     }
+    
+  /** Interpret <em>BeanShell</em> script.
+    * @param The <em>BeanShell</em> script to be interpreted. */
+  public void interpret(String text) {
+   try {
+      _interpreter.eval(text);
+      }
+    catch (EvalError e) {
+      log.error("Can't evaluate BeanShell expression:\n" + text, e);
+      }
+    }
+    
+  private Interpreter _interpreter;
    
   private List<Server>      _servers      = new ArrayList<>();
   private List<Action>      _actions      = new ArrayList<>();
