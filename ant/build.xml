@@ -23,7 +23,7 @@
     <pathelement path="${logging.jar}"/>
     <pathelement path="${cli.jar}"/>
     <pathelement path="${orgjson.jar}"/>
-    <fileset dir="../exelib">
+    <fileset dir="../extlib">
       <include name="*.jar"/>
       </fileset>
     </path>
@@ -61,7 +61,7 @@
       </tstamp>
     <mkdir dir="../build"/>
     <mkdir dir="../lib"/>
-    <mkdir dir="../exelib"/>
+    <mkdir dir="../extlib"/>
     <mkdir dir="../run"/>
     <mkdir dir="../doc/JavaDoc"/>      
     </target>
@@ -95,7 +95,7 @@
           depends="compile"
           description="Create JAR">
     <path id="libs">
-      <fileset dir="../exelib">
+      <fileset dir="../extlib">
         <include name="*.jar"/>
         <exclude name="*.exe.jar"/>
         </fileset>
@@ -260,7 +260,7 @@
       </concat>
     <javadoc packagenames="*"
              doclet="org.jboss.apiviz.APIviz"
-             docletpath="../exelib/apiviz-1.3.4.jar:../exelib/jdepend-2.9.5.jar:../exelib/tools-1.8.0.jar"
+             docletpath="../extlib/apiviz-1.3.4.jar:../extlib/jdepend-2.9.5.jar:../extlib/tools-1.8.0.jar"
              sourcepath="../src/java:../build"
              destdir="../doc/JavaDoc"
              author="true"
@@ -322,7 +322,7 @@
           failonerror="true">
       <arg value="../build"/>
       <classpath>
-          <pathelement location="../exelib/jdepend-2.9.5.jar"/>
+          <pathelement location="../extlib/jdepend-2.9.5.jar"/>
           </classpath>
       </java>
     </target>
@@ -368,7 +368,7 @@
 		  <arg value="-source"/>
 		  <arg value="1.8"/>
 		  <arg value="-docletpath"/>
-		  <arg value="../exelib/UmlGraph.jar"/>
+		  <arg value="../extlib/UmlGraph.jar"/>
 		  <arg line="-doclet org.umlgraph.doclet.UmlGraph"/>
 		  <arg value="-all"/>
 		  <arg value="-noguillemot"/>
@@ -415,7 +415,7 @@
   <target name="cleanimports"
           description="Clean Unused Imports">
     <exec executable="../src/python/remove-unused-imports.py">
-      <arg line="../src/java/com/astrolabsoftware/AstroLabNet/Browser"/>
+      <arg line="../src/java/com/astrolabsoftware/AstroLabNet"/>
       </exec>
     </target>
  
