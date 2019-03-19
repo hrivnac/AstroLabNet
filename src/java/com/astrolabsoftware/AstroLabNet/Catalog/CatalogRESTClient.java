@@ -20,7 +20,8 @@ import java.util.ArrayList;
 // Log4J
 import org.apache.log4j.Logger;
 
-/** <code>CatalogRIESTCLient</code> is the bridge to the <em>HBase Catalog</em> REST service.
+/** <code>CatalogRIESTCLient</code> is the bridge to the <em>HBase Catalog</em> REST service:
+  * <a href="https://www.cloudera.com/documentation/enterprise/5-9-x/topics/admin_hbase_rest_api.html">API</a>.
   * @opt attributes
   * @opt operations
   * @opt types
@@ -36,6 +37,11 @@ public class CatalogRESTClient {
     }
     
   /** Get server status.
+    * <pre>
+    * GET /version/cluster
+    * GET /status/cluster
+    * GET /
+    * </pre>
     * @return The full server status. */
   public String getStatus() {
     String result = "";

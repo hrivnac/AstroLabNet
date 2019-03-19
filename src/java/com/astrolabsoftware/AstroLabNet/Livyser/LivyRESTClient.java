@@ -20,7 +20,8 @@ import java.util.ArrayList;
 // Log4J
 import org.apache.log4j.Logger;
 
-/** <code>LivyRIESTCLient</code> is the bridge to the <em>Livy</em> REST service.
+/** <code>LivyRESTCLient</code> is the bridge to the <em>Livy</em> REST service:
+  * <a href="https://livy.incubator.apache.org/docs/latest/rest-api.html">API</a>.
   * @opt attributes
   * @opt operations
   * @opt types
@@ -37,6 +38,9 @@ public class LivyRESTClient {
     }
   
   /** Initiate session on the server.
+    * <pre>
+    * POST /sessions {"kind":language}
+    * </pre>
     * @param language The {@link Language} of the {@link Session}.
     * @return The new session number. */
   public int initSession(Language language) {
@@ -55,6 +59,9 @@ public class LivyRESTClient {
     }
     
   /** Get list of opened sessions.
+    * <pre>
+    * GET /sessions
+    * </pre>
     * @return The {@link List} of {@link Pair}s of open session numbers and languages. */
   public List<Pair<Integer, Language>> getSessions() {
     List<Pair<Integer, Language>> ss = new ArrayList<>();
@@ -76,6 +83,9 @@ public class LivyRESTClient {
     }
     
   /** Get list of opened statements.
+    * <pre>
+    * GET /sessions/idSession/statements
+    * </re>
     * @param  idSession The existing session number.
     * @return           The {@link List} of {@link Integer}s of open statement numbers for a session. */
   public List<Integer> getStatements(int idSession) {
@@ -96,6 +106,9 @@ public class LivyRESTClient {
     }
   
   /** Send command to the server.
+    * <pre>
+    * POST /sessions/idSession/statements {"code":code}
+    * </pre>
     * @param  idSession The existing session number.
     * @param  code      The <em>scala</code> to be run on the server.
     * @return           The command result, in <em>json</em>. */
@@ -117,6 +130,9 @@ public class LivyRESTClient {
     }
     
   /** Send command to the server.
+    * <pre>
+    * GET /sessions/idSession/statements/idStatement
+    * </pre>
     * @param  idSession   The existing session number.
     * @param  idStatement The statement number.
     * @return             The command result, in <em>json</em>. */
