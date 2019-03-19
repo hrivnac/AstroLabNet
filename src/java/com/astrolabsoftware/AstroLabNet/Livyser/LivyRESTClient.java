@@ -1,6 +1,5 @@
 package com.astrolabsoftware.AstroLabNet.Livyser;
 
-import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
 import com.astrolabsoftware.AstroLabNet.Utils.SmallHttpClient;
 import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
 
@@ -12,8 +11,6 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 // Java
-import java.util.Map;
-import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 

@@ -1,27 +1,17 @@
 package com.astrolabsoftware.AstroLabNet.Livyser;
 
-import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
 import com.astrolabsoftware.AstroLabNet.Utils.Init;
-import com.astrolabsoftware.AstroLabNet.Utils.SmallHttpClient;
-import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
 import com.astrolabsoftware.AstroLabNet.DB.Jobs.*;
 
 // JavaFX
-import javafx.util.Pair;
 
 // org.json
-import org.json.JSONObject;
-import org.json.JSONArray;
 
 // Livy
 import org.apache.livy.LivyClientBuilder;
 import org.apache.livy.LivyClient;
 
 // Java
-import java.util.Map;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ArrayList;
 import java.net.URI;
 import java.io.File;
 

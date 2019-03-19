@@ -13,7 +13,6 @@ import com.astrolabsoftware.AstroLabNet.Core.Interacter;
 
 // Bean Shell
 import bsh.Interpreter;
-import bsh.util.JConsole;
 import bsh.EvalError;
 
 // Java

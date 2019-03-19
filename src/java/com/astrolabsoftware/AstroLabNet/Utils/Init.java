@@ -16,10 +16,6 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.ParseException;
 
 // Bean Shell
-import bsh.util.JConsole;
-import bsh.Interpreter;
-import bsh.util.JConsole;
-import bsh.EvalError;
 
 // Java
 import java.util.Enumeration;

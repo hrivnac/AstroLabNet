@@ -5,7 +5,6 @@ import com.astrolabsoftware.AstroLabNet.Utils.StringFile;
 import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
 
 // JavaFX
-import javafx.scene.Scene;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.stage.FileChooser;

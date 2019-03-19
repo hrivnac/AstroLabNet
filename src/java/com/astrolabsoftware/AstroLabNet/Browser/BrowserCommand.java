@@ -10,7 +10,6 @@ import com.astrolabsoftware.AstroLabNet.CLI.CommandLine;
 // JavaFX
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.MenuItem;
-import javafx.scene.image.Image;
 
 // Log4J
 import org.apache.log4j.Logger;

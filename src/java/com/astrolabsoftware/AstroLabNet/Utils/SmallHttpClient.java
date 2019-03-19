@@ -9,29 +9,21 @@ import org.apache.http.StatusLine;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.params.ClientPNames;
-import org.apache.http.client.params.CookiePolicy;
-import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.entity.StringEntity;
 
 // Java
-import java.security.Security;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.zip.GZIPInputStream;
 import java.util.Map;
-import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Date;
 
 // Log4J
 import org.apache.log4j.Logger;
