@@ -109,10 +109,16 @@ public class ServerRep extends ElementRep {
     return server().urlHBase();
     }  
     
-  /** Give Livy Server url.
-    * @return The Livy Server url. */
+  /** Give Livy Server.
+    * @return The Livy Server. */
   public LivyRESTClient livy() {
     return server().livy();
+    }
+    
+  /** Give HBase Server.
+    * @return The HBase Server. */
+  public CatalogRESTClient catalog() {
+    return server().catalog();
     }
     
   @Override

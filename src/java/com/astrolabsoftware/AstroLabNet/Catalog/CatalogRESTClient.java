@@ -1,0 +1,60 @@
+package com.astrolabsoftware.AstroLabNet.Livyser;
+
+import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
+import com.astrolabsoftware.AstroLabNet.Utils.SmallHttpClient;
+import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
+
+// JavaFX
+import javafx.util.Pair;
+
+// org.json
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+// Java
+import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
+
+// Log4J
+import org.apache.log4j.Logger;
+
+/** <code>CatalogRIESTCLient</code> is the bridge to the <em>HBase Catalog</em> REST service.
+  * @opt attributes
+  * @opt operations
+  * @opt types
+  * @opt visibility
+  * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
+public class CatalogRESTClient {
+  
+  /** Connect to the server.
+    * @param url The url of the server. */
+  public CatalogRESTClient(String url) {
+    log.info("Connecting to Catalog Server " + url);
+    _url = url;
+    }
+    
+  /** Get server status.
+    * @return The full server status. */
+  public String getStatus() {
+    String result = "";
+    try {
+      result = SmallHttpClient.get(_url + "/version/cluster", null) + "\n"
+             + SmallHttpClient.get(_url + "/status/cluster",  null) + "\n"
+             + SmallHttpClient.get(_url + "/",                null)
+      }
+    catch (AstroLabNetException e) {
+      log.info(e);
+      AstroLabNetException.reportException("Request has failed", e, log);
+      }
+    log.debug("Result:\n" + result.trim());
+    return result;
+    }
+    
+  private String _url;
+
+  /** Logging . */
+  private static Logger log = Logger.getLogger(CatalogRESTClient.class);
+
+  }

@@ -53,6 +53,12 @@ public class Server extends Element {
     return _livy;
     }
     
+  /** Give {@link CatalogRESTClient}.
+    * @return The {@link CatalogRESTClient}. */
+  public CatalogRESTClient catalog() {
+    return _catalog;
+    }
+    
   @Override
   public String toString() {
     return name() + " (Livy = " + _urlLivy + ", Spark = " + _urlSpark + ", HBase = " + _urlHBase + ")";
@@ -65,6 +71,8 @@ public class Server extends Element {
   private String _urlHBase;
   
   private LivyRESTClient _livy;
+  
+  private CatalogRESTClient _catalog;
   
   /** Logging . */
   private static Logger log = Logger.getLogger(Server.class);
