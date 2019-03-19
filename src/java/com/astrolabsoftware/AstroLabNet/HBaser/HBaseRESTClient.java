@@ -1,4 +1,4 @@
-package com.astrolabsoftware.AstroLabNet.Catalog;
+package com.astrolabsoftware.AstroLabNet.HBaser;
 
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
 import com.astrolabsoftware.AstroLabNet.Utils.SmallHttpClient;
@@ -20,19 +20,19 @@ import java.util.ArrayList;
 // Log4J
 import org.apache.log4j.Logger;
 
-/** <code>CatalogRIESTCLient</code> is the bridge to the <em>HBase Catalog</em> REST service:
+/** <code>HBaseRESTCLient</code> is the bridge to the <em>HBase</em> REST service:
   * <a href="https://www.cloudera.com/documentation/enterprise/5-9-x/topics/admin_hbase_rest_api.html">API</a>.
   * @opt attributes
   * @opt operations
   * @opt types
   * @opt visibility
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
-public class CatalogRESTClient {
+public class HBaseRESTClient {
   
   /** Connect to the server.
     * @param url The url of the server. */
-  public CatalogRESTClient(String url) {
-    log.info("Connecting to Catalog Server " + url);
+  public HBaseRESTClient(String url) {
+    log.info("Connecting to HBase Server " + url);
     _url = url;
     }
     
@@ -61,6 +61,6 @@ public class CatalogRESTClient {
   private String _url;
 
   /** Logging . */
-  private static Logger log = Logger.getLogger(CatalogRESTClient.class);
+  private static Logger log = Logger.getLogger(HBaseRESTClient.class);
 
   }

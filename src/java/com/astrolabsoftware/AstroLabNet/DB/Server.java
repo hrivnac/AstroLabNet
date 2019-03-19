@@ -1,6 +1,6 @@
 package com.astrolabsoftware.AstroLabNet.DB;
 
-import com.astrolabsoftware.AstroLabNet.Catalog.CatalogRESTClient;
+import com.astrolabsoftware.AstroLabNet.HBaser.HBaseRESTClient;
 import com.astrolabsoftware.AstroLabNet.Livyser.LivyRESTClient;
 
 // Log4J
@@ -28,6 +28,7 @@ public class Server extends Element {
     _urlSpark   = urlSpark;
     _urlHBase   = urlHBase;
     _livy       = new LivyRESTClient(urlLivy);
+    _hbase      = new HBaseRESTClient(urlHBase);
     }
         
   /** Give Spark Server Livy interface url.
@@ -54,10 +55,10 @@ public class Server extends Element {
     return _livy;
     }
     
-  /** Give {@link CatalogRESTClient}.
-    * @return The {@link CatalogRESTClient}. */
-  public CatalogRESTClient catalog() {
-    return _catalog;
+  /** Give {@link HBaseRESTClient}.
+    * @return The {@link HBaseRESTClient}. */
+  public HBaseRESTClient hbase() {
+    return _hbase;
     }
     
   @Override
@@ -73,7 +74,7 @@ public class Server extends Element {
   
   private LivyRESTClient _livy;
   
-  private CatalogRESTClient _catalog;
+  private HBaseRESTClient _hbase;
   
   /** Logging . */
   private static Logger log = Logger.getLogger(Server.class);

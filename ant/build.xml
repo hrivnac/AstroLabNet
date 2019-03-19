@@ -283,7 +283,7 @@
       <group title="Browser Actions"    packages="com.astrolabsoftware.AstroLabNet.Browser.Reps*"/>
       <group title="Utils"              packages="com.astrolabsoftware.AstroLabNet.Utils*"/>
       <group title="Livyser"            packages="com.astrolabsoftware.AstroLabNet.Livyser*"/>
-      <group title="Catalog"            packages="com.astrolabsoftware.AstroLabNet.Catalog*"/>
+      <group title="HBaser"             packages="com.astrolabsoftware.AstroLabNet.HBaser*"/>
       <group title="DB"                 packages="com.astrolabsoftware.AstroLabNet.DB*"/>
       <group title="Jobs"               packages="com.astrolabsoftware.AstroLabNet.Jobs*"/>
       <link href="http://docs.oracle.com/javase/8/docs/api"/>
