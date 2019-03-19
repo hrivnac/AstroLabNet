@@ -1,17 +1,41 @@
 <h1>This is the AstroLabNet Help !</h1>
 
-<h2>How to see available Data ?</h2>
-<ol>
-<li>Select <b>Data</b>, <b>Data Source</b> or <b>Data Channel</b> on the top/left tree.</li>
-<li>A new pane with more information and relations will appear in the central pane.</li>
-</ol>
 
 <h2>How to execute an Action ?</h2>
 <ol>
-<li>Select <b>Session</b> in which you want to run.</li>
-<li>(If needed) Select one or several parts of <b>Data</b>, <b>Data Source</b> or <b>Data Channel</b> on the top/left tree.</li>
-<li>Select <b>Action</b> on the top/left tree.</li>
-<li>A form will appear in the central pane - fill missing fields.</li>
-<li>Send the command - it will appear as a <b>Task</b> and/or <b>Session</b>.</li>
+<li>On <b>Servers</b>, select the <em>Server</em>, on which you want to run.</li>
+<li>Using <em>Right-Click</em> on that <em>Server</em>, create a <em>Session</em> with required language.</li>
+<li>Using <em>Right-Click</em> on that <em>Session</em>, prepare it for execution.
+    It will open a new <em>Session Tab</em>. </li>
+<li>On <b>Actions</b>, select the <em>Action</em>, you want to execute.</li>
+<li>Using <em>Right-Click</em> on that <em>Action</em>, use it for the selected <em>Session</em>.
+    It will fill the selected <em>Session Tab</em>.</li>
+<li>If needed, edit the source in the selected <em>Session Tab</em>.</li>
+<li><em>Execute</em> on the selected <em>Session Tab</em> and wait for the result.</li>
 </ol>
 
+<h2>How to create a new Action ?</h2>
+Using <em>Right-Click</em> on <b>Actions</b> and selecting <em>Create</em>.
+
+<h2>How to connect to new Server ?</h2>
+Using <em>Right-Click</em> on <b>Servers</b> and selecting <em>Create</em>.
+
+<h2>How to execute a Bean Shell script ?</h2>
+Using <b>Script</b> button on thre top MenuBar.
+
+<hr/>
+<h2>Commands available in CLI</h2>
+<pre>
+w.servers();
+w.actions();
+w.datas();
+w.dataSources();
+w.dataChannels();
+w.tasks();
+w.addServer(name, urlLivy, urlSpark);
+w.addAction(name, cmd, language); // language = Language.PYTHON, Language.SCALA,...
+w.addData(name);
+w.addDataSource(name);
+w.addDataChannel(name);
+</pre>
+and (almost) full standard Java 
