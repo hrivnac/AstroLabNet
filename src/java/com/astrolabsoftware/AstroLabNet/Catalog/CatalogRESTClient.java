@@ -1,4 +1,4 @@
-package com.astrolabsoftware.AstroLabNet.Livyser;
+package com.astrolabsoftware.AstroLabNet.Catalog;
 
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
 import com.astrolabsoftware.AstroLabNet.Utils.SmallHttpClient;
@@ -48,7 +48,7 @@ public class CatalogRESTClient {
     try {
       result = SmallHttpClient.get(_url + "/version/cluster", null) + "\n"
              + SmallHttpClient.get(_url + "/status/cluster",  null) + "\n"
-             + SmallHttpClient.get(_url + "/",                null)
+             + SmallHttpClient.get(_url + "/",                null);
       }
     catch (AstroLabNetException e) {
       log.info(e);

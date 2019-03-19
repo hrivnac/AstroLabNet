@@ -1,5 +1,6 @@
 package com.astrolabsoftware.AstroLabNet.DB;
 
+import com.astrolabsoftware.AstroLabNet.Catalog.CatalogRESTClient;
 import com.astrolabsoftware.AstroLabNet.Livyser.LivyRESTClient;
 
 // Log4J
