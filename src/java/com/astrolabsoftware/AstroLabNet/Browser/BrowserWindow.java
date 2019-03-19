@@ -224,6 +224,15 @@ public class BrowserWindow extends Application {
       engineSpark.load(serverRep.urlSpark());
       addTab(viewSpark, serverRep.name() + " : Spark : " + serverRep.urlSpark(), Images.SPARK);
       }
+    if (serverRep.urlHBase() == null) {
+      log.warn("HBase url for " + serverRep.name() + " is not defined !");
+      }
+    else {
+      WebView viewHBase = new WebView();
+      WebEngine engineHBase = viewHBase.getEngine();
+      engineHBase.load(serverRep.urlHBase() + "/status/cluster");
+      addTab(viewHBase, serverRep.name() + " : HBase : " + serverRep.urlHBase(), Images.HBASE);
+      }
     }
   
   /** Register the {@link SessionRep} command, so that it can be filled

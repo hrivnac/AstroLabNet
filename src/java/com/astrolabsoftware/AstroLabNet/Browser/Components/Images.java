@@ -24,6 +24,7 @@ public final class Images {
 
   public static final Image ASTROLAB = new Image(myLoader.getResourceAsStream("com/astrolabsoftware/AstroLabNet/Browser/Components/images/AstroLab.png"));
   public static final Image SPARK    = new Image(myLoader.getResourceAsStream("com/astrolabsoftware/AstroLabNet/Browser/Components/images/Spark.png"));
+  public static final Image HBASE    = new Image(myLoader.getResourceAsStream("com/astrolabsoftware/AstroLabNet/Browser/Components/images/HBase.png"));
   public static final Image LIVY     = new Image(myLoader.getResourceAsStream("com/astrolabsoftware/AstroLabNet/Browser/Components/images/Livy.png"));
   public static final Image ACTION   = new Image(myLoader.getResourceAsStream("com/astrolabsoftware/AstroLabNet/Browser/Components/images/Action.png"));
   public static final Image SESSION  = new Image(myLoader.getResourceAsStream("com/astrolabsoftware/AstroLabNet/Browser/Components/images/Session.png"));

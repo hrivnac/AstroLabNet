@@ -103,6 +103,12 @@ public class ServerRep extends ElementRep {
     return server().urlSpark();
     }  
     
+  /** Give HBase Server url.
+    * @return The HBase Server url. */
+  public String urlHBase() {
+    return server().urlHBase();
+    }  
+    
   /** Give Livy Server url.
     * @return The Livy Server url. */
   public LivyRESTClient livy() {

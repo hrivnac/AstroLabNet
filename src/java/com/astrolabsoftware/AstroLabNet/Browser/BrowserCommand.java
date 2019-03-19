@@ -45,8 +45,9 @@ public class BrowserCommand extends CommandLine {
   @Override
   public Server addServer(String name,
                           String urlLivy,
-                          String urlSpark) {
-    Server server = super.addServer(name, urlLivy, urlSpark);
+                          String urlSpark,
+                          String urlHBase) {
+    Server server = super.addServer(name, urlLivy, urlSpark, urlHBase);
     if (server == null) {
       return null;
       }

@@ -109,12 +109,13 @@ public abstract class DefaultInteracter implements Interacter {
   @Override
   public Server addServer(String name,
                           String urlLivy,
-                          String urlSpark) {
+                          String urlSpark,
+                          String urlHBase) {
     if (urlLivy == null) {
       log.warn("No Livy server defined for " + name);
       return null;
       }
-    Server server = new Server(name, urlLivy, urlSpark);
+    Server server = new Server(name, urlLivy, urlSpark, urlHBase);
     log.info("Adding Server: " + server);
     _servers.add(server);
     return server;

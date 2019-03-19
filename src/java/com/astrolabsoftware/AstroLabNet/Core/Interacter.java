@@ -38,10 +38,12 @@ public interface Interacter {
     * @param name     The {@link ServerRep} name.
     * @param urlLivy  The url of the <em>Livy</em> server. Should not be <tt>null</tt>.
     * @param urlSpark The url of the <em>Spark</em> server. May be <tt>null</tt>.
+    * @param urlHBase The url of the <em>HBase</em> server (hosting <em>Catalog</em>. May be <tt>null</tt>.
     * @return         The added {@link Server}. */
   public Server addServer(String name,
                           String urlLivy,
-                          String urlSpark);
+                          String urlSpark,
+                          String urlHBase);
   
   /** Add {@link Action}.
     * @param name     The {@link Action} name.

@@ -16,13 +16,16 @@ public class Server extends Element {
   /** Create new Spark and Livy Server.
     * @param name     The Server name.
     * @param urlLivy  The url of the Spark Server Livy interface.
-    * @param urlSpark The url of the Spark Server. */
+    * @param urlSpark The url of the Spark Server.
+    * @param urlHBase The url of the HBase Server (for Catalog). */
   public Server(String        name,
                 String        urlLivy,
-                String        urlSpark) {
+                String        urlSpark,
+                String        urlHBase) {
     super(name);
     _urlLivy    = urlLivy;
     _urlSpark   = urlSpark;
+    _urlHBase   = urlHBase;
     _livy       = new LivyRESTClient(urlLivy);
     }
         
@@ -37,6 +40,12 @@ public class Server extends Element {
   public String urlSpark() {
     return _urlSpark;
     }  
+
+  /** Give HBase Server url.
+    * @return The HBase Server url. */
+  public String urlHBase() {
+    return _urlHBase;
+    }  
     
   /** Give {@link LivyRESTClient}.
     * @return The {@link LivyRESTClient}. */
@@ -46,12 +55,14 @@ public class Server extends Element {
     
   @Override
   public String toString() {
-    return name() + " (Livy = " + _urlLivy + ", Spark = " + _urlSpark + ")";
+    return name() + " (Livy = " + _urlLivy + ", Spark = " + _urlSpark + ", HBase = " + _urlHBase + ")";
     }
     
   private String _urlLivy;
   
   private String _urlSpark;
+  
+  private String _urlHBase;
   
   private LivyRESTClient _livy;
   

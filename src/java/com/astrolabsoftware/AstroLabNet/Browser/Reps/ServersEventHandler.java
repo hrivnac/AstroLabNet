@@ -64,11 +64,13 @@ public class ServersEventHandler implements EventHandler<ActionEvent> {
     TextField livyField = new TextField("http://");
     Label sparkLabel = new Label("Spark Server:");
     TextField sparkField = new TextField("http://");
+    Label hbaseLabel = new Label("HBase Server:");
+    TextField hbaseField = new TextField("http://");
     Button create = new Button("create");
     create.setOnAction(new EventHandler() {
       @Override
       public void handle(Event event) {
-        _command.addServer(nameField.getText(), livyField.getText(), sparkField.getText());
+        _command.addServer(nameField.getText(), livyField.getText(), sparkField.getText(), hbaseField.getText());
         dialog.close();
         }
       });
@@ -85,10 +87,12 @@ public class ServersEventHandler implements EventHandler<ActionEvent> {
     livy.getChildren().addAll(livyLabel, livyField);
     HBox spark = new HBox(8);
     spark.getChildren().addAll(sparkLabel, sparkField);
+    HBox hbase = new HBox(8);
+    hbase.getChildren().addAll(hbaseLabel, hbaseField);
     HBox buttons = new HBox(8);
     buttons.getChildren().addAll(create, close);
     VBox root = new VBox(8);
-    root.getChildren().addAll(titleLabel, name, livy, spark, buttons);
+    root.getChildren().addAll(titleLabel, name, livy, spark, hbase, buttons);
     dialog.initStyle(StageStyle.UTILITY);
     Scene scene = new Scene(root);
     dialog.setScene(scene);
