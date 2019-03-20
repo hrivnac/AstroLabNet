@@ -1,2 +1,2 @@
 w.addServer("Local Host", "http://localhost:8998", "http://localhost:4040", "http://localhost:8080");
-w.addServer("LAL", "http://vm-75222.lal.in2p3.fr:21111", "http://vm-75222.lal.in2p3.fr:20001", "http://134.158.74.54:8080");
+//w.addServer("LAL", "http://vm-75222.lal.in2p3.fr:21111", "http://vm-75222.lal.in2p3.fr:20001", "http://134.158.74.54:8080");

@@ -35,6 +35,29 @@ it can be called like
 java -jar AstroLabNet.exe.jar
 </pre>
 <hr/>
+<h3>How to setup private server</h3>
+<ol>
+<li>Install:
+<ol>
+<li><a href="https://spark.apache.org">Spark</a></li>
+<li><a href="https://livy.incubator.apache.org">Livy</a></li>
+<li><a href="https://hbase.apache.org">HBase</a></li>
+</ol></li>
+<li>Start all servers:
+<pre>
+${SPARK_HOME}/bin/spark-shell
+${LIVY_HOME}/bin/livy-server start
+${HBASE_HOME}/bin/start-hbase.sh
+${HBASE_HOME}/bin/hbase-daemon.sh start rest
+</pre></li>
+<li>Create HBase tables:
+<pre>
+${HBASE_HOME}/bin/hbase shell < ../src/ruby/createCatalog.rb
+${HBASE_HOME}/bin/hbase shell < ../src/ruby/createJournal.rb
+${HBASE_HOME}/bin/hbase shell < ../src/ruby/createTopology.rb
+</pre>
+</ol>
+<hr/>
 <ul>
 <li><a href="JavaDoc">JavaDoc</a></li>
 <li><a href="Src">Source</a></li>
@@ -75,6 +98,7 @@ java -jar AstroLabNet.exe.jar
 <b><u>ToDos</u></b>
 <ul>
 <li>Save newly created Actions.</li>
+<li>Accept Actions as JAR files.</li>
 <li>Treat entities and data as a graph (network).</li>
 <li>Interface to LSST Alert system.</li>
 <li>Interface to LSST Catalog and data system.</li>
@@ -98,7 +122,8 @@ java -jar AstroLabNet.exe.jar
     </ul></li>
 <li><u>*.*.*:</u>
     <ul>
-    <li>...</li>
+    <li>Complete CLI.</li>
+    <li>
     </ul>
 </ul>
 
@@ -118,11 +143,11 @@ java -jar AstroLabNet.exe.jar
 <ul>
 <li><u>2019:</u>
     <ul>
-    <li><a href="docsrc/2018.11.13-AstroLabNet.pdf">AstroLabNet (13/11/2018, LAL)</a></li>
+    <li><a href="docsrc/2019.02.19-AstroLabNet.pdf">AstroLabNet Status (19/2/2019, LAL)</a></li>
     </ul></li>
 <li><u>2018:</u>
     <ul>
-    <li><a href="docsrc/2019.02.19-AstroLabNet.pdf">AstroLabNet Status (19/2/2019, LAL)</a></li>
+    <li><a href="docsrc/2018.11.13-AstroLabNet.pdf">AstroLabNet (13/11/2018, LAL)</a></li>
     </ul></li>
 </ul>
 </p>

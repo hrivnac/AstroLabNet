@@ -18,19 +18,43 @@ public class Server extends Element {
     * @param name     The Server name.
     * @param urlLivy  The url of the Spark Server Livy interface.
     * @param urlSpark The url of the Spark Server.
-    * @param urlHBase The url of the HBase Server (for Catalog). */
+    * @param urlHBase The url of the HBase Server. */
   public Server(String        name,
                 String        urlLivy,
                 String        urlSpark,
                 String        urlHBase) {
     super(name);
-    _urlLivy    = urlLivy;
-    _urlSpark   = urlSpark;
-    _urlHBase   = urlHBase;
-    _livy       = new LivyRESTClient(urlLivy);
-    _hbase      = new HBaseRESTClient(urlHBase);
+    setLivy(urlLivy);
+    setSpark(urlSpark);
+    setHBase(urlHBase);
     }
         
+  /** Create new Spark and Livy Server.
+    * @param name The Server name. */
+  public Server(String name) {
+    super(name);
+    }
+    
+  /** Set Spark Server Livy interface.
+    * @param urlLivy  The url of the Spark Server Livy interface. */
+  public void setLivy(String url) {
+    _urlLivy = url;
+    _livy = new LivyRESTClient(url);
+    }
+
+  /** Set Spark Server.
+    * @param urlLivy  The url of the Spark Server. */
+  public void setSpark(String urlSpark) {
+    _urlSpark = urlSpark;
+    }
+ 
+  /** Set HBase Server.
+    * @param url The url of the HBase Server. */
+  public void setHBase(String url) {
+    _urlHBase = url;
+    _hbase    = new HBaseRESTClient(url);
+    }
+    
   /** Give Spark Server Livy interface url.
     * @return The Spark Server Livy interface url. */
   public String urlLivy() {

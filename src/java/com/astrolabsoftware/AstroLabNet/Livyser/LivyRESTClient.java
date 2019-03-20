@@ -36,15 +36,16 @@ public class LivyRESTClient {
   
   /** Initiate session on the server.
     * <pre>
-    * POST /sessions {"kind":language}
+    * POST /sessions {"kind":*language*}
     * </pre>
     * @param language The {@link Language} of the {@link Session}.
     * @return The new session number. */
+  // TBD: allow closing session
   public int initSession(Language language) {
     log.info("Creating Session in " + language);
     String result = "";
     try {
-      result = SmallHttpClient.post(_url + "/sessions", "{\"kind\":\"" + language.asSpark() + "\"}", null);
+      result = SmallHttpClient.postJSON(_url + "/sessions", "{\"kind\":\"" + language.asSpark() + "\"}", null, null);
       }
     catch (AstroLabNetException e) {
       log.info(e);
@@ -81,7 +82,7 @@ public class LivyRESTClient {
     
   /** Get list of opened statements.
     * <pre>
-    * GET /sessions/idSession/statements
+    * GET /sessions/-idSession-/statements
     * </re>
     * @param  idSession The existing session number.
     * @return           The {@link List} of {@link Integer}s of open statement numbers for a session. */
@@ -104,7 +105,7 @@ public class LivyRESTClient {
   
   /** Send command to the server.
     * <pre>
-    * POST /sessions/idSession/statements {"code":code}
+    * POST /sessions/-idSession-/statements {"code":-code-}
     * </pre>
     * @param  idSession The existing session number.
     * @param  code      The <em>scala</code> to be run on the server.
@@ -116,7 +117,7 @@ public class LivyRESTClient {
                .replaceAll("\n", "\\\\n")
                .replaceAll("\"", "\\\\\"");
     try {
-      result = SmallHttpClient.post(_url + "/sessions/" + idSession + "/statements", "{\"code\":\"" + code + "\"}", null);
+      result = SmallHttpClient.postJSON(_url + "/sessions/" + idSession + "/statements", "{\"code\":\"" + code + "\"}", null, null);
       }
     catch (AstroLabNetException e) {
       log.info(e);
@@ -126,9 +127,9 @@ public class LivyRESTClient {
     return result;
     }
     
-  /** Send command to the server.
+  /** Check comamnd progreess, get results.
     * <pre>
-    * GET /sessions/idSession/statements/idStatement
+    * GET /sessions/-idSession-/statements/-idStatement-
     * </pre>
     * @param  idSession   The existing session number.
     * @param  idStatement The statement number.

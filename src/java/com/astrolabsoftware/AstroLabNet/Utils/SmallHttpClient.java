@@ -35,6 +35,7 @@ import org.apache.log4j.Logger;
   * @opt types
   * @opt visibility
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
+// TBD: JSON/XML should be handked the same way in get/post
 public class SmallHttpClient {
 
   /** Make http get call.
@@ -149,12 +150,15 @@ public class SmallHttpClient {
   /** Make http post call. It accepts gzipped results.
     * @param url     The http url.
     * @param json    The request parameters as JSON string.
-    * @param headers The additional headers.
+    * @param headers The additional headers. May be <code>null</code>.
+    * @param header  The requested header (instead of answer body). May be <code>null</code>.
     * @return        The answer.
     * @throws AstroLabNetException If anything goes wrong. */
-  public static String post(String              url,
-                            String              json,
-                            Map<String, String> headers) throws AstroLabNetException {
+  // TBD: header should be more generic
+  public static String postJSON(String              url,
+                                String              json,
+                                Map<String, String> headers,
+                                String              header) throws AstroLabNetException {
     String answer = "";
     DefaultHttpClient client = new DefaultHttpClient();
     HttpPost post = new HttpPost(url);
@@ -180,7 +184,66 @@ public class SmallHttpClient {
         throw new AstroLabNetException("Post to " + url + " " + json + " failed: " + statusLine.getReasonPhrase());
         }
       else {
-        answer = getResponseBody(response);   
+        if (header != null) {
+          answer = response.getHeaders(header)[0].getElements()[0].getName();
+          }
+        else {
+          answer = getResponseBody(response);   
+          }
+        }
+      }
+    catch (Exception e) {
+      throw new AstroLabNetException("Post to " + url + " " + json + " failed", e);
+      }
+    finally {
+      post.releaseConnection();
+      }  
+    return answer;
+    }
+    
+  /** Make http post call. It accepts gzipped results.
+    * @param url     The http url.
+    * @param json    The request parameters as XML string.
+    * @param headers The additional headers. May be <code>null</code>.
+    * @param header  The requested header (instead of answer body). May be <code>null</code>.
+    * @return        The answer.
+    * @throws AstroLabNetException If anything goes wrong. */
+  // TBD: header should be more generic
+  public static String postXML(String              url,
+                               String              json,
+                               Map<String, String> headers,
+                               String              header) throws AstroLabNetException {
+    String answer = "";
+    DefaultHttpClient client = new DefaultHttpClient();
+    HttpPost post = new HttpPost(url);
+    post.addHeader("Accept-Encoding", "gzip");
+    post.addHeader("Content-Type", "text/xml");
+    post.addHeader("Accept", "text/xml");
+    if (headers != null) {
+      for (Map.Entry<String, String> entry : headers.entrySet()) {
+        post.addHeader(entry.getKey(), entry.getValue());
+        }
+      }
+    try {
+      post.setEntity(new StringEntity(json));
+      }
+    catch (UnsupportedEncodingException e) {
+      log.warn("Cannot encode nameValuePairs", e);
+      }      
+    try {
+      HttpResponse response = client.execute(post);
+      StatusLine statusLine = response.getStatusLine();
+      int statusCode = statusLine.getStatusCode();
+      if (statusCode != HttpStatus.SC_OK && statusCode != HttpStatus.SC_CREATED) {
+        throw new AstroLabNetException("Post to " + url + " " + json + " failed: " + statusLine.getReasonPhrase());
+        }
+      else {
+        if (header != null) {
+          answer = response.getHeaders(header)[0].getElements()[0].getName();
+          }
+        else {
+          answer = getResponseBody(response);
+          }
         }
       }
     catch (Exception e) {

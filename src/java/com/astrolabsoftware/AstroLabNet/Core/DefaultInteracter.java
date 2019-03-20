@@ -15,9 +15,14 @@ import com.astrolabsoftware.AstroLabNet.Core.Interacter;
 import bsh.Interpreter;
 import bsh.EvalError;
 
+// org.json
+import org.json.JSONObject;
+import org.json.JSONArray;
+
 // Java
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Base64;
 
 // Log4J
 import org.apache.log4j.Logger;
@@ -102,6 +107,53 @@ public abstract class DefaultInteracter implements Interacter {
       }
     catch (EvalError e) {
       log.error("Can't evaluate standard BeanShell expression", e);
+      }
+    log.info("Reading Topology Databases");
+    // TBD: should be recursive
+    // TBD: should not douple servers
+    List<Server> servers = new ArrayList<>();
+    for (Server s : servers()) {
+      servers.add(s);
+      }
+    for (Server server : servers) {
+      try {
+        String scannerId = server.hbase().initScanner("astrolabnet.topology.1");
+        String resultString = server.hbase().getResults("astrolabnet.topology.1", scannerId);
+        JSONObject row;
+        JSONArray cell;
+        JSONObject column;
+        Server server1;
+        String name;
+        String cname;
+        String cvalue;
+        String spark = null;
+        String livy = null;
+        String hbase = null;
+        JSONArray result = new JSONObject(resultString).getJSONArray("Row");
+        for (int i = 0; i < result.length(); i++) {
+          row = result.getJSONObject(i);
+          name = decode(row.getString("key"));
+          cell = row.getJSONArray("Cell");
+          for (int j = 0; j < cell.length(); j++) {
+            spark = null;
+            livy  = null;
+            hbase = null;
+            column = cell.getJSONObject(j);
+            cname  = decode(column.getString("column"));
+            cvalue = decode(column.getString("$"));
+            switch (cname) {
+              case "d:spark":
+                spark = cvalue;
+              case "d:livy":
+                livy  = cvalue;
+              case "d:hbase":
+                hbase = cvalue;
+              }
+            }
+          addServer(name, livy, spark, hbase);
+          }
+        }
+      catch (Exception e) {}
       }
     }    
     
@@ -203,6 +255,13 @@ public abstract class DefaultInteracter implements Interacter {
     catch (EvalError e) {
       log.error("Can't evaluate BeanShell expression:\n" + text, e);
       }
+    }
+    
+  /** Decode REST server string.
+    * @param s The encoded REST server string.
+    * @return The decode  REST server string. */
+  private String decode(String s) {
+    return  new String(Base64.getDecoder().decode(s));
     }
     
   private Interpreter _interpreter;
