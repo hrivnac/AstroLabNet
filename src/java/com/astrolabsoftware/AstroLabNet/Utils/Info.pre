@@ -16,8 +16,29 @@ public class Info {
     return _version + " [" + _build + " by " + _builder + "]";
     }
 
-  private static final String _version = "@version@";
-  private static final String _build   = "@TSTAMP@";
-  private static final String _builder = "@user.name@";
+  /** Give catalog HBase table name.
+    * @return The catalog HBase table name. */
+  public final static String catalog() {
+    return _catalog;
+    }
+
+    /** Give topology HBase table name.
+    * @return The topology HBase table name. */
+  public final static String topology() {
+    return _topology;
+    }
+
+    /** Give journal HBase table name.
+    * @return The journal HBase table name. */
+  public final static String journal() {
+    return _journal;
+    }
+    
+  private static final String _version  = "@version@";
+  private static final String _build    = "@TSTAMP@";
+  private static final String _builder  = "@user.name@";
+  private static final String _catalog  = "@catalog@";
+  private static final String _topology = "@topology@";
+  private static final String _journal  = "@journal@";
 
   }

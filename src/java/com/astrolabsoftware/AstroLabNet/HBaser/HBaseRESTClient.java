@@ -94,6 +94,14 @@ public class HBaseRESTClient {
     return result;
     }
     
+  /** Scan table.
+    * @param table The requested table name.
+    * @return      The command result, in <em>xml</em>. */
+  public String scan(String table) {
+    String scannerId = initScanner(table);
+    return getResults(table, scannerId);
+    }
+    
   private String _url;
 
   /** Logging . */

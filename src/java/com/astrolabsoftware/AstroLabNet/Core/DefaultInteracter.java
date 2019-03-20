@@ -7,6 +7,7 @@ import com.astrolabsoftware.AstroLabNet.DB.*;
 import com.astrolabsoftware.AstroLabNet.Utils.StringFile;
 import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
 import com.astrolabsoftware.AstroLabNet.Utils.Init;
+import com.astrolabsoftware.AstroLabNet.Utils.Info;
 import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
 import com.astrolabsoftware.AstroLabNet.Livyser.Language;
 import com.astrolabsoftware.AstroLabNet.Core.Interacter;
@@ -110,15 +111,14 @@ public abstract class DefaultInteracter implements Interacter {
       }
     log.info("Reading Topology Databases");
     // TBD: should be recursive
-    // TBD: should not douple servers
+    // TBD: should not multiply servers
     List<Server> servers = new ArrayList<>();
     for (Server s : servers()) {
       servers.add(s);
       }
     for (Server server : servers) {
       try {
-        String scannerId = server.hbase().initScanner("astrolabnet.topology.1");
-        String resultString = server.hbase().getResults("astrolabnet.topology.1", scannerId);
+        String resultString = server.hbase().scan(Info.topology());
         JSONObject row;
         JSONArray cell;
         JSONObject column;
@@ -134,10 +134,10 @@ public abstract class DefaultInteracter implements Interacter {
           row = result.getJSONObject(i);
           name = decode(row.getString("key"));
           cell = row.getJSONArray("Cell");
+          spark = null;
+          livy  = null;
+          hbase = null;
           for (int j = 0; j < cell.length(); j++) {
-            spark = null;
-            livy  = null;
-            hbase = null;
             column = cell.getJSONObject(j);
             cname  = decode(column.getString("column"));
             cvalue = decode(column.getString("$"));
@@ -153,7 +153,9 @@ public abstract class DefaultInteracter implements Interacter {
           addServer(name, livy, spark, hbase);
           }
         }
-      catch (Exception e) {}
+      catch (Exception e) {
+        log.warn("Cannot parse Topology table", e);
+        }
       }
     }    
     
@@ -165,6 +167,12 @@ public abstract class DefaultInteracter implements Interacter {
     if (urlLivy == null) {
       log.warn("No Livy server defined for " + name);
       return null;
+      }
+    for (Server server : servers()) {
+      if (name.equals(server.name())) {
+        log.warn("Server " + name + " not updated");
+        return null;
+        }
       }
     Server server = new Server(name, urlLivy, urlSpark, urlHBase);
     log.info("Adding Server: " + server);

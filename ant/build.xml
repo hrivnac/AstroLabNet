@@ -50,6 +50,9 @@
     <replace file="../build/com/astrolabsoftware/AstroLabNet/Utils/Info.java" token="@version@"   value="${version}"/>
     <replace file="../build/com/astrolabsoftware/AstroLabNet/Utils/Info.java" token="@TSTAMP@"    value="${TSTAMP}"/>
     <replace file="../build/com/astrolabsoftware/AstroLabNet/Utils/Info.java" token="@user.name@" value="${user.name}"/>
+    <replace file="../build/com/astrolabsoftware/AstroLabNet/Utils/Info.java" token="@catalog@"   value="${catalog}"/>
+    <replace file="../build/com/astrolabsoftware/AstroLabNet/Utils/Info.java" token="@topology@"  value="${topology}"/>
+    <replace file="../build/com/astrolabsoftware/AstroLabNet/Utils/Info.java" token="@journal@"   value="${journal}"/>
     </target>
 
   <!-- Init =================================================================-->
