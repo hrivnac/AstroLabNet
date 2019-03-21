@@ -109,12 +109,19 @@ public abstract class DefaultInteracter implements Interacter {
     catch (EvalError e) {
       log.error("Can't evaluate standard BeanShell expression", e);
       }
-    // TBD: should be recursive
-    List<Server> servers = new ArrayList<>();
-    for (Server s : servers()) {
-      servers.add(s);
+    getServersFromTopology(servers());
+    }
+    
+  /** Get new {@link Server}s from topology table.
+    * Runs recursively, stops whje n no new {@link Server} found.
+    * @param servers The {@link List} of existing {@link Server}s to scan for new {@link Server}s. */
+  private void getServersFromTopology(List<Server> servers) {
+    List<Server> knownServers = new ArrayList<>();
+    List<Server> newServers   = new ArrayList<>();
+    for (Server s : servers) {
+      knownServers.add(s);
       }
-    for (Server server : servers) {
+    for (Server server : knownServers) {
       log.info("Reading Topology Database " + server.urlHBase());
       try {
         String resultString = server.hbase().scan(Info.topology());
@@ -140,7 +147,6 @@ public abstract class DefaultInteracter implements Interacter {
             column = cell.getJSONObject(j);
             cname  = decode(column.getString("column"));
             cvalue = decode(column.getString("$"));
-            log.info(cname + " " + cvalue);
             switch (cname) {
               case "d:spark":
                 spark = cvalue;
@@ -153,12 +159,18 @@ public abstract class DefaultInteracter implements Interacter {
                 break;
               }
             }
-          addServer(name, livy, spark, hbase);
+          Server newServer = addServer(name, livy, spark, hbase);
+          if (newServer != null) {
+            newServers.add(newServer);
+            }
           }
         }
       catch (Exception e) {
         log.warn("Cannot parse Topology table", e);
         }
+      }
+    if (!newServers.isEmpty()) {
+      getServersFromTopology(newServers);
       }
     }    
     
