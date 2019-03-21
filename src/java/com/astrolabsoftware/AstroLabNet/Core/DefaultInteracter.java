@@ -109,14 +109,13 @@ public abstract class DefaultInteracter implements Interacter {
     catch (EvalError e) {
       log.error("Can't evaluate standard BeanShell expression", e);
       }
-    log.info("Reading Topology Databases");
     // TBD: should be recursive
-    // TBD: should not multiply servers
     List<Server> servers = new ArrayList<>();
     for (Server s : servers()) {
       servers.add(s);
       }
     for (Server server : servers) {
+      log.info("Reading Topology Database " + server.urlHBase());
       try {
         String resultString = server.hbase().scan(Info.topology());
         JSONObject row;
@@ -141,13 +140,17 @@ public abstract class DefaultInteracter implements Interacter {
             column = cell.getJSONObject(j);
             cname  = decode(column.getString("column"));
             cvalue = decode(column.getString("$"));
+            log.info(cname + " " + cvalue);
             switch (cname) {
               case "d:spark":
                 spark = cvalue;
+                break;
               case "d:livy":
                 livy  = cvalue;
+                break;
               case "d:hbase":
                 hbase = cvalue;
+                break;
               }
             }
           addServer(name, livy, spark, hbase);

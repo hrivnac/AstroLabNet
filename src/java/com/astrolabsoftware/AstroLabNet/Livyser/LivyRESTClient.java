@@ -9,6 +9,7 @@ import javafx.util.Pair;
 // org.json
 import org.json.JSONObject;
 import org.json.JSONArray;
+import org.json.JSONException;
 
 // Java
 import java.util.List;
@@ -71,11 +72,17 @@ public class LivyRESTClient {
       AstroLabNetException.reportException("Request has failed", e, log);
       return ss;
       }
-    JSONArray sessions = new JSONObject(result).getJSONArray("sessions");
-    for (int i = 0; i < sessions.length(); i++) {
-      ss.add(new Pair<Integer, Language>(sessions.getJSONObject(i).getInt("id"),
-                                         Language.fromSpark(sessions.getJSONObject(i).getString("kind"))));
-      getStatements(sessions.getJSONObject(i).getInt("id"));
+    try {
+      JSONArray sessions = new JSONObject(result).getJSONArray("sessions");
+      for (int i = 0; i < sessions.length(); i++) {
+        ss.add(new Pair<Integer, Language>(sessions.getJSONObject(i).getInt("id"),
+                                           Language.fromSpark(sessions.getJSONObject(i).getString("kind"))));
+        getStatements(sessions.getJSONObject(i).getInt("id"));
+        }
+      }
+    catch (JSONException e) {
+      AstroLabNetException.reportException("Request has failed", e, log);
+      return ss;
       }
     return ss;
     }
