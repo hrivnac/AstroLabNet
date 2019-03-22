@@ -101,7 +101,7 @@ public abstract class DefaultInteracter implements Interacter {
       }
     if (init.equals("")) {
       log.warn("no suitable init bsh file found, the default setup with Local Host server will be used.");
-      init = "w.addServer(\"Local Host\", \"http://localhost:8998\", \"http://localhost:4040\")";
+      init = "w.addServer(\"Local Host\", \"http://localhost:8998\", \"http://localhost:4040\", \"http://localhost:8080\")";
       }
     try {
       interpreter.eval(init);

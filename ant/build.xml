@@ -23,6 +23,7 @@
     <pathelement path="${logging.jar}"/>
     <pathelement path="${cli.jar}"/>
     <pathelement path="${orgjson.jar}"/>
+    <pathelement path="${avro.jar}"/>
     <fileset dir="../extlib">
       <include name="*.jar"/>
       </fileset>
@@ -69,6 +70,20 @@
     <mkdir dir="../doc/JavaDoc"/>      
     </target>
 
+  <!-- Avro =================================================================-->
+
+  <target name="avro"
+          description="Create Avro Representation">
+    <java jar="${avro-tools.jar}"
+          fork="true"
+          failonerror="true">
+      <arg value="compile"/>
+      <arg value="schema"/>
+      <arg value="../src/avro/ztf/candidate.avsc"/>
+      <arg value="../build"/>
+      </java>
+    </target>
+
   <!-- Compile ==============================================================-->
 
   <target name="compile"
@@ -84,7 +99,7 @@
            target="8">
       <!--compilerarg value="-Xlint:unchecked"/-->
       <!--compilerarg value="-Xlint:deprecation"/-->
-      <src path="../src/java/com/astrolabsoftware/AstroLabNet"/>
+      <src path="../src/java"/>
       <src path="../build"/>
       <classpath>
         <path refid="classpath.build"/>
@@ -105,7 +120,7 @@
       </path>
     <property name="classpath.libs" refid="libs"/>
     <jar jarfile="../lib/AstroLabNet.jar" index="yes">
-      <fileset dir="../build"    includes="com/astrolabsoftware/AstroLabNet/**/*.class"/>
+      <fileset dir="../build"    includes="**/*.class"/>
       <fileset dir="../src/java" includes="com/astrolabsoftware/AstroLabNet/**/*.properties"/>
       <fileset dir="../src/java" includes="com/astrolabsoftware/AstroLabNet/**/*.txt"/>
       <fileset dir="../src/java" includes="com/astrolabsoftware/AstroLabNet/**/*.png"/>
@@ -130,6 +145,7 @@
       <zipfileset includes="**/*" src="${logging.jar}"/>
       <zipfileset includes="**/*" src="${cli.jar}"/>
       <zipfileset includes="**/*" src="${orgjson.jar}"/>
+      <zipfileset includes="**/*" src="${avro.jar}"/>
       <manifest>
         <attribute name="Created-By" value="${user.name}"/>
         <attribute name="AppName"    value="AstroLabNet"/>
@@ -289,6 +305,7 @@
       <group title="HBaser"             packages="com.astrolabsoftware.AstroLabNet.HBaser*"/>
       <group title="DB"                 packages="com.astrolabsoftware.AstroLabNet.DB*"/>
       <group title="Jobs"               packages="com.astrolabsoftware.AstroLabNet.Jobs*"/>
+      <group title="ZTF Avro"           packages="ztf*"/>
       <link href="http://docs.oracle.com/javase/8/docs/api"/>
       <link href="http://www.beanshell.org/javadoc/"/>
       <link href="https://logging.apache.org/log4j/1.2/apidocs"/>
@@ -297,7 +314,8 @@
       <link href="https://hc.apache.org/httpcomponents-client-ga/httpclient/apidocs"/>
       <link href="http://stleary.github.io/JSON-java"/>
       <link href="https://commons.apache.org/proper/commons-cli/apidocs"/>
-      <!-- scala library -->
+      <link href="https://avro.apache.org/docs/1.8.2/api/java/index.html"/>
+      <!-- TBD: scala library -->
       <classpath>
         <path refid="classpath.run"/>
         </classpath>
