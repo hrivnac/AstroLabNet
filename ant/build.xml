@@ -24,6 +24,7 @@
     <pathelement path="${cli.jar}"/>
     <pathelement path="${orgjson.jar}"/>
     <pathelement path="${avro.jar}"/>
+    <pathelement path="${jackson.jar}"/>
     <fileset dir="../extlib">
       <include name="*.jar"/>
       </fileset>
@@ -74,14 +75,23 @@
 
   <target name="avro"
           description="Create Avro Representation">
+    <concat destfile="../build/ztf.avsc" append="true">
+      <filelist dir="../src/avro/ztf" files="candidate.avsc"/>
+      <filelist dir="../src/avro/ztf" files="prv_candidate.avsc"/>
+      <filelist dir="../src/avro/ztf" files="alert.avsc"/>
+      <filelist dir="../src/avro/ztf" files="cutout.avsc"/>
+      </concat>
     <java jar="${avro-tools.jar}"
           fork="true"
           failonerror="true">
       <arg value="compile"/>
       <arg value="schema"/>
-      <arg value="../src/avro/ztf/candidate.avsc"/>
+      <arg value="../build/ztf.avsc"/>
       <arg value="../build"/>
       </java>
+    <delete includeEmptyDirs="true">
+      <fileset dir="../build" includes="ztf.avsc"/>
+      </delete>
     </target>
 
   <!-- Compile ==============================================================-->
@@ -255,7 +265,7 @@
 			<fileset dir="../docsrc" includes="*"/>
       </copy>
     <copy todir="../doc/dist">
-			<fileset dir="../lib" includes="*.exe.jar"/>
+			<fileset dir="../lib" includes="*.exhttps://github.com/ZwickyTransientFacility/ztf-avro-alert/tree/master/schemae.jar"/>
       </copy>
  		<copy todir="../doc/JavaDoc">
 			<fileset dir="../src/java" includes="**/doc-files/*"/>
@@ -315,6 +325,7 @@
       <link href="http://stleary.github.io/JSON-java"/>
       <link href="https://commons.apache.org/proper/commons-cli/apidocs"/>
       <link href="https://avro.apache.org/docs/1.8.2/api/java/index.html"/>
+      <!-- TBD Jackson -->
       <!-- TBD: scala library -->
       <classpath>
         <path refid="classpath.run"/>
@@ -379,6 +390,7 @@
     
   <!-- UmlGraph =============================================================-->  
 
+  <!-- TBD: divide into code and Avro schema -->
   <target name="uml"
           depends="init"
           description="Create UML Graph">
