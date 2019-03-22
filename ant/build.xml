@@ -390,7 +390,6 @@
     
   <!-- UmlGraph =============================================================-->  
 
-  <!-- TBD: divide into code and Avro schema -->
   <target name="uml"
           depends="init"
           description="Create UML Graph">
@@ -409,7 +408,22 @@
 		  <!--arg value="-horizontal"/-->
 		  <arg line="-output ../doc/index.dot"/>
 		  <fileset dir="../src"/>
-		  <fileset dir="../build"/>
+		  <fileset dir="../build/com"/>
+		  <mapper type="glob" from="*.java" to="*.dot"/>
+	    </apply>
+	  <apply executable="javadoc" dest="../build" parallel="true">
+		  <arg value="-classpath"/>
+		  <arg value="${classpath.run}"/>
+		  <arg value="-source"/>
+		  <arg value="1.8"/>
+		  <arg value="-docletpath"/>
+		  <arg value="../extlib/UmlGraph.jar"/>
+		  <arg line="-doclet org.umlgraph.doclet.UmlGraph"/>
+		  <arg value="-all"/>
+		  <arg value="-noguillemot"/>
+		  <!--arg value="-horizontal"/-->
+		  <arg line="-output ../doc/index-ztf.dot"/>
+		  <fileset dir="../build/ztf"/>
 		  <mapper type="glob" from="*.java" to="*.dot"/>
 	    </apply>
 	  <apply executable="dot" dest="../doc" parallel="false">
