@@ -114,7 +114,6 @@ public class HBaseRESTClient {
                   String   key,
                   String[] columns,
                   String[] values) {
-    String result = "";
     String rowsXML = "<?xml version='1.0' encoding='UTF-8' standalone='yes'?><CellSet><Row key='" + key + "'>";
     String[] r;
     for (int i = 0; i < columns.length; i++) {
@@ -122,14 +121,13 @@ public class HBaseRESTClient {
       }
     rowsXML += "</Row></CellSet>";
     try {
-      result = SmallHttpClient.putXML(_url + "/" + table + "/fakerow", rowsXML, null, null);
+      SmallHttpClient.putXML(_url + "/" + table + "/fakerow", rowsXML, null, null);
       }
     catch (AstroLabNetException e) {
       log.info(e);
       AstroLabNetException.reportException("Request has failed", e, log);
       return;
       }
-    log.debug("Result:\n" + result.trim());
     }
     
   private String _url;

@@ -138,13 +138,13 @@ public class AvroReader {
     for (String s : columns) {
       Object o = record.get(s);
       if (o instanceof java.nio.ByteBuffer) {
-        //o = new String(((java.nio.ByteBuffer)o).array());
+        //o = new String(((java.nio.ByteBuffer)o).array()); // TBD
         }
       toCatalog(key, family, s, o.toString());
       }
     }
     
-  /** Send raw to <em>HBase</em>.
+  /** Send row to <em>HBase</em>.
     * @param key    The <em>HBase</em> key to be used.
     * @param family The <em>HBase</em> family to be used.
     * @param column The <em>HBase</em> columns to be written to.
@@ -154,8 +154,11 @@ public class AvroReader {
                          String family,
                          String column,
                          String value) {
-    log.info(key + " => " + family + ":" + column + " = " + value);
-    _server.hbase().put("astrolabnet.catalog.1", encode(key), new String[]{encode(family + ":" + column)}, new String[]{value});
+    //log.info(key + " => " + family + ":" + column + " = " + value);
+    _server.hbase().put("astrolabnet.catalog.1",
+                        encode(key),
+                        new String[]{encode(family + ":" + column)},
+                        new String[]{encode(value)});
     }
  
   /** Get {@link Field}s corresponding to simple types
