@@ -3,7 +3,8 @@
 # key: url
 # i = info
 # d = description
+# r = reference
 # c = comments
-#   comment
+# a = attributes
 #############################################
-create 'astrolabnet.catalog.1', 'i', 'd', 'c'
+create 'astrolabnet.catalog.1', 'i', 'd', 'r', 'c', 'a'

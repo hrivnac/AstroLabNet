@@ -10,5 +10,6 @@
 #   rc
 # c = comments
 #   comment
+# a = attributes
 #############################################
-create 'astrolabnet.journal.1', 'i', 'd', 'c'
+create 'astrolabnet.journal.1', 'i', 'd', 'c', 'a'

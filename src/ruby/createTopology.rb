@@ -11,5 +11,6 @@
 #   xrootd
 # c = comments
 #   comment
+# a = attributes
 #############################################
-create 'astrolabnet.topology.1', 'i', 'd', 'c'
+create 'astrolabnet.topology.1', 'i', 'd', 'c', 'a'

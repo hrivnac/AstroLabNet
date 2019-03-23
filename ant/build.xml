@@ -25,6 +25,7 @@
     <pathelement path="${orgjson.jar}"/>
     <pathelement path="${avro.jar}"/>
     <pathelement path="${jackson.jar}"/>
+    <pathelement path="${slf4j.jar}"/>
     <fileset dir="../extlib">
       <include name="*.jar"/>
       </fileset>
@@ -75,6 +76,9 @@
 
   <target name="avro"
           description="Create Avro Representation">
+    <delete includeEmptyDirs="true">
+      <fileset dir="../build" includes="ztf.avsc"/>
+      </delete>
     <concat destfile="../build/ztf.avsc" append="true">
       <filelist dir="../src/avro/ztf" files="candidate.avsc"/>
       <filelist dir="../src/avro/ztf" files="prv_candidate.avsc"/>
@@ -89,9 +93,6 @@
       <arg value="../build/ztf.avsc"/>
       <arg value="../build"/>
       </java>
-    <delete includeEmptyDirs="true">
-      <fileset dir="../build" includes="ztf.avsc"/>
-      </delete>
     </target>
 
   <!-- Compile ==============================================================-->
@@ -156,6 +157,8 @@
       <zipfileset includes="**/*" src="${cli.jar}"/>
       <zipfileset includes="**/*" src="${orgjson.jar}"/>
       <zipfileset includes="**/*" src="${avro.jar}"/>
+      <zipfileset includes="**/*" src="${jackson.jar}"/>
+      <zipfileset includes="**/*" src="${slf4j.jar}"/>
       <manifest>
         <attribute name="Created-By" value="${user.name}"/>
         <attribute name="AppName"    value="AstroLabNet"/>
@@ -175,9 +178,9 @@
        
   <!-- Check ================================================================-->
     
-  <target name="check-api"
-           description="Check API">
-    <echo>Check API</echo>
+  <target name="check-livy"
+           description="Check Livy">
+    <echo>Check Livy</echo>
     <java classname="com.astrolabsoftware.AstroLabNet.Livyser.LivyAPIClient"
           fork="true"
           failonerror="true">
@@ -188,6 +191,22 @@
           </fileset>
         <fileset dir="/opt/livy/jars">
           <include name="*.jar"/>
+          </fileset>
+         </classpath>
+      </java>
+    </target>
+    
+  <target name="check-avro"
+           description="Check Avro">
+    <echo>Check Avro</echo>
+    <java classname="com.astrolabsoftware.AstroLabNet.Avro.AvroReader"
+          fork="true"
+          failonerror="true">
+      <arg value="../build/ztf.avsc"/>
+      <arg value="../data/avro/697251920015010010.avro"/>
+      <classpath>
+        <fileset dir="../lib">
+          <include name="AstroLabNet.exe.jar"/>
           </fileset>
          </classpath>
       </java>
@@ -314,7 +333,8 @@
       <group title="Livyser"            packages="com.astrolabsoftware.AstroLabNet.Livyser*"/>
       <group title="HBaser"             packages="com.astrolabsoftware.AstroLabNet.HBaser*"/>
       <group title="DB"                 packages="com.astrolabsoftware.AstroLabNet.DB*"/>
-      <group title="Jobs"               packages="com.astrolabsoftware.AstroLabNet.Jobs*"/>
+      <group title="Jobs"               packages="com.astrolabsoftware.AstroLabNet.DB.Jobs*"/>
+      <group title="Avro"               packages="com.astrolabsoftware.AstroLabNet.Avro*"/>
       <group title="ZTF Avro"           packages="ztf*"/>
       <link href="http://docs.oracle.com/javase/8/docs/api"/>
       <link href="http://www.beanshell.org/javadoc/"/>
