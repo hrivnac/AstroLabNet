@@ -2,6 +2,7 @@ package com.astrolabsoftware.AstroLabNet.Avro;
 
 import com.astrolabsoftware.AstroLabNet.Utils.Init;
 import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
+import com.astrolabsoftware.AstroLabNet.DB.Server;
 
 // Avro
 import org.apache.avro.Schema;
@@ -23,6 +24,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Base64;
 
 // ZTF
 import ztf.alert.candidate;
@@ -47,6 +49,8 @@ public class AvroReader {
     AvroReader ar = new AvroReader();
     ar.process(args[0], args[1]);
     }
+    
+  private Server _server = new Server("Local Host", null, null, "http://localhost:8080");
     
   /** Process <em>Avro</em> alert file.
     * @param schemaFN The filename of the schema file.
@@ -151,6 +155,7 @@ public class AvroReader {
                          String column,
                          String value) {
     log.info(key + " => " + family + ":" + column + " = " + value);
+    _server.hbase().put("astrolabnet.catalog.1", encode(key), new String[]{encode(family + ":" + column)}, new String[]{value});
     }
  
   /** Get {@link Field}s corresponding to simple types
@@ -185,6 +190,13 @@ public class AvroReader {
         }
       }
     return fields.toArray(new String[]{});
+    }
+    
+  /** Encode REST server string.
+    * @param s The string.
+    * @return The encodeed REST server string. */
+  private String encode(String s) {
+    return new String(Base64.getEncoder().encode(s.getBytes()));
     }
     
   /** Logging . */

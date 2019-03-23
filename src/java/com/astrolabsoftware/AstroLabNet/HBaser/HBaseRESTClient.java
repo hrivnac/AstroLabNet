@@ -59,7 +59,7 @@ public class HBaseRESTClient {
     log.info("Creating Scanner for " + table);
     String result = "";
     try {
-      result = SmallHttpClient.postXML(_url + "/" + table + "/scanner", "<Scanner batch='100'/>", null, "Location");
+      result = SmallHttpClient.putXML(_url + "/" + table + "/scanner", "<Scanner batch='100'/>", null, "Location");
       }
     catch (AstroLabNetException e) {
       log.info(e);
@@ -100,6 +100,36 @@ public class HBaseRESTClient {
   public String scan(String table) {
     String scannerId = initScanner(table);
     return getResults(table, scannerId);
+    }
+    
+  /** Initiate <em>scanner</em> on the server.
+    * <pre>
+    * PUT /-table-/fakerow
+    * </pre>
+    * @param table   The requested table name.
+    * @param key     The row key.
+    * @param columns The columns as <tt>family:column</tt>.
+    * @param values  The columns as <tt>family:column</tt>. */
+  public void put(String   table,
+                  String   key,
+                  String[] columns,
+                  String[] values) {
+    String result = "";
+    String rowsXML = "<?xml version='1.0' encoding='UTF-8' standalone='yes'?><CellSet><Row key='" + key + "'>";
+    String[] r;
+    for (int i = 0; i < columns.length; i++) {
+      rowsXML += "<Cell column='" + columns[i] + "'>" + values[i] + "</Cell>";
+      }
+    rowsXML += "</Row></CellSet>";
+    try {
+      result = SmallHttpClient.putXML(_url + "/" + table + "/fakerow", rowsXML, null, null);
+      }
+    catch (AstroLabNetException e) {
+      log.info(e);
+      AstroLabNetException.reportException("Request has failed", e, log);
+      return;
+      }
+    log.debug("Result:\n" + result.trim());
     }
     
   private String _url;

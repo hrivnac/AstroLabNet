@@ -9,6 +9,7 @@ import org.apache.http.StatusLine;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.entity.StringEntity;
@@ -35,7 +36,7 @@ import org.apache.log4j.Logger;
   * @opt types
   * @opt visibility
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
-// TBD: JSON/XML should be handked the same way in get/post
+// TBD: JSON/XML should be handked the same way in get/post/put
 public class SmallHttpClient {
 
   /** Make http get call.
@@ -44,23 +45,15 @@ public class SmallHttpClient {
   public static void main(String[] args) throws AstroLabNetException {
     System.out.println(get(args[0]));
     }
-   
+  
+  // GET -----------------------------------------------------------------------
+    
   /** Make http get call.
     * @param question The http request.
     * @return         The answer.
     * @throws AstroLabNetException If anything goes wrong. */
   public static String get(String question) throws AstroLabNetException {
     return get(question, null);
-    }
-   
-  /** Make http post call.
-    * @param url The http url.
-    * @param params The request parameters.
-    * @return       The answer.
-    * @throws AstroLabNetException If anything goes wrong. */
-  public static String post(String              question,
-                            Map<String, String> params) throws AstroLabNetException {
-    return post(question, params, null);
     }
    
   /** Make http get call. It accepts gzipped results.
@@ -98,7 +91,19 @@ public class SmallHttpClient {
       }  
     return answer;
     }
+       
+  // POST ----------------------------------------------------------------------  
     
+  /** Make http post call.
+    * @param url The http url.
+    * @param params The request parameters.
+    * @return       The answer.
+    * @throws AstroLabNetException If anything goes wrong. */
+  public static String post(String              question,
+                            Map<String, String> params) throws AstroLabNetException {
+    return post(question, params, null);
+    }
+
   /** Make http post call. It accepts gzipped results.
     * @param url     The http url.
     * @param params  The request parameters.
@@ -254,6 +259,176 @@ public class SmallHttpClient {
       }  
     return answer;
     }
+    
+  // PUT -----------------------------------------------------------------------
+  
+  /** Make http put call.
+    * @param url The http url.
+    * @param params The request parameters.
+    * @return       The answer.
+    * @throws AstroLabNetException If anything goes wrong. */
+  public static String put(String              question,
+                           Map<String, String> params) throws AstroLabNetException {
+    return put(question, params, null);
+    }
+
+  /** Make http put call. It accepts gzipped results.
+    * @param url     The http url.
+    * @param params  The request parameters.
+    * @param headers The additional headers.
+    * @return        The answer.
+    * @throws AstroLabNetException If anything goes wrong. */
+  public static String put(String              url,
+                           Map<String, String> params,
+                           Map<String, String> headers) throws AstroLabNetException {
+    String answer = "";
+    DefaultHttpClient client = new DefaultHttpClient();
+    HttpPut put = new HttpPut(url);
+    put.addHeader("Accept-Encoding", "gzip");
+    if (headers != null) {
+      for (Map.Entry<String, String> entry : headers.entrySet()) {
+        put.addHeader(entry.getKey(), entry.getValue());
+        }
+      }
+    List<NameValuePair> nameValuePairs = new ArrayList<>();
+    for (Map.Entry<String, String> entry : params.entrySet()) {
+      nameValuePairs.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
+      }
+    try {
+      put.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+      }
+    catch (UnsupportedEncodingException e) {
+      log.warn("Cannot encode nameValuePairs", e);
+      }      
+    try {
+      HttpResponse response = client.execute(put);
+      StatusLine statusLine = response.getStatusLine();
+      int statusCode = statusLine.getStatusCode();
+      if (statusCode != HttpStatus.SC_OK && statusCode != HttpStatus.SC_CREATED) {
+        throw new AstroLabNetException("Put to " + url + " " + params + " failed: " + statusLine.getReasonPhrase());
+        }
+      else {
+        answer = getResponseBody(response);   
+        }
+      }
+    catch (Exception e) {
+      throw new AstroLabNetException("Put to " + url + " " + params + " failed", e);
+      }
+    finally {
+      put.releaseConnection();
+      }  
+    return answer;
+    }
+    
+  /** Make http put call. It accepts gzipped results.
+    * @param url     The http url.
+    * @param json    The request parameters as JSON string.
+    * @param headers The additional headers. May be <code>null</code>.
+    * @param header  The requested header (instead of answer body). May be <code>null</code>.
+    * @return        The answer.
+    * @throws AstroLabNetException If anything goes wrong. */
+  // TBD: header should be more generic
+  public static String putJSON(String              url,
+                               String              json,
+                               Map<String, String> headers,
+                               String              header) throws AstroLabNetException {
+    String answer = "";
+    DefaultHttpClient client = new DefaultHttpClient();
+    HttpPut put = new HttpPut(url);
+    put.addHeader("Accept-Encoding", "gzip");
+    put.addHeader("Content-Type", "application/json");
+    put.addHeader("Accept", "application/json");
+    if (headers != null) {
+      for (Map.Entry<String, String> entry : headers.entrySet()) {
+        put.addHeader(entry.getKey(), entry.getValue());
+        }
+      }
+    try {
+      put.setEntity(new StringEntity(json));
+      }
+    catch (UnsupportedEncodingException e) {
+      log.warn("Cannot encode nameValuePairs", e);
+      }      
+    try {
+      HttpResponse response = client.execute(put);
+      StatusLine statusLine = response.getStatusLine();
+      int statusCode = statusLine.getStatusCode();
+      if (statusCode != HttpStatus.SC_OK && statusCode != HttpStatus.SC_CREATED) {
+        throw new AstroLabNetException("Put to " + url + " " + json + " failed: " + statusLine.getReasonPhrase());
+        }
+      else {
+        if (header != null) {
+          answer = response.getHeaders(header)[0].getElements()[0].getName();
+          }
+        else {
+          answer = getResponseBody(response);   
+          }
+        }
+      }
+    catch (Exception e) {
+      throw new AstroLabNetException("Put to " + url + " " + json + " failed", e);
+      }
+    finally {
+      put.releaseConnection();
+      }  
+    return answer;
+    }
+    
+  /** Make http put call. It accepts gzipped results.
+    * @param url     The http url.
+    * @param json    The request parameters as XML string.
+    * @param headers The additional headers. May be <code>null</code>.
+    * @param header  The requested header (instead of answer body). May be <code>null</code>.
+    * @return        The answer.
+    * @throws AstroLabNetException If anything goes wrong. */
+  // TBD: header should be more generic
+  public static String putXML(String              url,
+                              String              json,
+                              Map<String, String> headers,
+                              String              header) throws AstroLabNetException {
+    String answer = "";
+    DefaultHttpClient client = new DefaultHttpClient();
+    HttpPut put = new HttpPut(url);
+    put.addHeader("Accept-Encoding", "gzip");
+    put.addHeader("Content-Type", "text/xml");
+    put.addHeader("Accept", "text/xml");
+    if (headers != null) {
+      for (Map.Entry<String, String> entry : headers.entrySet()) {
+        put.addHeader(entry.getKey(), entry.getValue());
+        }
+      }
+    try {
+      put.setEntity(new StringEntity(json));
+      }
+    catch (UnsupportedEncodingException e) {
+      log.warn("Cannot encode nameValuePairs", e);
+      }      
+    try {
+      HttpResponse response = client.execute(put);
+      StatusLine statusLine = response.getStatusLine();
+      int statusCode = statusLine.getStatusCode();
+      if (statusCode != HttpStatus.SC_OK && statusCode != HttpStatus.SC_CREATED) {
+        throw new AstroLabNetException("Put to " + url + " " + json + " failed: " + statusLine.getReasonPhrase());
+        }
+      else {
+        if (header != null) {
+          answer = response.getHeaders(header)[0].getElements()[0].getName();
+          }
+        else {
+          answer = getResponseBody(response);
+          }
+        }
+      }
+    catch (Exception e) {
+      throw new AstroLabNetException("Put to " + url + " " + json + " failed", e);
+      }
+    finally {
+      put.releaseConnection();
+      }  
+    return answer;
+    }
+  
+  // ---------------------------------------------------------------------------
 
   /** Get Response Body. Perform GZIP uncompression if neccessary.
     * @param  response The {@link HttpResponse}.
