@@ -5,6 +5,8 @@ import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
 
 // Avro
 import org.apache.avro.Schema;
+import org.apache.avro.Schema.Field;
+import org.apache.avro.Schema.Type;
 import org.apache.avro.io.DatumReader;
 import org.apache.avro.file.DataFileReader;
 import org.apache.avro.generic.GenericRecord;
@@ -19,6 +21,8 @@ import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
+import java.util.ArrayList;
 
 // ZTF
 import ztf.alert.candidate;
@@ -72,10 +76,11 @@ public class AvroReader {
   /** Process <em>Avro</em> alert.
     * @param record The full alert {@link GenericRecord}. */
   private void processAlert(GenericRecord record) {
+    getSimpleFields(record, new String[]{"candid"});
     String key = record.get("objectId").toString(); 
-    toCatalog(key, "i", "type", "alert"); 
-    register(record, key, "i", new String[]{"schemavsn", "publisher"});
+    toCatalog(key, "d", "type", "alert"); 
     register(record, key, "r", new String[]{"candid"});
+    register(record, key, "d", getSimpleFields(record, new String[]{"candid"}));
     processCandidate((GenericRecord)(record.get("candidate"))); // TBD: check cast
     Array prv_candidates = (Array)(record.get("prv_candidates")); // TBD: check cast
     int n = 0;
@@ -90,8 +95,8 @@ public class AvroReader {
     * @param record The {@link GenericRecord} with <em>candidate</em>. */
   private void processCandidate(GenericRecord record) {
     String key = record.get("candid").toString();
-    toCatalog(key, "i", "type", "candidate");
-    register(record, key, "i", new String[]{"jd", "fid", "pid"});
+    toCatalog(key, "d", "type", "candidate");
+    register(record, key, "d", getSimpleFields(record, new String[]{}));
     }
     
   /** Process <em>Avro</em> prv_candidate.
@@ -103,8 +108,8 @@ public class AvroReader {
     if (record.get("candid") != null) {
       key = record.get("candid").toString();
       }
-    toCatalog(key, "i", "type", "prv_candidate");
-    register(record, key, "i", new String[]{"jd", "fid", "pid"});
+    toCatalog(key, "d", "type", "prv_candidate");
+    register(record, key, "d", getSimpleFields(record, new String[]{}));
     }
     
   /** Process <em>Avro</em> cutoutScience.
@@ -112,9 +117,9 @@ public class AvroReader {
     * @param key0   The <em>HBase</em> key to use in absence of <em>Avro</em> key. */
   private void processCutoutScience(GenericRecord record,
                                     String        key) {
-    toCatalog(key, "i", "type", "cutoutScience");
-    register(record, key, "i", new String[]{"fileName"});
-    register(record, key, "i", new String[]{"stampData"});
+    toCatalog(key, "d", "type", "cutoutScience");
+    register(record, key, "d", getSimpleFields(record, new String[]{}));
+    register(record, key, "d", new String[]{"stampData"});
     }
 
   /** Register part of {@link GenericRecord} in <em>HBase</em>.
@@ -147,7 +152,41 @@ public class AvroReader {
                          String value) {
     log.info(key + " => " + family + ":" + column + " = " + value);
     }
-  
+ 
+  /** Get {@link Field}s corresponding to simple types
+    * and having non-<code>null</code> values.
+    * @param record The {@link GenericRecord} to use.
+    * @param avoids The array of fields names not to report.
+    * @return       The array of coressponding fields. */
+  private String[] getSimpleFields(GenericRecord record,
+                                   String[]      avoids) {
+    List<String> fields = new ArrayList<>();
+    Type type;
+    String name;
+    boolean veto;
+    for (Field field : record.getSchema().getFields()) {
+      type = field.schema().getType();
+      name = field.name();
+      if (type == Type.BOOLEAN ||
+          type == Type.DOUBLE  ||
+          type == Type.FLOAT   ||
+          type == Type.LONG    ||
+          type == Type.INT     ||
+          type == Type.STRING) {
+        veto = false;
+        for (String avoid : avoids) {
+          if (name.equals(avoid) || record.get(name) == null) {
+            veto = true;
+            }
+          }
+        if (!veto) {
+          fields.add(name);
+          }
+        }
+      }
+    return fields.toArray(new String[]{});
+    }
+    
   /** Logging . */
   private static Logger log = Logger.getLogger(AvroReader.class);
                                                 
