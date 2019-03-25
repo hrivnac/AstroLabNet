@@ -1,7 +1,6 @@
 package com.astrolabsoftware.AstroLabNet.Avro;
 
 import com.astrolabsoftware.AstroLabNet.Utils.Init;
-import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
 import com.astrolabsoftware.AstroLabNet.DB.Server;
 
 // Avro
@@ -17,10 +16,6 @@ import org.apache.avro.specific.SpecificDatumReader;
 
 // Java
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
