@@ -57,6 +57,7 @@
     <replace file="../build/com/astrolabsoftware/AstroLabNet/Utils/Info.java" token="@topology@"  value="${topology}"/>
     <replace file="../build/com/astrolabsoftware/AstroLabNet/Utils/Info.java" token="@journal@"   value="${journal}"/>
     </target>
+    <echo>${log4j.jar}</echo>
 
   <!-- Init =================================================================-->
 
@@ -164,6 +165,29 @@
         <attribute name="AppName"    value="AstroLabNet"/>
         <attribute name="AppVersion" value="${version} ${TSTAMP}"/>
         <attribute name="Main-Class" value="com.astrolabsoftware.AstroLabNet.Core.This"/>
+        </manifest>
+      </jar>
+    <jar jarfile="../lib/AstroLabNet.AvroReader.exe.jar" index="yes">
+      <zipfileset includes="**/*" src="../lib/AstroLabNet.jar"/>
+      <zipfileset includes="**/*" src="${log4j.jar}"/>
+      <zipfileset includes="**/*" src="${bsh.jar}"/>
+      <zipfileset includes="**/*" src="${scala.jar}"/>
+      <zipfileset includes="**/*" src="${livy.jar}"/>
+      <zipfileset includes="**/*" src="${spark.jar}"/>
+      <zipfileset includes="**/*" src="${httpclient.jar}"/>
+      <zipfileset includes="**/*" src="${httpcore.jar}"/>
+      <zipfileset includes="**/*" src="${logging.jar}"/>
+      <zipfileset includes="**/*" src="${cli.jar}"/>
+      <zipfileset includes="**/*" src="${orgjson.jar}"/>
+      <zipfileset includes="**/*" src="${avro.jar}"/>
+      <zipfileset includes="**/*" src="${jackson.jar}"/>
+      <zipfileset includes="**/*" src="${slf4j.jar}"/>
+      <zipfileset includes="**/*" src="${slf4jlog4j.jar}"/>
+      <manifest>
+        <attribute name="Created-By" value="${user.name}"/>
+        <attribute name="AppName"    value="AstroLabNet-AvroReader"/>
+        <attribute name="AppVersion" value="${version} ${TSTAMP}"/>
+        <attribute name="Main-Class" value="com.astrolabsoftware.AstroLabNet.Avro.AvroReader"/>
         </manifest>
       </jar>
     <jar jarfile="../lib/PiJob.jar" index="yes">

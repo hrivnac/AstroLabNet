@@ -41,24 +41,57 @@ import org.apache.log4j.Logger;
 public class AvroReader {
     
   /** SelfTest.
-    * @param args[0] The avro schema filename.
-    * @param args[1] The avro data filename.
+    * @param args[0] The avro data filename.
+    * @param args[1] The avro file filename (optional).
     * @throws IOException If file cannot be read. */
   public static void main(String[] args) throws IOException {
     Init.init(args);
-    AvroReader ar = new AvroReader();
-    ar.process(args[0], args[1]);
+    if (args.length == 0 || args.length > 2) {
+      log.error("AvroReader <avro data file> [<avro schema file>]");
+      System.exit(-1);
+      }
+    String schemaFN = null;
+    if (args.length == 2) {
+      schemaFN = args[1];
+      }
+    AvroReader ar = new AvroReader(null, schemaFN);
+    ar.process(args[0]);
     }
     
-  private Server _server = new Server("Local Host", null, null, "http://localhost:8080");
-    
-  /** Process <em>Avro</em> alert file.
+  /** Create.
+    * @param server   The {@link Server} to use for <em>Catalog</em>.
+    *                 If <tt>null</tt>, the default {@link Server} will be tried.
     * @param schemaFN The filename of the schema file.
-    * @param dataFN   The filename of the data file. */
+    *                 If <tt>null</tt>, schema will be read from data file.*/
+  public AvroReader(Server server,
+                    String schemaFN) {
+    log.info("Using server " + server);
+    log.info("Using schema from " + schemaFN);
+    if (server == null) {
+      _server = new Server("Local Host", null, null, "http://localhost:8080");
+      }
+    else {
+      _server = server;
+      }
+    if (schemaFN == null) {
+      _schema = null;
+      }
+    else {
+      try {
+        _schema = new Schema.Parser().parse(new File(schemaFN));
+        }
+      catch (IOException e) {
+        log.warn("Cannot read schema " + schemaFN + ", will use schema from Avro file");
+        }
+      }
+    }
+        
+  /** Process <em>Avro</em> alert file.
+     * @param dataFN   The filename of the data file.
+     * @thows IOException If problem with file reading. */
   // TBD: use generated schema (problem: it mixes ztf.alert namespace and class
-  public void process(String schemaFN,
-                      String dataFN) throws IOException {
-    Schema schema = new Schema.Parser().parse(new File(schemaFN));
+  public void process(String dataFN) throws IOException {
+    log.info("Loading " + dataFN);
     File file = new File(dataFN);
     /*
     DatumReader<candidate> candidateDatumReader = new SpecificDatumReader<candidate>(candidate.class);
@@ -75,7 +108,7 @@ public class AvroReader {
       record = dataFileReader.next(record);
       processAlert(record);
       }
-    }
+    } 
   
   /** Process <em>Avro</em> alert.
     * @param record The full alert {@link GenericRecord}. */
@@ -201,6 +234,10 @@ public class AvroReader {
   private String encode(String s) {
     return new String(Base64.getEncoder().encode(s.getBytes()));
     }
+    
+  private Server _server;  
+    
+  private Schema _schema;
     
   /** Logging . */
   private static Logger log = Logger.getLogger(AvroReader.class);
