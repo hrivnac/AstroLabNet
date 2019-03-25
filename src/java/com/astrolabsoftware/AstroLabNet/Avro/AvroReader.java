@@ -17,6 +17,7 @@ import org.apache.avro.specific.SpecificDatumReader;
 // Java
 import java.io.File;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -165,10 +166,13 @@ public class AvroReader {
                         String[]      columns) {
     for (String s : columns) {
       Object o = record.get(s);
-      if (o instanceof java.nio.ByteBuffer) {
-        //o = new String(((java.nio.ByteBuffer)o).array()); // TBD
+      if (o instanceof ByteBuffer) {
+        byte[] b = ((ByteBuffer)o).array();
+        toCatalog(key, family, s, new String(b));
         }
-      toCatalog(key, family, s, o.toString());
+      else {
+        toCatalog(key, family, s, o.toString());
+        }
       }
     }
     
@@ -188,7 +192,7 @@ public class AvroReader {
                         new String[]{encode(family + ":" + column)},
                         new String[]{encode(value)});
     }
- 
+  
   /** Get {@link Field}s corresponding to simple types
     * and having non-<code>null</code> values.
     * @param record The {@link GenericRecord} to use.
@@ -223,11 +227,11 @@ public class AvroReader {
     return fields.toArray(new String[]{});
     }
     
-  /** Encode REST server string.
+  /** Encode {@link String} to REST server string.
     * @param s The string.
     * @return The encodeed REST server string. */
   private String encode(String s) {
-    return new String(Base64.getEncoder().encode(s.getBytes()));
+    return Base64.getEncoder().encodeToString(s.getBytes());
     }
     
   private Server _server;  
