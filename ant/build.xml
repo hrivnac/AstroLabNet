@@ -226,7 +226,7 @@
     <java classname="com.astrolabsoftware.AstroLabNet.Avro.AvroReader"
           fork="true"
           failonerror="true">
-      <arg value="../data/avro/697251920015010010.avro"/>
+      <arg value="../data/test/alarms/697251920015010010.avro"/>
       <arg value="../build/ztf.avsc"/>
       <classpath>
         <fileset dir="../lib">
