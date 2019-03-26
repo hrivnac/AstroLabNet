@@ -6,8 +6,6 @@ import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
 import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
 
-// Java
-
 // Log4J
 import org.apache.log4j.Logger;
 

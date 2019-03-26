@@ -3,10 +3,6 @@ package com.astrolabsoftware.AstroLabNet.Livyser;
 import com.astrolabsoftware.AstroLabNet.Utils.Init;
 import com.astrolabsoftware.AstroLabNet.DB.Jobs.*;
 
-// JavaFX
-
-// org.json
-
 // Livy
 import org.apache.livy.LivyClientBuilder;
 import org.apache.livy.LivyClient;

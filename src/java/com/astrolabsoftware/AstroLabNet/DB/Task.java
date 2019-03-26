@@ -3,12 +3,6 @@ package com.astrolabsoftware.AstroLabNet.DB;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
 import com.astrolabsoftware.AstroLabNet.DB.*;
 
-// JavaFX
-
-// org.json
-
-// Java
-
 // Log4J
 import org.apache.log4j.Logger;
 

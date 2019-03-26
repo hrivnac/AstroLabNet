@@ -7,10 +7,6 @@ import com.astrolabsoftware.AstroLabNet.Livyser.Language;
 import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
 
-// Java
-
-// Log4J
-
 /** <code>ServerSessionEventHandler</code> implements {@link EventHandler} for {@link ServerRep}.
   * It creates new {@link Session}.
   * @opt attributes

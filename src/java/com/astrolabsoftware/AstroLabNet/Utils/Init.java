@@ -15,8 +15,6 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.ParseException;
 
-// Bean Shell
-
 // Java
 import java.util.Enumeration;
 import java.util.Arrays;

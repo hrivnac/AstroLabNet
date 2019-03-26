@@ -5,13 +5,7 @@ import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
 import com.astrolabsoftware.AstroLabNet.DB.*;
 
 // JavaFX
-import javafx.application.Platform;
-import javafx.scene.text.Text;
 import javafx.scene.control.MenuItem;
-import javafx.scene.paint.Color;
-
-// org.json
-import org.json.JSONObject;
 
 // Java
 import java.util.List;

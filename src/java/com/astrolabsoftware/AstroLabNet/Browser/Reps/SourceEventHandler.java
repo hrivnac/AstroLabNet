@@ -6,12 +6,6 @@ import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
 import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
 
-// org.json
-
-// Java
-
-// Log4J
-
 /** <code>SourceEventHandler</code> implements {@link EventHandler} for {@link SourceRep}.
   * It executes {@link Action}.
   * @opt attributes
