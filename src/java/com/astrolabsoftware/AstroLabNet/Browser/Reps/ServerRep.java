@@ -59,14 +59,17 @@ public class ServerRep extends ElementRep {
     MenuItem scalaSession  = new MenuItem("Scala Session",  Images.icon(Images.SESSION));
     MenuItem rSession      = new MenuItem("R Session",      Images.icon(Images.SESSION));
     MenuItem sqlSession    = new MenuItem("SQL Session",    Images.icon(Images.SESSION));
-    pythonSession.setOnAction(new ServerEventHandler(this, Language.PYTHON));
-    scalaSession.setOnAction( new ServerEventHandler(this, Language.SCALA ));
-    rSession.setOnAction(     new ServerEventHandler(this, Language.R     ));
-    sqlSession.setOnAction(   new ServerEventHandler(this, Language.SQL   ));
+    MenuItem dataSource    = new MenuItem("Data Source",    Images.icon(Images.SOURCE ));
+    pythonSession.setOnAction(new ServerSessionEventHandler(this, Language.PYTHON));
+    scalaSession.setOnAction( new ServerSessionEventHandler(this, Language.SCALA ));
+    rSession.setOnAction(     new ServerSessionEventHandler(this, Language.R     ));
+    sqlSession.setOnAction(   new ServerSessionEventHandler(this, Language.SQL   ));
+    dataSource.setOnAction(   new ServerSourceEventHandler( this                 ));
     menuItems.add(pythonSession);
     menuItems.add(scalaSession);
     menuItems.add(rSession);
     menuItems.add(sqlSession);
+    menuItems.add(dataSource);
     updateSessions();
     return menuItems;
     }

@@ -212,21 +212,13 @@ public abstract class DefaultInteracter implements Interacter {
     _datas.add(data);
     return data;
     }
-    
+        
   @Override
-  public DataSource addDataSource(String name) {
-    DataSource dataSource = new DataSource(name);
-    log.info("Adding DataSource: " + dataSource);
-    _dataSources.add(dataSource);
-    return dataSource;
-    }
-    
-  @Override
-  public DataChannel addDataChannel(String name) {
-    DataChannel dataChannel = new DataChannel(name);
-    log.info("Adding DataChannel: " + dataChannel);
-    _dataChannels.add(dataChannel);
-    return dataChannel;
+  public Channel addChannel(String name) {
+    Channel channel = new Channel(name);
+    log.info("Adding Channel: " + channel);
+    _channels.add(channel);
+    return channel;
     }
     
   @Override
@@ -255,13 +247,8 @@ public abstract class DefaultInteracter implements Interacter {
     }
     
   @Override
-  public List<DataSource> dataSources() {
-    return _dataSources;
-    }
-    
-  @Override
-  public List<DataChannel> dataChannels() {
-    return _dataChannels;
+  public List<Channel> channels() {
+    return _channels;
     }
     
   @Override
@@ -289,12 +276,11 @@ public abstract class DefaultInteracter implements Interacter {
     
   private Interpreter _interpreter;
    
-  private List<Server>      _servers      = new ArrayList<>();
-  private List<Action>      _actions      = new ArrayList<>();
-  private List<Data>        _datas        = new ArrayList<>();
-  private List<DataSource>  _dataSources  = new ArrayList<>();
-  private List<DataChannel> _dataChannels = new ArrayList<>();
-  private List<Task>        _tasks        = new ArrayList<>();
+  private List<Server>  _servers  = new ArrayList<>();
+  private List<Action>  _actions  = new ArrayList<>();
+  private List<Data>    _datas    = new ArrayList<>();
+  private List<Channel> _channels = new ArrayList<>();
+  private List<Task>    _tasks    = new ArrayList<>();
   
   /** Logging . */
   private static Logger log = Logger.getLogger(DefaultInteracter.class);

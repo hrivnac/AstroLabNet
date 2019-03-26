@@ -78,27 +78,18 @@ public class BrowserCommand extends CommandLine {
     }
 
   @Override
-  public DataSource addDataSource(String name) {
-    DataSource dataSource = super.addDataSource(name);
-    DataSourceRep dataSourceRep = new DataSourceRep(dataSource, _window);
-    log.info("Adding DataSourceRep: " + dataSourceRep);
-    _dataSourceReps.getChildren().add(dataSourceRep.item());
-    return dataSource;
+  public Channel addChannel(String name) {
+    Channel channel = super.addChannel(name);
+    ChannelRep channelRep = new ChannelRep(channel, _window);
+    log.info("Adding ChannelRep: " + channelRep);
+    _channelReps.getChildren().add(channelRep.item());
+    return channel;
     }
 
-  @Override
-  public DataChannel addDataChannel(String name) {
-    DataChannel dataChannel = super.addDataChannel(name);
-    DataChannelRep dataChannelRep = new DataChannelRep(dataChannel, _window);
-    log.info("Adding DataChannelRep: " + dataChannelRep);
-    _dataChannelReps.getChildren().add(dataChannelRep.item());
-    return dataChannel;
-    }
-
-    @Override
-  public Task addTask(String      name,
-                      Session session,
-                      int     id) {
+   @Override
+   public Task addTask(String      name,
+                       Session session,
+                       int     id) {
     Task task = super.addTask(name, session, id);
     TaskRep taskRep = TaskRep.create(task, _window);
     log.info("Adding TaskRep: " + taskRep);
@@ -124,16 +115,10 @@ public class BrowserCommand extends CommandLine {
     return _dataReps;
     }
     
-  /** Give {@link TreeItem} of {@link DataSourceRep}.
-    * @return The {@link TreeItem} of available {@link DataSourceRep}. */
-  public TreeItem<ElementRep> dataSourceReps() {
-    return _dataSourceReps;
-    }
-    
-  /** Give {@link TreeItem} of {@link DataChannelRep}.
-    * @return The {@link TreeItem} of available {@link DataChannelRep}. */
-  public TreeItem<ElementRep> dataChannelReps() {
-    return _dataChannelReps;
+  /** Give {@link TreeItem} of {@link ChannelRep}.
+    * @return The {@link TreeItem} of available {@link ChannelRep}. */
+  public TreeItem<ElementRep> channelReps() {
+    return _channelReps;
     }
     
   /** Give {@link TreeItem} of {@link TaskRep}.
@@ -146,10 +131,9 @@ public class BrowserCommand extends CommandLine {
     
   private TreeItem<ElementRep> _serverReps;
   private TreeItem<ElementRep> _actionReps;
-  private TreeItem<ElementRep> _dataReps        = new TreeItem<>(new ElementRep(new Element("Data"),          _window));
-  private TreeItem<ElementRep> _dataSourceReps  = new TreeItem<>(new ElementRep(new Element("Data Sources"),  _window));
-  private TreeItem<ElementRep> _dataChannelReps = new TreeItem<>(new ElementRep(new Element("Data Channels"), _window));
-  private TreeItem<ElementRep> _taskReps        = new TreeItem<>(new ElementRep(new Element("Tasks"),         _window));
+  private TreeItem<ElementRep> _dataReps    = new TreeItem<>(new ElementRep(new Element("Data"),          _window));
+  private TreeItem<ElementRep> _channelReps = new TreeItem<>(new ElementRep(new Element("Channels"), _window));
+  private TreeItem<ElementRep> _taskReps    = new TreeItem<>(new ElementRep(new Element("Tasks"),         _window));
       
   /** Logging . */
   private static Logger log = Logger.getLogger(BrowserCommand.class);

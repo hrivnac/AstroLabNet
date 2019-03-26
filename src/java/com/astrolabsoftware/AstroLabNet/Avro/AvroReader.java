@@ -64,7 +64,8 @@ public class AvroReader {
     log.info("Using server " + server);
     log.info("Using schema from " + schemaFN);
     if (server == null) {
-      _server = new Server("Local Host", null, null, "http://localhost:8080");
+      //_server = new Server("Local Host", null, null, "http://localhost:8080");
+      _server = new Server("Local Host", null, null, "http://134.158.74.54:8080");
       }
     else {
       _server = server;

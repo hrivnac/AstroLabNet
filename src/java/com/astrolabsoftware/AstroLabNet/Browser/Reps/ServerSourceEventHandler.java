@@ -11,31 +11,26 @@ import javafx.event.ActionEvent;
 
 // Log4J
 
-/** <code>ServerEventHandler</code> implements {@link EventHandler} for {@link ServerRep}.
-  * It creates new {@link Session}.
+/** <code>ServerSourceEventHandler</code> implements {@link EventHandler} for {@link ServerRep}.
+  * It creates new {@link Source}.
   * @opt attributes
   * @opt operations
   * @opt types
   * @opt visibility
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
-public class ServerEventHandler implements EventHandler<ActionEvent> {
+public class ServerSourceEventHandler implements EventHandler<ActionEvent> {
 
   /** Create.
-    * @param serverRep The associated {@link ServerRep}.
-    * @param language  The {@link Language} of this {@link EventHandler}. */
-  public ServerEventHandler(ServerRep serverRep,
-                            Language  language) {
+    * @param serverRep The associated {@link ServerRep}. */
+  public ServerSourceEventHandler(ServerRep serverRep) {
     _serverRep = serverRep;
-    _language  = language;
     }
  
   @Override
   public void handle(ActionEvent event) {
-    _serverRep.livy().initSession(_language);
-    _serverRep.updateSessions();
+    //_serverRep.hbase().initScanner();
+    //_serverRep.updateSources();
     }
- 
-  private Language _language;  
   
   private ServerRep _serverRep;
     

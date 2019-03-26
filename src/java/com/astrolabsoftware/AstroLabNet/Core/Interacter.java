@@ -52,16 +52,11 @@ public interface Interacter {
     * @param name The {@link Data} name
     * @return     The added {@link Data}. */
   public Data addData(String name);
-  
-  /** Add {@link DataSource}.
-    * @param name The {@link DataSource} name.
-    * @return     The added {@link DataSource}. */
-  public DataSource addDataSource(String name);
-  
-  /** Add {@link DataChannel}.
-    * @param name The {@link DataChannel} name.
-    * @return     The added {@link DataChannel}. */
-  public DataChannel addDataChannel(String name);
+    
+  /** Add {@link Channel}.
+    * @param name The {@link Channel} name.
+    * @return     The added {@link Channel}. */
+  public Channel addChannel(String name);
   
   /** Add {@link Task}.
     * @param name    The {@link Task} name.
@@ -84,13 +79,9 @@ public interface Interacter {
     * @return The {@link List} of available {@link Data}s. */
   public List<Data> datas();
    
-  /** Give {@link List} of available {@link DataSource}s.
-    * @return The {@link List} of available {@link DataSource}s. */
-  public List<DataSource> dataSources();
-   
-  /** Give {@link List} of available {@link DataChannel}s.
-    * @return The {@link List} of available {@link DataChannel}s. */
-  public List<DataChannel> dataChannels();
+  /** Give {@link List} of available {@link Channel}s.
+    * @return The {@link List} of available {@link Channel}s. */
+  public List<Channel> channels();
    
   /** Give {@link List} of available {@link Task}s.
     * @return The {@link List} of available {@link Task}s. */

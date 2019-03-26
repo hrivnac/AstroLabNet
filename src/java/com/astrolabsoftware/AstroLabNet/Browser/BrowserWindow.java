@@ -91,8 +91,7 @@ public class BrowserWindow extends Application {
     tree.setCellFactory(callback);
     root.getChildren().addAll(_command.serverReps(),
                               _command.dataReps(),
-                              _command.dataSourceReps(),
-                              _command.dataChannelReps(),
+                              _command.channelReps(),
                               _command.actionReps(),
                               _command.taskReps());
     // Help
