@@ -24,6 +24,9 @@ import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.geometry.Orientation;
 
+// org.json
+import org.json.JSONObject;
+
 // Java
 import java.util.List;
 import java.util.Map;
@@ -98,21 +101,19 @@ public class SourceRep extends ElementRep {
     }
     
   /** Add {@link Tab} of this SourceRep. */
-  public void addTab() {/*
+  public void addTab() {
     // Desc
-    Label desc = new Label("Command in " + language() + ":");
+    Label desc = new Label("Search");
     // Cmd
     TextArea cmd = new TextArea();
     cmd.setPrefHeight(2000);
-    // Progress
-    _progress = new ProgressBar(0);
     // Button
     Button button = new Button("Execute");
     // ButtonBox = Progress + Button
     HBox buttonBox = new HBox(10);
     buttonBox.setSpacing(5);
     buttonBox.setAlignment(Pos.CENTER);
-    buttonBox.getChildren().addAll(_progress, button);
+    buttonBox.getChildren().addAll(button);
     // CmdBox = Desc + Cmd + ButtonBox 
     VBox cmdBox = new VBox();
     cmdBox.setSpacing(5);
@@ -132,19 +133,20 @@ public class SourceRep extends ElementRep {
     pane.setDividerPositions(0.5);
     pane.setOrientation(Orientation.VERTICAL);
     pane.getItems().addAll(cmdBox, scrollPane);
-    SessionRep sessionRep = this;
+    SourceRep sourceRep = this;
     button.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent e) {
-        String result = serverRep().livy().sendCommand(id(), cmd.getText());
-        int id = new JSONObject(result).getInt("id");
-        browser().command().addTask(serverRep().name() + "/" + id() + "/" + id, sessionRep.session(), id);
-        resultText.getChildren().add(new Text("Command send to Session\n\n"));
+        String result = serverRep().hbase().scan("astrolabnet.catalog.1"); // TBD: via params
+        browser().command().addSearch(serverRep().name(), sourceRep.source());
+        resultText.getChildren().add(new Text("Query send to Source\n\n"));
+        JSONObject resultObject = new JSONObject(result);
+        resultText.getChildren().add(new Text(resultObject.toString(2).replaceAll("\\\\n", "") + "\n\n"));
         }
       });
     setResultRef(resultText);
-    Tab tab = browser().addTab(pane, toString(), Images.SESSION);
-    browser().registerSessionTab(this, tab);*/
+    Tab tab = browser().addTab(pane, toString(), Images.SOURCE);
+    browser().registerSourceTab(this, tab);
     }
 
   /** Give the SessionRep keeping {@link Server}.

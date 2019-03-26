@@ -244,6 +244,15 @@ public class BrowserWindow extends Application {
                                  Tab        tab) {
     _sessionTabs.put(sessionRep, tab);
     }
+  
+  /** Register the {@link SourceRep} command, so that it can be filled
+    * by {@link ActionRep}.
+    * @param sourceRep The related {@link SourceRep}.
+    * @param tab        The {@link Tab} containing the {@link SourceRep}. */
+  public void registerSourceTab(SourceRep sourceRep,
+                                Tab       tab) {
+    _sourceTabs.put(sourceRep, tab);
+    }
     
   /** Set the {@link SessionRep} command text. To be called from {@link ActionRep}.
     * @param txt The text to fill in the {@link SessionRep} command. */

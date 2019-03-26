@@ -53,55 +53,8 @@ public class SearchRep extends ElementRep {
                    BrowserWindow browser) {
     super(search, browser, Images.SEARCH);
     Thread thread = new Thread() {
-      // check periodically status, untill progress = 1.0
-      // then leave the thread and report results
       @Override
-      public void run() {/*
-        String resultString;
-        JSONObject result;
-        double progress;
-        while (true) {
-          try {
-            resultString = sessionRep().serverRep().livy().checkProgress(sessionRep().id(), task.id());
-            result = new JSONObject(resultString);
-            progress = result.getDouble("progress");
-            sessionRep().setProgress(progress);
-            log.debug("Progress = " + progress);
-            if (progress == 1.0) {
-              break;
-              }
-            Thread.sleep(1000); // 1s
-            }
-          catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            }          
-          }
-        JSONObject output = result.getJSONObject("output");
-        String status = output.getString("status");
-        JSONObject data = null;
-        Text text = new Text();
-        if (status.equals("ok")) {
-          data = output.getJSONObject("data");
-          text.setFill(Color.DARKBLUE);
-          }
-        else if (status.equals("error")) {
-          data = output;
-          text.setFill(Color.DARKRED);
-          }
-        else {
-          log.error("Unknown status " + status);
-          }
-        JSONObject d = data;
-        log.info(status + " : " + d);
-        // to synchronise threads
-        Platform.runLater(new Runnable() {
-          @Override
-          public void run() {
-            text.setText("status = " + status + "\n\noutput = " + output.toString(2).replaceAll("\\\\n", "") + "\n\n");
-            sessionRep().setResult(text); // check, if the selected tab is correct
-            }
-          });
-        */}
+      public void run() {}
       };
     thread.start();
     }
