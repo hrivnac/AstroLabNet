@@ -12,10 +12,26 @@ import org.apache.log4j.Logger;
 public class Source extends Element {
   
   /** Create new Source.
-    * @param name The Source name. */
-  public Source(String name) {
+    * @param name The Source name.
+    * @param server The {@link Server} keeping this Session. */
+  public Source(String name,
+                Server server) {
     super(name);
+    _server = server;
     }
+    
+  /** Give the keeping {@link Server}.
+    * @return The keeping {@link Server}. */
+  public Server server() {
+    return _server;
+    }
+    
+  @Override
+  public String toString() {
+    return name() + " on " + _server.name();
+    }
+  
+  private Server _server;
   
   /** Logging . */
   private static Logger log = Logger.getLogger(Source.class);

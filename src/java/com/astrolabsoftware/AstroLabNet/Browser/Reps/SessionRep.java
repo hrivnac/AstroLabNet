@@ -78,7 +78,6 @@ public class SessionRep extends ElementRep {
   public List<MenuItem> menuItems() {
     List<MenuItem> menuItems = super.menuItems();
     MenuItem execute = new MenuItem("Prepare for Execution",  Images.icon(Images.SESSION));
-    String tit = toString();
     execute.setOnAction(new SessionEventHandler(this));
     menuItems.add(execute);
     return menuItems;

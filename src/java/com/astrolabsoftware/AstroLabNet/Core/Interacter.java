@@ -67,6 +67,13 @@ public interface Interacter {
                       Session session,
                       int     id);
   
+  /** Add {@link Search}.
+    * @param name   The {@link Search} name.
+    * @param source The hosting {@link Source}.
+    * @return       The added {@link Search}. */
+  public Search addSearch(String  name,
+                          Source source);
+  
   /** Give {@link List} of available {@link Server}s.
     * @return The {@link List} of available {@link Server}s. */
   public List<Server> servers();
@@ -86,5 +93,9 @@ public interface Interacter {
   /** Give {@link List} of available {@link Task}s.
     * @return The {@link List} of available {@link Task}s. */
   public List<Task> tasks();
+   
+  /** Give {@link List} of available {@link Search}s.
+    * @return The {@link List} of available {@link Search}s. */
+  public List<Search> searches();
 
   }

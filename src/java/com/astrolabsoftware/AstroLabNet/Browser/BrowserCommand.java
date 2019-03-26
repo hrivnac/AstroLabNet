@@ -97,6 +97,16 @@ public class BrowserCommand extends CommandLine {
     return task;
     }
     
+   @Override
+   public Search addSearch(String name,
+                           Source source) {
+    Search search = super.addSearch(name, source);
+    SearchRep searchRep = SearchRep.create(search, _window);
+    log.info("Adding SearchRep: " + searchRep);
+    _searchReps.getChildren().add(searchRep.item());
+    return search;
+    }
+    
   /** Give {@link TreeItem} of {@link ServerRep}.
     * @return The {@link TreeItem} of available {@link ServerRep}. */
   public TreeItem<ElementRep> serverReps() {
@@ -127,13 +137,20 @@ public class BrowserCommand extends CommandLine {
     return _taskReps;
     }
     
+  /** Give {@link TreeItem} of {@link SearchRep}.
+    * @return The {@link TreeItem} of available {@link SearchRep}. */
+  public TreeItem<ElementRep> searchReps() {
+    return _searchReps;
+    }
+    
   private BrowserWindow _window;  
     
   private TreeItem<ElementRep> _serverReps;
   private TreeItem<ElementRep> _actionReps;
-  private TreeItem<ElementRep> _dataReps    = new TreeItem<>(new ElementRep(new Element("Data"),          _window));
+  private TreeItem<ElementRep> _dataReps    = new TreeItem<>(new ElementRep(new Element("Data"),     _window));
   private TreeItem<ElementRep> _channelReps = new TreeItem<>(new ElementRep(new Element("Channels"), _window));
-  private TreeItem<ElementRep> _taskReps    = new TreeItem<>(new ElementRep(new Element("Tasks"),         _window));
+  private TreeItem<ElementRep> _taskReps    = new TreeItem<>(new ElementRep(new Element("Tasks"),    _window));
+  private TreeItem<ElementRep> _searchReps  = new TreeItem<>(new ElementRep(new Element("Searches"), _window));
       
   /** Logging . */
   private static Logger log = Logger.getLogger(BrowserCommand.class);

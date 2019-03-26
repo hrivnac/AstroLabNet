@@ -28,8 +28,7 @@ public class ServerSourceEventHandler implements EventHandler<ActionEvent> {
  
   @Override
   public void handle(ActionEvent event) {
-    //_serverRep.hbase().initScanner();
-    //_serverRep.updateSources();
+    _serverRep.showSource();
     }
   
   private ServerRep _serverRep;

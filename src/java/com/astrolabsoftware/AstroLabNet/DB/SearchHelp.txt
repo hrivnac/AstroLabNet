@@ -1,0 +1,1 @@
+Search represents an job running on a HBase Server.

@@ -93,14 +93,16 @@ public class BrowserWindow extends Application {
                               _command.dataReps(),
                               _command.channelReps(),
                               _command.actionReps(),
-                              _command.taskReps());
+                              _command.taskReps(),
+                              _command.searchReps());
     // Help
     String helpText = "";
     for (String helpPage : new String[] {"Browser/Components/",
                                          "DB/Server",
                                          "DB/Session",
                                          "DB/Action",
-                                         "DB/Task"}) {
+                                         "DB/Task",
+                                         "DB/Search"}) {
       try {
         helpText += new StringResource("com/astrolabsoftware/AstroLabNet/" + helpPage + "Help.txt").toString();
         }
@@ -285,6 +287,18 @@ public class BrowserWindow extends Application {
       }
     _results.getSelectionModel().select(_sessionTabs.get(sessionRep));
     }
+    
+  /** Select {@link Tab} with requested {@link SourceRep}.
+    * @param sourceRep The requested {@link SourceRep} to be selected. */
+  public void selectTab(SourceRep sourceRep) {
+    Tab tab = _sourceTabs.get(sourceRep);
+    // re-attach if closed
+    if (tab.tabPaneProperty().getValue() == null) {
+      _results.getTabs().addAll(tab);
+      _results.getSelectionModel().select(tab);
+      }
+    _results.getSelectionModel().select(_sourceTabs.get(sourceRep));
+    }
   
   /** Close. */
   // TBD: merge with stop()
@@ -307,6 +321,8 @@ public class BrowserWindow extends Application {
   private BrowserCommand _command;  
   
   private Map<SessionRep, Tab> _sessionTabs = new HashMap<>();
+
+  private Map<SourceRep,  Tab> _sourceTabs  = new HashMap<>();
   
   private static Console _console;
   

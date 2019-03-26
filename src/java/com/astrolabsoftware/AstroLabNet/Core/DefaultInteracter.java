@@ -230,6 +230,15 @@ public abstract class DefaultInteracter implements Interacter {
     _tasks.add(task);
     return task;
     }
+    
+  @Override
+  public Search addSearch(String name,
+                          Source source) {
+    Search search = new Search(name, source);
+    log.info("Adding Search: " + search);
+    _searches.add(search);
+    return search;
+    }
 
   @Override
   public List<Server> servers() {
@@ -254,6 +263,11 @@ public abstract class DefaultInteracter implements Interacter {
   @Override
   public List<Task> tasks() {
     return _tasks;
+    }
+    
+  @Override
+  public List<Search> searches() {
+    return _searches;
     }
     
   /** Interpret <em>BeanShell</em> script.
@@ -281,6 +295,7 @@ public abstract class DefaultInteracter implements Interacter {
   private List<Data>    _datas    = new ArrayList<>();
   private List<Channel> _channels = new ArrayList<>();
   private List<Task>    _tasks    = new ArrayList<>();
+  private List<Search>  _searches = new ArrayList<>();
   
   /** Logging . */
   private static Logger log = Logger.getLogger(DefaultInteracter.class);

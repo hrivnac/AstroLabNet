@@ -14,6 +14,7 @@ import javafx.util.Pair;
 
 // Java
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -76,7 +77,7 @@ public class ServerRep extends ElementRep {
 
   /** Update list of dependent {@link Session}s. */
   public void updateSessions() {
-    item().getChildren().clear();
+    item().getChildren().retainAll(_retains);
     int idSession;
     SessionRep sessionRep;
     for (Pair<Integer, Language> p : livy().getSessions()) {
@@ -87,6 +88,15 @@ public class ServerRep extends ElementRep {
         browser().command().addTask(name() + "/" + idSession + "/" + idStatement, sessionRep.session(), idStatement);
         }
       }
+    }
+    
+   /** Show dependent {@link Source}. */
+   public void showSource() {
+    SourceRep sourceRep = SourceRep.create(new Source("Source", server()), browser());
+    TreeItem<ElementRep> ti = new TreeItem<ElementRep>(sourceRep);
+    _retains.add(ti);
+    item().getChildren().add(ti);
+    //browser().command().addSearch(name() + "/" + idSession + "/" + idStatement, sessionRep.session(), idStatement);
     }
     
   /** Give the referenced {@link Server}.
@@ -129,7 +139,9 @@ public class ServerRep extends ElementRep {
   public String toString() {
     return server().toString();
     }
-  
+ 
+  private List<TreeItem<ElementRep>> _retains = new ArrayList<>();
+ 
   /** Logging . */
   private static Logger log = Logger.getLogger(ServerRep.class);
 
