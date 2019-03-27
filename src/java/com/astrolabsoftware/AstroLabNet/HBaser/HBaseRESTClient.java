@@ -129,6 +129,11 @@ public class HBaseRESTClient {
       return;
       }
     }
+
+  @Override
+  public String toString() {
+    return "HBaseRESTClient(" + _url + ")";
+    }
     
   private String _url;
 

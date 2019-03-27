@@ -64,7 +64,6 @@ public class BrowserWindow extends Application {
     _console = new Console(this);
     _command = new BrowserCommand(this);
     _command.setupInterpreter(_console.interpreter());
-    _command.readActions();
     setupGUI(stage);
     }
     

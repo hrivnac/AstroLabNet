@@ -1,6 +1,7 @@
 package com.astrolabsoftware.AstroLabNet.Avro;
 
 import com.astrolabsoftware.AstroLabNet.Utils.Init;
+import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
 import com.astrolabsoftware.AstroLabNet.DB.Server;
 
 // Avro
@@ -40,7 +41,7 @@ public class AvroReader {
     * @param args[0] The avro data filename.
     * @param args[1] The avro file filename (optional).
     * @throws IOException If file cannot be read. */
-  public static void main(String[] args) throws IOException {
+  public static void main(String[] args) throws Exception {
     Init.init(args);
     if (args.length == 0 || args.length > 2) {
       log.error("AvroReader <avro data file> [<avro schema file>]");
@@ -64,7 +65,6 @@ public class AvroReader {
     log.info("Using server " + server);
     log.info("Using schema from " + schemaFN);
     if (server == null) {
-      //_server = new Server("Local Host", null, null, "http://localhost:8080");
       _server = new Server("Local Host", null, null, "http://134.158.74.54:8080");
       }
     else {
@@ -83,13 +83,41 @@ public class AvroReader {
       }
     }
         
+  /** Process directory with <em>Avro</em> alert files.
+     * @param dirFN   The dirname of directiory with data file. */
+  public void processDir(String dirFN) {  
+    log.info("Loading directory " + dirFN);
+    File dir = new File(dirFN);
+    int i = 0;
+    for (String dataFN : dir.list()) {
+      if (dataFN.endsWith(".avro")) {
+        try {
+          process(dirFN + "/" + dataFN);
+          i++;
+          }
+        catch (IOException | AstroLabNetException e) {
+          log.error("Failed to process " + dirFN + "/" + dataFN, e);
+          }
+        }
+      else {
+        log.warn("Not Avro file: " + dataFN);
+        }
+      }
+    log.info("" + i + " files loaded");
+    }
+     
   /** Process <em>Avro</em> alert file.
      * @param dataFN   The filename of the data file.
-     * @thows IOException If problem with file reading. */
+     * @thows IOException If problem with file reading.
+     * @throws AstroLabNetException If anything wrong. */
   // TBD: use generated schema (problem: it mixes ztf.alert namespace and class
-  public void process(String dataFN) throws IOException {
+  public void process(String dataFN) throws IOException, AstroLabNetException  {
     log.info("Loading " + dataFN);
     File file = new File(dataFN);
+    if (!file.isFile()) {
+      log.error("Not a file: " + dataFN);
+      return;
+      }
     /*
     DatumReader<candidate> candidateDatumReader = new SpecificDatumReader<candidate>(candidate.class);
     DataFileReader<candidate> dataFileReader = new DataFileReader<candidate>(file, candidateDatumReader);

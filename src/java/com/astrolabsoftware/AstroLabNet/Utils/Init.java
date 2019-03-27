@@ -73,6 +73,7 @@ public class Init {
     CommandLineParser parser = new BasicParser();
     Options options = new Options();
     options.addOption("h", "help",    false, "show help");
+    options.addOption("b", "browser", false, "start graphicakl browser (default)");
     options.addOption("c", "cli",     false, "start command line");
     options.addOption("q", "quiet",   false, "minimal direct feedback");
     options.addOption(OptionBuilder.withLongOpt("source")

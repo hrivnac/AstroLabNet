@@ -26,7 +26,7 @@ public class LivyAPIClient {
   /** Selftest. */
   public static void main(String[] args) {
     Init.init(args, true);
-    String livyUrl = "http://localhost:8998";
+    String livyUrl = "http://localhost:4040";
     String piJar = "/home/hrivnac/work/LSST/AstroLabNet/lib/PiJob.jar"; // TBD: without abs path
     int samples = 100;
     LivyClient client = null;

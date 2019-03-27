@@ -38,7 +38,6 @@ public class CommandLine extends DefaultInteracter {
     interpreter.print("https://astrolabsoftware.github.io\n");
     setupInterpreter(interpreter);
     new Thread(interpreter).start();
-    readActions();
     }
  
   /** Logging . */

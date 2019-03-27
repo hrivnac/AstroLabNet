@@ -51,7 +51,7 @@ public class LivyRESTClient {
     catch (AstroLabNetException e) {
       log.info(e);
       AstroLabNetException.reportException("Request has failed", e, log);
-      return 0;
+      return -1;
       }
     log.debug("Result:\n" + result.trim());
     return new JSONObject(result).getInt("id");
@@ -109,16 +109,16 @@ public class LivyRESTClient {
       }
     return ss;
     }
-  
+     
   /** Send command to the server.
     * <pre>
     * POST /sessions/-idSession-/statements {"code":-code-}
     * </pre>
     * @param  idSession The existing session number.
     * @param  code      The <em>scala</code> to be run on the server.
-    * @return           The command result, in <em>json</em>. */
-  public String sendCommand(int    idSession,
-                            String code) {
+    * @return           The new statement id. */
+  public int sendCommand(int    idSession,
+                         String code) {
     String result = "";
     code = code.trim()
                .replaceAll("\n", "\\\\n")
@@ -127,11 +127,11 @@ public class LivyRESTClient {
       result = SmallHttpClient.postJSON(_url + "/sessions/" + idSession + "/statements", "{\"code\":\"" + code + "\"}", null, null);
       }
     catch (AstroLabNetException e) {
-      log.info(e);
       AstroLabNetException.reportException("Request has failed", e, log);
+      return -1;
       }
     log.debug("Result:\n" + result.trim());
-    return result;
+    return new JSONObject(result).getInt("id");
     }
     
   /** Check comamnd progreess, get results.
@@ -148,11 +148,61 @@ public class LivyRESTClient {
       result = SmallHttpClient.get(_url + "/sessions/" + idSession + "/statements/" + idStatement, null);
       }
     catch (AstroLabNetException e) {
-      log.info(e);
       AstroLabNetException.reportException("Request has failed", e, log);
       }
     log.debug("Result:\n" + result.trim());
     return result;
+    }
+
+  /** TBD */
+  public String waitForResult(int idSession,
+                              int idStatement) {
+    String resultString;  
+    JSONObject result;
+    double progress;
+    while (true) {
+      try {
+        resultString = checkProgress(idSession, idStatement);
+        result = new JSONObject(resultString);
+        progress = result.getDouble("progress");
+        log.debug("Progress = " + progress);
+        if (progress == 1.0) {
+          break;
+          }
+        Thread.sleep(1000); // 1s
+        }
+      catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
+        }          
+      }
+    return resultString;
+    }
+   
+  /** TBD */
+  public String executeCommand(String   cmd,
+                               Language language) {
+    log.info("Executing command '" + cmd + "' in " + language + " and waiting for result");
+    int sessionId = -1;
+    int statementId = -1;
+    try {
+      while (sessionId < 0) {
+        Thread.sleep(1000);
+        sessionId = initSession(language);
+        }
+      while (statementId < 0) {
+        Thread.sleep(1000);
+        statementId = sendCommand(sessionId, cmd);
+        }
+      }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      }          
+    return waitForResult(sessionId, statementId);
+    }
+    
+  @Override
+  public String toString() {
+    return "LivyRESTClient(" + _url + ")";
     }
     
   private String _url;

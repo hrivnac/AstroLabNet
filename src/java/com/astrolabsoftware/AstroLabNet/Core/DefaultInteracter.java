@@ -92,14 +92,16 @@ public abstract class DefaultInteracter implements Interacter {
       log.warn("init.bsh file cannot be read.");
       log.debug("init.bsh file cannot be read.", e);
       }
-      catch (EvalError e) {
-        log.error("Can't evaluate standard BeanShell expression", e);
-        }
+    catch (EvalError e) {
+      log.error("Can't evaluate standard BeanShell expression", e);
+      }
     // Populate Servers
     if (servers().isEmpty()) {
       addServer("Local Host", "http://localhost:8998", "http://localhost:4040", "http://localhost:8080");
       }
     getServersFromTopology(servers());
+    // Read Actions
+    readActions();
     // Source command line source
     if (Init.source() != null) {
       log.info("Sourcing " + Init.source());

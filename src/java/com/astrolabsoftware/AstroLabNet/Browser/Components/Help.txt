@@ -1,5 +1,19 @@
 <h1>This is the AstroLabNet Help !</h1>
 
+<h2>How to start a Graphical Browser ?</h2>
+<pre>
+java -jar AstroLabNet.exe.jar
+</pre>
+
+<h2>How to start a command line interface ? </h2>
+<pre>
+# just command line
+java -jar AstroLabNet.exe.jar -c
+# with startup script
+java -jar AstroLabNet.exe.jar -c -s script.bsh
+# with minimal output
+java -jar AstroLabNet.exe.jar -c -s script.bsh -q
+</pre>
 
 <h2>How to execute an Action ?</h2>
 <ol>
@@ -20,10 +34,38 @@ Using <em>Right-Click</em> on <b>Actions</b> and selecting <em>Create</em>.
 <h2>How to connect to new Server ?</h2>
 Using <em>Right-Click</em> on <b>Servers</b> and selecting <em>Create</em>.
 
-<h2>How to execute a Bean Shell script ?</h2>
+<h2>How to execute a Bean Shell script from GUI ?</h2>
+Using <b>Script</b> button on thre top MenuBar.
+
+<h2>How to execute a Bean Shell script from GUI ?</h2>
 Using <b>Script</b> button on thre top MenuBar.
 
 <hr/>
+
+<h2>Examples of CLI scripts</h2>
+<pre>
+// Send command to first Spark server
+String result = w.servers().get(0).livy().executeCommand("1+1", Language.PYTHON);
+System.out.println(result);
+System.exit(1);
+
+// Load an Avro Alarm into the (first) Catalog
+import com.astrolabsoftware.AstroLabNet.Avro.AvroReader;
+new AvroReader(w.servers().get(0), null).process("xxx.avro");
+System.exit(1);
+
+// Load all Avro Alarm from a directory into the (first) Catalog
+import com.astrolabsoftware.AstroLabNet.Avro.AvroReader;
+new AvroReader(w.servers().get(0), null).processDir("yyy");
+System.exit(1);
+
+// Show the whole (first) catalog
+System.out.println(w.servers().get(0).hbase().scan("astrolabnet.catalog.1"));
+System.exit(1);
+</pre>
+
+<hr/>
+
 <h2>Commands available in CLI</h2>
 <pre>
 w.servers();
@@ -38,4 +80,4 @@ w.addData(name);
 w.addDataSource(name);
 w.addDataChannel(name);
 </pre>
-and (almost) full standard Java 
+and (almost) full standard Java.

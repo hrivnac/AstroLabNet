@@ -29,10 +29,19 @@ Full functionality is available via CLI, GUI and WS.
 <a href="Help.html">Full Application Help</a>
 <hr/>
 After direct download from 
-<a href="dist/AstroLabNet.exe.jar">AstroLabNet.exe.jar</a>,
-it can be called like
+<a href="dist/AstroLabNet.exe.jar">AstroLabNet.exe.jar</a>.
+It can be called like
 <pre>
 java -jar AstroLabNet.exe.jar
+</pre>
+The full help:
+<pre>
+java -jar AstroLabNet.exe.jar -h                
+usage: java -jar AstroLabNet.exe.jar
+ -c,--cli             start command line
+ -h,--help            show help
+ -q,--quiet           minimal direct feedback
+ -s,--source &lt;file&gt;   source bsh file (init.bsh is also read)
 </pre>
 <hr/>
 <h3>How to setup private server</h3>
@@ -88,7 +97,7 @@ ${HBASE_HOME}/bin/hbase shell < ../src/ruby/createTopology.rb
 </ul>
 <a href="index.jpg"><img src="index.jpg" width="800"></a>
 <br/>
-<a href="index.jpg"><img src="index-ztf.jpg" width="800"></a>
+<a href="index.jpg"><img src="index-ztf.jpg" width="400"></a>
 <hr/>
 <img src="JavaDoc/com/astrolabsoftware/AstroLabNet/Browser/doc-files/Architecture.jpg" width="800">
 <br/>

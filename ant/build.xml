@@ -160,6 +160,7 @@
       <zipfileset includes="**/*" src="${avro.jar}"/>
       <zipfileset includes="**/*" src="${jackson.jar}"/>
       <zipfileset includes="**/*" src="${slf4j.jar}"/>
+      <zipfileset includes="**/*" src="${slf4jlog4j.jar}"/>
       <manifest>
         <attribute name="Created-By" value="${user.name}"/>
         <attribute name="AppName"    value="AstroLabNet"/>

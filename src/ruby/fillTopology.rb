@@ -3,8 +3,8 @@
 # Local Host
 put 'astrolabnet.topology.1', 'Local Host', 'i:name',     'Local Host'
 put 'astrolabnet.topology.1', 'Local Host', 'i:location', 'here'
-put 'astrolabnet.topology.1', 'Local Host', 'd:spark',    'http://localhost:8998'
-put 'astrolabnet.topology.1', 'Local Host', 'd:livy',     'http://localhost:4040'
+put 'astrolabnet.topology.1', 'Local Host', 'd:livy',     'http://localhost:8998'
+put 'astrolabnet.topology.1', 'Local Host', 'd:spark',    'http://localhost:4040'
 put 'astrolabnet.topology.1', 'Local Host', 'd:hbase',    'http://localhost:8080'
 put 'astrolabnet.topology.1', 'Local Host', 'c:comment',  'Default server'
 # LAL
