@@ -40,7 +40,10 @@ public class Init {
   public static void init(String[] args,
                           boolean  minimal) {
     parseArgs(args);
-    if (minimal) {
+    if (quiet()) {
+      PropertyConfigurator.configure(Init.class.getClassLoader().getResource(PROPERTIES_MINIMALISTIC));
+      }
+    else if (asCLI()) {
       PropertyConfigurator.configure(Init.class.getClassLoader().getResource(PROPERTIES_MINIMAL));
       }
     else {
@@ -69,9 +72,9 @@ public class Init {
   private static void parseArgs(String[] args) {
     CommandLineParser parser = new BasicParser();
     Options options = new Options();
-    options.addOption("h", "help", false, "show help");
-    options.addOption("c", "cli", false, "start command line");
-    options.addOption("b", "browser", false, "open graphical browser (default)");
+    options.addOption("h", "help",    false, "show help");
+    options.addOption("c", "cli",     false, "start command line");
+    options.addOption("q", "quiet",   false, "minimal direct feedback");
     options.addOption(OptionBuilder.withLongOpt("source")
                                    .withDescription("source bsh file (init.bsh is also read)")
                                    .hasArg()
@@ -88,6 +91,9 @@ public class Init {
         }
       if (line.hasOption("browser")) {
         _asBrowser = true;
+        }
+      if (line.hasOption("quiet")) {
+        _quiet = true;
         }
       if (line.hasOption("source")) {
         _source = line.getOptionValue("source");
@@ -113,6 +119,11 @@ public class Init {
   public static boolean asBrowser() {
     return _asBrowser;
     }
+  /** Whether comamnd feedback should be absolutely minimal.
+    * @return Whether comamnd feedback should be absolutely minimal. */
+  public static boolean quiet() {
+    return _quiet;
+    }
     
   /** The <em>BeanShell</em> script to be sourced.
     * @return The <em>BeanShell</em> script to be sourced. May be <tt>null</tt>. */
@@ -124,6 +135,8 @@ public class Init {
     
   private static boolean _asBrowser = false;  
   
+  private static boolean _quiet = false;
+  
   private static String _source = null;
     
   private static String[] WARN = {"org.apache.zookeeper.ZooKeeper",
@@ -131,8 +144,9 @@ public class Init {
           
   private static String[] ERROR = {"org.apache.hadoop.hbase.HBaseConfiguration"};
   
-  private static String PROPERTIES         = "com/astrolabsoftware/AstroLabNet/Utils/log4j.properties";
-  private static String PROPERTIES_MINIMAL = "com/astrolabsoftware/AstroLabNet/Utils/log4j-minimal.properties";
+  private static String PROPERTIES              = "com/astrolabsoftware/AstroLabNet/Utils/log4j.properties";
+  private static String PROPERTIES_MINIMAL      = "com/astrolabsoftware/AstroLabNet/Utils/log4j-minimal.properties";
+  private static String PROPERTIES_MINIMALISTIC = "com/astrolabsoftware/AstroLabNet/Utils/log4j-minimalistic.properties";
   
     
   /** Logging . */

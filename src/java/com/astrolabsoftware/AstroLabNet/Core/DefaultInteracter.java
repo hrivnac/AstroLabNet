@@ -72,6 +72,7 @@ public abstract class DefaultInteracter implements Interacter {
   @Override
   public void setupInterpreter(Interpreter interpreter) {
     _interpreter = interpreter;
+    // Set global reference and imports
     try {
       interpreter.eval("import com.astrolabsoftware.AstroLabNet.DB.*");
       interpreter.eval("import com.astrolabsoftware.AstroLabNet.Livyser.Language");
@@ -81,35 +82,39 @@ public abstract class DefaultInteracter implements Interacter {
       log.error("Can't set CommandLine references", e);
       }
     String init = "";
+    // Source init.bsh
+    log.info("Sourcing init.bsh");
+    try {
+      init = new StringFile("init.bsh").toString();
+      interpreter.eval(init);
+      }
+    catch (AstroLabNetException e) {
+      log.warn("init.bsh file cannot be read.");
+      log.debug("init.bsh file cannot be read.", e);
+      }
+      catch (EvalError e) {
+        log.error("Can't evaluate standard BeanShell expression", e);
+        }
+    // Populate Servers
+    if (servers().isEmpty()) {
+      addServer("Local Host", "http://localhost:8998", "http://localhost:4040", "http://localhost:8080");
+      }
+    getServersFromTopology(servers());
+    // Source command line source
     if (Init.source() != null) {
       log.info("Sourcing " + Init.source());
       try {
-        init += new StringFile(Init.source()).toString();
+        init = new StringFile(Init.source()).toString();
+        interpreter.eval(init);
         }
       catch (AstroLabNetException e) {
-        log.warn(Init.source() + " file cannot be read, the default setup with Local Host server is used.");
-        log.debug(Init.source() + " file cannot be read, the default setup with Local Host server is used.", e);
+        log.warn(Init.source() + " file cannot be read.");
+        log.debug(Init.source() + " file cannot be read.", e);
+        }
+      catch (EvalError e) {
+        log.error("Can't evaluate standard BeanShell expression", e);
         }
       }
-    log.info("Sourcing init.bsh");
-    try {
-      init += new StringFile("init.bsh").toString();
-      }
-    catch (AstroLabNetException e) {
-      log.warn("init.bsh file cannot be read, the default setup with Local Host server is used.");
-      log.debug("init.bsh file cannot be read, the default setup with Local Host server is used.", e);
-      }
-    if (init.equals("")) {
-      log.warn("no suitable init bsh file found, the default setup with Local Host server will be used.");
-      init = "w.addServer(\"Local Host\", \"http://localhost:8998\", \"http://localhost:4040\", \"http://localhost:8080\")";
-      }
-    try {
-      interpreter.eval(init);
-      }
-    catch (EvalError e) {
-      log.error("Can't evaluate standard BeanShell expression", e);
-      }
-    getServersFromTopology(servers());
     }
     
   /** Get new {@link Server}s from topology table.
