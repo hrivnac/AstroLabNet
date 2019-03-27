@@ -27,7 +27,7 @@ public class ServerSessionEventHandler implements EventHandler<ActionEvent> {
  
   @Override
   public void handle(ActionEvent event) {
-    _serverRep.livy().initSession(_language);
+    _serverRep.livy().initSession(_language, Integer.MAX_VALUE, 1);
     _serverRep.updateSessions();
     }
  

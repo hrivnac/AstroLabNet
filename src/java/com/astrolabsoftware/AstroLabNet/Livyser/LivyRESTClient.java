@@ -40,21 +40,37 @@ public class LivyRESTClient {
     * POST /sessions {"kind":*language*}
     * </pre>
     * @param language The {@link Language} of the {@link Session}.
+    * @param tries     How many times to try.
+    * @param sleep     How many <tt>s</tt> wait between tries.
     * @return The new session number. */
   // TBD: allow closing session
-  public int initSession(Language language) {
+  public int initSession(Language language,
+                         int      tries,
+                         int      sleep) {
     log.info("Creating Session in " + language);
+    boolean success = false;
+    int i = 0;
     String result = "";
-    try {
-      result = SmallHttpClient.postJSON(_url + "/sessions", "{\"kind\":\"" + language.asSpark() + "\"}", null, null);
+    while (!success && i++ <= tries) {
+      try {
+        Thread.sleep(1000 * sleep);
+        result = SmallHttpClient.postJSON(_url + "/sessions", "{\"kind\":\"" + language.asSpark() + "\"}", null, null);
+        success = true;
+        }
+      catch (AstroLabNetException e) {
+        log.debug("Request has failed", e);
+        }
+      catch (InterruptedException e) {
+        break;
+        }
       }
-    catch (AstroLabNetException e) {
-      log.info(e);
-      AstroLabNetException.reportException("Request has failed", e, log);
+    if (success) {
+      log.debug("Result:\n" + result.trim());
+      return new JSONObject(result).getInt("id");
+      }
+    else {
       return -1;
       }
-    log.debug("Result:\n" + result.trim());
-    return new JSONObject(result).getInt("id");
     }
     
   /** Get list of opened sessions.
@@ -116,22 +132,40 @@ public class LivyRESTClient {
     * </pre>
     * @param  idSession The existing session number.
     * @param  code      The <em>scala</code> to be run on the server.
+    * @param  tries     How many times to try.
+    * @param  sleep     How many <tt>s</tt> wait between tries.
     * @return           The new statement id. */
   public int sendCommand(int    idSession,
-                         String code) {
-    String result = "";
+                         String code,
+                         int    tries,
+                         int    sleep) {
+    log.info("Sending command '" + code + "'");
     code = code.trim()
                .replaceAll("\n", "\\\\n")
                .replaceAll("\"", "\\\\\"");
-    try {
-      result = SmallHttpClient.postJSON(_url + "/sessions/" + idSession + "/statements", "{\"code\":\"" + code + "\"}", null, null);
+    String result = "";
+    boolean success = false;
+    int i = 0;
+    while (!success && i++ <= tries) {
+      try {
+        Thread.sleep(1000 * sleep);
+        result = SmallHttpClient.postJSON(_url + "/sessions/" + idSession + "/statements", "{\"code\":\"" + code + "\"}", null, null);
+        success = true;
+        }
+      catch (AstroLabNetException e) {
+        log.debug("Request has failed", e);
+        }
+      catch (InterruptedException e) {
+        break;
+        }
       }
-    catch (AstroLabNetException e) {
-      AstroLabNetException.reportException("Request has failed", e, log);
+    if (success) {
+      log.debug("Result:\n" + result.trim());
+      return new JSONObject(result).getInt("id");
+      }
+    else {
       return -1;
       }
-    log.debug("Result:\n" + result.trim());
-    return new JSONObject(result).getInt("id");
     }
     
   /** Check comamnd progreess, get results.
@@ -154,10 +188,16 @@ public class LivyRESTClient {
     return result;
     }
 
-  /** TBD */
+  /** Wait for the command to deliver result.
+    * @param  idSession   The existing session number.
+    * @param  idStatement The statement number.
+    * @param  sleep       How many <tt>s</tt> wait between requests.
+    * @return             The result as <em>Json</em> string. */
   public String waitForResult(int idSession,
-                              int idStatement) {
-    String resultString;  
+                              int idStatement,
+                              int sleep) {
+    log.info("Waiting for result");
+    String resultString = null;  
     JSONObject result;
     double progress;
     while (true) {
@@ -169,35 +209,25 @@ public class LivyRESTClient {
         if (progress == 1.0) {
           break;
           }
-        Thread.sleep(1000); // 1s
+        Thread.sleep(1000 + sleep);
         }
       catch (InterruptedException e) {
-        Thread.currentThread().interrupt();
+        break;
         }          
       }
     return resultString;
     }
    
-  /** TBD */
+  /** Execute command, try until succeeds, wait for result.
+    * @param cmd      The command to send.
+    * @param language The command {@link Language}.
+    * @return         The result as <em>Json</em> string. */
   public String executeCommand(String   cmd,
                                Language language) {
     log.info("Executing command '" + cmd + "' in " + language + " and waiting for result");
-    int sessionId = -1;
-    int statementId = -1;
-    try {
-      while (sessionId < 0) {
-        Thread.sleep(1000);
-        sessionId = initSession(language);
-        }
-      while (statementId < 0) {
-        Thread.sleep(1000);
-        statementId = sendCommand(sessionId, cmd);
-        }
-      }
-    catch (InterruptedException e) {
-      Thread.currentThread().interrupt();
-      }          
-    return waitForResult(sessionId, statementId);
+    int sessionId   = initSession(language,       Integer.MAX_VALUE, 1);
+    int statementId = sendCommand(sessionId, cmd, Integer.MAX_VALUE, 1);
+    return waitForResult(sessionId, statementId,                     1);
     }
     
   @Override
