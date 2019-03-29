@@ -16,15 +16,12 @@ public class Batch extends Element {
   /** Create new Batch.
     * @param name     The Batch name.
     * @param id       The Batch id.
-    * @param language The Batch {@link Language}.
     * @param server The {@link Server} keeping this Batch. */
   public Batch(String   name,
                int      id,
-               Language language,
                Server   server) {
     super(name);
     _id       = id;
-    _language = language;
     _server   = server;
     }
     
@@ -32,12 +29,6 @@ public class Batch extends Element {
     * @return The Batch id. */
   public int id() {
     return _id;
-    }
-    
-  /** Give the Batch {@link Language}.
-    * @return The Batch {@link Language}. */
-  public Language language() {
-    return _language;
     }
     
   /** Give the keeping {@link Server}.
@@ -48,12 +39,10 @@ public class Batch extends Element {
     
   @Override
   public String toString() {
-    return name() + " : " + _id + " on " + _server.name() + " in " + _language;
+    return name() + " : " + _id + " on " + _server.name();
     }
     
   private int _id;
-  
-  private Language _language;
   
   private Server _server;
  

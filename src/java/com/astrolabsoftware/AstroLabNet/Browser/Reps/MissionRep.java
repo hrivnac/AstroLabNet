@@ -63,7 +63,7 @@ public class MissionRep extends ElementRep {
         double progress;
         while (true) {
           try {
-            resultString = batchRep().serverRep().livy().checkProgress(batchRep().id(), mission.id());
+            resultString = batchRep().serverRep().livy().checkBatchProgress(batchRep().id(), 10, 1);
             result = new JSONObject(resultString);
             progress = result.getDouble("progress");
             batchRep().setProgress(progress);

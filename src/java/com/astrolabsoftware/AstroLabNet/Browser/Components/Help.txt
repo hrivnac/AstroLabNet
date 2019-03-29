@@ -49,6 +49,11 @@ String result = w.servers().get(0).livy().executeCommand("1+1", Language.PYTHON)
 System.out.println(result);
 System.exit(1);
 
+// Send job to first Spark server
+String result = w.servers().get(0).livy().sendJob("local:.../AstroLabNet/lib/PiJob.jar", "com.astrolabsoftware.AstroLabNet.DB.Jobs.PiJob");
+System.out.println(result);
+System.exit(1);
+
 // Load an Avro Alarm into the (first) Catalog
 import com.astrolabsoftware.AstroLabNet.Avro.AvroReader;
 new AvroReader(w.servers().get(0), null).process("xxx.avro");

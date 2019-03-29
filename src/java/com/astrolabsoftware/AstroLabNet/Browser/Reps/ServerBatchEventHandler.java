@@ -17,22 +17,17 @@ import javafx.event.ActionEvent;
 public class ServerBatchEventHandler implements EventHandler<ActionEvent> {
 
   /** Create.
-    * @param serverRep The associated {@link ServerRep}.
-    * @param language  The {@link Language} of this {@link EventHandler}. */
-  public ServerBatchEventHandler(ServerRep serverRep,
-                                   Language  language) {
+    * @param serverRep The associated {@link ServerRep}. */
+  public ServerBatchEventHandler(ServerRep serverRep) {
     _serverRep = serverRep;
-    _language  = language;
     }
  
   @Override
   public void handle(ActionEvent event) {
-    _serverRep.livy().initBatch(_language, Integer.MAX_VALUE, 1);
+    //_serverRep.livy().initBatch(_file, _className, Integer.MAX_VALUE, 1);
     _serverRep.updateBatchs();
     }
- 
-  private Language _language;  
-  
+    
   private ServerRep _serverRep;
     
   }

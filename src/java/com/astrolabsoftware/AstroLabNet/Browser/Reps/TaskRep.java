@@ -63,7 +63,7 @@ public class TaskRep extends ElementRep {
         double progress;
         while (true) {
           try {
-            resultString = sessionRep().serverRep().livy().checkProgress(sessionRep().id(), task.id());
+            resultString = sessionRep().serverRep().livy().checkSessionProgress(sessionRep().id(), task.id(), 10, 1);
             result = new JSONObject(resultString);
             progress = result.getDouble("progress");
             sessionRep().setProgress(progress);

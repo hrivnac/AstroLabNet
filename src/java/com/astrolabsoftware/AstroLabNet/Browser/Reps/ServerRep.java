@@ -60,29 +60,20 @@ public class ServerRep extends ElementRep {
     MenuItem scalaSession  = new MenuItem("Scala Session",  Images.icon(Images.SESSION));
     MenuItem rSession      = new MenuItem("R Session",      Images.icon(Images.SESSION));
     MenuItem sqlSession    = new MenuItem("SQL Session",    Images.icon(Images.SESSION));
-    MenuItem pythonBatch   = new MenuItem("Python Batch",   Images.icon(Images.BATCH));
-    MenuItem scalaBatch    = new MenuItem("Scala Batch",    Images.icon(Images.BATCH));
-    MenuItem rBatch        = new MenuItem("R Batch",        Images.icon(Images.BATCH));
-    MenuItem sqlBatch      = new MenuItem("SQL Batch",      Images.icon(Images.BATCH));
-    MenuItem dataSource    = new MenuItem("Data Source",    Images.icon(Images.SOURCE ));
+    MenuItem batch         = new MenuItem("Batch",          Images.icon(Images.BATCH));
+    MenuItem source        = new MenuItem("Source",         Images.icon(Images.SOURCE ));
     pythonSession.setOnAction(new ServerSessionEventHandler(this, Language.PYTHON));
     scalaSession.setOnAction( new ServerSessionEventHandler(this, Language.SCALA ));
     rSession.setOnAction(     new ServerSessionEventHandler(this, Language.R     ));
     sqlSession.setOnAction(   new ServerSessionEventHandler(this, Language.SQL   ));
-    pythonBatch.setOnAction(  new ServerBatchEventHandler(  this, Language.PYTHON));
-    scalaBatch.setOnAction(   new ServerBatchEventHandler(  this, Language.SCALA ));
-    rBatch.setOnAction(       new ServerBatchEventHandler(  this, Language.R     ));
-    sqlBatch.setOnAction(     new ServerBatchEventHandler(  this, Language.SQL   ));
-    dataSource.setOnAction(   new ServerSourceEventHandler( this                 ));
+    batch.setOnAction(        new ServerBatchEventHandler(  this                 ));
+    source.setOnAction(       new ServerSourceEventHandler( this                 ));
     menuItems.add(pythonSession);
     menuItems.add(scalaSession);
     menuItems.add(rSession);
     menuItems.add(sqlSession);
-    menuItems.add(pythonBatch);
-    menuItems.add(scalaBatch);
-    menuItems.add(rBatch);
-    menuItems.add(sqlBatch);
-    menuItems.add(dataSource);
+    menuItems.add(batch);
+    menuItems.add(source);
     updateSessions();
     updateBatchs();
     return menuItems;
@@ -102,14 +93,13 @@ public class ServerRep extends ElementRep {
         }
       }
     }
+    
   /** Update list of dependent {@link Batch}s. */
   public void updateBatchs() {
     item().getChildren().retainAll(_retains);
-    int idBatch;
     BatchRep batchRep;
-    for (Pair<Integer, Language> p : livy().getBatchs()) {
-      idBatch = p.getKey();
-      batchRep = BatchRep.create(new Batch("Batch",  idBatch, p.getValue(), server()), browser());
+    for (int idBatch : livy().getBatches()) {
+      batchRep = BatchRep.create(new Batch("Batch",  idBatch, server()), browser());
       item().getChildren().add(new TreeItem<ElementRep>(batchRep));
       for (int idStatement : livy().getStatements(idBatch)) {
         browser().command().addMission(name() + "/" + idBatch + "/" + idStatement, batchRep.batch(), idStatement);

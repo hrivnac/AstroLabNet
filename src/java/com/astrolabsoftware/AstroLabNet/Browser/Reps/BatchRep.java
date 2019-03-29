@@ -104,7 +104,7 @@ public class BatchRep extends ElementRep {
   /** Add {@link Tab} of this BatchRep. */
   public void addTab() {
     // Desc
-    Label desc = new Label("Command in " + language() + ":");
+    Label desc = new Label("Job:");
     // Cmd
     TextArea cmd = new TextArea();
     cmd.setPrefHeight(2000);
@@ -163,12 +163,6 @@ public class BatchRep extends ElementRep {
     * @return The BatchRep id. */
   public int id() {
     return batch().id();
-    }
-    
-  /** Give the BatchRep {@link Language}.
-    * @return The BatchRep {@link Language}. */
-  public Language language() {
-    return batch().language();
     }
     
   /** Give the BatchRep keeping {@link Server}.
