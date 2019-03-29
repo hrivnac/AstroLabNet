@@ -52,13 +52,13 @@ public interface Interacter {
                           Language language);
   
   /** Add {@link Job}.
-    * @param name     The {@link Job} name.
-    * @param cmd      The command to execute.
-    * @param language The {@link Language} of the command.
-    * @return         The added {@link Job}. */
-  public Job addJob(String   name,
-                    String   cmd,
-                    Language language);
+    * @param name      The {@link Job} name
+    * @param file      The jar filename.
+    * @param className The <em>main</em> className.
+    * @return          The added {@link Job}. */
+  public Job addJob(String name,
+                    String   file,
+                    String   className);
   
   /** Add {@link Data}.
     * @param name The {@link Data} name

@@ -75,10 +75,10 @@ public class BrowserCommand extends CommandLine {
     }
     
   @Override
-  public Job addJob(String   name,
-                    String   cmd,
-                    Language language) {
-    Job job = super.addJob(name, cmd, language);
+  public Job addJob(String  name,
+                    String  file,
+                    String  className) {
+    Job job = super.addJob(name, file, className);
     JobRep jobRep = new JobRep(job, _window);
     log.info("Adding JobRep: " + jobRep);
     _jobReps.getChildren().add(jobRep.item());

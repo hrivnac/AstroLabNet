@@ -33,7 +33,7 @@ public class JobRep extends ElementRep {
   @Override
   public List<MenuItem> menuItems() {
     List<MenuItem> menuItems = super.menuItems();
-    MenuItem execute = new MenuItem("Use for Session",  Images.icon(Images.SESSION));
+    MenuItem execute = new MenuItem("Use for Batch",  Images.icon(Images.SESSION));
     execute.setOnAction(new JobEventHandler(this));
     menuItems.add(execute);
     return menuItems;
@@ -41,28 +41,25 @@ public class JobRep extends ElementRep {
     
   /** Activate {@link Session}. */
   public void activate() {
-    SessionRep selected = browser().getSelectedSession();
+    BatchRep selected = browser().getSelectedBatch();
     if (selected == null) {
-      log.error("No Session is selected");
-      }
-    else if (selected.language() != language()) {
-      log.error("Job language " + language() + " != Session language " + selected.language());
+      log.error("No Batch is selected");
       }
     else {
-      browser().setSessionCmd(cmd());
+      // TBD: browser().setSessionCmd(cmd());
       }
     }
 
-  /** Give the associated command text.
-    * @return The associated command text. */
-  public String cmd() {
-    return job().cmd();
+  /** Give the Job jar filename.
+    * @return the Job jar filename.. */
+  public String file() {
+    return job().file();
     }
     
-  /** Give the Job {@link Language}.
-    * @return The Action {@link Language}. */
-  public Language language() {
-    return job().language();
+  /** Give the Job <em>main</em> className.
+    * @return The <em>main</em> className. */
+  public String className() {
+    return job().className();
     }
     
   /** Give the referenced {@link Job}.

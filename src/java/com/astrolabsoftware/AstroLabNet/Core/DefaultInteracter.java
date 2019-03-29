@@ -71,7 +71,7 @@ public abstract class DefaultInteracter implements Interacter {
     
   @Override
   public void readJobs() {
-    // TBD
+    addJob("Pi", "local:../lib/PiJob.jar", "com.astrolabsoftware.AstroLabNet.DB.Jobs.PiJob"); // TBD: should be automatic
     }
      
   @Override
@@ -221,9 +221,9 @@ public abstract class DefaultInteracter implements Interacter {
     
   @Override
   public Job addJob(String   name,
-                    String   cmd,
-                    Language language) {
-    Job job = new Job(name, cmd, language);
+                    String   file,
+                    String   className) {
+    Job job = new Job(name, file, className);
     log.info("Adding Job: " + job);
     _jobs.add(job);
     return job;

@@ -15,36 +15,36 @@ public class Job extends Element {
   
   /** Create new Job.
     * @param name     The Job name.
-    * @param cmd      The command.
-    * @param language The {@link Language} od the command. */
+    * @param file      The jar filename.
+    * @param className The <em>main</em> className. */
   public Job(String        name,
-             String        cmd,
-             Language      language) {
+             String        file,
+             String        className) {
     super(name);
-    _cmd      = cmd;
-    _language = language;
+    _file      = file;
+    _className = className;
     }
 
-  /** Give the associated command text.
-    * @return The associated command text. */
-  public String cmd() {
-    return _cmd;
+  /** Give the Job jar filename.
+    * @return The Job jar filename. */
+  public String file() {
+    return _file;
     }
     
-  /** Give the Job {@link Language}.
-    * @return The Job {@link Language}. */
-  public Language language() {
-    return _language;
+  /** Give the Job <em>main</em> className.
+    * @return The <em>main</em> className. */
+  public String className() {
+    return _className;
     }
     
   @Override
   public String toString() {
-    return name() + " (" + _language + ")";
+    return name() + " (" + _className + "  from " + _file + ")";
     }
 
-  private String _cmd;
+  private String _file;
   
-  private Language _language;
+  private String _className;
   
   /** Logging . */
   private static Logger log = Logger.getLogger(Job.class);
