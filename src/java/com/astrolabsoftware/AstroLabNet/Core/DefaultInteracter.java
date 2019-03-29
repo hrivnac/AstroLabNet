@@ -61,12 +61,17 @@ public abstract class DefaultInteracter implements Interacter {
           default:
             log.error("Unknown extension " + ext + ", supposing Python");
           } 
-        addAction("pi", new StringResource("com/astrolabsoftware/AstroLabNet/DB/Actions/" + actionTxt).toString(), lang);
+        addAction(actionTxt.substring(0, actionTxt.lastIndexOf(".")), new StringResource("com/astrolabsoftware/AstroLabNet/DB/Actions/" + actionTxt).toString(), lang);
         }
       catch (AstroLabNetException e) {
         log.error("Cannot load Action from " + actionTxt, e);
         }
       }
+    }
+    
+  @Override
+  public void readJobs() {
+    // TBD
     }
      
   @Override
@@ -79,7 +84,7 @@ public abstract class DefaultInteracter implements Interacter {
       interpreter.set("w", this);
       }
     catch (EvalError e) {
-      log.error("Can't set CommandLine references", e);
+      log.error("Can't set CommandLinetasks references", e);
       }
     String init = "";
     // Source init.bsh
@@ -102,6 +107,8 @@ public abstract class DefaultInteracter implements Interacter {
     getServersFromTopology(servers());
     // Read Actions
     readActions();
+    // Read Jobs
+    readJobs();
     // Source command line source
     if (Init.source() != null) {
       log.info("Sourcing " + Init.source());
@@ -213,6 +220,16 @@ public abstract class DefaultInteracter implements Interacter {
     }
     
   @Override
+  public Job addJob(String   name,
+                    String   cmd,
+                    Language language) {
+    Job job = new Job(name, cmd, language);
+    log.info("Adding Job: " + job);
+    _jobs.add(job);
+    return job;
+    }
+    
+  @Override
   public Data addData(String name) {
     Data data = new Data(name);
     log.info("Adding Data: " + data);
@@ -239,6 +256,16 @@ public abstract class DefaultInteracter implements Interacter {
     }
     
   @Override
+  public Batch addBatch(String  name,
+                        Session session,
+                        int     id) {
+    Batch batch = new Batch(name, session, id);
+    log.info("Adding Batch: " + batch);
+    _batchs.add(batch);
+    return batch;
+    }
+    
+  @Override
   public Search addSearch(String name,
                           Source source) {
     Search search = new Search(name, source);
@@ -256,6 +283,11 @@ public abstract class DefaultInteracter implements Interacter {
   public List<Action> actions() {
     return _actions;
     }
+
+  @Override
+  public List<Job> jobs() {
+    return _jobs;
+    }
     
   @Override
   public List<Data> datas() {
@@ -270,6 +302,11 @@ public abstract class DefaultInteracter implements Interacter {
   @Override
   public List<Task> tasks() {
     return _tasks;
+    }
+
+    @Override
+  public List<Batch> batchs() {
+    return _batchs;
     }
     
   @Override
@@ -299,9 +336,11 @@ public abstract class DefaultInteracter implements Interacter {
    
   private List<Server>  _servers  = new ArrayList<>();
   private List<Action>  _actions  = new ArrayList<>();
+  private List<Job>     _jobs     = new ArrayList<>();
   private List<Data>    _datas    = new ArrayList<>();
   private List<Channel> _channels = new ArrayList<>();
   private List<Task>    _tasks    = new ArrayList<>();
+  private List<Batch>   _batchs   = new ArrayList<>();
   private List<Search>  _searches = new ArrayList<>();
   
   /** Logging . */

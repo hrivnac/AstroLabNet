@@ -33,6 +33,12 @@ public class BrowserCommand extends CommandLine {
     createAction.setOnAction(new ActionsEventHandler(this));
     actionsRep.addMenuItem(createAction);
     _actionReps = new TreeItem<>(actionsRep);
+    // Jobs
+    ElementRep jobsRep = new ElementRep(new Element("Jobs"), _window);
+    MenuItem createJob = new MenuItem("Create", Images.icon(Images.CREATE));
+    createJob.setOnAction(new JobsEventHandler(this));
+    jobsRep.addMenuItem(createJob);
+    _jobReps = new TreeItem<>(jobsRep);
     // Servers
     ElementRep serversRep = new ElementRep(new Element("Servers"), _window);
     MenuItem createServer = new MenuItem("Create", Images.icon(Images.CREATE));
@@ -69,6 +75,17 @@ public class BrowserCommand extends CommandLine {
     }
     
   @Override
+  public Job addJob(String   name,
+                    String   cmd,
+                    Language language) {
+    Job job = super.addJob(name, cmd, language);
+    JobRep jobRep = new JobRep(job, _window);
+    log.info("Adding JobRep: " + jobRep);
+    _jobReps.getChildren().add(jobRep.item());
+    return job;
+    }
+    
+  @Override
   public Data addData(String name) {
     Data data = super.addData(name);
     DataRep dataRep = new DataRep(data, _window);
@@ -96,6 +113,17 @@ public class BrowserCommand extends CommandLine {
     _taskReps.getChildren().add(taskRep.item());
     return task;
     }
+
+   @Override
+   public Batch addBatch(String      name,
+                         Session session,
+                         int     id) {
+    Batch batch = super.addBatch(name, session, id);
+    BatchRep batchRep = BatchRep.create(batch, _window);
+    log.info("Adding BatchRep: " + batchRep);
+    _batchReps.getChildren().add(batchRep.item());
+    return batch;
+    }
     
    @Override
    public Search addSearch(String name,
@@ -119,6 +147,12 @@ public class BrowserCommand extends CommandLine {
     return _actionReps;
     }
     
+  /** Give {@link TreeItem} of {@link JobRep}.
+    * @return The {@link TreeItem} of available {@link JobRep}. */
+  public TreeItem<ElementRep> jobReps() {
+    return _jobReps;
+    }
+    
   /** Give {@link TreeItem} of {@link DataRep}.
     * @return The {@link TreeItem} of available {@link DataRep}. */
   public TreeItem<ElementRep> dataReps() {
@@ -137,6 +171,12 @@ public class BrowserCommand extends CommandLine {
     return _taskReps;
     }
     
+  /** Give {@link TreeItem} of {@link BatchRep}.
+    * @return The {@link TreeItem} of available {@link BatchRep}. */
+  public TreeItem<ElementRep> batchReps() {
+    return _batchReps;
+    }
+    
   /** Give {@link TreeItem} of {@link SearchRep}.
     * @return The {@link TreeItem} of available {@link SearchRep}. */
   public TreeItem<ElementRep> searchReps() {
@@ -147,9 +187,11 @@ public class BrowserCommand extends CommandLine {
     
   private TreeItem<ElementRep> _serverReps;
   private TreeItem<ElementRep> _actionReps;
+  private TreeItem<ElementRep> _jobReps;
   private TreeItem<ElementRep> _dataReps    = new TreeItem<>(new ElementRep(new Element("Data"),     _window));
   private TreeItem<ElementRep> _channelReps = new TreeItem<>(new ElementRep(new Element("Channels"), _window));
   private TreeItem<ElementRep> _taskReps    = new TreeItem<>(new ElementRep(new Element("Tasks"),    _window));
+  private TreeItem<ElementRep> _batchReps   = new TreeItem<>(new ElementRep(new Element("Batchs"),   _window));
   private TreeItem<ElementRep> _searchReps  = new TreeItem<>(new ElementRep(new Element("Searches"), _window));
       
   /** Logging . */

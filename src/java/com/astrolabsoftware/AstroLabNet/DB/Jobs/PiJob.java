@@ -1,46 +1,40 @@
 package com.astrolabsoftware.AstroLabNet.DB.Jobs;
 
-// Livy
-import org.apache.livy.Job;
-import org.apache.livy.JobContext;
-
 // Spark
-import org.apache.spark.api.java.function.Function;
-import org.apache.spark.api.java.function.Function2;
+import org.apache.spark.api.java.JavaRDD;
+import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.sql.SparkSession;
 
 // Java
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
-public class PiJob implements Job<Double>,
-                              Function<Integer, Integer>,
-                              Function2<Integer, Integer, Integer> {
+/** <code>PiJob</code> is the standard <em>Spark</em> job example.
+  * @opt attributes
+  * @opt operations
+  * @opt types
+  * @opt visibility
+  * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
+public final class PiJob {
 
-  public PiJob(int samples) {
-    _samples = samples;
-    }
-
-  @Override
-  public Double call(JobContext ctx) throws Exception {
-    List<Integer> sampleList = new ArrayList<>();
-    for (int i = 0; i < _samples; i++) {
-      sampleList.add(i + 1);
+  /** Run the example. */
+  public static void main(String[] args) throws Exception {
+    SparkSession spark = SparkSession.builder().appName("PiJob").getOrCreate();
+    JavaSparkContext jsc = new JavaSparkContext(spark.sparkContext());
+    int slices = (args.length == 1) ? Integer.parseInt(args[0]) : 2;
+    int n = 100000 * slices;
+    List<Integer> l = new ArrayList<>(n);
+    for (int i = 0; i < n; i++) {
+      l.add(i);
       }
-    return 4.0d * ctx.sc().parallelize(sampleList).map(this).reduce(this) / _samples;
+    JavaRDD<Integer> dataSet = jsc.parallelize(l, slices);
+    int count = dataSet.map(integer -> {
+      double x = Math.random() * 2 - 1;
+      double y = Math.random() * 2 - 1;
+      return (x * x + y * y <= 1) ? 1 : 0;
+      }).reduce((integer, integer2) -> integer + integer2);
+    System.out.println("Pi is roughly " + 4.0 * count / n);
+    spark.stop();
     }
-
-  @Override
-  public Integer call(Integer v1) {
-    double x = Math.random();
-    double y = Math.random();
-    return (x*x + y*y < 1) ? 1 : 0;
-    }
-
-  @Override
-  public Integer call(Integer v1, Integer v2) {
-    return v1 + v2;
-    }
-
-  private final int _samples;
-
   }
+ 

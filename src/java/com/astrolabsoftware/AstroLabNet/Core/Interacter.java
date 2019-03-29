@@ -24,6 +24,9 @@ public interface Interacter {
   /** Fill the pre-defined {@link Action}s. */
   public void readActions();
   
+  /** Fill the pre-defined {@link Job}s. */
+  public void readJobs();
+  
   /** Load standard init files and setup standard environment.
     * @param interpreter The embedded {@link Interpreter}. */
   public void setupInterpreter(Interpreter interpreter);
@@ -48,6 +51,15 @@ public interface Interacter {
                           String   cmd,
                           Language language);
   
+  /** Add {@link Job}.
+    * @param name     The {@link Job} name.
+    * @param cmd      The command to execute.
+    * @param language The {@link Language} of the command.
+    * @return         The added {@link Job}. */
+  public Job addJob(String   name,
+                    String   cmd,
+                    Language language);
+  
   /** Add {@link Data}.
     * @param name The {@link Data} name
     * @return     The added {@link Data}. */
@@ -67,6 +79,15 @@ public interface Interacter {
                       Session session,
                       int     id);
   
+  /** Add {@link Batch}.
+    * @param name    The {@link Batch} name.
+    * @param session The hosting {@link Session}.
+    * @param id      The statement id.
+    * @return        The added {@link Batch}. */
+  public Batch addBatch(String  name,
+                       Session session,
+                       int     id);
+  
   /** Add {@link Search}.
     * @param name   The {@link Search} name.
     * @param source The hosting {@link Source}.
@@ -82,6 +103,10 @@ public interface Interacter {
     * @return The {@link List} of available {@link Action}s. */
   public List<Action> actions();
   
+  /** Give {@link List} of available {@link Job}s.
+    * @return The {@link List} of available {@link Job}s. */
+  public List<Job> jobs();
+  
   /** Give {@link List} of available {@link Data}s.
     * @return The {@link List} of available {@link Data}s. */
   public List<Data> datas();
@@ -93,6 +118,10 @@ public interface Interacter {
   /** Give {@link List} of available {@link Task}s.
     * @return The {@link List} of available {@link Task}s. */
   public List<Task> tasks();
+  
+  /** Give {@link List} of available {@link Batch}s.
+    * @return The {@link List} of available {@link Batch}s. */
+  public List<Batch> batchs();
    
   /** Give {@link List} of available {@link Search}s.
     * @return The {@link List} of available {@link Search}s. */

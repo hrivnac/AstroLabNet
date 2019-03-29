@@ -18,6 +18,7 @@
     <pathelement path="${scala.jar}"/>
     <pathelement path="${livy.jar}"/>
     <pathelement path="${spark.jar}"/>
+    <pathelement path="${spark-sql.jar}"/>
     <pathelement path="${httpclient.jar}"/>
     <pathelement path="${httpcore.jar}"/>
     <pathelement path="${logging.jar}"/>
@@ -192,6 +193,8 @@
         </manifest>
       </jar>
     <jar jarfile="../lib/PiJob.jar" index="yes">
+      <zipfileset includes="**/*" src="../lib/AstroLabNet.jar"/>
+      <zipfileset includes="**/*" src="${livy.jar}"/>
       <fileset dir="../build"    includes="com/astrolabsoftware/AstroLabNet/DB/Jobs/PiJob.class"/>
       <manifest>
         <attribute name="Created-By" value="${user.name}"/>
@@ -202,25 +205,7 @@
     </target>
        
   <!-- Check ================================================================-->
-    
-  <target name="check-livy"
-           description="Check Livy">
-    <echo>Check Livy</echo>
-    <java classname="com.astrolabsoftware.AstroLabNet.Livyser.LivyAPIClient"
-          fork="true"
-          failonerror="true">
-      <!-- TBD: should go via properties -->
-      <classpath>
-        <fileset dir="../lib">
-          <include name="AstroLabNet.jar"/>
-          </fileset>
-        <fileset dir="/opt/livy/jars">
-          <include name="*.jar"/>
-          </fileset>
-         </classpath>
-      </java>
-    </target>
-    
+        
   <target name="check-avro"
            description="Check Avro">
     <echo>Check Avro</echo>

@@ -1,1 +1,1 @@
-Task represents an job running on a Spark Server behind Livy Server.
+Task represents an task running on a Spark Server behind Livy Server.
