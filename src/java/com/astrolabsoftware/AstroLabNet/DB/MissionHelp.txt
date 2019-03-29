@@ -1,0 +1,1 @@
+Mission represents an batch running on a Spark Server behind Livy Server.

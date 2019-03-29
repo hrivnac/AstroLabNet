@@ -79,14 +79,14 @@ public interface Interacter {
                       Session session,
                       int     id);
   
-  /** Add {@link Batch}.
-    * @param name    The {@link Batch} name.
-    * @param session The hosting {@link Session}.
+  /** Add {@link Mission}.
+    * @param name    The {@link Mission} name.
+    * @param batch   The hosting {@link Batch}.
     * @param id      The statement id.
-    * @return        The added {@link Batch}. */
-  public Batch addBatch(String  name,
-                       Session session,
-                       int     id);
+    * @return        The added {@link Mission}. */
+  public Mission addMission(String  name,
+                            Batch   batch,
+                            int     id);
   
   /** Add {@link Search}.
     * @param name   The {@link Search} name.
@@ -119,9 +119,9 @@ public interface Interacter {
     * @return The {@link List} of available {@link Task}s. */
   public List<Task> tasks();
   
-  /** Give {@link List} of available {@link Batch}s.
-    * @return The {@link List} of available {@link Batch}s. */
-  public List<Batch> batchs();
+  /** Give {@link List} of available {@link Mission}s.
+    * @return The {@link List} of available {@link Mission}s. */
+  public List<Mission> missions();
    
   /** Give {@link List} of available {@link Search}s.
     * @return The {@link List} of available {@link Search}s. */

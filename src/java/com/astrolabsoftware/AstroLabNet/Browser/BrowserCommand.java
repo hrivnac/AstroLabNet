@@ -115,14 +115,14 @@ public class BrowserCommand extends CommandLine {
     }
 
    @Override
-   public Batch addBatch(String      name,
-                         Session session,
-                         int     id) {
-    Batch batch = super.addBatch(name, session, id);
-    BatchRep batchRep = BatchRep.create(batch, _window);
-    log.info("Adding BatchRep: " + batchRep);
-    _batchReps.getChildren().add(batchRep.item());
-    return batch;
+   public Mission addMission(String name,
+                             Batch  batch,
+                            int     id) {
+    Mission mission = super.addMission(name, batch, id);
+    MissionRep missionRep = MissionRep.create(mission, _window);
+    log.info("Adding MissionRep: " + missionRep);
+    _missionReps.getChildren().add(missionRep.item());
+    return mission;
     }
     
    @Override
@@ -171,10 +171,10 @@ public class BrowserCommand extends CommandLine {
     return _taskReps;
     }
     
-  /** Give {@link TreeItem} of {@link BatchRep}.
-    * @return The {@link TreeItem} of available {@link BatchRep}. */
-  public TreeItem<ElementRep> batchReps() {
-    return _batchReps;
+  /** Give {@link TreeItem} of {@link MissionRep}.
+    * @return The {@link TreeItem} of available {@link MissionRep}. */
+  public TreeItem<ElementRep> missionReps() {
+    return _missionReps;
     }
     
   /** Give {@link TreeItem} of {@link SearchRep}.
@@ -191,7 +191,7 @@ public class BrowserCommand extends CommandLine {
   private TreeItem<ElementRep> _dataReps    = new TreeItem<>(new ElementRep(new Element("Data"),     _window));
   private TreeItem<ElementRep> _channelReps = new TreeItem<>(new ElementRep(new Element("Channels"), _window));
   private TreeItem<ElementRep> _taskReps    = new TreeItem<>(new ElementRep(new Element("Tasks"),    _window));
-  private TreeItem<ElementRep> _batchReps   = new TreeItem<>(new ElementRep(new Element("Batchs"),   _window));
+  private TreeItem<ElementRep> _missionReps   = new TreeItem<>(new ElementRep(new Element("Missions"),   _window));
   private TreeItem<ElementRep> _searchReps  = new TreeItem<>(new ElementRep(new Element("Searches"), _window));
       
   /** Logging . */

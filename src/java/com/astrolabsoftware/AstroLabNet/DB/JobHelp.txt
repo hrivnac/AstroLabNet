@@ -1,8 +1,8 @@
-Action represents a program to be send to a Spark Server.
-It can be formulated as a simple text or a JAR file.
+Job represents a program to be send to a Spark Server,
+formulated as a JAR file.
 It can be written in Python, Scala, SQL or R.
-You can send it to a Session opened on a Spark Server.
+You can send it to a Batch opened on a Spark Server.
 
 CLI
 ---
-w.addAction("pokus", "1+1", Language.PYTHON);
+w.addJob("pokus", TBD, Language.PYTHON);

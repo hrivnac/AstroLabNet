@@ -73,6 +73,13 @@ public class LivyRESTClient {
       }
     }
     
+  /** TBD */  
+  public int initBatch(Language language,
+                       int      tries,
+                       int      sleep) {
+    return 0;
+    }
+    
   /** Get list of opened sessions.
     * <pre>
     * GET /sessions
@@ -103,6 +110,11 @@ public class LivyRESTClient {
     return ss;
     }
     
+  /** TBD */ 
+  public List<Pair<Integer, Language>> getBatchs() {
+    return null;
+    }
+   
   /** Get list of opened statements.
     * <pre>
     * GET /sessions/-idSession-/statements

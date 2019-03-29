@@ -1,5 +1,5 @@
-Action represents a program to be send to a Spark Server.
-It can be formulated as a simple text or a JAR file.
+Action represents a program to be send to a Spark Server,
+formulated as a simple text.
 It can be written in Python, Scala, SQL or R.
 You can send it to a Session opened on a Spark Server.
 

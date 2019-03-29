@@ -1,53 +1,62 @@
 package com.astrolabsoftware.AstroLabNet.DB;
 
-import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
-import com.astrolabsoftware.AstroLabNet.DB.*;
+import com.astrolabsoftware.AstroLabNet.Livyser.Language;
 
 // Log4J
 import org.apache.log4j.Logger;
 
-/** <code>Batch</code> represents a batch running or finished on <em>Spark</em>.
+/** <code>Batch</code> represents <em>Spark</em> batch.
   * @opt attributes
   * @opt operations
   * @opt types
   * @opt visibility
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
-public class Batch extends Element {  
-    
-  /** Create new Batch.
-    * Check the progress.
-    * @param name    The Batch name.
-    * @param session The hosting {@link Session}.
-    * @param id      The statement id. */
-  public Batch(String     name,
-               Session    session,
-               int        id) {
-    super(name);
-    _session = session;
-    _id      = id;
-    }
+public class Batch extends Element {
   
-  /** Give hosting {@link Session}.
-    * @return The hosting {@link Session}. */
-  public Session session() {
-    return _session;
+  /** Create new Batch.
+    * @param name     The Batch name.
+    * @param id       The Batch id.
+    * @param language The Batch {@link Language}.
+    * @param server The {@link Server} keeping this Batch. */
+  public Batch(String   name,
+               int      id,
+               Language language,
+               Server   server) {
+    super(name);
+    _id       = id;
+    _language = language;
+    _server   = server;
     }
     
-  /** Give the hosting {@link Session} id.
-    * @return The hosting {@link Session} id. */
+  /** Give the Batch id.
+    * @return The Batch id. */
   public int id() {
     return _id;
     }
-     
+    
+  /** Give the Batch {@link Language}.
+    * @return The Batch {@link Language}. */
+  public Language language() {
+    return _language;
+    }
+    
+  /** Give the keeping {@link Server}.
+    * @return The keeping {@link Server}. */
+  public Server server() {
+    return _server;
+    }
+    
   @Override
   public String toString() {
-    return name();
+    return name() + " : " + _id + " on " + _server.name() + " in " + _language;
     }
-   
-  private Session _session;  
-  
-  private int _id;
     
+  private int _id;
+  
+  private Language _language;
+  
+  private Server _server;
+ 
   /** Logging . */
   private static Logger log = Logger.getLogger(Batch.class);
 

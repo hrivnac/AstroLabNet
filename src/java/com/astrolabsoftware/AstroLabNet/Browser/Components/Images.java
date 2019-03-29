@@ -22,7 +22,7 @@ public final class Images {
   
   public static final ClassLoader myLoader = new Images().getClass().getClassLoader();
 
-  // TBD: JOB != ACTION, also BATCH
+  // TBD: JOB != ACTION, also BATCH, MISSION
   public static final Image ASTROLAB = new Image(myLoader.getResourceAsStream("com/astrolabsoftware/AstroLabNet/Browser/Components/images/AstroLab.png"));
   public static final Image SPARK    = new Image(myLoader.getResourceAsStream("com/astrolabsoftware/AstroLabNet/Browser/Components/images/Spark.png"));
   public static final Image HBASE    = new Image(myLoader.getResourceAsStream("com/astrolabsoftware/AstroLabNet/Browser/Components/images/HBase.png"));
@@ -31,6 +31,7 @@ public final class Images {
   public static final Image JOB      = new Image(myLoader.getResourceAsStream("com/astrolabsoftware/AstroLabNet/Browser/Components/images/Action.png"));
   public static final Image SESSION  = new Image(myLoader.getResourceAsStream("com/astrolabsoftware/AstroLabNet/Browser/Components/images/Session.png"));
   public static final Image TASK     = new Image(myLoader.getResourceAsStream("com/astrolabsoftware/AstroLabNet/Browser/Components/images/Task.png"));
+  public static final Image MISSION  = new Image(myLoader.getResourceAsStream("com/astrolabsoftware/AstroLabNet/Browser/Components/images/Task.png"));
   public static final Image BATCH    = new Image(myLoader.getResourceAsStream("com/astrolabsoftware/AstroLabNet/Browser/Components/images/Task.png"));
   public static final Image SOURCE   = new Image(myLoader.getResourceAsStream("com/astrolabsoftware/AstroLabNet/Browser/Components/images/Source.png"));
   public static final Image SEARCH   = new Image(myLoader.getResourceAsStream("com/astrolabsoftware/AstroLabNet/Browser/Components/images/Search.png"));
