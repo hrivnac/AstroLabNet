@@ -2,7 +2,6 @@ package com.astrolabsoftware.AstroLabNet.Browser.Reps;
 
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
-import com.astrolabsoftware.AstroLabNet.Livyser.Language;
 import com.astrolabsoftware.AstroLabNet.DB.*;
 
 // JavaFX
@@ -41,13 +40,13 @@ public class JobRep extends ElementRep {
     
   /** Activate {@link Session}. */
   public void activate() {
-    BatchRep selected = browser().getSelectedBatch();
-    if (selected == null) {
-      log.error("No Batch is selected");
-      }
-    else {
+    //BatchRep selected = browser().getSelectedBatch();
+    //if (selected == null) {
+    //  log.error("No Batch is selected");
+    //  }
+    //else {
       // TBD: browser().setSessionCmd(cmd());
-      }
+    //  }
     }
 
   /** Give the Job jar filename.

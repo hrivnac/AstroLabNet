@@ -113,17 +113,6 @@ public class BrowserCommand extends CommandLine {
     _taskReps.getChildren().add(taskRep.item());
     return task;
     }
-
-   @Override
-   public Mission addMission(String name,
-                             Batch  batch,
-                            int     id) {
-    Mission mission = super.addMission(name, batch, id);
-    MissionRep missionRep = MissionRep.create(mission, _window);
-    log.info("Adding MissionRep: " + missionRep);
-    _missionReps.getChildren().add(missionRep.item());
-    return mission;
-    }
     
    @Override
    public Search addSearch(String name,
@@ -171,13 +160,8 @@ public class BrowserCommand extends CommandLine {
     return _taskReps;
     }
     
-  /** Give {@link TreeItem} of {@link MissionRep}.
-    * @return The {@link TreeItem} of available {@link MissionRep}. */
-  public TreeItem<ElementRep> missionReps() {
-    return _missionReps;
-    }
-    
-  /** Give {@link TreeItem} of {@link SearchRep}.
+
+    /** Give {@link TreeItem} of {@link SearchRep}.
     * @return The {@link TreeItem} of available {@link SearchRep}. */
   public TreeItem<ElementRep> searchReps() {
     return _searchReps;
@@ -191,7 +175,6 @@ public class BrowserCommand extends CommandLine {
   private TreeItem<ElementRep> _dataReps    = new TreeItem<>(new ElementRep(new Element("Data"),     _window));
   private TreeItem<ElementRep> _channelReps = new TreeItem<>(new ElementRep(new Element("Channels"), _window));
   private TreeItem<ElementRep> _taskReps    = new TreeItem<>(new ElementRep(new Element("Tasks"),    _window));
-  private TreeItem<ElementRep> _missionReps   = new TreeItem<>(new ElementRep(new Element("Missions"),   _window));
   private TreeItem<ElementRep> _searchReps  = new TreeItem<>(new ElementRep(new Element("Searches"), _window));
       
   /** Logging . */

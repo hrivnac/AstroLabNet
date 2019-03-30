@@ -12,9 +12,6 @@ import bsh.Interpreter;
 
 // Java
 import java.io.InputStreamReader;
-import java.io.FileReader;
-import java.io.PushbackReader;
-import java.nio.charset.StandardCharsets;
 
 // Log4J
 import org.apache.log4j.Logger;

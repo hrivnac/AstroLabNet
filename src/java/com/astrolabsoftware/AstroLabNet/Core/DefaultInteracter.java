@@ -256,16 +256,6 @@ public abstract class DefaultInteracter implements Interacter {
     }
     
   @Override
-  public Mission addMission(String  name,
-                            Batch   batch,
-                            int     id) {
-    Mission mission = new Mission(name, batch, id);
-    log.info("Adding Mission: " + mission);
-    _missions.add(mission);
-    return mission;
-    }
-    
-  @Override
   public Search addSearch(String name,
                           Source source) {
     Search search = new Search(name, source);
@@ -303,11 +293,6 @@ public abstract class DefaultInteracter implements Interacter {
   public List<Task> tasks() {
     return _tasks;
     }
-
-    @Override
-  public List<Mission> missions() {
-    return _missions;
-    }
     
   @Override
   public List<Search> searches() {
@@ -340,7 +325,6 @@ public abstract class DefaultInteracter implements Interacter {
   private List<Data>    _datas    = new ArrayList<>();
   private List<Channel> _channels = new ArrayList<>();
   private List<Task>    _tasks    = new ArrayList<>();
-  private List<Mission>   _missions   = new ArrayList<>();
   private List<Search>  _searches = new ArrayList<>();
   
   /** Logging . */

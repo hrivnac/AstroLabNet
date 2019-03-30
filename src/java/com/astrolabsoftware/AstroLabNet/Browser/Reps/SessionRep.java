@@ -26,7 +26,6 @@ import javafx.geometry.Pos;
 import javafx.geometry.Orientation;
 
 // org.json
-import org.json.JSONObject;
 
 // Java
 import java.util.List;
@@ -82,25 +81,7 @@ public class SessionRep extends ElementRep {
     menuItems.add(execute);
     return menuItems;
     }
-    
-  /** Set reference to result.
-    * To be filled once available.
-    * @param resultRef The result {@link TextFlow} shown in the {@link SessionRep} tab.*/
-  public void setResultRef(TextFlow resultRef) {
-    _resultRef = resultRef;
-    }
-    
-  /** Set result into result reference on the {@link SessionRep} tab.
-    * @param result The result {@link Text}. */
-  public void setResult(Text result) {
-    if (_resultRef == null) {
-      addTab();
-      }
-    else {
-      _resultRef.getChildren().add(result);
-      }
-    }
-    
+        
   /** Add {@link Tab} of this SessionRep. */
   public void addTab() {
     // Desc
@@ -148,6 +129,24 @@ public class SessionRep extends ElementRep {
     setResultRef(resultText);
     Tab tab = browser().addTab(pane, toString(), Images.SESSION);
     browser().registerSessionTab(this, tab);
+    }
+
+  /** Set reference to result.
+    * To be filled once available.
+    * @param resultRef The result {@link TextFlow} shown in the {@link SessionRep} tab.*/
+  public void setResultRef(TextFlow resultRef) {
+    _resultRef = resultRef;
+    }
+    
+  /** Set result into result reference on the {@link SessionRep} tab.
+    * @param result The result {@link Text}. */
+  public void setResult(Text result) {
+    if (_resultRef == null) {
+      addTab();
+      }
+    else {
+      _resultRef.getChildren().add(result);
+      }
     }
     
   /** Set {@link ProgressBar} value.

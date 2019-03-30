@@ -1,6 +1,5 @@
 package com.astrolabsoftware.AstroLabNet.DB;
 
-import com.astrolabsoftware.AstroLabNet.Livyser.Language;
 
 // Log4J
 import org.apache.log4j.Logger;

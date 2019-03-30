@@ -15,20 +15,11 @@ public class Batch extends Element {
   
   /** Create new Batch.
     * @param name     The Batch name.
-    * @param id       The Batch id.
     * @param server The {@link Server} keeping this Batch. */
   public Batch(String   name,
-               int      id,
                Server   server) {
     super(name);
-    _id       = id;
     _server   = server;
-    }
-    
-  /** Give the Batch id.
-    * @return The Batch id. */
-  public int id() {
-    return _id;
     }
     
   /** Give the keeping {@link Server}.
@@ -37,14 +28,27 @@ public class Batch extends Element {
     return _server;
     }
     
-  @Override
-  public String toString() {
-    return name() + " : " + _id + " on " + _server.name();
+  /** Attribute the id.
+    * @param id The new id. */
+  public void setId(int id) {
+    _id = id;
     }
     
-  private int _id;
+  /** Give the attributed id.
+    * @return The attributed id.
+    *         If <tt>0</tt>, no id attributed yet. */
+  public int id() {
+    return _id;
+    }
+    
+  @Override
+  public String toString() {
+    return name() + " on " + _server.name();
+    }
   
   private Server _server;
+  
+  private int _id;
  
   /** Logging . */
   private static Logger log = Logger.getLogger(Batch.class);

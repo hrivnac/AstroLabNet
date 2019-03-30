@@ -94,7 +94,6 @@ public class BrowserWindow extends Application {
                               _command.actionReps(),
                               _command.jobReps(),
                               _command.taskReps(),
-                              _command.missionReps(),
                               _command.searchReps());
     // Help
     String helpText = "";
@@ -105,7 +104,6 @@ public class BrowserWindow extends Application {
                                          "DB/Action",
                                          "DB/Job",
                                          "DB/Task",
-                                         "DB/Mission",
                                          "DB/Search"}) {
       try {
         helpText += new StringResource("com/astrolabsoftware/AstroLabNet/" + helpPage + "Help.txt").toString();
@@ -219,7 +217,7 @@ public class BrowserWindow extends Application {
       engineLivy.load(serverRep.urlLivy());
       addTab(viewLivy, serverRep.name() + " : Livy : " + serverRep.urlLivy(), Images.LIVY);
       serverRep.updateSessions();
-      serverRep.updateBatchs();
+      //serverRep.updateBatchs();
       }
     if (serverRep.urlSpark() == null) {
       log.warn("Spark url for " + serverRep.name() + " is not defined !");
@@ -248,15 +246,6 @@ public class BrowserWindow extends Application {
   public void registerSessionTab(SessionRep sessionRep,
                                  Tab        tab) {
     _sessionTabs.put(sessionRep, tab);
-    }
-
-  /** Register the {@link BatchRep} command, so that it can be filled
-    * by {@link JobRep}.
-    * @param batchRep The related {@link BatchRep}.
-    * @param tab      The {@link Tab} containing the {@link BatchRep}. */
-  public void registerBatchTab(BatchRep batchRep,
-                               Tab      tab) {
-    _batchTabs.put(batchRep, tab);
     }
       
   /** Register the {@link SourceRep} command, so that it can be filled
@@ -287,42 +276,11 @@ public class BrowserWindow extends Application {
       }
     }
     
-  /** Set the {@link BatchRep} command text. To be called from {@link JobRep}.
-    * @param txt The text to fill in the {@link BatchRep} command. */
-  public void setBatchCmd(String txt) {
-    boolean done = false;
-    for (Map.Entry<BatchRep, Tab> entry : _batchTabs.entrySet()) {
-      if (entry.getValue().isSelected()) {
-        SplitPane pane = (SplitPane)(entry.getValue().getContent());
-        VBox vbox = (VBox)(pane.getItems().get(0));
-        TextArea actionTarget = (TextArea)(vbox.getChildren().get(1));
-        actionTarget.setText(txt);
-        done = true;
-        break;
-        }
-      }
-    if (!done) {
-      log.error("No Batch tab selected for Use");
-      }
-    }
-    
   /** Give selected {@link SessionRep}.
     * @return The selected {@link SessionRep},
     *         <tt>null</tt> if no {@link SessionRep} is selected. */
   public SessionRep getSelectedSession() {
     for (Map.Entry<SessionRep, Tab> entry : _sessionTabs.entrySet()) {
-      if (entry.getValue().isSelected()) {
-        return entry.getKey();
-        }
-      }
-    return null;
-    }
-    
-  /** Give selected {@link BatchRep}.
-    * @return The selected {@link BatchRep},
-    *         <tt>null</tt> if no {@link BatchRep} is selected. */
-  public BatchRep getSelectedBatch() {
-    for (Map.Entry<BatchRep, Tab> entry : _batchTabs.entrySet()) {
       if (entry.getValue().isSelected()) {
         return entry.getKey();
         }
@@ -340,18 +298,6 @@ public class BrowserWindow extends Application {
       _results.getSelectionModel().select(tab);
       }
     _results.getSelectionModel().select(_sessionTabs.get(sessionRep));
-    }
-    
-  /** Select {@link Tab} with requested {@link BatchRep}.
-    * @param batchRep The  requested {@link BatchRep} to be selected. */
-  public void selectTab(BatchRep batchRep) {
-    Tab tab = _batchTabs.get(batchRep);
-    // re-attach if closed
-    if (tab.tabPaneProperty().getValue() == null) {
-      _results.getTabs().addAll(tab);
-      _results.getSelectionModel().select(tab);
-      }
-    _results.getSelectionModel().select(_batchTabs.get(batchRep));
     }
     
   /** Select {@link Tab} with requested {@link SourceRep}.
@@ -387,8 +333,6 @@ public class BrowserWindow extends Application {
   private BrowserCommand _command;  
   
   private Map<SessionRep, Tab> _sessionTabs = new HashMap<>();
-
-  private Map<BatchRep, Tab>   _batchTabs   = new HashMap<>();
 
   private Map<SourceRep,  Tab> _sourceTabs  = new HashMap<>();
   

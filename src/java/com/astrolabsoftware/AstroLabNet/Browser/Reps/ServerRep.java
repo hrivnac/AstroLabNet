@@ -75,7 +75,7 @@ public class ServerRep extends ElementRep {
     menuItems.add(batch);
     menuItems.add(source);
     updateSessions();
-    updateBatchs();
+    //updateBatchs();
     return menuItems;
     }
 
@@ -96,15 +96,15 @@ public class ServerRep extends ElementRep {
     
   /** Update list of dependent {@link Batch}s. */
   public void updateBatchs() {
-    item().getChildren().retainAll(_retains);
+    /*item().getChildren().retainAll(_retains);
     BatchRep batchRep;
     for (int idBatch : livy().getBatches()) {
       batchRep = BatchRep.create(new Batch("Batch",  idBatch, server()), browser());
       item().getChildren().add(new TreeItem<ElementRep>(batchRep));
       for (int idStatement : livy().getStatements(idBatch)) {
-        browser().command().addMission(name() + "/" + idBatch + "/" + idStatement, batchRep.batch(), idStatement);
+        //browser().command().addMission(name() + "/" + idBatch + "/" + idStatement, batchRep.batch(), idStatement);
         }
-      }
+      }*/
     }
     
    /** Show dependent {@link Source}. */

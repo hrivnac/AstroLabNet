@@ -17,22 +17,13 @@ public class Mission extends Element {
   /** Create new Mission.
     * Check the progress.
     * @param name    The Mission name.
-    * @param batch   The hosting {@link Batch}.
     * @param id      The statement id. */
   public Mission(String     name,
-                 Batch      batch,
                  int        id) {
     super(name);
-    _batch   = batch;
     _id      = id;
     }
-  
-  /** Give hosting {@link Batch}.
-    * @return The hosting {@link Batch}. */
-  public Batch batch() {
-    return _batch;
-    }
-    
+      
   /** Give the hosting {@link Batch} id.
     * @return The hosting {@link Batch} id. */
   public int id() {
@@ -43,8 +34,6 @@ public class Mission extends Element {
   public String toString() {
     return name();
     }
-   
-  private Batch _batch;  
   
   private int _id;
     

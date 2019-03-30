@@ -72,47 +72,7 @@ public class LivyRESTClient {
       return -1;
       }
     }
-    
-  /** Initiate batch on the server.
-    * <pre>
-    * POST /batches {"file":*file*, "className":*classname*}
-    * </pre>
-    * @param file      The jar filename.
-    * @param className The <em>main</em> className.
-    * @param tries     How many times to try.
-    * @param sleep     How many <tt>s</tt> wait between tries.
-    * @return The new batch number. */
-  // TBD: allow closing session
-  public int initBatch(String file,
-                       String className,
-                       int    tries,
-                       int    sleep) {
-    log.info("Creating Batch " + className + " from " + file);
-    boolean success = false;
-    int i = 0;
-    String result = "";
-    while (!success && i++ <= tries) {
-      try {
-        Thread.sleep(1000 * sleep);
-        result = SmallHttpClient.postJSON(_url + "/batches", "{\"file\":\"" + file + "\", \"className\":\"" + className + "\"}", null, null);
-        success = true;
-        }
-      catch (AstroLabNetException e) {
-        log.debug("Request has failed", e);
-        }
-      catch (InterruptedException e) {
-        break;
-        }
-      }
-    if (success) {
-      log.debug("Result:\n" + result.trim());
-      return new JSONObject(result).getInt("id");
-      }
-    else {
-      return -1;
-      }
-    }
-    
+
   /** Get list of opened sessions.
     * <pre>
     * GET /sessions
@@ -122,7 +82,7 @@ public class LivyRESTClient {
     List<Pair<Integer, Language>> ss = new ArrayList<>();
     String result = "";
     try {
-      result = SmallHttpClient.get(_url + "/batches", null);
+      result = SmallHttpClient.get(_url + "/sessions", null);
       }
     catch (AstroLabNetException e) {
       AstroLabNetException.reportException("Request has failed", e, log);
@@ -133,7 +93,7 @@ public class LivyRESTClient {
       for (int i = 0; i < sessions.length(); i++) {
         ss.add(new Pair<Integer, Language>(sessions.getJSONObject(i).getInt("id"),
                                            Language.fromSpark(sessions.getJSONObject(i).getString("kind"))));
-        //getStatements(sessions.getJSONObject(i).getInt("id"));
+        getStatements(sessions.getJSONObject(i).getInt("id"));
         }
       }
     catch (JSONException e) {
@@ -198,11 +158,11 @@ public class LivyRESTClient {
     * <pre>
     * POST /sessions/-idSession-/statements {"code":-code-}
     * </pre>
-    * @param  idSession The existing session number.
-    * @param  code      The <em>scala</code> to be run on the server.
-    * @param  tries     How many times to try.
-    * @param  sleep     How many <tt>s</tt> wait between tries.
-    * @return           The new statement id. */
+    * @param idSession The existing session number.
+    * @param code      The <em>scala</code> to be run on the server.
+    * @param tries     How many times to try.
+    * @param sleep     How many <tt>s</tt> wait between tries.
+    * @return          The new statement id. */
   public int sendCommand(int    idSession,
                          String code,
                          int    tries,
@@ -218,6 +178,45 @@ public class LivyRESTClient {
       try {
         Thread.sleep(1000 * sleep);
         result = SmallHttpClient.postJSON(_url + "/sessions/" + idSession + "/statements", "{\"code\":\"" + code + "\"}", null, null);
+        success = true;
+        }
+      catch (AstroLabNetException e) {
+        log.debug("Request has failed", e);
+        }
+      catch (InterruptedException e) {
+        break;
+        }
+      }
+    if (success) {
+      log.debug("Result:\n" + result.trim());
+      return new JSONObject(result).getInt("id");
+      }
+    else {
+      return -1;
+      }
+    }
+    
+  /** Send job to the server.
+    * <pre>
+    * POST /batches {"file":*file*, "className":*classname*}
+    * </pre>
+    * @param file      The jar filename.
+    * @param className The <em>main</em> className.
+    * @param tries     How many times to try.
+    * @param sleep     How many <tt>s</tt> wait between tries.
+    * @return           The new statement id. */
+  public int sendJob(String file,
+                     String className,
+                     int    tries,
+                     int    sleep) {
+    log.info("Sending job '" + className + "' from '" + file + "'");
+    String result = "";
+    boolean success = false;
+    int i = 0;
+    while (!success && i++ <= tries) {
+      try {
+        Thread.sleep(1000 * sleep);
+        result = SmallHttpClient.postJSON(_url + "/batches", "{\"file\":\"" + file + "\", \"className\":\"" + className + "\"}", null, null);
         success = true;
         }
       catch (AstroLabNetException e) {
@@ -391,7 +390,7 @@ public class LivyRESTClient {
   public String sendJob(String file,
                         String className) {
     log.info("Sending '" + className + "' in " + file + " and waiting for result");
-    int batchId = initBatch(file, className,    Integer.MAX_VALUE, 1);
+    int batchId = sendJob(file, className,    Integer.MAX_VALUE, 1);
     return waitForJobResult(batchId, Integer.MAX_VALUE, 1);
     }
     

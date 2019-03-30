@@ -118,15 +118,15 @@ public class MissionRep extends ElementRep {
   
   /** Give hosting {@link BatchRep}.
     * @return The hosting {@link BatchRep}. */
-  public BatchRep batchRep() {
-    return BatchRep.create(batch(), browser());
-    }
+  //public BatchRep batchRep() {
+  //  return BatchRep.create(batch(), browser());
+  //  }
     
   /** Give the associated hosting {@link Batch}.
     * @return The associsted hosting {@link Batch}. */
-  public Batch batch() {
-    return mission().batch();
-    }
+  //public Batch batch() {
+  //  return mission().batch();
+  //  }
 
   /** Give the associated hosting {@link Batch} id.
     * @return The associated hosting {@link Batch} id. */

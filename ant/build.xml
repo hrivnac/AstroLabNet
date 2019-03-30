@@ -200,6 +200,7 @@
         <attribute name="Created-By" value="${user.name}"/>
         <attribute name="AppName"    value="AstroLabNet-PiJob"/>
         <attribute name="AppVersion" value="${version} ${TSTAMP}"/>
+        <attribute name="Main-Class" value="com.astrolabsoftware.AstroLabNet.DB.Jobs.PiJob"/>
         </manifest>
       </jar>
     </target>
