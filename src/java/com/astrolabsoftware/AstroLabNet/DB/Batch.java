@@ -21,6 +21,18 @@ public class Batch extends Element {
     super(name);
     _server   = server;
     }
+  
+  /** Create new Batch.
+    * @param name   The Batch name.
+    * @param id     The Batch id.
+    * @param server The {@link Server} keeping this Batch. */
+  public Batch(String   name,
+               int      id,
+               Server   server) {
+    super(name);
+    _id       = id;
+    _server   = server;
+    }
     
   /** Give the keeping {@link Server}.
     * @return The keeping {@link Server}. */

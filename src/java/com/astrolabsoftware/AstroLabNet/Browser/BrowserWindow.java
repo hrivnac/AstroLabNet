@@ -94,6 +94,7 @@ public class BrowserWindow extends Application {
                               _command.actionReps(),
                               _command.jobReps(),
                               _command.taskReps(),
+                              _command.batchReps(),
                               _command.searchReps());
     // Help
     String helpText = "";
@@ -104,6 +105,7 @@ public class BrowserWindow extends Application {
                                          "DB/Action",
                                          "DB/Job",
                                          "DB/Task",
+                                         "DB/Batch",
                                          "DB/Search"}) {
       try {
         helpText += new StringResource("com/astrolabsoftware/AstroLabNet/" + helpPage + "Help.txt").toString();

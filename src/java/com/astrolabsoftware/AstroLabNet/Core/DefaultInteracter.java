@@ -256,6 +256,16 @@ public abstract class DefaultInteracter implements Interacter {
     }
     
   @Override
+  public Batch addBatch(String  name,
+                        Server  server,
+                        int     id) {
+    Batch batch = new Batch(name, id, server);
+    log.info("Adding Batch: " + batch);
+    _batchs.add(batch);
+    return batch;
+    }
+    
+  @Override
   public Search addSearch(String name,
                           Source source) {
     Search search = new Search(name, source);
@@ -295,6 +305,11 @@ public abstract class DefaultInteracter implements Interacter {
     }
     
   @Override
+  public List<Batch> batchs() {
+    return _batchs;
+    }
+    
+  @Override
   public List<Search> searches() {
     return _searches;
     }
@@ -325,6 +340,7 @@ public abstract class DefaultInteracter implements Interacter {
   private List<Data>    _datas    = new ArrayList<>();
   private List<Channel> _channels = new ArrayList<>();
   private List<Task>    _tasks    = new ArrayList<>();
+  private List<Batch>   _batchs   = new ArrayList<>();
   private List<Search>  _searches = new ArrayList<>();
   
   /** Logging . */

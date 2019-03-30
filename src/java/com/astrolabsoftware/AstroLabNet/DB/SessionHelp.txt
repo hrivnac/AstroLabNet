@@ -1,2 +1,2 @@
 Session represents a session on a Spark Server behind Livy Server.
-You can send an Action to it, creating a Job.
+You can send an Action to it.

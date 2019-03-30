@@ -30,6 +30,7 @@ import javafx.geometry.Orientation;
 
 // org.json
 import org.json.JSONObject;
+import org.json.JSONArray;
 
 // Java
 import java.util.List;
@@ -54,21 +55,31 @@ import org.apache.log4j.Logger;
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public class BatchRep extends ElementRep {
   
-  /** Create new BatchRep as a <em>Singleton</em>.
+  /** Create new BatchRep as a <em>Singleton</em>,
+    * if it has id > 0.
     * @param batch   The original {@link Batch}.
     * @param browser The {@link BrowserWindow}. */
   public static BatchRep create(Batch          batch,
                                 BrowserWindow  browser) {
-    //BatchRep batchRep = _batchReps.get(batch.toString());
-    //if (batchRep == null) {
-    //  batchRep = new BatchRep(batch, browser);
-    //  log.info("Adding Batch " + batchRep);
-    //  _batchReps.put(batch.toString(), batchRep);
-    //  }
-    //return batchRep;
-    return new BatchRep(batch, browser);
+    BatchRep batchRep = null;
+    if (batch.id() > 0) {
+      batchRep = _batchReps.get(batch.toString());
+      }
+    if (batchRep == null) {
+      batchRep = new BatchRep(batch, browser);
+      if (batch.id() > 0) {
+        log.info("Adding Batch " + batchRep);
+        _batchReps.put(batch.toString(), batchRep);
+        }
+      }
+    return batchRep;
     }
   
+  /** TBD */
+  private void put(String   batchName) {
+    _batchReps.put(batchName, this);
+    }
+    
   private static Map<String, BatchRep> _batchReps = new HashMap<>();  
   
   /** Create new BatchRep.
@@ -85,47 +96,50 @@ public class BatchRep extends ElementRep {
       public void run() {
         String resultString;
         JSONObject result;
-        double progress;
+        String statex;
         while (true) {
           try {
-            if (batch.id() != 0) {
+            if (batch.id() > 0) {
               resultString = serverRep().livy().checkBatchProgress(batch.id(), 10, 1);
-              result = new JSONObject(resultString);
-              progress = result.getDouble("progress");
-              setProgress(progress);
-              log.debug("Progress = " + progress);
-              if (progress == 1.0) {
-                break;
+              if (resultString != null) {
+                result = new JSONObject(resultString);
+                statex = result.getString("state");
+                setState(statex);
+                log.debug("State = " + statex);
+                if (statex.equals("success")) { // TBD: handle failure
+                  break;
+                  }
                 }
-              Thread.sleep(1000); // 1s
               }
+            Thread.sleep(1000); // 1s
             }
           catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             }          
           }
-        JSONObject output = result.getJSONObject("output");
-        String status = output.getString("status");
-        JSONObject data = null;
+        JSONArray logArray = result.getJSONArray("log");
+        String fullLog = "";
+        for (Object logEntry : logArray) {
+          fullLog += logEntry.toString();
+          }
+        String state = result.getString("state");
         Text text = new Text();
-        if (status.equals("ok")) {
-          data = output.getJSONObject("data");
+        if (state.equals("success")) {
           text.setFill(Color.DARKBLUE);
           }
-        else if (status.equals("error")) {
-          data = output;
+        else if (state.equals("???")) {
           text.setFill(Color.DARKRED);
           }
         else {
-          log.error("Unknown status " + status);
+          log.error("Unknown state " + state);
           }
-        JSONObject d = data;
-        log.info(status + " : " + d);
+        log.info(state + " : " + fullLog);
+        final String fullLog1 = fullLog; // so it can go to inner fcion
         // to synchronise threads
         Platform.runLater(new Runnable() {
           @Override
           public void run() {
-            text.setText("status = " + status + "\n\noutput = " + output.toString(2).replaceAll("\\\\n", "") + "\n\n");
+            text.setText("state = " + state + "\n\nlog = " + fullLog1.replaceAll("\\\\n", "") + "\n\n");
             setResult(text); // check, if the selected tab is correct
             }
           });
@@ -184,6 +198,8 @@ public class BatchRep extends ElementRep {
       public void handle(ActionEvent e) {
         int id = serverRep().livy().sendJob("local:" + _file.getText(), _className.getText(), Integer.MAX_VALUE, 1);
         batch().setId(id);
+        put(batch().toString());
+        browser().command().addBatch(batch().name(), batch().server(), batch().id());
         resultText.getChildren().add(new Text("Job send\n\n"));
         }
       });
@@ -219,11 +235,22 @@ public class BatchRep extends ElementRep {
     
   /** Set {@link ProgressBar} value.
     * @param p The {@link ProgressBar} value = 0,1. */ // TBD: make just 0-1 light
-  public void setProgress(double p) {
+  public void setState(String s) {
     if (_progress == null) {
       return;
       }
-    _progress.setProgress(p);
+    if (s.equals("starting")) {
+      _progress.setProgress(0.0);
+      }
+    else if (s.equals("running")) {
+      _progress.setProgress(0.5);
+      }
+   else if (s.equals("success")) {
+      _progress.setProgress(1.0);
+      }
+    else {
+      log.error("Cannot handle state " + s);
+      }
     }   
   
   /** Set chosen jar files and its <em>Main-Class</em>, if possible.
