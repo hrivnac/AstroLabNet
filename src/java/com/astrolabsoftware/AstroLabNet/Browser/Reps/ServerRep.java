@@ -102,7 +102,7 @@ public class ServerRep extends ElementRep {
       batchRep = BatchRep.create(new Batch("Batch",  idBatch, server()), browser());
       item().getChildren().add(new TreeItem<ElementRep>(batchRep));
       for (int idStatement : livy().getStatements(idBatch)) {
-        browser().command().addBatch(name() + "/" + idBatch, server(), idStatement);
+        browser().command().addBatch(name() + "/" + idBatch, server(), idBatch);
         }
       }
     }

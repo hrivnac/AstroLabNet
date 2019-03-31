@@ -106,7 +106,7 @@ public class BatchRep extends ElementRep {
                 statex = result.getString("state");
                 setState(statex);
                 log.debug("State = " + statex);
-                if (statex.equals("success")) { // TBD: handle failure
+                if (statex.equals("success") || statex.equals("dead")) { // TBD: handle failure
                   break;
                   }
                 }
@@ -120,14 +120,14 @@ public class BatchRep extends ElementRep {
         JSONArray logArray = result.getJSONArray("log");
         String fullLog = "";
         for (Object logEntry : logArray) {
-          fullLog += logEntry.toString();
+          fullLog += logEntry.toString() + "\n";
           }
         String state = result.getString("state");
         Text text = new Text();
         if (state.equals("success")) {
           text.setFill(Color.DARKBLUE);
           }
-        else if (state.equals("???")) {
+        else if (state.equals("dead")) {
           text.setFill(Color.DARKRED);
           }
         else {
@@ -205,6 +205,7 @@ public class BatchRep extends ElementRep {
       });
     setResultRef(resultText);
     Tab tab = browser().addTab(pane, toString(), Images.SESSION);
+    browser().registerBatchTab(this, tab);
     }
     
   @Override
@@ -246,6 +247,9 @@ public class BatchRep extends ElementRep {
       _progress.setProgress(0.5);
       }
    else if (s.equals("success")) {
+      _progress.setProgress(1.0);
+      }
+   else if (s.equals("dead")) {
       _progress.setProgress(1.0);
       }
     else {

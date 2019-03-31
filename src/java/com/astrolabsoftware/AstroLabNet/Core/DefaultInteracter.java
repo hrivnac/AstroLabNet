@@ -24,6 +24,7 @@ import org.json.JSONArray;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.nio.file.FileSystems;
 
 // Log4J
 import org.apache.log4j.Logger;
@@ -71,7 +72,7 @@ public abstract class DefaultInteracter implements Interacter {
     
   @Override
   public void readJobs() {
-    addJob("Pi", "local:../lib/PiJob.jar", "com.astrolabsoftware.AstroLabNet.DB.Jobs.PiJob"); // TBD: should be automatic
+    addJob("Pi", "../lib/PiJob.jar", "com.astrolabsoftware.AstroLabNet.DB.Jobs.PiJob"); // TBD: should be automatic
     }
      
   @Override
@@ -223,6 +224,7 @@ public abstract class DefaultInteracter implements Interacter {
   public Job addJob(String   name,
                     String   file,
                     String   className) {
+    file = FileSystems.getDefault().getPath(file).normalize().toAbsolutePath().toString();
     Job job = new Job(name, file, className);
     log.info("Adding Job: " + job);
     _jobs.add(job);

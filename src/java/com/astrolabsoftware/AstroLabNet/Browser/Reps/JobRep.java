@@ -40,13 +40,13 @@ public class JobRep extends ElementRep {
     
   /** Activate {@link Session}. */
   public void activate() {
-    //BatchRep selected = browser().getSelectedBatch();
-    //if (selected == null) {
-    //  log.error("No Batch is selected");
-    //  }
-    //else {
-      // TBD: browser().setSessionCmd(cmd());
-    //  }
+    BatchRep selected = browser().getSelectedBatch();
+    if (selected == null) {
+      log.error("No Batch is selected");
+      }
+    else {
+       browser().setBatchJob(file(), className());
+      }
     }
 
   /** Give the Job jar filename.

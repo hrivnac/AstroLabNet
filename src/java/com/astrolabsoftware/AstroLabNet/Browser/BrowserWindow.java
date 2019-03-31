@@ -29,6 +29,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.web.WebView;
@@ -249,6 +250,15 @@ public class BrowserWindow extends Application {
                                  Tab        tab) {
     _sessionTabs.put(sessionRep, tab);
     }
+    
+  /** Register the {@link BatchRep} command, so that it can be filled
+    * by {@link JobRep}.
+    * @param batchRep The related {@link BatchRep}.
+    * @param tab      The {@link Tab} containing the {@link BatchRep}. */
+  public void registerBatchTab(BatchRep batchRep,
+                               Tab      tab) {
+    _batchTabs.put(batchRep, tab);
+    }
       
   /** Register the {@link SourceRep} command, so that it can be filled
     * by {@link ActionRep}.
@@ -278,11 +288,47 @@ public class BrowserWindow extends Application {
       }
     }
     
+  /** Set the {@link BatchRep} file and className. To be called from {@link JobRep}.
+    * @param file      The jar file name to fill in the {@link BatchRep} command.
+    * @param className The main className to fill in the {@link BatchRep} command.*/
+  public void setBatchJob(String file,
+                          String className) {
+    boolean done = false;
+    for (Map.Entry<BatchRep, Tab> entry : _batchTabs.entrySet()) {
+      if (entry.getValue().isSelected()) {
+        SplitPane pane = (SplitPane)(entry.getValue().getContent());
+        VBox vbox = (VBox)(pane.getItems().get(0));
+        HBox hbox = (HBox)(vbox.getChildren().get(1));
+        TextField fileTarget       = (TextField)(hbox.getChildren().get(1));
+        TextField classNameTarget = (TextField)(hbox.getChildren().get(2));
+        fileTarget.setText(file);
+        classNameTarget.setText(className);
+        done = true;
+        break;
+        }
+      }
+    if (!done) {
+      log.error("No Batch tab selected for Use");
+      }
+    }
+    
   /** Give selected {@link SessionRep}.
     * @return The selected {@link SessionRep},
     *         <tt>null</tt> if no {@link SessionRep} is selected. */
   public SessionRep getSelectedSession() {
     for (Map.Entry<SessionRep, Tab> entry : _sessionTabs.entrySet()) {
+      if (entry.getValue().isSelected()) {
+        return entry.getKey();
+        }
+      }
+    return null;
+    }
+    
+  /** Give selected {@link BatchRep}.
+    * @return The selected {@link BatchRep},
+    *         <tt>null</tt> if no {@link BatchRep} is selected. */
+  public BatchRep getSelectedBatch() {
+    for (Map.Entry<BatchRep, Tab> entry : _batchTabs.entrySet()) {
       if (entry.getValue().isSelected()) {
         return entry.getKey();
         }
@@ -300,6 +346,18 @@ public class BrowserWindow extends Application {
       _results.getSelectionModel().select(tab);
       }
     _results.getSelectionModel().select(_sessionTabs.get(sessionRep));
+    }
+    
+  /** Select {@link Tab} with requested {@link BatchRep}.
+    * @param batchRep The  requested {@link BatchRep} to be selected. */
+  public void selectTab(BatchRep batchRep) {
+    Tab tab = _batchTabs.get(batchRep);
+    // re-attach if closed
+    if (tab.tabPaneProperty().getValue() == null) {
+      _results.getTabs().addAll(tab);
+      _results.getSelectionModel().select(tab);
+      }
+    _results.getSelectionModel().select(_batchTabs.get(batchRep));
     }
     
   /** Select {@link Tab} with requested {@link SourceRep}.
@@ -335,6 +393,8 @@ public class BrowserWindow extends Application {
   private BrowserCommand _command;  
   
   private Map<SessionRep, Tab> _sessionTabs = new HashMap<>();
+  
+  private Map<BatchRep, Tab>   _batchTabs   = new HashMap<>();
 
   private Map<SourceRep,  Tab> _sourceTabs  = new HashMap<>();
   

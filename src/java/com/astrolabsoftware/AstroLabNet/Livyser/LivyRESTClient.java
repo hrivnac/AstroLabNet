@@ -359,7 +359,7 @@ public class LivyRESTClient {
         result = new JSONObject(resultString);
         state = result.getString("state");
         log.debug("State = " + state);
-        if (state.equals("success")) { // TBD: handle failure
+        if (state.equals("success") || state.equals("dead")) { // TBD: handle failure
           break;
           }
         Thread.sleep(1000 + sleep);
