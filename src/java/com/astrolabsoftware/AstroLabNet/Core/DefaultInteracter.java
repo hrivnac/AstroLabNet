@@ -259,9 +259,9 @@ public abstract class DefaultInteracter implements Interacter {
     
   @Override
   public Batch addBatch(String  name,
-                        Server  server,
+                        Sender  sender,
                         int     id) {
-    Batch batch = new Batch(name, id, server);
+    Batch batch = new Batch(name, sender, id);
     log.info("Adding Batch: " + batch);
     _batchs.add(batch);
     return batch;

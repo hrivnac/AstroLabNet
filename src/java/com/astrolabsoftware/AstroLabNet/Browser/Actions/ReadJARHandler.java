@@ -1,7 +1,7 @@
 package com.astrolabsoftware.AstroLabNet.Browser.Actions;
 
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
-import com.astrolabsoftware.AstroLabNet.Browser.Reps.BatchRep;
+import com.astrolabsoftware.AstroLabNet.Browser.Reps.SenderRep;
 
 // JavaFX
 import javafx.event.ActionEvent;
@@ -26,10 +26,10 @@ import org.apache.log4j.Logger;
 public final class ReadJARHandler implements EventHandler<ActionEvent> {
 
   /** Create.
-    * @param h The connected {@link ServerBatchEventHandler}. */
-  public ReadJARHandler(BatchRep br) {
+    * @param h The connected {@link SenderRep}. */
+  public ReadJARHandler(SenderRep sr) {
     super();
-    _br = br;
+    _sr = sr;
     }
     
   /** Close the {@link BrowserWindow}.
@@ -43,11 +43,11 @@ public final class ReadJARHandler implements EventHandler<ActionEvent> {
     dialog.initStyle(StageStyle.UTILITY);
     File selectedFile = fileChooser.showOpenDialog(dialog);
     if (selectedFile != null) {
-      _br.setFile(selectedFile);
+      _sr.setFile(selectedFile);
       }
     }
     
-  private BatchRep _br;
+  private SenderRep _sr;
   
   /** Logging . */
   private static Logger log = Logger.getLogger(ReadJARHandler.class);

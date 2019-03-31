@@ -116,12 +116,13 @@ public class BrowserCommand extends CommandLine {
     
   @Override
   public Batch addBatch(String      name,
-                        Server      server,
+                        Sender      sender,
                         int         id) {
-    Batch batch = super.addBatch(name, server, id);
+    Batch batch = super.addBatch(name, sender, id);
     BatchRep batchRep = BatchRep.create(batch, _window);
     log.info("Adding BatchRep: " + batchRep);
     _batchReps.getChildren().add(batchRep.item());
+    sender.registerBatch(id);
     return batch;
     }
     

@@ -23,7 +23,7 @@ public class BatchEventHandler implements EventHandler<ActionEvent> {
     
   @Override
   public void handle(ActionEvent event) {
-    //_taskRep.browser().selectTab(_batchRep.jobRep());
+    _batchRep.browser().selectTab(_batchRep.senderRep());
     }
     
   private BatchRep _batchRep;  

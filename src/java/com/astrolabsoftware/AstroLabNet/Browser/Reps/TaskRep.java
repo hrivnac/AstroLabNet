@@ -115,6 +115,12 @@ public class TaskRep extends ElementRep {
     menuItems.add(show);
     return menuItems;
     }
+
+  /** Give the Statement id.
+    * @return The Statement id. */
+  public int id() {
+    return task().id();
+    }
   
   /** Give hosting {@link SessionRep}.
     * @return The hosting {@link SessionRep}. */
@@ -126,12 +132,6 @@ public class TaskRep extends ElementRep {
     * @return The associsted hosting {@link Session}. */
   public Session session() {
     return task().session();
-    }
-
-  /** Give the associated hosting {@link Session} id.
-    * @return The associated hosting {@link Session} id. */
-  public int id() {
-    return task().id();
     }
     
   /** Give the referenced {@link Task}.

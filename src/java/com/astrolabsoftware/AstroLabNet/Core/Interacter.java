@@ -73,7 +73,7 @@ public interface Interacter {
   /** Add {@link Task}.
     * @param name    The {@link Task} name.
     * @param session The hosting {@link Session}.
-    * @param id      The statement id.
+    * @param id      The Statement id.
     * @return        The added {@link Task}. */
   public Task addTask(String  name,
                       Session session,
@@ -81,11 +81,11 @@ public interface Interacter {
   
   /** Add {@link Batch}.
     * @param name    The {@link Batch} name.
-    * @param server  The hosting {@link Server}.
-    * @param id      The {@link Batch} id.
+    * @param sender  The hosting {@link Sender}.
+    * @param id      The Batch id.
     * @return        The added {@link Batch}. */
   public Batch addBatch(String  name,
-                        Server  server,
+                        Sender  sender,
                         int     id);
   
   /** Add {@link Search}.

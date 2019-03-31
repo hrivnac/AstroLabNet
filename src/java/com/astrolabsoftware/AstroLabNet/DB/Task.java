@@ -18,7 +18,7 @@ public class Task extends Element {
     * Check the progress.
     * @param name    The Task name.
     * @param session The hosting {@link Session}.
-    * @param id      The statement id. */
+    * @param id      The Statement id. */
   public Task(String     name,
               Session    session,
               int        id) {
@@ -33,8 +33,8 @@ public class Task extends Element {
     return _session;
     }
     
-  /** Give the hosting {@link Session} id.
-    * @return The hosting {@link Session} id. */
+  /** Give the Statement id.
+    * @return The Statement id. */
   public int id() {
     return _id;
     }

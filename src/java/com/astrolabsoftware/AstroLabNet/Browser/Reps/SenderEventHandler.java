@@ -6,26 +6,26 @@ import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
 import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
 
-/** <code>TaskEventHandler</code> implements {@link EventHandler} for {@link TaskRep}.
-  * It shows related {@link Session}.
+/** <code>SenderEventHandler</code> implements {@link EventHandler} for {@link SenderRep}.
+  * It executes {@link Action}.
   * @opt attributes
   * @opt operations
   * @opt types
   * @opt visibility
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
-public class TaskEventHandler implements EventHandler<ActionEvent> {
-
+public class SenderEventHandler implements EventHandler<ActionEvent> {
+  
   /** Create.
-    * @param taskRep The {@link TaskRep} to run on. */
-  public TaskEventHandler(TaskRep taskRep) {
-    _taskRep = taskRep;
+    * @param senderRep The associated {@link SenderRep}. */
+  public SenderEventHandler(SenderRep senderRep) {
+    _senderRep = senderRep;
     }
- 
+    
   @Override
   public void handle(ActionEvent event) {
-    _taskRep.browser().selectTab(_taskRep.sessionRep());
+    _senderRep.addTab();
     }
- 
-  private TaskRep _taskRep;  
     
+  private SenderRep _senderRep;  
+
   }

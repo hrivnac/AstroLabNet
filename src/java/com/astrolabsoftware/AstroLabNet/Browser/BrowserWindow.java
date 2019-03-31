@@ -220,7 +220,7 @@ public class BrowserWindow extends Application {
       engineLivy.load(serverRep.urlLivy());
       addTab(viewLivy, serverRep.name() + " : Livy : " + serverRep.urlLivy(), Images.LIVY);
       serverRep.updateSessions();
-      //serverRep.updateBatchs();
+      serverRep.updateSenders();
       }
     if (serverRep.urlSpark() == null) {
       log.warn("Spark url for " + serverRep.name() + " is not defined !");
@@ -251,13 +251,13 @@ public class BrowserWindow extends Application {
     _sessionTabs.put(sessionRep, tab);
     }
     
-  /** Register the {@link BatchRep} command, so that it can be filled
+  /** Register the {@link SenderRep} command, so that it can be filled
     * by {@link JobRep}.
-    * @param batchRep The related {@link BatchRep}.
-    * @param tab      The {@link Tab} containing the {@link BatchRep}. */
-  public void registerBatchTab(BatchRep batchRep,
-                               Tab      tab) {
-    _batchTabs.put(batchRep, tab);
+    * @param senderRep The related {@link SenderRep}.
+    * @param tab       The {@link Tab} containing the {@link SenderRep}. */
+  public void registerSenderTab(SenderRep senderRep,
+                                Tab       tab) {
+    _senderTabs.put(senderRep, tab);
     }
       
   /** Register the {@link SourceRep} command, so that it can be filled
@@ -288,13 +288,13 @@ public class BrowserWindow extends Application {
       }
     }
     
-  /** Set the {@link BatchRep} file and className. To be called from {@link JobRep}.
+  /** Set the {@link SenderRep} file and className. To be called from {@link JobRep}.
     * @param file      The jar file name to fill in the {@link BatchRep} command.
     * @param className The main className to fill in the {@link BatchRep} command.*/
-  public void setBatchJob(String file,
-                          String className) {
+  public void setSenderFile(String file,
+                            String className) {
     boolean done = false;
-    for (Map.Entry<BatchRep, Tab> entry : _batchTabs.entrySet()) {
+    for (Map.Entry<SenderRep, Tab> entry : _senderTabs.entrySet()) {
       if (entry.getValue().isSelected()) {
         SplitPane pane = (SplitPane)(entry.getValue().getContent());
         VBox vbox = (VBox)(pane.getItems().get(0));
@@ -308,7 +308,7 @@ public class BrowserWindow extends Application {
         }
       }
     if (!done) {
-      log.error("No Batch tab selected for Use");
+      log.error("No Sender tab selected for Use");
       }
     }
     
@@ -324,11 +324,11 @@ public class BrowserWindow extends Application {
     return null;
     }
     
-  /** Give selected {@link BatchRep}.
-    * @return The selected {@link BatchRep},
-    *         <tt>null</tt> if no {@link BatchRep} is selected. */
-  public BatchRep getSelectedBatch() {
-    for (Map.Entry<BatchRep, Tab> entry : _batchTabs.entrySet()) {
+  /** Give selected {@link SenderRep}.
+    * @return The selected {@link SenderRep},
+    *         <tt>null</tt> if no {@link SenderRep} is selected. */
+  public SenderRep getSelectedSender() {
+    for (Map.Entry<SenderRep, Tab> entry : _senderTabs.entrySet()) {
       if (entry.getValue().isSelected()) {
         return entry.getKey();
         }
@@ -348,16 +348,16 @@ public class BrowserWindow extends Application {
     _results.getSelectionModel().select(_sessionTabs.get(sessionRep));
     }
     
-  /** Select {@link Tab} with requested {@link BatchRep}.
-    * @param batchRep The  requested {@link BatchRep} to be selected. */
-  public void selectTab(BatchRep batchRep) {
-    Tab tab = _batchTabs.get(batchRep);
+  /** Select {@link Tab} with requested {@link SenderRep}.
+    * @param senderRep The  requested {@link SenderRep} to be selected. */
+  public void selectTab(SenderRep senderRep) {
+    Tab tab = _senderTabs.get(senderRep);
     // re-attach if closed
     if (tab.tabPaneProperty().getValue() == null) {
       _results.getTabs().addAll(tab);
       _results.getSelectionModel().select(tab);
       }
-    _results.getSelectionModel().select(_batchTabs.get(batchRep));
+    _results.getSelectionModel().select(_senderTabs.get(senderRep));
     }
     
   /** Select {@link Tab} with requested {@link SourceRep}.
@@ -394,7 +394,7 @@ public class BrowserWindow extends Application {
   
   private Map<SessionRep, Tab> _sessionTabs = new HashMap<>();
   
-  private Map<BatchRep, Tab>   _batchTabs   = new HashMap<>();
+  private Map<SenderRep,  Tab> _senderTabs  = new HashMap<>();
 
   private Map<SourceRep,  Tab> _sourceTabs  = new HashMap<>();
   

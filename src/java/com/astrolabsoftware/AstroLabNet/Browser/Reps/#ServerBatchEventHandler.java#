@@ -54,7 +54,7 @@ public class ServerBatchEventHandler implements EventHandler<ActionEvent> {
  
   @Override
   public void handle(ActionEvent event) {
-    BatchRep batchRep = new BatchRep(new Batch("xxx", _serverRep.server()), _serverRep.browser());
+    BatchRep batchRep = new BatchRep(new Batch("Batch", _serverRep.server()), _serverRep.browser());
     batchRep.addTab();
     _serverRep.updateBatchs();
     }

@@ -14,51 +14,35 @@ import org.apache.log4j.Logger;
 public class Batch extends Element {
   
   /** Create new Batch.
-    * @param name     The Batch name.
-    * @param server The {@link Server} keeping this Batch. */
+    * @param name    The Batch name.
+    * @param sender  The hosting {@link Sender}
+    * @param id      The Batch id. */
   public Batch(String   name,
-               Server   server) {
+               Sender   sender,
+               int      id) {
     super(name);
-    _server   = server;
-    }
-  
-  /** Create new Batch.
-    * @param name   The Batch name.
-    * @param id     The Batch id.
-    * @param server The {@link Server} keeping this Batch. */
-  public Batch(String   name,
-               int      id,
-               Server   server) {
-    super(name);
-    _id       = id;
-    _server   = server;
+    _sender  = sender;
+    _id      = id;
     }
     
-  /** Give the keeping {@link Server}.
-    * @return The keeping {@link Server}. */
-  public Server server() {
-    return _server;
+  /** Give the keeping {@link Sender}.
+    * @return The keeping {@link Sender}. */
+  public Sender sender() {
+    return _sender;
     }
     
-  /** Attribute the id.
-    * @param id The new id. */
-  public void setId(int id) {
-    _id = id;
-    }
-    
-  /** Give the attributed id.
-    * @return The attributed id.
-    *         If <tt>0</tt>, no id attributed yet. */
+  /** Give the Batch id.
+    * @return The Batch id. */
   public int id() {
     return _id;
     }
     
   @Override
   public String toString() {
-    return name() + " on " + _server.name();
+    return name();
     }
   
-  private Server _server;
+  private Sender _sender;
   
   private int _id;
  

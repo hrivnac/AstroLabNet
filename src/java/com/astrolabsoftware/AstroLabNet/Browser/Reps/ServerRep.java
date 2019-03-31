@@ -60,22 +60,22 @@ public class ServerRep extends ElementRep {
     MenuItem scalaSession  = new MenuItem("Scala Session",  Images.icon(Images.SESSION));
     MenuItem rSession      = new MenuItem("R Session",      Images.icon(Images.SESSION));
     MenuItem sqlSession    = new MenuItem("SQL Session",    Images.icon(Images.SESSION));
-    MenuItem batch         = new MenuItem("Batch",          Images.icon(Images.BATCH));
+    MenuItem sender        = new MenuItem("Sender",         Images.icon(Images.SENDER ));
     MenuItem source        = new MenuItem("Source",         Images.icon(Images.SOURCE ));
     pythonSession.setOnAction(new ServerSessionEventHandler(this, Language.PYTHON));
     scalaSession.setOnAction( new ServerSessionEventHandler(this, Language.SCALA ));
     rSession.setOnAction(     new ServerSessionEventHandler(this, Language.R     ));
     sqlSession.setOnAction(   new ServerSessionEventHandler(this, Language.SQL   ));
-    batch.setOnAction(        new ServerBatchEventHandler(  this                 ));
+    sender.setOnAction(       new ServerSenderEventHandler( this                 ));
     source.setOnAction(       new ServerSourceEventHandler( this                 ));
     menuItems.add(pythonSession);
     menuItems.add(scalaSession);
     menuItems.add(rSession);
     menuItems.add(sqlSession);
-    menuItems.add(batch);
+    menuItems.add(sender);
     menuItems.add(source);
     updateSessions();
-    updateBatchs();
+    updateSenders();
     return menuItems;
     }
 
@@ -93,22 +93,24 @@ public class ServerRep extends ElementRep {
         }
       }
     }
-    
-  /** Update list of dependent {@link Batch}s. */
-  public void updateBatchs() {
+
+  /** Update list of dependent {@link Sender}s. */
+  public void updateSenders() {
     item().getChildren().retainAll(_retains);
-    BatchRep batchRep;
+    SenderRep senderRep;
+    for (Sender sender : Sender.senders()) {
+      senderRep = SenderRep.create(new Sender("Sender", server()), browser());
+      item().getChildren().add(new TreeItem<ElementRep>(senderRep));
+      }
     for (int idBatch : livy().getBatches()) {
-      batchRep = BatchRep.create(new Batch("Batch",  idBatch, server()), browser());
-      item().getChildren().add(new TreeItem<ElementRep>(batchRep));
-      for (int idStatement : livy().getStatements(idBatch)) {
-        browser().command().addBatch(name() + "/" + idBatch, server(), idBatch);
+      if (Sender.sender(idBatch) != null) {
+        browser().command().addBatch(name() + "/" + idBatch, Sender.sender(idBatch), idBatch);
         }
       }
     }
     
-   /** Show dependent {@link Source}. */
-   public void showSource() {
+  /** Show dependent {@link Source}. */
+  public void showSource() {
     SourceRep sourceRep = SourceRep.create(new Source("Source", server()), browser());
     TreeItem<ElementRep> ti = new TreeItem<ElementRep>(sourceRep);
     _retains.add(ti);
