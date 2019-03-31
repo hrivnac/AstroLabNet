@@ -205,8 +205,10 @@ public abstract class DefaultInteracter implements Interacter {
         }
       }
     Server server = new Server(name, urlLivy, urlSpark, urlHBase);
-    log.info("Adding Server: " + server);
-    _servers.add(server);
+    if (!_servers.contains(server)) { // TBD: refactor
+      log.info("Adding Server: " + server);
+      _servers.add(server);
+      }
     return server;
     }
     
@@ -215,8 +217,10 @@ public abstract class DefaultInteracter implements Interacter {
                           String   cmd,
                           Language language) {
     Action action = new Action(name, cmd, language);
-    log.info("Adding Action: " + action);
-    _actions.add(action);
+    if (!_actions.contains(action)) {
+      log.info("Adding Action: " + action);
+      _actions.add(action);
+      }
     return action;
     }
     
@@ -226,24 +230,30 @@ public abstract class DefaultInteracter implements Interacter {
                     String   className) {
     file = FileSystems.getDefault().getPath(file).normalize().toAbsolutePath().toString();
     Job job = new Job(name, file, className);
-    log.info("Adding Job: " + job);
-    _jobs.add(job);
+    if (!_jobs.contains(job)) {
+      log.info("Adding Job: " + job);
+      _jobs.add(job);
+      }
     return job;
     }
     
   @Override
   public Data addData(String name) {
     Data data = new Data(name);
-    log.info("Adding Data: " + data);
-    _datas.add(data);
+    if (!_datas.contains(data)) {
+      log.info("Adding Data: " + data);
+      _datas.add(data);
+      }
     return data;
     }
         
   @Override
   public Channel addChannel(String name) {
     Channel channel = new Channel(name);
-    log.info("Adding Channel: " + channel);
-    _channels.add(channel);
+    if (!_channels.contains(channel)) {
+      log.info("Adding Channel: " + channel);
+      _channels.add(channel);
+      }
     return channel;
     }
     
@@ -252,8 +262,10 @@ public abstract class DefaultInteracter implements Interacter {
                       Session session,
                       int     id) {
     Task task = new Task(name, session, id);
-    log.info("Adding Task: " + task);
-    _tasks.add(task);
+    if (!_tasks.contains(task)) {
+      log.info("Adding Task: " + task);
+      _tasks.add(task);
+      }
     return task;
     }
     
@@ -262,8 +274,10 @@ public abstract class DefaultInteracter implements Interacter {
                         Sender  sender,
                         int     id) {
     Batch batch = new Batch(name, sender, id);
-    log.info("Adding Batch: " + batch);
-    _batchs.add(batch);
+    if (!_batchs.contains(batch)) {
+      log.info("Adding Batch: " + batch);
+      _batchs.add(batch);
+      }
     return batch;
     }
     
@@ -271,8 +285,10 @@ public abstract class DefaultInteracter implements Interacter {
   public Search addSearch(String name,
                           Source source) {
     Search search = new Search(name, source);
-    log.info("Adding Search: " + search);
-    _searches.add(search);
+    if (!_searchs.contains(search)) {
+      log.info("Adding Search: " + search);
+      _searchs.add(search);
+      }
     return search;
     }
 
@@ -312,8 +328,8 @@ public abstract class DefaultInteracter implements Interacter {
     }
     
   @Override
-  public List<Search> searches() {
-    return _searches;
+  public List<Search> searchs() {
+    return _searchs;
     }
     
   /** Interpret <em>BeanShell</em> script.
@@ -343,7 +359,7 @@ public abstract class DefaultInteracter implements Interacter {
   private List<Channel> _channels = new ArrayList<>();
   private List<Task>    _tasks    = new ArrayList<>();
   private List<Batch>   _batchs   = new ArrayList<>();
-  private List<Search>  _searches = new ArrayList<>();
+  private List<Search>  _searchs  = new ArrayList<>();
   
   /** Logging . */
   private static Logger log = Logger.getLogger(DefaultInteracter.class);

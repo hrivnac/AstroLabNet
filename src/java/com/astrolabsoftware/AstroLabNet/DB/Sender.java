@@ -1,6 +1,5 @@
 package com.astrolabsoftware.AstroLabNet.DB;
 
-import com.astrolabsoftware.AstroLabNet.Livyser.Language;
 
 // Java
 import java.util.Map;

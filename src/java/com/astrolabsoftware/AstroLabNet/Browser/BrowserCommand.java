@@ -57,8 +57,10 @@ public class BrowserCommand extends CommandLine {
       return null;
       }
     ServerRep serverRep = ServerRep.create(server, _window);
-    log.info("Adding ServerRep: " + serverRep);
-    _serverReps.getChildren().add(serverRep.item());
+    if (!_serverReps.getChildren().contains(serverRep.item())) { // TBD: refactor
+      log.info("Adding ServerRep: " + serverRep);
+      _serverReps.getChildren().add(serverRep.item());
+      }
     _window.showServer(serverRep);
     return server;
     }
@@ -69,8 +71,10 @@ public class BrowserCommand extends CommandLine {
                           Language language) {
     Action action = super.addAction(name, cmd, language);
     ActionRep actionRep = new ActionRep(action, _window);
-    log.info("Adding ActionRep: " + actionRep);
-    _actionReps.getChildren().add(actionRep.item());
+    if (!_actionReps.getChildren().contains(actionRep.item())) {
+      log.info("Adding ActionRep: " + actionRep);
+      _actionReps.getChildren().add(actionRep.item());
+      }
     return action;
     }
     
@@ -80,8 +84,10 @@ public class BrowserCommand extends CommandLine {
                     String  className) {
     Job job = super.addJob(name, file, className);
     JobRep jobRep = new JobRep(job, _window);
-    log.info("Adding JobRep: " + jobRep);
-    _jobReps.getChildren().add(jobRep.item());
+    if (!_jobReps.getChildren().contains(jobRep.item())) {
+      log.info("Adding JobRep: " + jobRep);
+      _jobReps.getChildren().add(jobRep.item());
+      }
     return job;
     }
     
@@ -89,8 +95,10 @@ public class BrowserCommand extends CommandLine {
   public Data addData(String name) {
     Data data = super.addData(name);
     DataRep dataRep = new DataRep(data, _window);
-    log.info("Adding DataRep: " + dataRep);
-    _dataReps.getChildren().add(dataRep.item());
+    if (!_dataReps.getChildren().contains(dataRep.item())) {
+      log.info("Adding DataRep: " + dataRep);
+      _dataReps.getChildren().add(dataRep.item());
+      }
     return data;
     }
 
@@ -98,8 +106,10 @@ public class BrowserCommand extends CommandLine {
   public Channel addChannel(String name) {
     Channel channel = super.addChannel(name);
     ChannelRep channelRep = new ChannelRep(channel, _window);
-    log.info("Adding ChannelRep: " + channelRep);
-    _channelReps.getChildren().add(channelRep.item());
+    if (!_channelReps.getChildren().contains(channelRep.item())) {
+      log.info("Adding ChannelRep: " + channelRep);
+      _channelReps.getChildren().add(channelRep.item());
+      }
     return channel;
     }
 
@@ -109,8 +119,10 @@ public class BrowserCommand extends CommandLine {
                       int     id) {
     Task task = super.addTask(name, session, id);
     TaskRep taskRep = TaskRep.create(task, _window);
-    log.info("Adding TaskRep: " + taskRep);
-    _taskReps.getChildren().add(taskRep.item());
+    if (!_taskReps.getChildren().contains(taskRep.item())) {
+      log.info("Adding TaskRep: " + taskRep);
+      _taskReps.getChildren().add(taskRep.item());
+      }
     return task;
     }
     
@@ -120,8 +132,10 @@ public class BrowserCommand extends CommandLine {
                         int         id) {
     Batch batch = super.addBatch(name, sender, id);
     BatchRep batchRep = BatchRep.create(batch, _window);
-    log.info("Adding BatchRep: " + batchRep);
-    _batchReps.getChildren().add(batchRep.item());
+    if (!_batchReps.getChildren().contains(batchRep.item())) {
+      log.info("Adding BatchRep: " + batchRep);
+      _batchReps.getChildren().add(batchRep.item());
+      }
     sender.registerBatch(id);
     return batch;
     }
@@ -131,8 +145,10 @@ public class BrowserCommand extends CommandLine {
                           Source source) {
     Search search = super.addSearch(name, source);
     SearchRep searchRep = SearchRep.create(search, _window);
-    log.info("Adding SearchRep: " + searchRep);
-    _searchReps.getChildren().add(searchRep.item());
+    if (!_searchReps.getChildren().contains(searchRep.item())) {
+      log.info("Adding SearchRep: " + searchRep);
+      _searchReps.getChildren().add(searchRep.item());
+      }
     return search;
     }
     

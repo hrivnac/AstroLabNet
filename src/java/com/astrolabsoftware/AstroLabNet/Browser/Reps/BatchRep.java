@@ -1,32 +1,14 @@
 package com.astrolabsoftware.AstroLabNet.Browser.Reps;
 
-import com.astrolabsoftware.AstroLabNet.Livyser.Language;
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
-import com.astrolabsoftware.AstroLabNet.Browser.Actions.ReadJARHandler;
 import com.astrolabsoftware.AstroLabNet.DB.*;
 
 // JavaFX
 import javafx.application.Platform;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
-import javafx.scene.control.SplitPane;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.Label;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tab;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.control.ScrollPane;
-import javafx.event.EventHandler;
-import javafx.event.ActionEvent;
-import javafx.geometry.Pos;
-import javafx.geometry.Orientation;
 
 // org.json
 import org.json.JSONObject;
@@ -36,13 +18,6 @@ import org.json.JSONArray;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
-import java.io.File;
-import java.io.File;
-import java.io.IOException;
-import java.util.jar.JarFile;
-import java.util.jar.Manifest;
-import java.util.jar.Attributes;
-import java.util.Iterator;
 
 // Log4J
 import org.apache.log4j.Logger;
@@ -60,7 +35,7 @@ public class BatchRep extends ElementRep {
     * @param browser The {@link BrowserWindow}. */
   public static BatchRep create(Batch          batch,
                                 BrowserWindow  browser) {
-    BatchRep batchRep = batchRep = _batchReps.get(batch.toString());
+    BatchRep batchRep = _batchReps.get(batch.toString());
     if (batchRep == null) {
       batchRep = new BatchRep(batch, browser);
       log.info("Adding Batch " + batchRep);

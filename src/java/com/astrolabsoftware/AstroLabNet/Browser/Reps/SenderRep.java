@@ -1,6 +1,5 @@
 package com.astrolabsoftware.AstroLabNet.Browser.Reps;
 
-import com.astrolabsoftware.AstroLabNet.Livyser.Language;
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
 import com.astrolabsoftware.AstroLabNet.Browser.Actions.ReadJARHandler;
@@ -10,7 +9,6 @@ import com.astrolabsoftware.AstroLabNet.DB.*;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.scene.control.SplitPane;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Label;

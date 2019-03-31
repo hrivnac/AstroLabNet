@@ -125,6 +125,6 @@ public interface Interacter {
    
   /** Give {@link List} of available {@link Search}s.
     * @return The {@link List} of available {@link Search}s. */
-  public List<Search> searches();
+  public List<Search> searchs();
 
   }
