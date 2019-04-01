@@ -25,7 +25,7 @@ public class ServerSenderEventHandler implements EventHandler<ActionEvent> {
   @Override
   public void handle(ActionEvent event) {
      new Sender("Sender", _serverRep.server()).register();
-    _serverRep.updateSenders();
+    _serverRep.update();
     }
   
   private ServerRep _serverRep;

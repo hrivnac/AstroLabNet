@@ -219,8 +219,7 @@ public class BrowserWindow extends Application {
       WebEngine engineLivy = viewLivy.getEngine();
       engineLivy.load(serverRep.urlLivy());
       addTab(viewLivy, serverRep.name() + " : Livy : " + serverRep.urlLivy(), Images.LIVY);
-      serverRep.updateSessions();
-      serverRep.updateSenders();
+      serverRep.update();
       }
     if (serverRep.urlSpark() == null) {
       log.warn("Spark url for " + serverRep.name() + " is not defined !");

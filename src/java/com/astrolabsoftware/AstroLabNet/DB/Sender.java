@@ -11,6 +11,8 @@ import java.util.TreeSet;
 import org.apache.log4j.Logger;
 
 /** <code>Sender</code> represents <em>Spark</em> sender.
+  * Because Senders are not known to <em>Livy</em>,
+  * they are registered here, together with related {@link Batch}s.
   * @opt attributes
   * @opt operations
   * @opt types
@@ -25,7 +27,8 @@ public class Sender extends Element
   public Sender(String   name,
                 Server   server) {
     super(name);
-    _server   = server;
+    _id = ++_maxId;
+    _server = server;
     }
     
   @Override
@@ -39,30 +42,34 @@ public class Sender extends Element
     return _server;
     }
     
-  /** TBD */
+  /** Register {@link Batch} related to this Sender.
+    * @param idBatch The {@link Batch} id. */
   public void registerBatch(int idBatch) {
     _batchOnSender.put(idBatch, this);
     register();
     }
     
-  /** TBD */
+  /** Register this Sender. */
   public void register() {
     _senders.add(this);
     }
     
-  /** TBD */
+  /** Give Sender for a {@link Batch}.
+    * @param idBatch The {@link Batch} id.
+    * @return        The hosting Sender. */
   public static Sender sender(int idBatch) {
     return _batchOnSender.get(idBatch);
     }
     
-  /** TBD */
+  /** Give all registered Senders.
+    * @return The {@link Set} of all registered Senders. */
   public static Set<Sender> senders() {
     return _senders;
     }
   
   @Override
   public String toString() {
-    return name() + " on " + _server.name();
+    return name() + " : " + _id + " on " + _server.name();
     }
   
   private Server _server;
@@ -70,6 +77,10 @@ public class Sender extends Element
   private static Map<Integer, Sender> _batchOnSender = new HashMap<>();
   
   private static Set<Sender> _senders = new TreeSet<>();
+  
+  private int _id;
+  
+  private static int _maxId;
  
   /** Logging . */
   private static Logger log = Logger.getLogger(Sender.class);

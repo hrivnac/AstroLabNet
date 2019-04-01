@@ -62,6 +62,7 @@ public class BrowserCommand extends CommandLine {
       _serverReps.getChildren().add(serverRep.item());
       }
     _window.showServer(serverRep);
+    serverRep.update();
     return server;
     }
     

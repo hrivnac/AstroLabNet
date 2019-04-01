@@ -102,7 +102,7 @@ public class SenderRep extends ElementRep {
     // File
     _file = new TextField();
     _file.setPrefColumnCount(50);
-    // ClassName
+    // ClassNameSender 
     _className = new TextField();
     _className.setPrefColumnCount(50);
     // JobBox = JAR + File + ClassName
@@ -123,7 +123,7 @@ public class SenderRep extends ElementRep {
     VBox cmdBox = new VBox();
     cmdBox.setSpacing(5);
     cmdBox.setAlignment(Pos.CENTER);
-    cmdBox.getChildren().addAll(desc, jobBox, buttonBox);
+    cmdBox.getChildren().addAll(desc, jobBox , buttonBox);
     // ResultText
     TextFlow resultText = new TextFlow(); 
     Text result0 = new Text("Fill in or select Action\n\n");

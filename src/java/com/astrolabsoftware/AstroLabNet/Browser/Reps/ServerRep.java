@@ -74,14 +74,14 @@ public class ServerRep extends ElementRep {
     menuItems.add(sqlSession);
     menuItems.add(sender);
     menuItems.add(source);
-    updateSessions();
-    updateSenders();
+    update();
     return menuItems;
     }
 
   /** Update list of dependent {@link Session}s. */
-  public void updateSessions() {
-    item().getChildren().retainAll(_retains);
+  public void update() {
+    //item().getChildren().retainAll(_retains);
+    item().getChildren().clear();
     int idSession;
     SessionRep sessionRep;
     for (Pair<Integer, Language> p : livy().getSessions()) {
@@ -92,15 +92,12 @@ public class ServerRep extends ElementRep {
         browser().command().addTask(name() + "/" + idSession + "/" + idStatement, sessionRep.session(), idStatement);
         }
       }
-    }
-
-  /** Update list of dependent {@link Sender}s. */
-  public void updateSenders() {
-    item().getChildren().retainAll(_retains);
     SenderRep senderRep;
     for (Sender sender : Sender.senders()) {
-      senderRep = SenderRep.create(new Sender("Sender", server()), browser());
-      item().getChildren().add(new TreeItem<ElementRep>(senderRep));
+      if (sender.server() == server()) {
+        senderRep = SenderRep.create(sender, browser());
+        item().getChildren().add(new TreeItem<ElementRep>(senderRep));
+        }
       }
     for (int idBatch : livy().getBatches()) {
       if (Sender.sender(idBatch) != null) {
