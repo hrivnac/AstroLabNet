@@ -37,6 +37,17 @@ public class Action extends Element {
     return _language;
     }
     
+  /** Set as a new Action, so it will be stored on Exit. */
+  public void setNew() {
+    _new = true;
+    }
+    
+  /** Whether is new, to be stored on Exit.
+    * return Whether is new. */
+  public boolean isNew() {
+    return _new;
+    }
+    
   @Override
   public String toString() {
     return name() + " (" + _language + ")";
@@ -45,6 +56,8 @@ public class Action extends Element {
   private String _cmd;
   
   private Language _language;
+  
+  private boolean _new = false;
   
   /** Logging . */
   private static Logger log = Logger.getLogger(Action.class);

@@ -139,7 +139,7 @@ public class SessionRep extends ElementRep {
         dialog.setHeaderText("The name of new Action");
         dialog.setContentText("Please enter the name:");
         Optional<String> answer = dialog.showAndWait();
-        answer.ifPresent(name -> browser().command().addAction(name, cmd.getText(), sessionRep.language()));
+        answer.ifPresent(name -> browser().command().addAction(name, cmd.getText(), sessionRep.language()).setNew());
         }
       });
     // Set

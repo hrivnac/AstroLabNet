@@ -180,7 +180,7 @@ public class SenderRep extends ElementRep {
         dialog.setHeaderText("The name of new Job");
         dialog.setContentText("Please enter the name:");
         Optional<String> answer = dialog.showAndWait();
-        answer.ifPresent(name -> browser().command().addJob(name, _file.getText(), _className.getText()));
+        answer.ifPresent(name -> browser().command().addJob(name, _file.getText(), _className.getText()).setNew());
         }
       });
     // Set

@@ -36,6 +36,17 @@ public class Job extends Element {
     return _className;
     }
     
+  /** Set as a new Action, so it will be stored on Exit. */
+  public void setNew() {
+    _new = true;
+    }
+    
+  /** Whether is new, to be stored on Exit.
+    * return Whether is new. */
+  public boolean isNew() {
+    return _new;
+    }
+    
   @Override
   public String toString() {
     return name() + " (" + _className + "  from " + _file + ")";
@@ -44,7 +55,9 @@ public class Job extends Element {
   private String _file;
   
   private String _className;
-  
+   
+  private boolean _new = false;
+ 
   /** Logging . */
   private static Logger log = Logger.getLogger(Job.class);
 

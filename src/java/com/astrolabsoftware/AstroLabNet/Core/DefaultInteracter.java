@@ -110,6 +110,19 @@ public abstract class DefaultInteracter implements Interacter {
     readActions();
     // Read Jobs
     readJobs();
+    // Source .state.bsh
+    log.info("Sourcing .state.bsh");
+    try {
+      init = new StringFile(".state.bsh").toString();
+      interpreter.eval(init);
+      }
+    catch (AstroLabNetException e) {
+      log.warn(".state.bsh file cannot be read.");
+      log.debug(".state.bsh file cannot be read.", e);
+      }
+    catch (EvalError e) {
+      log.error("Can't evaluate standard BeanShell expression", e);
+      }
     // Source command line source
     if (Init.source() != null) {
       log.info("Sourcing " + Init.source());
@@ -347,7 +360,7 @@ public abstract class DefaultInteracter implements Interacter {
     * @param s The encoded REST server string.
     * @return The decode  REST server string. */
   private String decode(String s) {
-    return  new String(Base64.getDecoder().decode(s));
+    return new String(Base64.getDecoder().decode(s));
     }
     
   private Interpreter _interpreter;
