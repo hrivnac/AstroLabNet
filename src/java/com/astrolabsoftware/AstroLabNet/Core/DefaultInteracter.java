@@ -72,7 +72,8 @@ public abstract class DefaultInteracter implements Interacter {
     
   @Override
   public void readJobs() {
-    addJob("Pi", "../lib/PiJob.jar", "com.astrolabsoftware.AstroLabNet.DB.Jobs.PiJob"); // TBD: should be automatic
+    addJob("PiJar", "../lib/PiJob.jar", "com.astrolabsoftware.AstroLabNet.DB.Jobs.PiJob"); // TBD: should be automatic
+    addJob("PiPy",  "../lib/PiJob.py",  null); // TBD: should be automatic
     }
      
   @Override

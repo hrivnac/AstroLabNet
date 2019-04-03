@@ -49,14 +49,14 @@ public class JobRep extends ElementRep {
       }
     }
 
-  /** Give the Job jar filename.
-    * @return the Job jar filename.. */
+  /** Give the Job jar or py filename.
+    * @return the Job jar or py filename.. */
   public String file() {
     return job().file();
     }
     
-  /** Give the Job <em>main</em> className.
-    * @return The <em>main</em> className. */
+  /** Give the Job <em>main</em> className or <tt>null</tt> for py file..
+    * @return The <em>main</em> classNameor <tt>null</tt> for py file.. */
   public String className() {
     return job().className();
     }

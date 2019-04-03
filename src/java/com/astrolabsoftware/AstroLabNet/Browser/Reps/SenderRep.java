@@ -106,7 +106,7 @@ public class SenderRep extends ElementRep {
     // Desc
     Label desc = new Label("Job:");
     // Load
-    Button load = new SimpleButton("JAR file", Images.JAR, "Load JAR file");
+    Button load = new SimpleButton("JAR/PY file", Images.JAR, "Load JAR or PY file");
     // File
     _file = new TextField();
     _file.setPrefColumnCount(50);
@@ -176,7 +176,7 @@ public class SenderRep extends ElementRep {
       @Override
       public void handle(ActionEvent e) {
         TextInputDialog dialog = new TextInputDialog("MyName");
-        dialog.setTitle("New JOb Name");
+        dialog.setTitle("New Job Name");
         dialog.setHeaderText("The name of new Job");
         dialog.setContentText("Please enter the name:");
         Optional<String> answer = dialog.showAndWait();

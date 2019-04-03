@@ -40,12 +40,17 @@ public final class ExitHandler implements EventHandler<ActionEvent> {
       PrintWriter writer = new PrintWriter(".state.bsh");
       for (Action action : _w.command().actions()) {
         if (action.isNew()) {
-          writer.println("w.addAction(\"" + action.name() + "\", new String(Base64.getDecoder().decode(\"" + Base64.getEncoder().encodeToString(action.cmd().getBytes()) + "\")), Language." + action.language() + ");");
+          writer.println("w.addAction(\"" + action.name() + "\", new String(Base64.getDecoder().decode(\"" + Base64.getEncoder().encodeToString(action.cmd().getBytes()) + "\")), Language." + action.language() + ").setNew();");
           }
         }
       for (Job job : _w.command().jobs()) {
         if (job.isNew()) {
-          writer.println("w.addJob(\"" + job.name() + "\", \"" + job.file() + "\", \"" + job.className() + "\");");
+          if (job.className() == null) {
+            writer.println("w.addJob(\"" + job.name() + "\", \"" + job.file() + "\", null).setNew();");
+            }
+          else {
+            writer.println("w.addJob(\"" + job.name() + "\", \"" + job.file() + "\", \"" + job.className() + "\").setNew();");
+            }
           }
         }
       writer.close();

@@ -1,8 +1,8 @@
 Job represents a program to be send to a Spark Server,
-formulated as a JAR file.
-It can be written in Python, Scala, SQL or R.
+formulated as a JAR or PY file.
+It can be written in Python or Scala.
 You can send it to a Batch opened on a Spark Server.
 
 CLI
 ---
-w.addJob("pokus", TBD, Language.PYTHON);
+w.addJob("pokus", "blabla.jar", "com.mypackage.MyClass");

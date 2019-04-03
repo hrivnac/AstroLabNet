@@ -200,23 +200,34 @@ public class LivyRESTClient {
     * <pre>
     * POST /batches {"file":*file*, "className":*classname*}
     * </pre>
-    * @param file      The jar filename.
-    * @param className The <em>main</em> className.
+    * @param file      The jar or py filename.
+    * @param className The <em>main</em> className
+    *                  or <tt>null</tt> for py file.
     * @param tries     How many times to try.
     * @param sleep     How many <tt>s</tt> wait between tries.
-    * @return           The new statement id. */
+    * @return         The new statement id. */
   public int sendJob(String file,
                      String className,
                      int    tries,
                      int    sleep) {
-    log.info("Sending job '" + className + "' from '" + file + "'");
+    if (className == null) {
+      log.info("Sending job from '" + file + "'");
+      }
+    else {
+      log.info("Sending job '" + className + "' from '" + file + "'");
+      }
     String result = "";
     boolean success = false;
     int i = 0;
     while (!success && i++ <= tries) {
       try {
         Thread.sleep(1000 * sleep);
-        result = SmallHttpClient.postJSON(_url + "/batches", "{\"file\":\"" + file + "\", \"className\":\"" + className + "\"}", null, null);
+        if (className == null) {
+          result = SmallHttpClient.postJSON(_url + "/batches", "{\"file\":\"" + file + "\"}", null, null);
+          }
+        else {
+          result = SmallHttpClient.postJSON(_url + "/batches", "{\"file\":\"" + file + "\", \"className\":\"" + className + "\"}", null, null);
+          }
         success = true;
         }
       catch (AstroLabNetException e) {

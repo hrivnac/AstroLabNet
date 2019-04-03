@@ -13,9 +13,10 @@ import org.apache.log4j.Logger;
 public class Job extends Element {  
   
   /** Create new Job.
-    * @param name     The Job name.
-    * @param file      The jar filename.
-    * @param className The <em>main</em> className. */
+    * @param name      The Job name.
+    * @param file      The jar or py filename.
+    * @param className The <em>main</em> className for jar file,
+    *                  <tt>null</tt> for py file. */
   public Job(String        name,
              String        file,
              String        className) {
@@ -24,19 +25,19 @@ public class Job extends Element {
     _className = className;
     }
 
-  /** Give the Job jar filename.
-    * @return The Job jar filename. */
+  /** Give the Job jar or py filename.
+    * @return The Job or py jar filename. */
   public String file() {
     return _file;
     }
     
-  /** Give the Job <em>main</em> className.
-    * @return The <em>main</em> className. */
+  /** Give the Job <em>main</em> className or <tt>null</tt> for py file.
+    * @return The <em>main</em> className or <tt>null</tt> for py file. */
   public String className() {
     return _className;
     }
     
-  /** Set as a new Action, so it will be stored on Exit. */
+  /** Set as a new Job, so it will be stored on Exit. */
   public void setNew() {
     _new = true;
     }

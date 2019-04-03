@@ -53,12 +53,12 @@ public interface Interacter {
   
   /** Add {@link Job}.
     * @param name      The {@link Job} name
-    * @param file      The jar filename.
-    * @param className The <em>main</em> className.
+    * @param file      The jar or py filename.
+    * @param className The <em>main</em> className or <tt>null</tt> for py file..
     * @return          The added {@link Job}. */
   public Job addJob(String name,
-                    String   file,
-                    String   className);
+                    String  file,
+                    String  className);
   
   /** Add {@link Data}.
     * @param name The {@link Data} name
