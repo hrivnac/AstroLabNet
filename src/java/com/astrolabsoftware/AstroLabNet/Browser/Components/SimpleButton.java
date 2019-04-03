@@ -14,6 +14,7 @@ import javafx.event.EventHandler;
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public final class SimpleButton extends Button {
 
+  /** TBD */
   public SimpleButton(String name,
                       String tooltip,
                       EventHandler handler) {
@@ -22,7 +23,15 @@ public final class SimpleButton extends Button {
     new ToolTipper(this, tooltip);
     setOnAction(handler);
     }
+    
+  /** TBD */
+  public SimpleButton(String name,
+                      String tooltip) {
+    super(name);
+    new ToolTipper(this, tooltip);
+    }
 
+  /** TBD */
   public SimpleButton(String name,
                       Image image,
                       String tooltip,
@@ -31,6 +40,15 @@ public final class SimpleButton extends Button {
     setGraphic(new ImageView(image));
     new ToolTipper(this, tooltip);
     setOnAction(handler);
+    }
+    
+  /** TBD */
+  public SimpleButton(String name,
+                      Image image,
+                      String tooltip) {
+    super(name);
+    setGraphic(new ImageView(image));
+    new ToolTipper(this, tooltip);
     }
 
   }

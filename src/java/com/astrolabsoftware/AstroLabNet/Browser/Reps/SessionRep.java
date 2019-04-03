@@ -10,6 +10,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
@@ -31,6 +32,7 @@ import javafx.geometry.Orientation;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Optional;
 
 // Log4J
 import org.apache.log4j.Logger;
@@ -92,12 +94,14 @@ public class SessionRep extends ElementRep {
     // Progress
     _progress = new ProgressBar(0);
     // Button
-    Button button = new Button("Execute");
-    // ButtonBox = Progress + Button
+    Button execute = new SimpleButton("Execute", "Execute Action on Spark");
+    // Record
+    Button record = new SimpleButton("Record", "Record Action");
+    // ButtonBox = Progress + Execute
     HBox buttonBox = new HBox(10);
     buttonBox.setSpacing(5);
     buttonBox.setAlignment(Pos.CENTER);
-    buttonBox.getChildren().addAll(_progress, button);
+    buttonBox.getChildren().addAll(_progress, execute, record);
     // CmdBox = Desc + Cmd + ButtonBox 
     VBox cmdBox = new VBox();
     cmdBox.setSpacing(5);
@@ -117,8 +121,9 @@ public class SessionRep extends ElementRep {
     pane.setDividerPositions(0.5);
     pane.setOrientation(Orientation.VERTICAL);
     pane.getItems().addAll(cmdBox, scrollPane);
+    // Actions
     SessionRep sessionRep = this;
-    button.setOnAction(new EventHandler<ActionEvent>() {
+    execute.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent e) {
         int id = serverRep().livy().sendCommand(id(), cmd.getText(), Integer.MAX_VALUE, 1);
@@ -126,6 +131,18 @@ public class SessionRep extends ElementRep {
         resultText.getChildren().add(new Text("Command send to Session\n\n"));
         }
       });
+    record.setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent e) {
+        TextInputDialog dialog = new TextInputDialog("MyName");
+        dialog.setTitle("New Action Name");
+        dialog.setHeaderText("The name of new Action");
+        dialog.setContentText("Please enter the name:");
+        Optional<String> answer = dialog.showAndWait();
+        answer.ifPresent(name -> browser().command().addAction(name, cmd.getText(), sessionRep.language()));
+        }
+      });
+    // Set
     setResultRef(resultText);
     Tab tab = browser().addTab(pane, toString(), Images.SESSION);
     browser().registerSessionTab(this, tab);

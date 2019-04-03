@@ -10,6 +10,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
@@ -24,6 +25,10 @@ import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.geometry.Orientation;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 // org.json
 
@@ -42,6 +47,9 @@ import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 import java.util.jar.Attributes;
 import java.util.Iterator;
+
+// Java
+import java.util.Optional;
 
 // Log4J
 import org.apache.log4j.Logger;
@@ -97,33 +105,35 @@ public class SenderRep extends ElementRep {
   public void addTab() {
     // Desc
     Label desc = new Label("Job:");
-    // JAR
-    Button jar = new SimpleButton("JAR file", Images.JAR, "Load JAR file", new ReadJARHandler(this));
+    // Load
+    Button load = new SimpleButton("JAR file", Images.JAR, "Load JAR file");
     // File
     _file = new TextField();
     _file.setPrefColumnCount(50);
     // ClassNameSender 
     _className = new TextField();
     _className.setPrefColumnCount(50);
-    // JobBox = JAR + File + ClassName
+    // JobBox = Load + File + ClassName
     HBox jobBox = new HBox(10);
     jobBox.setSpacing(5);
     jobBox.setAlignment(Pos.CENTER);
-    jobBox.getChildren().addAll(jar, _file, _className);
+    jobBox.getChildren().addAll(load, _file, _className);
     // Progress
     _progress = new ProgressBar(0);
-    // Button
-    Button button = new Button("Send");
-    // ButtonBox = Progress + Button
-    HBox buttonBox = new HBox(10);
-    buttonBox.setSpacing(5);
-    buttonBox.setAlignment(Pos.CENTER);
-    buttonBox.getChildren().addAll(_progress, button);
-    // CmdBox = Desc + JobBox + ButtonBox 
+    // Send
+    Button send = new SimpleButton("Send", "Send Job to Spark");
+    // Record
+    Button record = new SimpleButton("Record", "Record Job");
+    // ButtonBox = Progress + Send + Record
+    HBox sendBox = new HBox(10);
+    sendBox.setSpacing(5);
+    sendBox.setAlignment(Pos.CENTER);
+    sendBox.getChildren().addAll(_progress, send, record);
+    // CmdBox = Desc + JobBox + SendBox 
     VBox cmdBox = new VBox();
     cmdBox.setSpacing(5);
     cmdBox.setAlignment(Pos.CENTER);
-    cmdBox.getChildren().addAll(desc, jobBox , buttonBox);
+    cmdBox.getChildren().addAll(desc, jobBox , sendBox);
     // ResultText
     TextFlow resultText = new TextFlow(); 
     Text result0 = new Text("Fill in or select Action\n\n");
@@ -138,8 +148,23 @@ public class SenderRep extends ElementRep {
     pane.setDividerPositions(0.5);
     pane.setOrientation(Orientation.VERTICAL);
     pane.getItems().addAll(cmdBox, scrollPane);
+    // Actions
     SenderRep senderRep = this;
-    button.setOnAction(new EventHandler<ActionEvent>() {
+    load.setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent e) {
+        Stage dialog = new Stage();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open JAR File");
+        fileChooser.getExtensionFilters().addAll(new ExtensionFilter("JAR File", "*.jar"));
+        dialog.initStyle(StageStyle.UTILITY);
+        File selectedFile = fileChooser.showOpenDialog(dialog);
+        if (selectedFile != null) {
+          setFile(selectedFile);
+          }
+        }
+      });
+    send.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent e) {
         int id = serverRep().livy().sendJob("local:" + _file.getText(), _className.getText(), Integer.MAX_VALUE, 1);
@@ -147,6 +172,18 @@ public class SenderRep extends ElementRep {
         resultText.getChildren().add(new Text("Job send\n\n"));
         }
       });
+    record.setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent e) {
+        TextInputDialog dialog = new TextInputDialog("MyName");
+        dialog.setTitle("New JOb Name");
+        dialog.setHeaderText("The name of new Job");
+        dialog.setContentText("Please enter the name:");
+        Optional<String> answer = dialog.showAndWait();
+        answer.ifPresent(name -> browser().command().addJob(name, _file.getText(), _className.getText()));
+        }
+      });
+    // Set
     setResultRef(resultText);
     Tab tab = browser().addTab(pane, toString(), Images.SESSION);
     browser().registerSenderTab(this, tab);
