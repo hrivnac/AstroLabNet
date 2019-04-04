@@ -40,6 +40,20 @@
     <path refid="classpath.build"/>
     </path>
     
+  <path id="classpath-scala.build">
+    <fileset dir="${spark.jars}">
+      <include name="*.jar"/>
+      </fileset>
+    </path>
+    
+  <taskdef resource="scala/tools/ant/antlib.xml">
+    <classpath>
+      <pathelement location="${scala-compiler.jar}"/>
+      <pathelement location="${scala-reflect.jar}"/>
+      <pathelement location="${scala-library.jar}"/>
+    </classpath>
+  </taskdef>
+    
   <property name="classpath.build.content" refid="classpath.build"/>
   <property name="classpath.run.content"   refid="classpath.run"/>
 
@@ -58,7 +72,6 @@
     <replace file="../build/com/astrolabsoftware/AstroLabNet/Utils/Info.java" token="@topology@"  value="${topology}"/>
     <replace file="../build/com/astrolabsoftware/AstroLabNet/Utils/Info.java" token="@journal@"   value="${journal}"/>
     </target>
-    <echo>${log4j.jar}</echo>
 
   <!-- Init =================================================================-->
 
@@ -71,7 +84,7 @@
     <mkdir dir="../lib"/>
     <mkdir dir="../extlib"/>
     <mkdir dir="../run"/>
-    <mkdir dir="../doc/JavaDoc"/>      
+    <mkdir dir="../doc/JavaDoc"/>
     </target>
 
   <!-- Avro =================================================================-->
@@ -110,14 +123,20 @@
            optimize="yes"
            source="8"
            target="8">
-      <!--compilerarg value="-Xlint:unchecked"/-->
-      <!--compilerarg value="-Xlint:deprecation"/-->
       <src path="../src/java"/>
       <src path="../build"/>
       <classpath>
         <path refid="classpath.build"/>
         </classpath>
       </javac>
+    <scalac destdir="../build"
+           fork="yes">
+      <src path="../src"/>
+      <include name="**/*.scala"   />
+      <classpath>
+        <path refid="classpath-scala.build"/>
+        </classpath>
+      </scalac>
     </target>
     
   <!-- Create JAR ===========================================================-->
@@ -192,15 +211,26 @@
         <attribute name="Main-Class" value="com.astrolabsoftware.AstroLabNet.Avro.AvroReader"/>
         </manifest>
       </jar>
-    <jar jarfile="../lib/PiJob.jar" index="yes">
+    <jar jarfile="../lib/JavaPiJob.jar" index="yes">
       <zipfileset includes="**/*" src="../lib/AstroLabNet.jar"/>
       <zipfileset includes="**/*" src="${livy.jar}"/>
-      <fileset dir="../build"    includes="com/astrolabsoftware/AstroLabNet/DB/Jobs/PiJob.class"/>
+      <fileset dir="../build"    includes="com/astrolabsoftware/AstroLabNet/DB/Jobs/JavaPiJob.class"/>
       <manifest>
         <attribute name="Created-By" value="${user.name}"/>
-        <attribute name="AppName"    value="AstroLabNet-PiJob"/>
+        <attribute name="AppName"    value="AstroLabNet-JavaPiJob"/>
         <attribute name="AppVersion" value="${version} ${TSTAMP}"/>
-        <attribute name="Main-Class" value="com.astrolabsoftware.AstroLabNet.DB.Jobs.PiJob"/>
+        <attribute name="Main-Class" value="com.astrolabsoftware.AstroLabNet.DB.Jobs.JavaPiJob"/>
+        </manifest>
+      </jar>
+    <jar jarfile="../lib/ScalaPiJob.jar" index="yes">
+      <zipfileset includes="**/*" src="../lib/AstroLabNet.jar"/>
+      <zipfileset includes="**/*" src="${livy.jar}"/>
+      <fileset dir="../build"    includes="com/astrolabsoftware/AstroLabNet/DB/Jobs/ScalaPiJob.class"/>
+      <manifest>
+        <attribute name="Created-By" value="${user.name}"/>
+        <attribute name="AppName"    value="AstroLabNet-ScalaPiJob"/>
+        <attribute name="AppVersion" value="${version} ${TSTAMP}"/>
+        <attribute name="Main-Class" value="com.astrolabsoftware.AstroLabNet.DB.Jobs.ScalaPiJob"/>
         </manifest>
       </jar>
  		<copy todir="../lib">

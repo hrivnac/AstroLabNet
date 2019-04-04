@@ -61,6 +61,7 @@ public class BatchRep extends ElementRep {
         String resultString;
         JSONObject result;
         String statex;
+        // Check Progress
         while (true) {
           try {
             if (batch.id() > 0) {
@@ -70,7 +71,7 @@ public class BatchRep extends ElementRep {
                 statex = result.getString("state");
                 senderRep().setState(statex);
                 log.debug("State = " + statex);
-                if (statex.equals("success") || statex.equals("dead")) { // TBD: handle failure
+                if (statex.equals("success") || statex.equals("dead")) {
                   break;
                   }
                 }
@@ -98,6 +99,14 @@ public class BatchRep extends ElementRep {
           log.error("Unknown state " + state);
           }
         log.info(state + " : " + fullLog);
+        // Get Log
+        resultString = senderRep().serverRep().livy().getBatchLog(batch.id(), 10, 1);
+        result = new JSONObject(resultString);
+        logArray = result.getJSONArray("log");
+        fullLog += "\n\n";
+        for (Object logEntry : logArray) {
+          fullLog += logEntry.toString() + "\n";
+          }
         final String fullLog1 = fullLog; // so it can go to inner fcion
         // to synchronise threads
         Platform.runLater(new Runnable() {

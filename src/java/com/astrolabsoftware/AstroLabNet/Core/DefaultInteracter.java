@@ -43,7 +43,7 @@ public abstract class DefaultInteracter implements Interacter {
     String ext;
     Language lang = Language.PYTHON;
     for (String actionTxt : new String[] {"pi.py",
-                                          "pi.scala"}) {
+                                          "pi.scalash"}) {
       try {
         ext = actionTxt.substring(actionTxt.lastIndexOf(".") + 1);
         switch (ext) { // TBD: put into Language
@@ -72,8 +72,9 @@ public abstract class DefaultInteracter implements Interacter {
     
   @Override
   public void readJobs() {
-    addJob("PiJar", "../lib/PiJob.jar", "com.astrolabsoftware.AstroLabNet.DB.Jobs.PiJob"); // TBD: should be automatic
-    addJob("PiPy",  "../lib/PiJob.py",  null); // TBD: should be automatic
+    addJob("JavaPi",   "../lib/JavaPiJob.jar",  "com.astrolabsoftware.AstroLabNet.DB.Jobs.JavaPiJob"); // TBD: should be automatic
+    addJob("ScalaPi",  "../lib/ScalaPiJob.jar", "com.astrolabsoftware.AstroLabNet.DB.Jobs.ScalaPiJob"); // TBD: should be automatic
+    addJob("PythonPi", "../lib/PythonPiJob.py", null); // TBD: should be automatic
     }
      
   @Override

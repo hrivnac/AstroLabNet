@@ -284,7 +284,7 @@ public class LivyRESTClient {
       }
     }
     
-  /** Check batch progreess, get results.
+  /** Check batch progress, get results.
     * <pre>
     * GET /batches/-idBatch-
     * </pre>
@@ -302,6 +302,42 @@ public class LivyRESTClient {
       try {
         Thread.sleep(1000 * sleep);
         result = SmallHttpClient.get(_url + "/batches/" + idBatch, null);
+        success = true;
+        }
+      catch (AstroLabNetException e) {
+        log.debug("Request has failed", e);
+        }
+      catch (InterruptedException e) {
+        break;
+        }
+      }
+    if (success) {
+      log.debug("Result:\n" + result.trim());
+      return result;
+      }
+    else {
+      return null;
+      }
+    }
+    
+  /** Get batch log.
+    * <pre>
+    * GET /batches/-idBatch-/log
+    * </pre>
+    * @param  idBatch     The existing batch session number.
+    * @param  tries       How many times to try.
+    * @param  sleep       How many <tt>s</tt> wait between tries.
+    * @return             The result. */
+  public String getBatchLog(int idBatch,
+                            int tries,
+                            int sleep) {
+    String result = "";
+    boolean success = false;
+    int i = 0;
+    while (!success && i++ <= tries) {
+      try {
+        Thread.sleep(1000 * sleep);
+        result = SmallHttpClient.get(_url + "/batches/" + idBatch + "/log", null);
         success = true;
         }
       catch (AstroLabNetException e) {
@@ -402,7 +438,8 @@ public class LivyRESTClient {
                         String className) {
     log.info("Sending '" + className + "' in " + file + " and waiting for result");
     int batchId = sendJob(file, className,    Integer.MAX_VALUE, 1);
-    return waitForJobResult(batchId, Integer.MAX_VALUE, 1);
+    return waitForJobResult(batchId, Integer.MAX_VALUE, 1) + "\n\n" + 
+           getBatchLog(     batchId, Integer.MAX_VALUE, 1);
     }
     
   @Override

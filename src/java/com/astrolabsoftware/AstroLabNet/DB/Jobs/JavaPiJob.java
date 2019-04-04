@@ -9,17 +9,17 @@ import org.apache.spark.sql.SparkSession;
 import java.util.ArrayList;
 import java.util.List;
 
-/** <code>PiJob</code> is the standard <em>Spark</em> job example.
+/** <code>JavaPiJob</code> is the standard <em>Spark</em> job example.
   * @opt attributes
   * @opt operations
   * @opt types
   * @opt visibility
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
-public final class PiJob {
+public final class JavaPiJob {
 
   /** Run the example. */
   public static void main(String[] args) throws Exception {
-    SparkSession spark = SparkSession.builder().appName("PiJob").getOrCreate();
+    SparkSession spark = SparkSession.builder().appName("JavaPiJob").getOrCreate();
     JavaSparkContext jsc = new JavaSparkContext(spark.sparkContext());
     int slices = (args.length == 1) ? Integer.parseInt(args[0]) : 2;
     int n = 100000 * slices;
