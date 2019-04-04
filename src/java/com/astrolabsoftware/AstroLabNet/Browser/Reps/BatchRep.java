@@ -107,6 +107,7 @@ public class BatchRep extends ElementRep {
         for (Object logEntry : logArray) {
           fullLog += logEntry.toString() + "\n";
           }
+        log.debug(fullLog);
         final String fullLog1 = fullLog; // so it can go to inner fcion
         // to synchronise threads
         Platform.runLater(new Runnable() {

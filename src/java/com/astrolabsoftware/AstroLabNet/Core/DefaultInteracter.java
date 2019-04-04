@@ -43,7 +43,7 @@ public abstract class DefaultInteracter implements Interacter {
     String ext;
     Language lang = Language.PYTHON;
     for (String actionTxt : new String[] {"pi.py",
-                                          "pi.scalash"}) {
+                                          "pi.scala"}) {
       try {
         ext = actionTxt.substring(actionTxt.lastIndexOf(".") + 1);
         switch (ext) { // TBD: put into Language

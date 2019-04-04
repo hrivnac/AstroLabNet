@@ -132,7 +132,8 @@
     <scalac destdir="../build"
            fork="yes">
       <src path="../src"/>
-      <include name="**/*.scala"   />
+      <include name="**/*.scala"/>
+      <exclude name="java/com/astrolabsoftware/AstroLabNet/DB/Actions/*.scala"/>
       <classpath>
         <path refid="classpath-scala.build"/>
         </classpath>

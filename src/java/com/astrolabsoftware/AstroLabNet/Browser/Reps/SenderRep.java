@@ -155,7 +155,7 @@ public class SenderRep extends ElementRep {
         Stage dialog = new Stage();
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open JAR File");
-        fileChooser.getExtensionFilters().addAll(new ExtensionFilter("JAR File", "*.jar"));
+        fileChooser.getExtensionFilters().addAll(new ExtensionFilter("JAR/PY File", "*.jar", "*.py"));
         dialog.initStyle(StageStyle.UTILITY);
         File selectedFile = fileChooser.showOpenDialog(dialog);
         if (selectedFile != null) {

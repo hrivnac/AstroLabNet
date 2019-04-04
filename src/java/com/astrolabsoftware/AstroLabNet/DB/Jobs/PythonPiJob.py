@@ -7,7 +7,7 @@ from pyspark import SparkContext, SparkConf
 from pyspark.sql import SparkSession
 
 if __name__ == "__main__":
-  spark = SparkSession.builder.appName("PythonPyJob").getOrCreate()
+  spark = SparkSession.builder.appName("PythonPiJob").getOrCreate()
   slices = 2
   samples = 100000 * slices
 
