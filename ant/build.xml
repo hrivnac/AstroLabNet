@@ -86,6 +86,15 @@
     <mkdir dir="../run"/>
     <mkdir dir="../doc/JavaDoc"/>
     </target>
+    
+  <!-- Patch Livy ===========================================================-->
+  
+  <target name="patch"
+          description="Patch Livy">
+ 		<copy todir="${livy.home}/conf">
+			<fileset dir="../src/sys/livy/conf/" includes="*"/>
+      </copy>
+    </target>
 
   <!-- Avro =================================================================-->
 
