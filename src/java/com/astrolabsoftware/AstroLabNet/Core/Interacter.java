@@ -31,6 +31,27 @@ public interface Interacter {
     * @param interpreter The embedded {@link Interpreter}. */
   public void setupInterpreter(Interpreter interpreter);
   
+  /** Give named {@link Server}.
+    * @param name The name of the {@link Server}.
+    * @return     The named {@link Server},
+    *             null, if it doesn't exist' */
+   public Server server(String name);
+
+   /** Give named {@link Action}.
+    * @param name The name of the {@link Action}.
+    * @return     The named {@link Action},
+    *             null, if it doesn't exist' */
+  public Action action(String name);
+  
+  // TBD: accessors for other elements
+
+  /** Give named {@link Job}.
+    * @param name The name of the {@link Job}.
+    * @return     The named {@link Job},
+    *             null, if it doesn't exist' */
+  public Job job(String name);
+ 
+  
   /** Add {@link Server}.
     * @param name     The {@link ServerRep} name.
     * @param urlLivy  The url of the <em>Livy</em> server. Should not be <tt>null</tt>.

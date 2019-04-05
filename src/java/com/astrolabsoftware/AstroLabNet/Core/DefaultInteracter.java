@@ -209,12 +209,31 @@ public abstract class DefaultInteracter implements Interacter {
       }
     }    
     
-  
-  /** TBD */
+  @Override
   public Server server(String name) {
     for (Server s : servers()) {
       if (s.name().equals(name)) {
         return s;
+        }
+      }
+    return null;
+    }
+  
+  @Override
+  public Action action(String name) {
+    for (Action a : actions()) {
+      if (a.name().equals(name)) {
+        return a;
+        }
+      }
+    return null;
+    }
+    
+  @Override
+  public Job job(String name) {
+    for (Job j : jobs()) {
+      if (j.name().equals(name)) {
+        return j;
         }
       }
     return null;
@@ -254,16 +273,6 @@ public abstract class DefaultInteracter implements Interacter {
       }
     return server;
     }
-  
-  /** TBD */
-  public Action action(String name) {
-    for (Action a : actions()) {
-      if (a.name().equals(name)) {
-        return a;
-        }
-      }
-    return null;
-    }
     
   @Override
   public Action addAction(String   name,
@@ -276,17 +285,7 @@ public abstract class DefaultInteracter implements Interacter {
       }
     return action;
     }
-    
-  /** TBD */
-  public Job job(String name) {
-    for (Job j : jobs()) {
-      if (j.name().equals(name)) {
-        return j;
-        }
-      }
-    return null;
-    }
-      
+          
   @Override
   public Job addJob(String   name,
                     String   file,

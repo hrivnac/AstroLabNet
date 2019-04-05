@@ -45,11 +45,11 @@ public class AvroReader {
                     String schemaFN) {
     log.info("Using server " + server);
     _server = server;
-    log.info("Using schema from " + schemaFN);
     if (schemaFN == null) {
       _schema = null;
       }
     else {
+    log.info("Using schema from " + schemaFN);
       try {
         _schema = new Schema.Parser().parse(new File(schemaFN));
         }
@@ -57,6 +57,11 @@ public class AvroReader {
         log.warn("Cannot read schema " + schemaFN + ", will use schema from Avro file");
         }
       }
+    }
+  /** Create.
+    * @param server The {@link Server} to use for <em>Catalog</em>. */
+  public AvroReader(Server server) {
+    this(server, null);
     }
         
   /** Process directory with <em>Avro</em> alert files.

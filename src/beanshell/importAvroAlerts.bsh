@@ -2,6 +2,6 @@
 // -----------------------------------------
 import com.astrolabsoftware.AstroLabNet.Avro.AvroReader;
 Server server = w.server("Local");
-AvroReader reader = new AvroReader(server, null);
+AvroReader reader = new AvroReader(server);
 reader.process("../data/test/alarms/697251920015010010.avro");
 System.exit(1);
