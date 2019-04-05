@@ -27,7 +27,7 @@
 # livy.server.host = 0.0.0.0
 
 # What port to start the server on.
-# livy.server.port = 8998
+livy.server.port = 21111
 
 # What spark master Livy sessions should use.
 livy.spark.master = local

@@ -1,0 +1,4 @@
+// Scan Full Catalog
+// -----------------
+System.out.println(w.server("Local").hbase().scan("astrolabnet.catalog.1"));
+System.exit(1);

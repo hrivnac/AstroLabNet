@@ -91,9 +91,8 @@
   
   <target name="patch"
           description="Patch Livy">
- 		<copy todir="${livy.home}/conf">
-			<fileset dir="../src/sys/livy/conf/" includes="*"/>
-      </copy>
+    <copy file="../src/sys/livy/conf/livy.conf-${server.name}"
+          tofile="${livy.home}/conf/livy.conf"/>
     </target>
 
   <!-- Avro =================================================================-->
@@ -198,29 +197,6 @@
         <attribute name="Main-Class" value="com.astrolabsoftware.AstroLabNet.Core.This"/>
         </manifest>
       </jar>
-    <jar jarfile="../lib/AstroLabNet.AvroReader.exe.jar" index="yes">
-      <zipfileset includes="**/*" src="../lib/AstroLabNet.jar"/>
-      <zipfileset includes="**/*" src="${log4j.jar}"/>
-      <zipfileset includes="**/*" src="${bsh.jar}"/>
-      <zipfileset includes="**/*" src="${scala.jar}"/>
-      <zipfileset includes="**/*" src="${livy.jar}"/>
-      <zipfileset includes="**/*" src="${spark.jar}"/>
-      <zipfileset includes="**/*" src="${httpclient.jar}"/>
-      <zipfileset includes="**/*" src="${httpcore.jar}"/>
-      <zipfileset includes="**/*" src="${logging.jar}"/>
-      <zipfileset includes="**/*" src="${cli.jar}"/>
-      <zipfileset includes="**/*" src="${orgjson.jar}"/>
-      <zipfileset includes="**/*" src="${avro.jar}"/>
-      <zipfileset includes="**/*" src="${jackson.jar}"/>
-      <zipfileset includes="**/*" src="${slf4j.jar}"/>
-      <zipfileset includes="**/*" src="${slf4jlog4j.jar}"/>
-      <manifest>
-        <attribute name="Created-By" value="${user.name}"/>
-        <attribute name="AppName"    value="AstroLabNet-AvroReader"/>
-        <attribute name="AppVersion" value="${version} ${TSTAMP}"/>
-        <attribute name="Main-Class" value="com.astrolabsoftware.AstroLabNet.Avro.AvroReader"/>
-        </manifest>
-      </jar>
     <jar jarfile="../lib/JavaPiJob.jar" index="yes">
       <zipfileset includes="**/*" src="../lib/AstroLabNet.jar"/>
       <zipfileset includes="**/*" src="${livy.jar}"/>
@@ -249,31 +225,15 @@
     </target>
        
   <!-- Check ================================================================-->
-        
-  <target name="check-avro"
-           description="Check Avro">
-    <echo>Check Avro</echo>
-    <java classname="com.astrolabsoftware.AstroLabNet.Avro.AvroReader"
-          fork="true"
-          failonerror="true">
-      <arg value="../data/test/alarms/697251920015010010.avro"/>
-      <arg value="../build/ztf.avsc"/>
-      <classpath>
-        <fileset dir="../lib">
-          <include name="AstroLabNet.AvroReader.exe.jar"/>
-          </fileset>
-         </classpath>
-      </java>
-    </target>
-    
+            
   <!-- Run ==================================================================-->
     
   <target name="run"
            description="Run in Browser">
     <echo>Browser Run</echo>
- 		<copy todir=".">
+ 		<!--copy todir=".">
 			<fileset dir="../src/java/com/astrolabsoftware/AstroLabNet/Core" includes="init.bsh"/>
-      </copy>
+      </copy-->
     <java jar="../lib/AstroLabNet.exe.jar"
           fork="true"
           failonerror="true">
@@ -338,7 +298,7 @@
 			<fileset dir="../docsrc" includes="*"/>
       </copy>
     <copy todir="../doc/dist">
-			<fileset dir="../lib" includes="*.exhttps://github.com/ZwickyTransientFacility/ztf-avro-alert/tree/master/schemae.jar"/>
+			<fileset dir="../lib" includes="*.exe.jar"/>
       </copy>
  		<copy todir="../doc/JavaDoc">
 			<fileset dir="../src/java" includes="**/doc-files/*"/>
@@ -405,8 +365,15 @@
         <path refid="classpath.run"/>
         </classpath>
       </javadoc>
+    <concat destfile="tmp.bsh" append="true">
+      <path>
+        <fileset dir="../src/beanshell" includes="*.bsh"/>
+        </path>
+      </concat>
+    <loadfile property="BSH" srcFile="tmp.bsh"/>
     <replace file="../doc/index.html" token="@VERSION@" value="${version}"/>
     <replace file="../doc/index.html" token="@BUILD@"   value="${TSTAMP} by ${user.name}"/>
+    <replace file="../doc/index.html" token="@BSH@"     value="${BSH}"/>    
   </target>
 
   <!-- Post =================================================================-->

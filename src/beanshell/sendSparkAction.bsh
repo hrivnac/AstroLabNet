@@ -1,0 +1,5 @@
+// Send Action to Spark server
+// ---------------------------
+String result = w.server("Local").livy().executeCommand("1+1", Language.PYTHON);
+System.out.println(result);
+System.exit(1);

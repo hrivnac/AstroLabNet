@@ -1,0 +1,4 @@
+// Scan Full Topology
+// ------------------
+System.out.println(w.server("Local").hbase().scan("astrolabnet.topology.1"));
+System.exit(1);

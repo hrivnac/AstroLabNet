@@ -36,40 +36,16 @@ import org.apache.log4j.Logger;
   * @opt visibility
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public class AvroReader {
-    
-  /** SelfTest.
-    * @param args[0] The avro data filename.
-    * @param args[1] The avro file filename (optional).
-    * @throws IOException If file cannot be read. */
-  public static void main(String[] args) throws Exception {
-    Init.init(args);
-    if (args.length == 0 || args.length > 2) {
-      log.error("AvroReader <avro data file> [<avro schema file>]");
-      System.exit(-1);
-      }
-    String schemaFN = null;
-    if (args.length == 2) {
-      schemaFN = args[1];
-      }
-    AvroReader ar = new AvroReader(null, schemaFN);
-    ar.process(args[0]);
-    }
-    
+        
   /** Create.
     * @param server   The {@link Server} to use for <em>Catalog</em>.
-    *                 If <tt>null</tt>, the default {@link Server} will be tried.
     * @param schemaFN The filename of the schema file.
     *                 If <tt>null</tt>, schema will be read from data file.*/
   public AvroReader(Server server,
                     String schemaFN) {
     log.info("Using server " + server);
+    _server = server;
     log.info("Using schema from " + schemaFN);
-    if (server == null) {
-      _server = new Server("Local Host", null, null, "http://134.158.74.54:8080");
-      }
-    else {
-      _server = server;
-      }
     if (schemaFN == null) {
       _schema = null;
       }
@@ -106,16 +82,20 @@ public class AvroReader {
     log.info("" + i + " files loaded");
     }
      
-  /** Process <em>Avro</em> alert file.
-     * @param dataFN   The filename of the data file.
+  /** Process <em>Avro</em> alert file or directory with files (recursive).
+     * @param fn The filename of the data file
+     *           or directory with files.
      * @thows IOException If problem with file reading.
      * @throws AstroLabNetException If anything wrong. */
   // TBD: use generated schema (problem: it mixes ztf.alert namespace and class
-  public void process(String dataFN) throws IOException, AstroLabNetException  {
-    log.info("Loading " + dataFN);
-    File file = new File(dataFN);
+  public void process(String fn) throws IOException, AstroLabNetException  {
+    log.info("Loading " + fn);
+    File file = new File(fn);
+    if (file.isDirectory()) {
+      processDir(fn);
+      }
     if (!file.isFile()) {
-      log.error("Not a file: " + dataFN);
+      log.error("Not a file/directory: " + fn);
       return;
       }
     /*
@@ -140,7 +120,7 @@ public class AvroReader {
   private void processAlert(GenericRecord record) {
     getSimpleFields(record, new String[]{"candid"});
     String key = record.get("objectId").toString(); 
-    toCatalog(key, "d", "type", "alert"); 
+    toCatalog(key, "i", "type", "alert"); 
     register(record, key, "r", new String[]{"candid"});
     register(record, key, "d", getSimpleFields(record, new String[]{"candid"}));
     processCandidate((GenericRecord)(record.get("candidate"))); // TBD: check cast
@@ -157,7 +137,7 @@ public class AvroReader {
     * @param record The {@link GenericRecord} with <em>candidate</em>. */
   private void processCandidate(GenericRecord record) {
     String key = record.get("candid").toString();
-    toCatalog(key, "d", "type", "candidate");
+    toCatalog(key, "i", "type", "candidate");
     register(record, key, "d", getSimpleFields(record, new String[]{}));
     }
     
@@ -170,7 +150,7 @@ public class AvroReader {
     if (record.get("candid") != null) {
       key = record.get("candid").toString();
       }
-    toCatalog(key, "d", "type", "prv_candidate");
+    toCatalog(key, "i", "type", "prv_candidate");
     register(record, key, "d", getSimpleFields(record, new String[]{}));
     }
     
@@ -179,7 +159,7 @@ public class AvroReader {
     * @param key0   The <em>HBase</em> key to use in absence of <em>Avro</em> key. */
   private void processCutoutScience(GenericRecord record,
                                     String        key) {
-    toCatalog(key, "d", "type", "cutoutScience");
+    toCatalog(key, "i", "type", "cutoutScience");
     register(record, key, "d", getSimpleFields(record, new String[]{}));
     register(record, key, "d", new String[]{"stampData"});
     }

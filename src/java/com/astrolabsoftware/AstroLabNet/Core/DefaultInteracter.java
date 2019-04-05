@@ -24,7 +24,10 @@ import org.json.JSONArray;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.io.IOException;
 import java.nio.file.FileSystems;
+import java.net.URL;
+import java.net.InetAddress;
 
 // Log4J
 import org.apache.log4j.Logger;
@@ -87,7 +90,7 @@ public abstract class DefaultInteracter implements Interacter {
       interpreter.set("w", this);
       }
     catch (EvalError e) {
-      log.error("Can't set CommandLinetasks references", e);
+      log.error("Can't set CommandLine references", e);
       }
     String init = "";
     // Source init.bsh
@@ -105,7 +108,8 @@ public abstract class DefaultInteracter implements Interacter {
       }
     // Populate Servers
     if (servers().isEmpty()) {
-      addServer("Local Host", "http://localhost:8998", "http://localhost:4040", "http://localhost:8080");
+      log.info("Adding Default Local Server");  
+      addServer("Local", "http://localhost:8998", "http://localhost:4040", "http://localhost:8080");
       }
     getServersFromTopology(servers());
     // Read Actions
@@ -146,6 +150,7 @@ public abstract class DefaultInteracter implements Interacter {
     * Runs recursively, stops whje n no new {@link Server} found.
     * @param servers The {@link List} of existing {@link Server}s to scan for new {@link Server}s. */
   private void getServersFromTopology(List<Server> servers) {
+    log.info("Populating Servers");
     List<Server> knownServers = new ArrayList<>();
     List<Server> newServers   = new ArrayList<>();
     for (Server s : servers) {
@@ -204,6 +209,17 @@ public abstract class DefaultInteracter implements Interacter {
       }
     }    
     
+  
+  /** TBD */
+  public Server server(String name) {
+    for (Server s : servers()) {
+      if (s.name().equals(name)) {
+        return s;
+        }
+      }
+    return null;
+    }
+    
   @Override
   public Server addServer(String name,
                           String urlLivy,
@@ -211,6 +227,18 @@ public abstract class DefaultInteracter implements Interacter {
                           String urlHBase) {
     if (urlLivy == null) {
       log.warn("No Livy server defined for " + name);
+      return null;
+      }
+    
+    try {
+      String ip = new URL(urlLivy).getHost();
+      if (!InetAddress.getByName(ip).isReachable(1000)) { // 1s timeout
+        log.warn("Livy server " + name + " is unreachable: " + urlLivy);
+        return null;
+        }
+      }
+    catch (IOException e) {
+      log.error("Livy server " + name + " is unreachable: " + urlLivy, e);
       return null;
       }
     for (Server server : servers()) {

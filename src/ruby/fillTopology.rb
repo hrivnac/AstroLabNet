@@ -1,12 +1,12 @@
 # Fill Topology
 ###############
 # Local Host
-put 'astrolabnet.topology.1', 'Local Host', 'i:name',     'Local Host'
-put 'astrolabnet.topology.1', 'Local Host', 'i:location', 'here'
-put 'astrolabnet.topology.1', 'Local Host', 'd:livy',     'http://localhost:8998'
-put 'astrolabnet.topology.1', 'Local Host', 'd:spark',    'http://localhost:4040'
-put 'astrolabnet.topology.1', 'Local Host', 'd:hbase',    'http://localhost:8080'
-put 'astrolabnet.topology.1', 'Local Host', 'c:comment',  'Default server'
+put 'astrolabnet.topology.1', 'Local', 'i:name',     'Local Host'
+put 'astrolabnet.topology.1', 'Local', 'i:location', 'here'
+put 'astrolabnet.topology.1', 'Local', 'd:livy',     'http://localhost:8998'
+put 'astrolabnet.topology.1', 'Local', 'd:spark',    'http://localhost:4040'
+put 'astrolabnet.topology.1', 'Local', 'd:hbase',    'http://localhost:8080'
+put 'astrolabnet.topology.1', 'Local', 'c:comment',  'Default server'
 # LAL
 put 'astrolabnet.topology.1', 'LAL', 'i:name',     'LAL'
 put 'astrolabnet.topology.1', 'LAL', 'i:location', 'Orsay'

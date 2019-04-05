@@ -42,35 +42,6 @@ Using <b>Script</b> button on thre top MenuBar.
 
 <hr/>
 
-<h2>Examples of CLI scripts</h2>
-<pre>
-// Send command to first Spark server
-String result = w.servers().get(0).livy().executeCommand("1+1", Language.PYTHON);
-System.out.println(result);
-System.exit(1);
-
-// Send job to first Spark server
-String result = w.servers().get(0).livy().sendJob("local:.../AstroLabNet/lib/PiJob.jar", "com.astrolabsoftware.AstroLabNet.DB.Jobs.PiJob");
-System.out.println(result);
-System.exit(1);
-
-// Load an Avro Alarm into the (first) Catalog
-import com.astrolabsoftware.AstroLabNet.Avro.AvroReader;
-new AvroReader(w.servers().get(0), null).process("xxx.avro");
-System.exit(1);
-
-// Load all Avro Alarm from a directory into the (first) Catalog
-import com.astrolabsoftware.AstroLabNet.Avro.AvroReader;
-new AvroReader(w.servers().get(0), null).processDir("yyy");
-System.exit(1);
-
-// Show the whole (first) catalog
-System.out.println(w.servers().get(0).hbase().scan("astrolabnet.catalog.1"));
-System.exit(1);
-</pre>
-
-<hr/>
-
 <h2>Commands available in CLI</h2>
 <pre>
 w.servers();

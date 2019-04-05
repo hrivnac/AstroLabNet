@@ -1,0 +1,7 @@
+// Import Avro Alerts from file or directory
+// -----------------------------------------
+import com.astrolabsoftware.AstroLabNet.Avro.AvroReader;
+Server server = w.server("Local");
+AvroReader reader = new AvroReader(server, null);
+reader.process("../data/test/alarms/697251920015010010.avro");
+System.exit(1);
