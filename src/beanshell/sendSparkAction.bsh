@@ -1,5 +1,7 @@
 // Send Action to Spark server
 // ---------------------------
-String result = w.server("Local").livy().executeCommand("1+1", Language.PYTHON);
+Action action = w.action("ScalaPiAction");
+Server server = w.server("Local");
+String result = server.livy().executeAction(action);
 System.out.println(result);
 System.exit(1);

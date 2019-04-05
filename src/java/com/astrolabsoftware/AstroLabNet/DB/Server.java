@@ -1,7 +1,7 @@
 package com.astrolabsoftware.AstroLabNet.DB;
 
 import com.astrolabsoftware.AstroLabNet.HBaser.HBaseRESTClient;
-import com.astrolabsoftware.AstroLabNet.Livyser.LivyRESTClient;
+import com.astrolabsoftware.AstroLabNet.Livyser.LivyClient;
 
 // Log4J
 import org.apache.log4j.Logger;
@@ -39,7 +39,7 @@ public class Server extends Element {
     * @param urlLivy  The url of the Spark Server Livy interface. */
   public void setLivy(String url) {
     _urlLivy = url;
-    _livy = new LivyRESTClient(url);
+    _livy = new LivyClient(url);
     }
 
   /** Set Spark Server.
@@ -73,9 +73,9 @@ public class Server extends Element {
     return _urlHBase;
     }  
     
-  /** Give {@link LivyRESTClient}.
-    * @return The {@link LivyRESTClient}. */
-  public LivyRESTClient livy() {
+  /** Give {@link LivyClient}.
+    * @return The {@link LivyClient}. */
+  public LivyClient livy() {
     return _livy;
     }
     
@@ -96,7 +96,7 @@ public class Server extends Element {
   
   private String _urlHBase;
   
-  private LivyRESTClient _livy;
+  private LivyClient _livy;
   
   private HBaseRESTClient _hbase;
   

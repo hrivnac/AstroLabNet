@@ -45,8 +45,8 @@ public abstract class DefaultInteracter implements Interacter {
     addAction("Test", "1+1", Language.PYTHON);
     String ext;
     Language lang = Language.PYTHON;
-    for (String actionTxt : new String[] {"pi.py",
-                                          "pi.scala"}) {
+    for (String actionTxt : new String[] {"PythonPiAction.py",
+                                          "ScalaPiAction.scala"}) {
       try {
         ext = actionTxt.substring(actionTxt.lastIndexOf(".") + 1);
         switch (ext) { // TBD: put into Language
@@ -75,9 +75,9 @@ public abstract class DefaultInteracter implements Interacter {
     
   @Override
   public void readJobs() {
-    addJob("JavaPi",   "../lib/JavaPiJob.jar",  "com.astrolabsoftware.AstroLabNet.DB.Jobs.JavaPiJob"); // TBD: should be automatic
-    addJob("ScalaPi",  "../lib/ScalaPiJob.jar", "com.astrolabsoftware.AstroLabNet.DB.Jobs.ScalaPiJob"); // TBD: should be automatic
-    addJob("PythonPi", "../lib/PythonPiJob.py", null); // TBD: should be automatic
+    addJob("JavaPiJob",   "../lib/JavaPiJob.jar",  "com.astrolabsoftware.AstroLabNet.DB.Jobs.JavaPiJob"); // TBD: should be automatic
+    addJob("ScalaPiJob",  "../lib/ScalaPiJob.jar", "com.astrolabsoftware.AstroLabNet.DB.Jobs.ScalaPiJob"); // TBD: should be automatic
+    addJob("PythonPiJob", "../lib/PythonPiJob.py", null); // TBD: should be automatic
     }
      
   @Override
@@ -254,6 +254,16 @@ public abstract class DefaultInteracter implements Interacter {
       }
     return server;
     }
+  
+  /** TBD */
+  public Action action(String name) {
+    for (Action a : actions()) {
+      if (a.name().equals(name)) {
+        return a;
+        }
+      }
+    return null;
+    }
     
   @Override
   public Action addAction(String   name,
@@ -267,6 +277,16 @@ public abstract class DefaultInteracter implements Interacter {
     return action;
     }
     
+  /** TBD */
+  public Job job(String name) {
+    for (Job j : jobs()) {
+      if (j.name().equals(name)) {
+        return j;
+        }
+      }
+    return null;
+    }
+      
   @Override
   public Job addJob(String   name,
                     String   file,

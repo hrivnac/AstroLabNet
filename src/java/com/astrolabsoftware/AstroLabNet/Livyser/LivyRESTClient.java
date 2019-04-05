@@ -295,13 +295,15 @@ public class LivyRESTClient {
   public String checkBatchProgress(int idBatch,
                                    int tries,
                                    int sleep) {
-    String result = "";
+    String resultString = "";
+    JSONObject result = null;
     boolean success = false;
     int i = 0;
     while (!success && i++ <= tries) {
       try {
         Thread.sleep(1000 * sleep);
-        result = SmallHttpClient.get(_url + "/batches/" + idBatch, null);
+        resultString = SmallHttpClient.get(_url + "/batches/" + idBatch, null);
+        result = new JSONObject(resultString);
         success = true;
         }
       catch (AstroLabNetException e) {
@@ -311,9 +313,9 @@ public class LivyRESTClient {
         break;
         }
       }
-    if (success) {
-      log.debug("Result:\n" + result.trim());
-      return result;
+    if (success && result != null) {
+      log.debug("Result:\n" + result.toString(2));
+      return result.toString(2);
       }
     else {
       return null;
@@ -331,13 +333,15 @@ public class LivyRESTClient {
   public String getBatchLog(int idBatch,
                             int tries,
                             int sleep) {
-    String result = "";
+    String resultString = "";
+    JSONObject result = null;
     boolean success = false;
     int i = 0;
     while (!success && i++ <= tries) {
       try {
         Thread.sleep(1000 * sleep);
-        result = SmallHttpClient.get(_url + "/batches/" + idBatch + "/log", null);
+        resultString = SmallHttpClient.get(_url + "/batches/" + idBatch + "/log", null);
+        result = new JSONObject(resultString);
         success = true;
         }
       catch (AstroLabNetException e) {
@@ -347,9 +351,9 @@ public class LivyRESTClient {
         break;
         }
       }
-    if (success) {
-      log.debug("Result:\n" + result.trim());
-      return result;
+    if (success && result != null) {
+      log.debug("Result:\n" + result.toString(2));
+      return result.toString(2);
       }
     else {
       return null;
@@ -367,9 +371,10 @@ public class LivyRESTClient {
                                     int tries,
                                     int sleep) {
     log.info("Waiting for Action result");
-    String resultString = null;  
-    JSONObject result;
+    String resultString = "";  
+    JSONObject result = null;
     double progress;
+    boolean success = false;
     while (true) {
       try {
         resultString = checkSessionProgress(idSession, idStatement, tries, sleep);
@@ -377,15 +382,22 @@ public class LivyRESTClient {
         progress = result.getDouble("progress");
         log.debug("Progress = " + progress);
         if (progress == 1.0) {
+          success = true;
           break;
           }
-        Thread.sleep(1000 + sleep);
+        Thread.sleep(1000 * sleep);
         }
       catch (InterruptedException e) {
         break;
         }          
       }
-    return resultString;
+    if (success && result != null) {
+      log.debug("Result:\n" + result.toString(2));
+      return result.toString(2);
+      }
+    else {
+      return null;
+      }
     }
      
   /** Wait for the job to deliver result.
@@ -397,9 +409,10 @@ public class LivyRESTClient {
                                  int tries,
                                  int sleep) {
     log.info("Waiting for Job result");
-    String resultString = null;  
-    JSONObject result;
+    String resultString = "";  
+    JSONObject result = null;
     String state;
+    boolean success = false;
     while (true) {
       try {
         resultString = checkBatchProgress(idBatch, tries, sleep);
@@ -407,6 +420,7 @@ public class LivyRESTClient {
         state = result.getString("state");
         log.debug("State = " + state);
         if (state.equals("success") || state.equals("dead")) { // TBD: handle failure
+          success = true;
           break;
           }
         Thread.sleep(1000 + sleep);
@@ -415,7 +429,13 @@ public class LivyRESTClient {
         break;
         }          
       }
-    return resultString;
+    if (success && result != null) {
+      log.debug("Result:\n" + result.toString(2));
+      return result.toString(2);
+      }
+    else {
+      return null;
+      }
     }
   
   /** Execute action, try until succeeds, wait for result.
@@ -423,7 +443,7 @@ public class LivyRESTClient {
     * @param language The command {@link Language}.
     * @return         The result as <em>Json</em> string. */
   public String executeAction(String   cmd,
-                               Language language) {
+                              Language language) {
     log.info("Executing command '" + cmd + "' in " + language + " and waiting for result");
     int sessionId   = initSession(language,       Integer.MAX_VALUE, 1);
     int statementId = sendCommand(sessionId, cmd, Integer.MAX_VALUE, 1);
