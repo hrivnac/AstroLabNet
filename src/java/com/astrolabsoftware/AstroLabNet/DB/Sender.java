@@ -1,6 +1,5 @@
 package com.astrolabsoftware.AstroLabNet.DB;
 
-
 // Java
 import java.util.Map;
 import java.util.HashMap;

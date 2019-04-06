@@ -1,6 +1,5 @@
 package com.astrolabsoftware.AstroLabNet.Avro;
 
-import com.astrolabsoftware.AstroLabNet.Utils.Init;
 import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
 import com.astrolabsoftware.AstroLabNet.DB.Server;
 

@@ -2,7 +2,7 @@ package com.astrolabsoftware.AstroLabNet.Browser.Reps;
 
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
-import com.astrolabsoftware.AstroLabNet.HBaser.HBaseRESTClient;
+import com.astrolabsoftware.AstroLabNet.HBaser.HBaseClient;
 import com.astrolabsoftware.AstroLabNet.Livyser.LivyClient;
 import com.astrolabsoftware.AstroLabNet.Livyser.Language;
 import com.astrolabsoftware.AstroLabNet.DB.*;
@@ -147,7 +147,7 @@ public class ServerRep extends ElementRep {
     
   /** Give HBase Server.
     * @return The HBase Server. */
-  public HBaseRESTClient hbase() {
+  public HBaseClient hbase() {
     return server().hbase();
     }
     

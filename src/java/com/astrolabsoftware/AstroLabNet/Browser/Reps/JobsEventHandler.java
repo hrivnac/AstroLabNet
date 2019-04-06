@@ -5,7 +5,6 @@ import com.astrolabsoftware.AstroLabNet.Livyser.Language;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
 
 // JavaFX
-import javafx.event.EventHandler;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.event.ActionEvent;

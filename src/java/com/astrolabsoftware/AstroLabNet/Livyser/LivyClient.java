@@ -1,20 +1,6 @@
 package com.astrolabsoftware.AstroLabNet.Livyser;
 
-import com.astrolabsoftware.AstroLabNet.Utils.SmallHttpClient;
-import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
 import com.astrolabsoftware.AstroLabNet.DB.*;
-
-// JavaFX
-import javafx.util.Pair;
-
-// org.json
-import org.json.JSONObject;
-import org.json.JSONArray;
-import org.json.JSONException;
-
-// Java
-import java.util.List;
-import java.util.ArrayList;
 
 // Log4J
 import org.apache.log4j.Logger;

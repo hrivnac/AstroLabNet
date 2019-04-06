@@ -20,13 +20,10 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.control.ScrollPane;
 import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.geometry.Orientation;
-
-// org.json
 
 // Java
 import java.util.List;

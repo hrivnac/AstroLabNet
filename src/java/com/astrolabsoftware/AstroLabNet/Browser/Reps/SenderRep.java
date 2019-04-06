@@ -19,7 +19,6 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.control.ScrollPane;
 import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
@@ -29,23 +28,16 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-// org.json
-
 // Java
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
-import java.io.File;
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
-import java.io.File;
-import java.io.File;
-import java.io.IOException;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 import java.util.jar.Attributes;
 import java.util.Iterator;
+import java.io.File;
+import java.io.IOException;
 
 // Java
 import java.util.Optional;

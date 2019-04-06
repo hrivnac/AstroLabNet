@@ -7,7 +7,6 @@ import com.astrolabsoftware.AstroLabNet.Browser.Reps.*;
 // JavaFX
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeView;
-import javafx.scene.control.TreeCell;
 import javafx.util.Callback;
 
 /** <code>TreeCellCallback</code> handles {@link Callback}s

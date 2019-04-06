@@ -9,7 +9,6 @@ import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
 // JavaFX
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeView;
-import javafx.scene.control.TreeCell;
 import javafx.scene.control.MenuItem;
 import javafx.event.Event;
 import javafx.event.EventTarget;

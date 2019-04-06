@@ -15,9 +15,6 @@ import javax.swing.BorderFactory;
 // Bean Shell
 import bsh.util.JConsole;
 import bsh.Interpreter;
-import bsh.util.JConsole;
-
-// Java
 
 // Log4J
 import org.apache.log4j.Logger;

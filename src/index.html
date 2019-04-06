@@ -36,12 +36,13 @@ java -jar AstroLabNet.exe.jar
 </pre>
 The full help:
 <pre>
-java -jar AstroLabNet.exe.jar -h                
+$ java -jar AstroLabNet.exe.jar -h                
 usage: java -jar AstroLabNet.exe.jar
+ -b,--browser         start graphical browser (default)
  -c,--cli             start command line
  -h,--help            show help
  -q,--quiet           minimal direct feedback
- -s,--source &lt;file&gt;   source bsh file (init.bsh is also read)
+ -s,--source <file>   source bsh file (init.bsh is also read)
 </pre>
 The application will try to connect to your local Server
 and from it to other know Servers.
@@ -51,7 +52,7 @@ write a custom <code>init.bsh</code> file in your run directory:
 <pre>
 w.addServer("LAL", "http://vm-75222.lal.in2p3.fr:21111", "http://vm-75222.lal.in2p3.fr:20001", "http://134.158.74.54:8080");
 </pre>
-Examples of <em>BeanShell</em> scripts to load:
+Examples of <em>BeanShell</em> scripts to load (or type on the command line):
 <pre>
 @BSH@
 </pre>
