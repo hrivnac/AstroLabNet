@@ -1,0 +1,7 @@
+// Create and Send Action to Spark server
+// --------------------------------------
+Action action = w.addAction("PythonTestAction", "1+1", Language.PYTHON);
+Server server = w.server("Local");
+String result = server.livy().executeAction(action);
+System.out.println(result);
+System.exit(1);

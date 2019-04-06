@@ -1,0 +1,7 @@
+// Create and Send Job to Spark server
+// -----------------------------------
+Job job = w.addJob("JavaTestJob", "../lib/JavaPiJob.jar", "com.astrolabsoftware.AstroLabNet.DB.Jobs.JavaPiJob");
+Server server = w.server("Local");
+String result = server.livy().sendJob(job);
+System.out.println(result);
+System.exit(1);
