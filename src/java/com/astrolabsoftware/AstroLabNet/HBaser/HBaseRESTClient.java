@@ -82,9 +82,9 @@ public class HBaseRESTClient {
     * </pre>
     * @param table     The requested table name.
     * @param scannerId The assigned <em>scanner</em> id.
-    * @return             The command result, in <em>xml</em>. */
-  public String getResults(String table,
-                           String scannerId) {
+    * @return          The command result, in <em>json</em>, values byte-encoded. */
+  public String getResultsEncoded(String table,
+                                  String scannerId) {
     Map<String, String> headers = new HashMap<>();
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
@@ -104,10 +104,10 @@ public class HBaseRESTClient {
     
   /** Scan table.
     * @param table The requested table name.
-    * @return      The command result, in <em>xml</em>. */
-  public String scan(String table) {
+    * @return      The command result, in <em>json</em>, values byte-encoded. */
+  public String scanEncoded(String table) {
     String scannerId = initScanner(table);
-    return getResults(table, scannerId);
+    return getResultsEncoded(table, scannerId);
     }
     
   /** Initiate <em>scanner</em> on the server.
@@ -133,6 +133,12 @@ public class HBaseRESTClient {
       AstroLabNetException.reportException("Request has failed", e, log);
       return;
       }
+    }
+    
+  /** Give <em>HBase</em> url.
+    * @return The  <em>HBase</em> url. */
+  public String url() {
+    return _url;
     }
 
   @Override

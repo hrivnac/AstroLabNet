@@ -1,0 +1,5 @@
+// Scan Full Journal
+// -----------------
+Server server = w.server("Local");
+System.out.println(server.hbase().scan("astrolabnet.journal.1"));
+System.exit(1);
