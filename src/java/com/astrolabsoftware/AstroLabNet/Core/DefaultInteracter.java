@@ -8,6 +8,7 @@ import com.astrolabsoftware.AstroLabNet.Utils.StringFile;
 import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
 import com.astrolabsoftware.AstroLabNet.Utils.Init;
 import com.astrolabsoftware.AstroLabNet.Utils.Info;
+import com.astrolabsoftware.AstroLabNet.Utils.Network;
 import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
 import com.astrolabsoftware.AstroLabNet.Livyser.Language;
 import com.astrolabsoftware.AstroLabNet.Core.Interacter;
@@ -202,6 +203,7 @@ public abstract class DefaultInteracter implements Interacter {
         }
       catch (Exception e) {
         log.warn("Cannot parse Topology table", e);
+
         }
       }
     if (!newServers.isEmpty()) {
@@ -248,16 +250,8 @@ public abstract class DefaultInteracter implements Interacter {
       log.warn("No Livy server defined for " + name);
       return null;
       }
-    
-    try {
-      String ip = new URL(urlLivy).getHost();
-      if (!InetAddress.getByName(ip).isReachable(1000)) { // 1s timeout
-        log.warn("Livy server " + name + " is unreachable: " + urlLivy);
-        return null;
-        }
-      }
-    catch (IOException e) {
-      log.error("Livy server " + name + " is unreachable: " + urlLivy, e);
+    if (!Network.checkPort(urlLivy)) { 
+      log.warn("Livy server " + name + " is unreachable: " + urlLivy);
       return null;
       }
     for (Server server : servers()) {

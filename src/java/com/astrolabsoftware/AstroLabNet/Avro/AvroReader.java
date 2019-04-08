@@ -97,8 +97,9 @@ public class AvroReader {
     File file = new File(fn);
     if (file.isDirectory()) {
       processDir(fn);
+      return;
       }
-    if (!file.isFile()) {
+    else if (!file.isFile()) {
       log.error("Not a file/directory: " + fn);
       return;
       }
