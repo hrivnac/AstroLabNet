@@ -3,6 +3,11 @@ package com.astrolabsoftware.AstroLabNet.HBaser;
 import com.astrolabsoftware.AstroLabNet.Utils.SmallHttpClient;
 import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
 
+// org.json
+import org.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONException;
+
 // Java
 import java.util.Map;
 import java.util.HashMap;
@@ -34,18 +39,18 @@ public class HBaseRESTClient {
     * </pre>
     * @return The full server status. */
   public String getStatus() {
-    String result = "";
+    String resultString = "";
     try {
-      result = SmallHttpClient.get(_url + "/version/cluster", null) + "\n"
-             + SmallHttpClient.get(_url + "/status/cluster",  null) + "\n"
-             + SmallHttpClient.get(_url + "/",                null);
+      resultString = SmallHttpClient.get(_url + "/version/cluster", null) + "\n"
+                   + SmallHttpClient.get(_url + "/status/cluster",  null) + "\n"
+                   + SmallHttpClient.get(_url + "/",                null);
       }
     catch (AstroLabNetException e) {
       log.info(e);
       AstroLabNetException.reportException("Request has failed", e, log);
       }
-    log.debug("Result:\n" + result.trim());
-    return result;
+    log.debug("Result:\n" + resultString.trim());
+    return resultString;
     }
     
   /** Initiate <em>scanner</em> on the server.
@@ -57,17 +62,18 @@ public class HBaseRESTClient {
   // TBD: parametrise batch size
   public String initScanner(String table) {
     log.info("Creating Scanner for " + table);
-    String result = "";
+    String resultString = "";
+    JSONObject result = null;
     try {
-      result = SmallHttpClient.putXML(_url + "/" + table + "/scanner", "<Scanner batch='100'/>", null, "Location");
+      resultString = SmallHttpClient.putXML(_url + "/" + table + "/scanner", "<Scanner batch='100'/>", null, "Location");
       }
     catch (AstroLabNetException e) {
       log.info(e);
       AstroLabNetException.reportException("Request has failed", e, log);
       return "";
       }
-    log.debug("Result:\n" + result.trim());
-    return result.substring(result.lastIndexOf("/") + 1);
+    log.debug("Result:\n" + resultString.trim());
+    return resultString.substring(resultString.lastIndexOf("/") + 1);
     }
     
   /** Get results.
@@ -82,16 +88,18 @@ public class HBaseRESTClient {
     Map<String, String> headers = new HashMap<>();
     headers.put("Accept", "application/json");
     headers.put("Content-Type", "application/json");
-    String result = "";
+    String resultString = "";
+    JSONObject result = null;
     try {
-      result = SmallHttpClient.get(_url + "/" + table + "/scanner/" + scannerId, headers);
+      resultString = SmallHttpClient.get(_url + "/" + table + "/scanner/" + scannerId, headers);
+      result = new JSONObject(resultString);
       }
     catch (AstroLabNetException e) {
       log.info(e);
       AstroLabNetException.reportException("Request has failed", e, log);
       }
-    log.debug("Result:\n" + result.trim());
-    return result;
+    log.debug("Result:\n" + result.toString(2));
+    return result.toString(2);
     }
     
   /** Scan table.
@@ -107,17 +115,14 @@ public class HBaseRESTClient {
     * PUT /-table-/fakerow
     * </pre>
     * @param table   The requested table name.
-    * @param key     The row key.
-    * @param columns The columns as <tt>family:column</tt>.
-    * @param values  The columns as <tt>family:column</tt>. */
-  public void put(String   table,
-                  String   key,
-                  String[] columns,
-                  String[] values) {
+    * @param key     The row key (byte-encoded).
+    * @param entries The {@link Map} of columns in the form <code>family:column -&gt; value</code> (byte-encoded). */
+  public void putEncoded(String              table,
+                         String              key,
+                         Map<String, String> entries) {
     String rowsXML = "<?xml version='1.0' encoding='UTF-8' standalone='yes'?><CellSet><Row key='" + key + "'>";
-    String[] r;
-    for (int i = 0; i < columns.length; i++) {
-      rowsXML += "<Cell column='" + columns[i] + "'>" + values[i] + "</Cell>";
+    for (Map.Entry<String, String> entry : entries.entrySet()) { 
+      rowsXML += "<Cell column='" + entry.getKey() + "'>" + entry.getValue() + "</Cell>";
       }
     rowsXML += "</Row></CellSet>";
     try {

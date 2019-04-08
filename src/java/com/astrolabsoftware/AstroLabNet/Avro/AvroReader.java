@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Base64;
 
 // ZTF
 import ztf.alert.candidate;
@@ -200,11 +199,10 @@ public class AvroReader {
                          String family,
                          String column,
                          String value) {
-    //log.info(key + " => " + family + ":" + column + " = " + value);
     _server.hbase().put("astrolabnet.catalog.1",
-                        encode(key),
-                        new String[]{encode(family + ":" + column)},
-                        new String[]{encode(value)});
+                        key,
+                        new String[]{family + ":" + column},
+                        new String[]{value});
     }
   
   /** Get {@link Field}s corresponding to simple types
@@ -239,13 +237,6 @@ public class AvroReader {
         }
       }
     return fields.toArray(new String[]{});
-    }
-    
-  /** Encode {@link String} to REST server string.
-    * @param s The string.
-    * @return The encodeed REST server string. */
-  private String encode(String s) {
-    return Base64.getEncoder().encodeToString(s.getBytes());
     }
     
   private Server _server;  

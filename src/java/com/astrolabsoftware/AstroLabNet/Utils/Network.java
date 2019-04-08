@@ -9,11 +9,13 @@ import java.net.MalformedURLException;
 import org.apache.log4j.Logger;
 
 /** <code>Network</code> provides netowk utilities.
+  * @opt attributes
+  * @opt operations
+  * @opt types
+  * @opt visibility
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public class Network {
 
-  
-  
   /** Check server availability..
     * @param urlS The server url.
     * @return     Whether server can be reached. */
