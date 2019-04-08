@@ -1,8 +1,10 @@
 package com.astrolabsoftware.AstroLabNet.Browser.Reps;
 
 import com.astrolabsoftware.AstroLabNet.Journal.Record;
+import com.astrolabsoftware.AstroLabNet.Utils.IDFactory;
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
+import com.astrolabsoftware.AstroLabNet.Browser.Reps.EventHandlers.*;
 import com.astrolabsoftware.AstroLabNet.DB.*;
 
 // JavaFX
@@ -95,7 +97,7 @@ public class TaskRep extends ElementRep {
           }
         JSONObject d = data;
         log.info(status + " : " + d);
-        new Record(session().server()).record("Action", "execute", "0", "0", null, null, output.toString(2), "testing"); // TBD: fill all fields
+        new Record(session().server()).record(IDFactory.newID(), "Action", "execute", "0", "0", null, null, output.toString(2), "testing"); // TBD: fill all fields
         // to synchronise threads
         Platform.runLater(new Runnable() {
           @Override

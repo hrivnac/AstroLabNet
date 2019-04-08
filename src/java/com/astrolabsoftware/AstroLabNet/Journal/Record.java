@@ -24,6 +24,7 @@ public class Record {
   
   /** Record entry.
     * Runs assynchronisely.
+    * @param key     The record key, shoul be unique.
     * @param actor   The actor be recorded.
     * @param action  The action to be recorded.
     * @param rc      The result code. 0 means success.
@@ -32,7 +33,8 @@ public class Record {
     * @param after   The id of following action. May be <tt>null</tt>.
     * @param result  The command result to be recorded. May be <tt>null</tt>.      
     * @param comment The comment to be recorded. May be <tt>null</tt>. */
-  public void record(String actor,
+  public void record(String key,
+                     String actor,
                      String action,
                      String rc,
                      String time,
@@ -46,7 +48,7 @@ public class Record {
         try {
           String[] columns = new String[]{"i:actor", "i:action", "d:rc", "d:time", "d:before", "d:after", "d:result", "c:comment"};
           String[] values  = new String[]{   actor ,    action ,    rc ,    time ,    before ,    after ,    result ,    comment };
-          _hbase.put("astrolabnet.journal.1", IDFactory.newID(), columns, values);
+          _hbase.put("astrolabnet.journal.1", key, columns, values);
           }
         catch (Exception e) {
           log.debug("Can not record: " + action + " of " + actor , e);

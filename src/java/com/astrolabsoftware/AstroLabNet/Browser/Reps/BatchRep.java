@@ -1,8 +1,10 @@
 package com.astrolabsoftware.AstroLabNet.Browser.Reps;
 
 import com.astrolabsoftware.AstroLabNet.Journal.Record;
+import com.astrolabsoftware.AstroLabNet.Utils.IDFactory;
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
+import com.astrolabsoftware.AstroLabNet.Browser.Reps.EventHandlers.*;
 import com.astrolabsoftware.AstroLabNet.DB.*;
 
 // JavaFX
@@ -109,7 +111,7 @@ public class BatchRep extends ElementRep {
           fullLog += logEntry.toString() + "\n";
           }
         log.debug(fullLog);
-        new Record(sender().server()).record("Job", "send", "0", "0", null, null, fullLog, "testing"); // TBD: fill all fields
+        new Record(sender().server()).record(IDFactory.newID(),"Job", "send", "0", "0", null, null, fullLog, "testing"); // TBD: fill all fields
         final String fullLog1 = fullLog; // so it can go to inner fcion
         // to synchronise threads
         Platform.runLater(new Runnable() {

@@ -2,6 +2,7 @@ package com.astrolabsoftware.AstroLabNet.Browser.Reps;
 
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
+import com.astrolabsoftware.AstroLabNet.Browser.Reps.EventHandlers.*;
 import com.astrolabsoftware.AstroLabNet.HBaser.HBaseClient;
 import com.astrolabsoftware.AstroLabNet.Livyser.LivyClient;
 import com.astrolabsoftware.AstroLabNet.Livyser.Language;
@@ -54,26 +55,30 @@ public class ServerRep extends ElementRep {
     }
     
   @Override
+  // R, SQL not offered
   public List<MenuItem> menuItems() {
     List<MenuItem> menuItems = super.menuItems();
-    MenuItem pythonSession = new MenuItem("Python Session", Images.icon(Images.SESSION));
-    MenuItem scalaSession  = new MenuItem("Scala Session",  Images.icon(Images.SESSION));
-    //MenuItem rSession      = new MenuItem("R Session",      Images.icon(Images.SESSION));
-    //MenuItem sqlSession    = new MenuItem("SQL Session",    Images.icon(Images.SESSION));
-    MenuItem sender        = new MenuItem("Sender",         Images.icon(Images.SENDER ));
-    MenuItem source        = new MenuItem("Source",         Images.icon(Images.SOURCE ));
-    pythonSession.setOnAction(new ServerSessionEventHandler(this, Language.PYTHON));
-    scalaSession.setOnAction( new ServerSessionEventHandler(this, Language.SCALA ));
-    //rSession.setOnAction(     new ServerSessionEventHandler(this, Language.R     ));
-    //sqlSession.setOnAction(   new ServerSessionEventHandler(this, Language.SQL   ));
-    sender.setOnAction(       new ServerSenderEventHandler( this                 ));
-    source.setOnAction(       new ServerSourceEventHandler( this                 ));
+    MenuItem pythonSession = new MenuItem("Python Session", Images.icon(Images.SESSION ));
+    MenuItem scalaSession  = new MenuItem("Scala Session",  Images.icon(Images.SESSION ));
+    MenuItem sender        = new MenuItem("Sender",         Images.icon(Images.SENDER  ));
+    MenuItem source        = new MenuItem("Source",         Images.icon(Images.SOURCE  ));
+    MenuItem topology      = new MenuItem("Topology",       Images.icon(Images.TOPOLOGY));
+    MenuItem catalog       = new MenuItem("Catalog",        Images.icon(Images.CATALOG ));
+    MenuItem journal       = new MenuItem("Journal",        Images.icon(Images.JOURNAL ));
+    pythonSession.setOnAction(new ServerSessionEventHandler( this, Language.PYTHON));
+    scalaSession.setOnAction( new ServerSessionEventHandler( this, Language.SCALA ));
+    sender.setOnAction(       new ServerSenderEventHandler(  this                 ));
+    source.setOnAction(       new ServerSourceEventHandler(  this                 ));
+    topology.setOnAction(     new ServerTopologyEventHandler(this                 ));
+    catalog.setOnAction(      new ServerCatalogEventHandler( this                 ));
+    journal.setOnAction(      new ServerJournalEventHandler( this                 ));
     menuItems.add(pythonSession);
     menuItems.add(scalaSession);
-    //menuItems.add(rSession);
-    //menuItems.add(sqlSession);
     menuItems.add(sender);
     menuItems.add(source);
+    menuItems.add(topology);
+    menuItems.add(catalog);
+    menuItems.add(journal);
     update();
     return menuItems;
     }

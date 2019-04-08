@@ -1,8 +1,9 @@
-package com.astrolabsoftware.AstroLabNet.Browser.Reps;
+package com.astrolabsoftware.AstroLabNet.Browser.Reps.EventHandlers;
 
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserCommand;
 import com.astrolabsoftware.AstroLabNet.Livyser.Language;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
+import com.astrolabsoftware.AstroLabNet.Browser.Reps.*;
 
 // JavaFX
 import javafx.event.Event;
@@ -21,24 +22,24 @@ import javafx.stage.StageStyle;
 // Log4J
 import org.apache.log4j.Logger;
 
-/** <code>ActionsEventHandler</code> implements {@link EventHandler} for group of {@link ActionRep}s.
+/** <code>JobsEventHandler</code> implements {@link EventHandler} for group of {@link JobRep}s.
   * @opt attributes
   * @opt operations
   * @opt types
   * @opt visibility
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
-public class ActionsEventHandler implements EventHandler<ActionEvent> {
+public class JobsEventHandler implements EventHandler<ActionEvent> {
 
   /** Create. */
-  public ActionsEventHandler(BrowserCommand command) {
+  public JobsEventHandler(BrowserCommand command) {
     _command = command;
     }
  
   @Override
   public void handle(ActionEvent event) {
     Stage dialog = new Stage();
-    Label titleLabel = new Label("Create New Action");
-    titleLabel.setGraphic(new ImageView(Images.ACTION));
+    Label titleLabel = new Label("Create New Job");
+    titleLabel.setGraphic(new ImageView(Images.JOB));
     Label nameLabel = new Label("name:");
     TextField nameField = new TextField();
     Button python = new Button("as Python");
@@ -95,6 +96,6 @@ public class ActionsEventHandler implements EventHandler<ActionEvent> {
   private BrowserCommand _command;
     
   /** Logging . */
-  private static Logger log = Logger.getLogger(ActionsEventHandler.class);
+  private static Logger log = Logger.getLogger(JobsEventHandler.class);
     
   }
