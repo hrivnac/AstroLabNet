@@ -79,7 +79,7 @@ public class ServerRep extends ElementRep {
     menuItems.add(topology);
     menuItems.add(catalog);
     menuItems.add(journal);
-    update();
+    //update();
     return menuItems;
     }
 
