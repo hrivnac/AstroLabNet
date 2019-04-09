@@ -232,9 +232,6 @@
   <target name="run"
            description="Run in Browser">
     <echo>Browser Run</echo>
- 		<!--copy todir=".">
-			<fileset dir="../src/java/com/astrolabsoftware/AstroLabNet/Core" includes="init.bsh"/>
-      </copy-->
     <java jar="../lib/AstroLabNet.exe.jar"
           fork="true"
           failonerror="true">
@@ -367,6 +364,7 @@
         <path refid="classpath.run"/>
         </classpath>
       </javadoc>
+    <delete file="tmp.bsh"/>
     <concat destfile="tmp.bsh" append="true">
       <path>
         <fileset dir="../src/beanshell" includes="*.bsh"/>
