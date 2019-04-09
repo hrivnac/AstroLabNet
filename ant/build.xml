@@ -163,6 +163,7 @@
     <jar jarfile="../lib/AstroLabNet.jar" index="yes">
       <fileset dir="../build"    includes="**/*.class"/>
       <fileset dir="../src/java" includes="com/astrolabsoftware/AstroLabNet/**/*.properties"/>
+      <fileset dir="../src/java" includes="com/astrolabsoftware/AstroLabNet/**/*.bsh"/>
       <fileset dir="../src/java" includes="com/astrolabsoftware/AstroLabNet/**/*.txt"/>
       <fileset dir="../src/java" includes="com/astrolabsoftware/AstroLabNet/**/*.png"/>
       <fileset dir="../src/java" includes="com/astrolabsoftware/AstroLabNet/**/*.gif"/>

@@ -69,6 +69,7 @@ public class Init {
           
   /** Parse the cli arguments.
     * @param args The cli arguments. */
+  // TBD: find profiles
   private static void parseArgs(String[] args) {
     CommandLineParser parser = new BasicParser();
     Options options = new Options();
@@ -81,6 +82,11 @@ public class Init {
                                    .hasArg()
                                    .withArgName("file")
                                    .create("s"));
+    options.addOption(OptionBuilder.withLongOpt("profile")
+                                   .withDescription("use existing site profile Local (default) or LAL")
+                                   .hasArg()
+                                   .withArgName("name")
+                                   .create("p"));
     try {
       CommandLine line = parser.parse(options, args );
       if (line.hasOption("help")) {
@@ -98,6 +104,9 @@ public class Init {
         }
       if (line.hasOption("source")) {
         _source = line.getOptionValue("source");
+        }
+      if (line.hasOption("profile")) {
+        _profile = line.getOptionValue("profile");
         }
       }
     catch (ParseException e) {
@@ -132,6 +141,12 @@ public class Init {
     return _source;
     }
     
+  /** The site profile to be used.
+    * @return The site profile name. The default is <tt>Local</tt>. */
+  public static String profile() {
+    return _profile;
+    }
+    
   private static boolean _asCLI = false;  
     
   private static boolean _asBrowser = false;  
@@ -139,6 +154,8 @@ public class Init {
   private static boolean _quiet = false;
   
   private static String _source = null;
+  
+  private static String _profile = "Local";
     
   private static String[] WARN = {"org.apache.zookeeper.ZooKeeper",
                                   "org.apache.zookeeper.ClientCnxn"};

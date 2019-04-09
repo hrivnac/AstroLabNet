@@ -38,11 +38,12 @@ The full help:
 <pre>
 $ java -jar AstroLabNet.exe.jar -h                
 usage: java -jar AstroLabNet.exe.jar
- -b,--browser         start graphical browser (default)
- -c,--cli             start command line
- -h,--help            show help
- -q,--quiet           minimal direct feedback
- -s,--source <file>   source bsh file (init.bsh is also read)
+ -b,--browser          start graphical browser (default)
+ -c,--cli              start command line
+ -h,--help             show help
+ -p,--profile <name>   use existing site profile Local (default) or LAL
+ -q,--quiet            minimal direct feedback
+ -s,--source <file>    source bsh file (init.bsh is also read)
 </pre>
 The application will try to connect to your local Server
 and from it to other know Servers.
@@ -121,11 +122,10 @@ ${HBASE_HOME}/bin/hbase shell < ../src/ruby/fillTopology.rb
 <li>Interactive CLI (Swing component in JavaFX Application)
     unresponsive to input. Clash between JavaFX and Swing
     Threads.</li>
+<li>TreeView may react falsely on Right-Click (after update).</li>
 </ul>
 <b><u>ToDos</u></b>
 <ul>
-<li>Save newly created Actions.</li>
-<li>Accept Actions as JAR files.</li>
 <li>Treat entities and data as a graph (network).</li>
 <li>Interface to LSST Alert system.</li>
 <li>Interface to LSST Catalog and data system.</li>
@@ -165,6 +165,7 @@ ${HBASE_HOME}/bin/hbase shell < ../src/ruby/fillTopology.rb
     <li>Better CLI.</li>
     <li>Journal added.</li>
     <li>Topology, Catalog, Journal searchable from GUI and CLI.</li>
+    <li>Added site profiles.</li>
     </ul><li>
 </ul>
 
@@ -182,14 +183,14 @@ ${HBASE_HOME}/bin/hbase shell < ../src/ruby/fillTopology.rb
 
 <h4><a name="Presentations">Presentations</a></h4>
 <ul>
+<li><u>2018:</u>
+    <ul>
+    <li><a href="docsrc/2018.11.13-AstroLabNet.pdf">AstroLabNet (13/11/2018, LAL)</a></li>
+    </ul></li>
 <li><u>2019:</u>
     <ul>
     <li><a href="docsrc/2019.02.19-AstroLabNet.pdf">AstroLabNet Status (19/2/2019, LAL)</a></li>
     <li><a href="docsrc/2019.03.26-AstroLabNet.pdf">AstroLabNet: Catalog and File Server (26/3/2019, LAL)</a></li>
-    </ul></li>
-<li><u>2018:</u>
-    <ul>
-    <li><a href="docsrc/2018.11.13-AstroLabNet.pdf">AstroLabNet (13/11/2018, LAL)</a></li>
     </ul></li>
 </ul>
 </p>

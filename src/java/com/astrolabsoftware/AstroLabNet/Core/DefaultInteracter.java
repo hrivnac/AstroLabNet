@@ -107,6 +107,19 @@ public abstract class DefaultInteracter implements Interacter {
     catch (EvalError e) {
       log.error("Can't evaluate standard BeanShell expression", e);
       }
+    // Load site profile
+    log.info("Loading site profile: " + Init.profile());  
+    try {
+      init = new StringResource("com/astrolabsoftware/AstroLabNet/Core/" + Init.profile() + ".bsh").toString();
+      interpreter.eval(init);
+      }
+    catch (AstroLabNetException e) {
+      log.warn("Site profile " + Init.profile() + " cannot be loaded.");
+      log.debug("Site profile " + Init.profile() + " cannot be loaded.", e);
+      }
+    catch (EvalError e) {
+      log.error("Can't evaluate standard BeanShell expression", e);
+      }
     // Populate Servers
     if (servers().isEmpty()) {
       log.info("Adding Default Local Server");  
