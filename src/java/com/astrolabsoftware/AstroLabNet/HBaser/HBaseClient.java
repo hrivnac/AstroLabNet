@@ -78,6 +78,17 @@ public class HBaseClient extends HBaseRESTClient {
       }
     return answer;
     }
+  /** Get results.
+    * <pre>
+    * GET /-table-/scanner/-scannerId-
+    * </pre>
+    * @param table     The requested table name.
+    * @param scannerId The assigned <em>scanner</em> id.
+    * @return          The command result. */
+  public JSONObject getJSONResults(String table,
+                                   String scannerId) {
+    return new JSONObject(getResultsEncoded(table, scannerId));
+    }
     
   /** Scan table.
     * @param table The requested table name.
@@ -85,6 +96,14 @@ public class HBaseClient extends HBaseRESTClient {
   public String scan(String table) {
     String scannerId = initScanner(table);
     return getResults(table, scannerId);
+    }
+    
+  /** Scan table.
+    * @param table The requested table name.
+    * @return      The command result. */
+  public JSONObject scan2JSON(String table) {
+    String scannerId = initScanner(table);
+    return getJSONResults(table, scannerId);
     }
    
   /** Encode {@link String} to REST server string.

@@ -5,6 +5,7 @@ import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
 import com.astrolabsoftware.AstroLabNet.Browser.Reps.*;
 import com.astrolabsoftware.AstroLabNet.DB.*;
 import com.astrolabsoftware.AstroLabNet.HBaser.HBaseClient;
+import com.astrolabsoftware.AstroLabNet.Journal.JournalTableView;
 
 // JavaFX
 import javafx.scene.text.Text;
@@ -12,6 +13,7 @@ import javafx.scene.text.TextFlow;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Label;
@@ -29,6 +31,9 @@ import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.geometry.Orientation;
+
+// org.json
+import org.json.JSONObject;
 
 // Java
 import java.time.LocalDate;
@@ -128,15 +133,12 @@ public class ServerJournalEventHandler implements EventHandler<ActionEvent> {
     cmdBox.setSpacing(5);
     cmdBox.setAlignment(Pos.CENTER);
     cmdBox.getChildren().addAll(desc, period, selectionBox, buttonBox);
-    // ResultText
-    TextFlow resultText = new TextFlow(); 
-    Text result0 = new Text();
-    result0.setFill(Color.DARKGREEN);
-    resultText.getChildren().add(result0);
-    // ScrollPane = ResultText
+    // ResultTable
+    JournalTableView resultTable = new JournalTableView(); 
+    // ScrollPane = ResultTable
     ScrollPane scrollPane = new ScrollPane();
     scrollPane.setFitToWidth(true);
-    scrollPane.setContent(resultText);
+    scrollPane.setContent(resultTable);
     // Pane = Desc + Cmd + ButtonBox + ScrollPane
     SplitPane pane = new SplitPane();
     pane.setDividerPositions(0.5);
@@ -146,7 +148,9 @@ public class ServerJournalEventHandler implements EventHandler<ActionEvent> {
     search.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent e) {
-        resultText.getChildren().add(new Text(_hbase.scan("astrolabnet.journal.1")));
+        JSONObject json = _hbase.scan2JSON("astrolabnet.journal.1");
+        resultTable.addJSONEntry(json);
+        resultTable.refresh();
         }
       });
     // Show
