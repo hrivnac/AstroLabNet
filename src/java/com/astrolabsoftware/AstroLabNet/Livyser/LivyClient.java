@@ -1,6 +1,7 @@
 package com.astrolabsoftware.AstroLabNet.Livyser;
 
-import com.astrolabsoftware.AstroLabNet.DB.*;
+import com.astrolabsoftware.AstroLabNet.DB.Action;
+import com.astrolabsoftware.AstroLabNet.DB.Job;
 
 // Log4J
 import org.apache.log4j.Logger;

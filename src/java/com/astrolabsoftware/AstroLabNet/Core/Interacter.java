@@ -1,9 +1,16 @@
 package com.astrolabsoftware.AstroLabNet.Core;
 
-import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
-import com.astrolabsoftware.AstroLabNet.Browser.Reps.*;
-import com.astrolabsoftware.AstroLabNet.Browser.Actions.*;
-import com.astrolabsoftware.AstroLabNet.DB.*;
+import com.astrolabsoftware.AstroLabNet.DB.Server;
+import com.astrolabsoftware.AstroLabNet.DB.Action;
+import com.astrolabsoftware.AstroLabNet.DB.Job;
+import com.astrolabsoftware.AstroLabNet.DB.Data;
+import com.astrolabsoftware.AstroLabNet.DB.Channel;
+import com.astrolabsoftware.AstroLabNet.DB.Task;
+import com.astrolabsoftware.AstroLabNet.DB.Batch;
+import com.astrolabsoftware.AstroLabNet.DB.Search;
+import com.astrolabsoftware.AstroLabNet.DB.Session;
+import com.astrolabsoftware.AstroLabNet.DB.Source;
+import com.astrolabsoftware.AstroLabNet.DB.Sender;
 import com.astrolabsoftware.AstroLabNet.Livyser.Language;
 import com.astrolabsoftware.AstroLabNet.Core.Interacter;
 

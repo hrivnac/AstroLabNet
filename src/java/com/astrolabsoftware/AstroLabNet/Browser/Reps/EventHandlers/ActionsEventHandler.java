@@ -1,9 +1,8 @@
 package com.astrolabsoftware.AstroLabNet.Browser.Reps.EventHandlers;
 
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserCommand;
+import com.astrolabsoftware.AstroLabNet.Browser.Components.Images;
 import com.astrolabsoftware.AstroLabNet.Livyser.Language;
-import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
-import com.astrolabsoftware.AstroLabNet.Browser.Reps.*;
 
 // JavaFX
 import javafx.event.Event;

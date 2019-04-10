@@ -1,12 +1,20 @@
 package com.astrolabsoftware.AstroLabNet.Browser.Reps;
 
+import com.astrolabsoftware.AstroLabNet.DB.Server;
+import com.astrolabsoftware.AstroLabNet.DB.Sender;
+import com.astrolabsoftware.AstroLabNet.DB.Source;
+import com.astrolabsoftware.AstroLabNet.DB.Session;
+import com.astrolabsoftware.AstroLabNet.Browser.Reps.EventHandlers.ServerSessionEventHandler;
+import com.astrolabsoftware.AstroLabNet.Browser.Reps.EventHandlers.ServerSenderEventHandler;
+import com.astrolabsoftware.AstroLabNet.Browser.Reps.EventHandlers.ServerSourceEventHandler;
+import com.astrolabsoftware.AstroLabNet.Browser.Reps.EventHandlers.ServerTopologyEventHandler;
+import com.astrolabsoftware.AstroLabNet.Browser.Reps.EventHandlers.ServerCatalogEventHandler;
+import com.astrolabsoftware.AstroLabNet.Browser.Reps.EventHandlers.ServerJournalEventHandler;
+import com.astrolabsoftware.AstroLabNet.Browser.Components.Images;
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
-import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
-import com.astrolabsoftware.AstroLabNet.Browser.Reps.EventHandlers.*;
 import com.astrolabsoftware.AstroLabNet.HBaser.HBaseClient;
 import com.astrolabsoftware.AstroLabNet.Livyser.LivyClient;
 import com.astrolabsoftware.AstroLabNet.Livyser.Language;
-import com.astrolabsoftware.AstroLabNet.DB.*;
 
 // JavaFX
 import javafx.scene.control.TreeItem;

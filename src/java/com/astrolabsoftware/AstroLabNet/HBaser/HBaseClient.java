@@ -1,20 +1,16 @@
 package com.astrolabsoftware.AstroLabNet.HBaser;
 
-import com.astrolabsoftware.AstroLabNet.Utils.SmallHttpClient;
 import com.astrolabsoftware.AstroLabNet.Utils.Coding;
-import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
 
 // org.json
 import org.json.JSONObject;
 import org.json.JSONArray;
-import org.json.JSONException;
 
 // Java
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
-import java.util.Base64;
 
 // Log4J
 import org.apache.log4j.Logger;

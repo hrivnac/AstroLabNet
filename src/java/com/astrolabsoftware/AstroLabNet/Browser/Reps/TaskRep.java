@@ -1,11 +1,12 @@
 package com.astrolabsoftware.AstroLabNet.Browser.Reps;
 
+import com.astrolabsoftware.AstroLabNet.DB.Task;
+import com.astrolabsoftware.AstroLabNet.DB.Session;
+import com.astrolabsoftware.AstroLabNet.Browser.Components.Images;
+import com.astrolabsoftware.AstroLabNet.Browser.Reps.EventHandlers.TaskEventHandler;
 import com.astrolabsoftware.AstroLabNet.Journal.Record;
 import com.astrolabsoftware.AstroLabNet.Utils.IDFactory;
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
-import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
-import com.astrolabsoftware.AstroLabNet.Browser.Reps.EventHandlers.*;
-import com.astrolabsoftware.AstroLabNet.DB.*;
 
 // JavaFX
 import javafx.application.Platform;

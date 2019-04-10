@@ -2,8 +2,6 @@ package com.astrolabsoftware.AstroLabNet.Browser.Components;
 
 // JavaFX
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
-import javafx.scene.text.Font;
 import javafx.scene.paint.Color;
 
 /** <code>HeaderLabel</code>..

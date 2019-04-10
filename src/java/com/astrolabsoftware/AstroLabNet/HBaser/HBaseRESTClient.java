@@ -6,8 +6,6 @@ import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
 
 // org.json
 import org.json.JSONObject;
-import org.json.JSONArray;
-import org.json.JSONException;
 
 // Java
 import java.util.Map;

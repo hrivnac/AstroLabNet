@@ -1,8 +1,7 @@
 package com.astrolabsoftware.AstroLabNet.Browser.Reps;
 
+import com.astrolabsoftware.AstroLabNet.DB.Data;
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
-import com.astrolabsoftware.AstroLabNet.Browser.Reps.EventHandlers.*;
-import com.astrolabsoftware.AstroLabNet.DB.*;
 
 // Log4J
 import org.apache.log4j.Logger;

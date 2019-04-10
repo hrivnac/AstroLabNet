@@ -10,10 +10,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 // org.json
 import org.json.JSONObject;
 import org.json.JSONArray;
-import org.json.JSONException;
 
 // Java
-import java.util.Base64;
 
 // Log4J
 import org.apache.log4j.Logger;

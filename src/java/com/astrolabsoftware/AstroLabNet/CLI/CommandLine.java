@@ -1,9 +1,5 @@
 package com.astrolabsoftware.AstroLabNet.CLI;
 
-import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
-import com.astrolabsoftware.AstroLabNet.Browser.Reps.*;
-import com.astrolabsoftware.AstroLabNet.Browser.Actions.*;
-import com.astrolabsoftware.AstroLabNet.DB.*;
 import com.astrolabsoftware.AstroLabNet.Utils.Info;
 import com.astrolabsoftware.AstroLabNet.Core.DefaultInteracter;
 

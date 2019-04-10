@@ -1,10 +1,30 @@
 package com.astrolabsoftware.AstroLabNet.Browser;
 
-import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
-import com.astrolabsoftware.AstroLabNet.Browser.Reps.*;
-import com.astrolabsoftware.AstroLabNet.Browser.Reps.EventHandlers.*;
-import com.astrolabsoftware.AstroLabNet.Browser.Actions.*;
-import com.astrolabsoftware.AstroLabNet.DB.*;
+import com.astrolabsoftware.AstroLabNet.DB.Element;
+import com.astrolabsoftware.AstroLabNet.DB.Server;
+import com.astrolabsoftware.AstroLabNet.DB.Action;
+import com.astrolabsoftware.AstroLabNet.DB.Job;
+import com.astrolabsoftware.AstroLabNet.DB.Data;
+import com.astrolabsoftware.AstroLabNet.DB.Channel;
+import com.astrolabsoftware.AstroLabNet.DB.Task;
+import com.astrolabsoftware.AstroLabNet.DB.Batch;
+import com.astrolabsoftware.AstroLabNet.DB.Search;
+import com.astrolabsoftware.AstroLabNet.DB.Session;
+import com.astrolabsoftware.AstroLabNet.DB.Source;
+import com.astrolabsoftware.AstroLabNet.DB.Sender;
+import com.astrolabsoftware.AstroLabNet.Browser.Reps.ElementRep;
+import com.astrolabsoftware.AstroLabNet.Browser.Reps.ServerRep;
+import com.astrolabsoftware.AstroLabNet.Browser.Reps.ActionRep;
+import com.astrolabsoftware.AstroLabNet.Browser.Reps.JobRep;
+import com.astrolabsoftware.AstroLabNet.Browser.Reps.DataRep;
+import com.astrolabsoftware.AstroLabNet.Browser.Reps.ChannelRep;
+import com.astrolabsoftware.AstroLabNet.Browser.Reps.TaskRep;
+import com.astrolabsoftware.AstroLabNet.Browser.Reps.BatchRep;
+import com.astrolabsoftware.AstroLabNet.Browser.Reps.SearchRep;
+import com.astrolabsoftware.AstroLabNet.Browser.Components.Images;
+import com.astrolabsoftware.AstroLabNet.Browser.Reps.EventHandlers.ActionsEventHandler;
+import com.astrolabsoftware.AstroLabNet.Browser.Reps.EventHandlers.JobsEventHandler;
+import com.astrolabsoftware.AstroLabNet.Browser.Reps.EventHandlers.ServersEventHandler;
 import com.astrolabsoftware.AstroLabNet.Livyser.Language;
 import com.astrolabsoftware.AstroLabNet.CLI.CommandLine;
 

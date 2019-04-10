@@ -1,33 +1,23 @@
 package com.astrolabsoftware.AstroLabNet.Browser.Reps.EventHandlers;
 
+import com.astrolabsoftware.AstroLabNet.Browser.Reps.ServerRep;
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
-import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
-import com.astrolabsoftware.AstroLabNet.Browser.Reps.*;
-import com.astrolabsoftware.AstroLabNet.DB.*;
+import com.astrolabsoftware.AstroLabNet.Browser.Components.Images;
+import com.astrolabsoftware.AstroLabNet.Browser.Components.HeaderLabel;
+import com.astrolabsoftware.AstroLabNet.Browser.Components.SimpleButton;
 import com.astrolabsoftware.AstroLabNet.HBaser.HBaseClient;
 import com.astrolabsoftware.AstroLabNet.Journal.JournalTableView;
 
 // JavaFX
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
-import javafx.scene.text.Font;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextInputDialog;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tab;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.DatePicker;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
@@ -42,8 +32,6 @@ import org.json.JSONObject;
 // Java
 import java.util.Map;
 import java.util.HashMap;
-import java.time.LocalDate;
-import java.util.Base64;
 import java.time.LocalDateTime;
 import java.sql.Timestamp;
 

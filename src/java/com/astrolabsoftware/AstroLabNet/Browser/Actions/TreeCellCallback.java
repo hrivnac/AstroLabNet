@@ -1,8 +1,7 @@
 package com.astrolabsoftware.AstroLabNet.Browser.Actions;
 
-import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
-import com.astrolabsoftware.AstroLabNet.Browser.Actions.*;
-import com.astrolabsoftware.AstroLabNet.Browser.Reps.*;
+import com.astrolabsoftware.AstroLabNet.Browser.Components.TreeCellImpl;
+import com.astrolabsoftware.AstroLabNet.Browser.Reps.ElementRep;
 
 // JavaFX
 import javafx.scene.control.TreeCell;

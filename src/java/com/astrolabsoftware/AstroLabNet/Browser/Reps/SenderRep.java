@@ -1,9 +1,12 @@
 package com.astrolabsoftware.AstroLabNet.Browser.Reps;
 
+import com.astrolabsoftware.AstroLabNet.DB.Sender;
+import com.astrolabsoftware.AstroLabNet.DB.Server;
+import com.astrolabsoftware.AstroLabNet.Browser.Reps.EventHandlers.SenderEventHandler;
+import com.astrolabsoftware.AstroLabNet.Browser.Components.HeaderLabel;
+import com.astrolabsoftware.AstroLabNet.Browser.Components.SimpleButton;
+import com.astrolabsoftware.AstroLabNet.Browser.Components.Images;
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
-import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
-import com.astrolabsoftware.AstroLabNet.Browser.Reps.EventHandlers.*;
-import com.astrolabsoftware.AstroLabNet.DB.*;
 
 // JavaFX
 import javafx.scene.text.Text;

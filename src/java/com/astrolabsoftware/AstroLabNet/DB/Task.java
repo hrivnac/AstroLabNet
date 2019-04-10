@@ -1,8 +1,5 @@
 package com.astrolabsoftware.AstroLabNet.DB;
 
-import com.astrolabsoftware.AstroLabNet.Browser.Components.*;
-import com.astrolabsoftware.AstroLabNet.DB.*;
-
 // Log4J
 import org.apache.log4j.Logger;
 
