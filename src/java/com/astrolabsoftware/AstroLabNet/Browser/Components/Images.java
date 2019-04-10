@@ -41,6 +41,7 @@ public final class Images {
   public static final Image TOPOLOGY = new Image(myLoader.getResourceAsStream("com/astrolabsoftware/AstroLabNet/Browser/Components/images/Topology.png"));
   public static final Image CATALOG  = new Image(myLoader.getResourceAsStream("com/astrolabsoftware/AstroLabNet/Browser/Components/images/Catalog.png"));
   public static final Image JOURNAL  = new Image(myLoader.getResourceAsStream("com/astrolabsoftware/AstroLabNet/Browser/Components/images/Journal.png"));
+  public static final Image JAR      = new Image(myLoader.getResourceAsStream("com/astrolabsoftware/AstroLabNet/Browser/Components/images/Jar.png"));
 
   }
     
