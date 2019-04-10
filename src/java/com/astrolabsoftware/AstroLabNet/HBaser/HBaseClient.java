@@ -1,6 +1,7 @@
 package com.astrolabsoftware.AstroLabNet.HBaser;
 
 import com.astrolabsoftware.AstroLabNet.Utils.SmallHttpClient;
+import com.astrolabsoftware.AstroLabNet.Utils.Coding;
 import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
 
 // org.json
@@ -49,10 +50,10 @@ public class HBaseClient extends HBaseRESTClient {
     List<String> valuesEnc  = new ArrayList<>();
     for (int i = 0; i < values.length; i++) {
       if (values[i] != null) {
-        entries.put(encode(columns[i]), encode(values[i]));
+        entries.put(Coding.encode(columns[i]), Coding.encode(values[i]));
         }
       }
-    putEncoded(table, encode(key), entries);
+    putEncoded(table, Coding.encode(key), entries);
     }
     
   /** Get results.
@@ -69,11 +70,11 @@ public class HBaseClient extends HBaseRESTClient {
     JSONArray cells;
     String answer = "";
     for (int i = 0; i < rows.length(); i++) {
-      answer += decode(rows.getJSONObject(i).getString("key")) + ":\n";
+      answer += Coding.decode(rows.getJSONObject(i).getString("key")) + ":\n";
       cells = rows.getJSONObject(i).getJSONArray("Cell");
       for (int j = 0; j < cells.length(); j++) {
-         answer += "\t" + decode(cells.getJSONObject(j).getString("column"))
-                + " = " + decode(cells.getJSONObject(j).getString("$")) + "\n";
+         answer += "\t" + Coding.decode(cells.getJSONObject(j).getString("column"))
+                + " = " + Coding.decode(cells.getJSONObject(j).getString("$")) + "\n";
         }
       }
     return answer;
@@ -84,42 +85,44 @@ public class HBaseClient extends HBaseRESTClient {
     * </pre>
     * @param table     The requested table name.
     * @param scannerId The assigned <em>scanner</em> id.
-    * @return          The command result. */
+    * @return          The command result. May be <tt>null</tt>*/
   public JSONObject getJSONResults(String table,
                                    String scannerId) {
-    return new JSONObject(getResultsEncoded(table, scannerId));
+    String results = getResultsEncoded(table, scannerId);
+    if (results.equals("")) {
+      return null;
+      }
+    return new JSONObject(results);
     }
     
   /** Scan table.
-    * @param table The requested table name.
-    * @return      The command result. */
-  public String scan(String table) {
-    String scannerId = initScanner(table);
+    * @param table  The requested table name.
+    * @param filter The scanner filter (as family:column-value).
+    *               May be <tt>null</tt>.
+    * @param size   The number of requested results.
+    *               <tt>0</tt> means no limit.
+    * @return       The command result. */
+  public String scan(String              table,
+                     Map<String, String> filter,
+                     int                 size) {
+    String scannerId = initScanner(table, filter, size);
     return getResults(table, scannerId);
     }
     
   /** Scan table.
-    * @param table The requested table name.
-    * @return      The command result. */
-  public JSONObject scan2JSON(String table) {
-    String scannerId = initScanner(table);
+    * @param table  The requested table name.
+    * @param filter The scanner filter (as family:column-value).
+    *               May be <tt>null</tt>.
+    * @param size   The number of requested results.
+    *               <tt>0</tt> means no limit.
+    * @return       The command result. */
+  public JSONObject scan2JSON(String              table,
+                              Map<String, String> filter,
+                              int                 size) {
+    String scannerId = initScanner(table, filter, size);
     return getJSONResults(table, scannerId);
     }
-   
-  /** Encode {@link String} to REST server string.
-    * @param s The string.
-    * @return The encodeed REST server string. */
-  private String encode(String s) {
-    return Base64.getEncoder().encodeToString(s.getBytes());
-    }
-    
-  /** Decode REST server string.
-    * @param s The encoded REST server string.
-    * @return The decode  REST server string. */
-  private String decode(String s) {
-    return new String(Base64.getDecoder().decode(s));
-    }
-    
+       
   @Override
   public String toString() {
     return "HBaseClient of " + super.toString();

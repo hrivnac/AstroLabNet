@@ -40,6 +40,9 @@ public class JournalTableView extends TableView {
   /** Fill in {@link JSONObject}.
     * @param json The {@link JSONObject} to fill in. */
   public void addJSONEntry(JSONObject json) {
+    if (json == null || json.equals("")) {
+      return;
+      }
     JSONArray rows = json.getJSONArray("Row");
     JSONArray cells;
     String key;

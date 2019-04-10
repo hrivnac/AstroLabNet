@@ -1,6 +1,7 @@
 package com.astrolabsoftware.AstroLabNet.HBaser;
 
 import com.astrolabsoftware.AstroLabNet.Utils.SmallHttpClient;
+import com.astrolabsoftware.AstroLabNet.Utils.Coding;
 import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
 
 // org.json
@@ -16,7 +17,8 @@ import java.util.HashMap;
 import org.apache.log4j.Logger;
 
 /** <code>HBaseRESTCLient</code> is the bridge to the <em>HBase</em> REST service:
-  * <a href="https://www.cloudera.com/documentation/enterprise/5-9-x/topics/admin_hbase_rest_api.html">API</a>.
+  * <a href="https://www.cloudera.com/documentation/enterprise/5-9-x/topics/admin_hbase_rest_api.html">API</a>,
+  * <a href="https://gist.github.com/stelcheck/3979381">filters</a>.
   * @opt attributes
   * @opt operations
   * @opt types
@@ -57,15 +59,31 @@ public class HBaseRESTClient {
     * <pre>
     * PUT /-table-/scanner
     * </pre>
-    * @param table The requested table name.
+    * @param table  The requested table name.
+    * @param filter The scanner filter (as family:column-value).
+    *               May be <tt>null</tt>.
+    * @param size   The number of requested results.
+    *               <tt>0</tt> means no limit.
     * @return The assigned <em>scanner</em> id. */
   // TBD: parametrise batch size
-  public String initScanner(String table) {
+  public String initScanner(String              table,
+                            Map<String, String> filter,
+                            int                 size) {
     log.info("Creating Scanner for " + table);
+    log.info("  with filter: " + filter);
+    String scanner ="<Scanner";
+    if (size > 0) {
+      scanner += " batch='" + size +"'";
+      }
+    scanner += ">";
+    if (filter != null) {
+      scanner += "<filter>" + filter(filter) + "</filter>";
+      }
+    scanner += "</Scanner>";
     String resultString = "";
     JSONObject result = null;
     try {
-      resultString = SmallHttpClient.putXML(_url + "/" + table + "/scanner", "<Scanner batch='100'/>", null, "Location");
+      resultString = SmallHttpClient.putXML(_url + "/" + table + "/scanner", scanner, null, "Location");
       }
     catch (AstroLabNetException e) {
       log.info(e);
@@ -82,7 +100,8 @@ public class HBaseRESTClient {
     * </pre>
     * @param table     The requested table name.
     * @param scannerId The assigned <em>scanner</em> id.
-    * @return          The command result, in <em>json</em>, values byte-encoded. */
+    * @return          The command result, in <em>json</em>, values byte-encoded.
+    *                  May be empty. */
   public String getResultsEncoded(String table,
                                   String scannerId) {
     Map<String, String> headers = new HashMap<>();
@@ -98,15 +117,24 @@ public class HBaseRESTClient {
       log.info(e);
       AstroLabNetException.reportException("Request has failed", e, log);
       }
+    if (result == null) {
+      return "";
+      }
     log.debug("Result:\n" + result.toString(2));
     return result.toString(2);
     }
     
   /** Scan table.
     * @param table The requested table name.
+    * @param filter The scanner filter (as family:column-value).
+    *               May be <tt>null</tt>.
+    * @param size   The number of requested results.
+    *               <tt>0</tt> means no limit.
     * @return      The command result, in <em>json</em>, values byte-encoded. */
-  public String scanEncoded(String table) {
-    String scannerId = initScanner(table);
+  public String scanEncoded(String              table,
+                            Map<String, String> filter,
+                            int                 size) {
+    String scannerId = initScanner(table, filter, size);
     return getResultsEncoded(table, scannerId);
     }
     
@@ -139,6 +167,44 @@ public class HBaseRESTClient {
     * @return The  <em>HBase</em> url. */
   public String url() {
     return _url;
+    }
+    
+  /** Create <em>REST</em> filter from filter {@link Map}.
+    * @param filterMap The {@link Map} of column values to filter,
+    *                  in the form <tt>family:column-value</tt>.
+    * @return          The JSON filter. */
+  private String filter(Map<String, String> filterMap) {
+    String filter = "";
+    String[] column;
+    boolean first = true;
+    filter = "{\"type\":\"FilterList\","
+           + "\"op\":\"MUST_PASS_ALL\","
+           + "\"filters\":[";
+    for (Map.Entry<String, String> entry : filterMap.entrySet()) {
+      column = entry.getKey().split(":");
+      if (!first) {
+        filter += ",";
+        }
+      else {
+        first = false;
+        }
+      filter += "{"
+             +  "\"type\":\"SingleColumnValueFilter\","
+             +  "\"op\":\"EQUAL\","
+             +  "\"family\":\"" + Coding.encode(column[0]) + "\","
+             +  "\"qualifier\":\"" + Coding.encode(column[1]) + "\","
+             +  "\"latestVersion\":true,"
+             +  "\"ifMissing\":true,"
+             +  "\"comparator\":{"
+             +  "\"type\":\"BinaryComparator\","
+             +  "\"value\":\"" + Coding.encode(entry.getValue()) + "\""
+             +  "}"
+             +  "}";
+      
+      }
+    filter += "]";
+    filter += "}";
+    return filter; 
     }
 
   @Override

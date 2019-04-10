@@ -136,7 +136,7 @@ public class SourceRep extends ElementRep {
     button.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent e) {
-        String result = serverRep().hbase().scanEncoded("astrolabnet.catalog.1"); // TBD: via params
+        String result = serverRep().hbase().scanEncoded("astrolabnet.catalog.1", null, 0); // TBD: via params
         browser().command().addSearch(serverRep().name(), sourceRep.source());
         resultText.getChildren().add(new Text("Query send to Source\n\n"));
         JSONObject resultObject = new JSONObject(result);

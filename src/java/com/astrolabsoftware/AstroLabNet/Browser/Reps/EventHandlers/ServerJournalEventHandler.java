@@ -36,7 +36,10 @@ import javafx.geometry.Orientation;
 import org.json.JSONObject;
 
 // Java
+import java.util.Map;
+import java.util.HashMap;
 import java.time.LocalDate;
+import java.util.Base64;
 
 /** <code>ServerTJournalEventHandler</code> implements {@link EventHandler} for {@link ServerRep}.
   * It handles <em>Journal</em> database.
@@ -74,7 +77,7 @@ public class ServerJournalEventHandler implements EventHandler<ActionEvent> {
     // ActorLabel
     Label actorLabel = new Label("Actor");
     // Actor
-    ComboBox actor = new ComboBox();
+    ComboBox<String> actor = new ComboBox<>();
     actor.getItems().add("*");
     actor.getItems().add("Action");
     actor.getItems().add("Job");
@@ -83,7 +86,7 @@ public class ServerJournalEventHandler implements EventHandler<ActionEvent> {
     // RCLabel
     Label rcLabel = new Label("RC");
     // RC
-    ComboBox rc = new ComboBox();
+    ComboBox<String> rc = new ComboBox<>();
     rc.getItems().add("*");
     rc.getItems().add("+1");
     rc.getItems().add("0");
@@ -148,7 +151,16 @@ public class ServerJournalEventHandler implements EventHandler<ActionEvent> {
     search.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent e) {
-        JSONObject json = _hbase.scan2JSON("astrolabnet.journal.1");
+        Map<String, String> filterMap = new HashMap<>();
+        String actorV = actor.getValue();
+        String rcV    = rc.getValue();
+        if (!actorV.equals("*")) {
+          filterMap.put("i:actor", actorV);
+          }
+        if (!rcV.equals("*")) {
+          filterMap.put("d:rc", rcV);
+          }
+        JSONObject json = _hbase.scan2JSON("astrolabnet.journal.1", filterMap, 0);
         resultTable.addJSONEntry(json);
         resultTable.refresh();
         }
