@@ -96,7 +96,7 @@ public class SenderRep extends ElementRep {
   /** Add {@link Tab} of this SenderRep. */
   public void addTab() {
     // Desc
-    Label desc = new Label("Job:");
+    Label desc = new HeaderLabel("Job Sending", "Send Job to Spark");
     // Load
     Button load = new SimpleButton("JAR/PY file", Images.JAR, "Load JAR or PY file");
     // File

@@ -45,7 +45,7 @@ public class ServerCatalogEventHandler implements EventHandler<ActionEvent> {
   @Override
   public void handle(ActionEvent event) {
     // Desc
-    Label desc = new Label("Catalog");
+    Label desc = new HeaderLabel("Catalog Search", "Search Catalog Database");
     // Cmd
     TextArea cmd = new TextArea();
     cmd.setPrefHeight(2000);

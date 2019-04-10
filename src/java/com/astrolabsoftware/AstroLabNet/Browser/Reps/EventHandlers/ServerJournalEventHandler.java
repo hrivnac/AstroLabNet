@@ -10,6 +10,7 @@ import com.astrolabsoftware.AstroLabNet.Journal.JournalTableView;
 // JavaFX
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.scene.text.Font;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
@@ -66,13 +67,10 @@ public class ServerJournalEventHandler implements EventHandler<ActionEvent> {
     }
  
   @Override
-  // TBD: Use europeean date
-  // TBD: use time
   public void handle(ActionEvent event) {
     // Desc
-    Label desc = new Label("Journal");  
+    Label desc = new HeaderLabel("Journal Search", "Search Journal Database");
     // Start
-    //DatePicker start = new DatePicker(LocalDate.now().minusDays(1));
     LocalDateTimePicker start = new LocalDateTimePicker(LocalDateTime.now().minusDays(1));
      // Stop
     LocalDateTimePicker stop = new LocalDateTimePicker(LocalDateTime.now());
@@ -145,15 +143,11 @@ public class ServerJournalEventHandler implements EventHandler<ActionEvent> {
     cmdBox.getChildren().addAll(desc, period, selectionBox, buttonBox);
     // ResultTable
     JournalTableView resultTable = new JournalTableView(); 
-    // ScrollPane = ResultTable
-    ScrollPane scrollPane = new ScrollPane();
-    scrollPane.setFitToWidth(true);
-    scrollPane.setContent(resultTable);
-    // Pane = Desc + Cmd + ButtonBox + ScrollPane
+    // Pane = Desc + Cmd + ButtonBox + ResultTable
     SplitPane pane = new SplitPane();
     pane.setDividerPositions(0.5);
     pane.setOrientation(Orientation.VERTICAL);
-    pane.getItems().addAll(cmdBox, scrollPane);
+    pane.getItems().addAll(cmdBox, resultTable);
     // Actions
     search.setOnAction(new EventHandler<ActionEvent>() {
       @Override
@@ -190,7 +184,7 @@ public class ServerJournalEventHandler implements EventHandler<ActionEvent> {
         }
       });
     // Show
-    Tab tab = _browser.addTab(pane, toString(), Images.JOURNAL);
+    Tab tab = _browser.addTab(pane, "Journal Search", Images.JOURNAL);
     }
   
   private BrowserWindow _browser;  

@@ -45,7 +45,7 @@ public class ServerTopologyEventHandler implements EventHandler<ActionEvent> {
   @Override
   public void handle(ActionEvent event) {
     // Desc
-    Label desc = new Label("Topology");
+    Label desc = new HeaderLabel("Topology Search", "Search Topology Database");
     // Cmd
     TextArea cmd = new TextArea();
     cmd.setPrefHeight(2000);

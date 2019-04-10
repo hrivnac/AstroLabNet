@@ -85,7 +85,7 @@ public class SessionRep extends ElementRep {
   /** Add {@link Tab} of this SessionRep. */
   public void addTab() {
     // Desc
-    Label desc = new Label("Command in " + language() + ":");
+    Label desc = new HeaderLabel("Action Execution (" + language() + ")", "Execute Action in " + language());
     // Cmd
     TextArea cmd = new TextArea();
     cmd.setPrefHeight(2000);
