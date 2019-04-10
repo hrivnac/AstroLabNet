@@ -79,7 +79,7 @@ public class ServerCatalogEventHandler implements EventHandler<ActionEvent> {
     search.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent e) {
-        resultText.getChildren().add(new Text(_hbase.scan("astrolabnet.catalog.1", null, 0)));
+        resultText.getChildren().add(new Text(_hbase.scan("astrolabnet.catalog.1", null, 0, 0, 0)));
         }
       });
     // Show

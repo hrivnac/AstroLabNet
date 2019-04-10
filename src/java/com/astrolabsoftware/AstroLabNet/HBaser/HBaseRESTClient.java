@@ -60,20 +60,27 @@ public class HBaseRESTClient {
     * PUT /-table-/scanner
     * </pre>
     * @param table  The requested table name.
-    * @param filter The scanner filter (as family:column-value).
+    * @param filter The scanner filter (as family:column-value:comparator).
     *               May be <tt>null</tt>.
     * @param size   The number of requested results.
     *               <tt>0</tt> means no limit.
+    * @param start  The start search time in ms.
+    * @param end    The end search time in ms.
     * @return The assigned <em>scanner</em> id. */
   // TBD: parametrise batch size
   public String initScanner(String              table,
                             Map<String, String> filter,
-                            int                 size) {
+                            int                 size,
+                            long                start,
+                            long                end) {
     log.info("Creating Scanner for " + table);
     log.info("  with filter: " + filter);
     String scanner ="<Scanner";
     if (size > 0) {
       scanner += " batch='" + size +"'";
+      }
+    if (start != 0 && end != 0) {
+      scanner += " startTime=\"" + String.valueOf(start) + "\" endTime=\"" + String.valueOf(end) + "\"";
       }
     scanner += ">";
     if (filter != null) {
@@ -126,15 +133,19 @@ public class HBaseRESTClient {
     
   /** Scan table.
     * @param table The requested table name.
-    * @param filter The scanner filter (as family:column-value).
+    * @param filter The scanner filter (as family:column-value:comparator).
     *               May be <tt>null</tt>.
     * @param size   The number of requested results.
     *               <tt>0</tt> means no limit.
+    * @param start  The start search time in ms.
+    * @param end    The end search time in ms.
     * @return      The command result, in <em>json</em>, values byte-encoded. */
   public String scanEncoded(String              table,
                             Map<String, String> filter,
-                            int                 size) {
-    String scannerId = initScanner(table, filter, size);
+                            int                 size,
+                            long                start,
+                            long                end) {
+    String scannerId = initScanner(table, filter, size, start, end);
     return getResultsEncoded(table, scannerId);
     }
     
@@ -171,17 +182,22 @@ public class HBaseRESTClient {
     
   /** Create <em>REST</em> filter from filter {@link Map}.
     * @param filterMap The {@link Map} of column values to filter,
-    *                  in the form <tt>family:column-value</tt>.
+    *                  in the form <tt>family:column-value:comparator</tt>.
     * @return          The JSON filter. */
   private String filter(Map<String, String> filterMap) {
     String filter = "";
     String[] column;
+    String[] value;
     boolean first = true;
     filter = "{\"type\":\"FilterList\","
            + "\"op\":\"MUST_PASS_ALL\","
            + "\"filters\":[";
     for (Map.Entry<String, String> entry : filterMap.entrySet()) {
       column = entry.getKey().split(":");
+      value  = entry.getValue().split(":");
+      if (value[1].equals("BinaryComparator")) {
+        value[0] = Coding.encode(value[0]);
+        }
       if (!first) {
         filter += ",";
         }
@@ -196,8 +212,8 @@ public class HBaseRESTClient {
              +  "\"latestVersion\":true,"
              +  "\"ifMissing\":true,"
              +  "\"comparator\":{"
-             +  "\"type\":\"BinaryComparator\","
-             +  "\"value\":\"" + Coding.encode(entry.getValue()) + "\""
+             +  "\"type\":\"" + value[1] + "\","
+             +  "\"value\":\"" + value[0] + "\""
              +  "}"
              +  "}";
       

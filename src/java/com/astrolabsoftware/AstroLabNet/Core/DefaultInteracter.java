@@ -173,7 +173,7 @@ public abstract class DefaultInteracter implements Interacter {
     for (Server server : knownServers) {
       log.info("Reading Topology Database " + server.urlHBase());
       try {
-        String resultString = server.hbase().scanEncoded(Info.topology(), null, 0);
+        String resultString = server.hbase().scanEncoded(Info.topology(), null, 0, 0, 0);
         JSONObject row;
         JSONArray cell;
         JSONObject column;

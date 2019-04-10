@@ -32,6 +32,9 @@ import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.geometry.Orientation;
 
+// JFXtras
+import jfxtras.scene.control.LocalDateTimePicker;
+
 // org.json
 import org.json.JSONObject;
 
@@ -40,6 +43,11 @@ import java.util.Map;
 import java.util.HashMap;
 import java.time.LocalDate;
 import java.util.Base64;
+import java.time.LocalDateTime;
+import java.sql.Timestamp;
+
+// Log4J
+import org.apache.log4j.Logger;
 
 /** <code>ServerTJournalEventHandler</code> implements {@link EventHandler} for {@link ServerRep}.
   * It handles <em>Journal</em> database.
@@ -64,16 +72,15 @@ public class ServerJournalEventHandler implements EventHandler<ActionEvent> {
     // Desc
     Label desc = new Label("Journal");  
     // Start
-    DatePicker start = new DatePicker(LocalDate.now().minusDays(1));
-    // Interval
-    Label interval = new Label("-");    
+    //DatePicker start = new DatePicker(LocalDate.now().minusDays(1));
+    LocalDateTimePicker start = new LocalDateTimePicker(LocalDateTime.now().minusDays(1));
      // Stop
-    DatePicker stop = new DatePicker(LocalDate.now());
-    // Period = Start + Interval + Stop
+    LocalDateTimePicker stop = new LocalDateTimePicker(LocalDateTime.now());
+    // Period = Start + Stop
     HBox period = new HBox(10);
     period.setSpacing(5);
     period.setAlignment(Pos.CENTER);
-    period.getChildren().addAll(start, interval, stop);
+    period.getChildren().addAll(start, stop);
     // ActorLabel
     Label actorLabel = new Label("Actor");
     // Actor
@@ -152,15 +159,32 @@ public class ServerJournalEventHandler implements EventHandler<ActionEvent> {
       @Override
       public void handle(ActionEvent e) {
         Map<String, String> filterMap = new HashMap<>();
-        String actorV = actor.getValue();
-        String rcV    = rc.getValue();
+        String actorV   = actor.getValue();
+        String rcV      = rc.getValue();
+        String actionV  = action.getText();
+        String resultV  = result.getText();
+        String commentV = comment.getText();
         if (!actorV.equals("*")) {
-          filterMap.put("i:actor", actorV);
+          filterMap.put("i:actor", actorV + ":BinaryComparator");
           }
         if (!rcV.equals("*")) {
-          filterMap.put("d:rc", rcV);
+          filterMap.put("d:rc", rcV + ":BinaryComparator");
           }
-        JSONObject json = _hbase.scan2JSON("astrolabnet.journal.1", filterMap, 0);
+        if (!actionV.equals("")) {
+          filterMap.put("i:action", actionV + ":SubstringComparator");
+          }
+         if (!resultV.equals("")) {
+          filterMap.put("d:result", resultV + ":SubstringComparator");
+          }
+        if (!commentV.equals("")) {
+          filterMap.put("c:comment", commentV + ":SubstringComparator");
+          }
+        resultTable.getItems().clear();
+        JSONObject json = _hbase.scan2JSON("astrolabnet.journal.1",
+                                           filterMap,
+                                           0,
+                                           Timestamp.valueOf(start.getLocalDateTime()).getTime(),
+                                           Timestamp.valueOf(stop.getLocalDateTime() ).getTime());
         resultTable.addJSONEntry(json);
         resultTable.refresh();
         }
@@ -172,5 +196,8 @@ public class ServerJournalEventHandler implements EventHandler<ActionEvent> {
   private BrowserWindow _browser;  
     
   private HBaseClient _hbase;
+
+  /** Logging . */
+  private static Logger log = Logger.getLogger(ServerJournalEventHandler.class);
     
   }

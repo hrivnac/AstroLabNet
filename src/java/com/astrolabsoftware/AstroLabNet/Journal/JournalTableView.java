@@ -1,5 +1,7 @@
 package com.astrolabsoftware.AstroLabNet.Journal;
 
+import com.astrolabsoftware.AstroLabNet.Utils.Coding;
+
 // JavaFX
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -51,11 +53,11 @@ public class JournalTableView extends TableView {
     JournalEntry entry = null;
     for (int i = 0; i < rows.length(); i++) {
       entry = new JournalEntry();
-      entry.setKey(decode(rows.getJSONObject(i).getString("key")));
+      entry.setKey(Coding.decode(rows.getJSONObject(i).getString("key")));
       cells = rows.getJSONObject(i).getJSONArray("Cell");
       for (int j = 0; j < cells.length(); j++) {
-        column = decode(cells.getJSONObject(j).getString("column"));
-        value  = decode(cells.getJSONObject(j).getString("$"));
+        column = Coding.decode(cells.getJSONObject(j).getString("column"));
+        value  = Coding.decode(cells.getJSONObject(j).getString("$"));
         switch (column) { // TBD: befire/after should be r:
           case "i:actor":
             entry.setActor(value);
@@ -91,13 +93,6 @@ public class JournalTableView extends TableView {
       }
     }
     
-  /** Decode REST server string.
-    * @param s The encoded REST server string.
-    * @return The decode  REST server string. */
-  // TBD: pud encode/decode in one place
-  private String decode(String s) {
-    return new String(Base64.getDecoder().decode(s));
-    }
     
   private static String[] ENTRY_NAMES = new String[]{"key", "actor", "action", "rc", "time", "before", "after", "result", "comment"};
   

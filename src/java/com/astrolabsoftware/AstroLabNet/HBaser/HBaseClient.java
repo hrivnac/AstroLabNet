@@ -97,29 +97,37 @@ public class HBaseClient extends HBaseRESTClient {
     
   /** Scan table.
     * @param table  The requested table name.
-    * @param filter The scanner filter (as family:column-value).
+    * @param filter The scanner filter (as family:column-value:comparator).
     *               May be <tt>null</tt>.
     * @param size   The number of requested results.
     *               <tt>0</tt> means no limit.
+    * @param start  The start search time in ms.
+    * @param end    The end search time in ms.
     * @return       The command result. */
   public String scan(String              table,
                      Map<String, String> filter,
-                     int                 size) {
-    String scannerId = initScanner(table, filter, size);
+                     int                 size,
+                     long                start,
+                     long                end) {
+    String scannerId = initScanner(table, filter, size, start, end);
     return getResults(table, scannerId);
     }
     
   /** Scan table.
     * @param table  The requested table name.
-    * @param filter The scanner filter (as family:column-value).
+    * @param filter The scanner filter (as family:column-value:comparator).
     *               May be <tt>null</tt>.
     * @param size   The number of requested results.
     *               <tt>0</tt> means no limit.
+    * @param start  The start search time in ms.
+    * @param end    The end search time in ms.
     * @return       The command result. */
   public JSONObject scan2JSON(String              table,
                               Map<String, String> filter,
-                              int                 size) {
-    String scannerId = initScanner(table, filter, size);
+                              int                 size,
+                              long                start,
+                              long                end) {
+    String scannerId = initScanner(table, filter, size, start, end);
     return getJSONResults(table, scannerId);
     }
        
