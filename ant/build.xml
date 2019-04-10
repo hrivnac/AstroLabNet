@@ -350,6 +350,7 @@
       <group title="Jobs"               packages="com.astrolabsoftware.AstroLabNet.DB.Jobs*"/>
       <group title="Avro"               packages="com.astrolabsoftware.AstroLabNet.Avro*"/>
       <group title="Journal"            packages="com.astrolabsoftware.AstroLabNet.Journal*"/>
+      <group title="Journal"            packages="com.astrolabsoftware.AstroLabNet.Topology*"/>
       <group title="ZTF Avro"           packages="ztf*"/>
       <link href="http://docs.oracle.com/javase/8/docs/api"/>
       <link href="http://www.beanshell.org/javadoc/"/>

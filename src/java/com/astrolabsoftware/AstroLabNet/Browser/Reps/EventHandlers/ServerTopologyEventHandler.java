@@ -6,6 +6,7 @@ import com.astrolabsoftware.AstroLabNet.Browser.Components.Images;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.HeaderLabel;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.SimpleButton;
 import com.astrolabsoftware.AstroLabNet.HBaser.HBaseClient;
+import com.astrolabsoftware.AstroLabNet.Journal.TopologyTableView;
 
 // JavaFX
 import javafx.scene.text.Text;
@@ -23,6 +24,12 @@ import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.geometry.Orientation;
+
+// org.json
+import org.json.JSONObject;
+
+// Log4J
+import org.apache.log4j.Logger;
 
 /** <code>ServerTopologyEventHandler</code> implements {@link EventHandler} for {@link ServerRep}.
   * It handles <em>Topology</em> database.
@@ -59,25 +66,26 @@ public class ServerTopologyEventHandler implements EventHandler<ActionEvent> {
     cmdBox.setSpacing(5);
     cmdBox.setAlignment(Pos.CENTER);
     cmdBox.getChildren().addAll(desc, cmd, buttonBox);
-    // ResultText
-    TextFlow resultText = new TextFlow(); 
-    Text result0 = new Text();
-    result0.setFill(Color.DARKGREEN);
-    resultText.getChildren().add(result0);
-    // ScrollPane = ResultText
-    ScrollPane scrollPane = new ScrollPane();
-    scrollPane.setFitToWidth(true);
-    scrollPane.setContent(resultText);
-    // Pane = Desc + Cmd + ButtonBox + ScrollPane
+    // ResultTable
+    TopologyTableView resultTable = new TopologyTableView(); 
+    // Pane = Desc + Cmd + ButtonBox + ResultTable
     SplitPane pane = new SplitPane();
     pane.setDividerPositions(0.5);
     pane.setOrientation(Orientation.VERTICAL);
-    pane.getItems().addAll(cmdBox, scrollPane);
+    pane.getItems().addAll(cmdBox, resultTable);
     // Actions
     search.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent e) {
-        resultText.getChildren().add(new Text(_hbase.scan("astrolabnet.topology.1", null, 0, 0, 0)));
+        //resultText.getChildren().add(new Text(_hbase.scan("astrolabnet.topology.1", null, 0, 0, 0)));
+        resultTable.getItems().clear();
+        JSONObject json = _hbase.scan2JSON("astrolabnet.topology.1",
+                                           null,
+                                           0,
+                                           0,
+                                           0);
+        resultTable.addJSONEntry(json);
+        resultTable.refresh();
         }
       });
     // Show
@@ -87,5 +95,8 @@ public class ServerTopologyEventHandler implements EventHandler<ActionEvent> {
   private BrowserWindow _browser;  
     
   private HBaseClient _hbase;
-    
+  
+  /** Logging . */
+  private static Logger log = Logger.getLogger(ServerTopologyEventHandler.class);
+   
   }
