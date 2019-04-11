@@ -104,7 +104,7 @@ public class SourceRep extends ElementRep {
   /** Add {@link Tab} of this SourceRep. */
   public void addTab() {
     // Desc
-    Label desc = new HeaderLabel("Source...", "Source...");
+    Label desc = new HeaderLabel(toString(), "Source...");
     // Cmd
     TextArea cmd = new TextArea();
     cmd.setPrefHeight(2000);

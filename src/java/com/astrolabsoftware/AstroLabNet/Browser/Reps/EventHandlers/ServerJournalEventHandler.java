@@ -57,7 +57,7 @@ public class ServerJournalEventHandler implements EventHandler<ActionEvent> {
   @Override
   public void handle(ActionEvent event) {
     // Desc
-    Label desc = new HeaderLabel("Journal Search", "Search Journal Database");
+    Label desc = new HeaderLabel(toString(), "Search Journal Database");
     // Start
     LocalDateTimePicker start = new LocalDateTimePicker(LocalDateTime.now().minusDays(1));
      // Stop

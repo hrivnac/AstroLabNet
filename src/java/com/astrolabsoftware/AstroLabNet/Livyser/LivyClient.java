@@ -36,7 +36,7 @@ public class LivyClient extends LivyRESTClient {
     
   @Override
   public String toString() {
-    return "LivyClient of " + super.toString();
+    return "LivyClient(" + url() + ")";
     }
     
   private String _url;

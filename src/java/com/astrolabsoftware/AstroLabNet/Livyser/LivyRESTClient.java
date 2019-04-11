@@ -462,6 +462,11 @@ public class LivyRESTClient {
            getBatchLog(     batchId, Integer.MAX_VALUE, 1);
     }
     
+  /** TBD */
+  public String url() {
+    return _url;
+    }
+    
   @Override
   public String toString() {
     return "LivyRESTClient(" + _url + ")";

@@ -90,7 +90,7 @@ public class SenderRep extends ElementRep {
   @Override
   public List<MenuItem> menuItems() {
     List<MenuItem> menuItems = super.menuItems();
-    MenuItem execute = new MenuItem("Prepare for SEnding",  Images.icon(Images.SENDER));
+    MenuItem execute = new MenuItem("Prepare for Sending",  Images.icon(Images.SENDER));
     execute.setOnAction(new SenderEventHandler(this));
     menuItems.add(execute);
     return menuItems;
@@ -99,7 +99,7 @@ public class SenderRep extends ElementRep {
   /** Add {@link Tab} of this SenderRep. */
   public void addTab() {
     // Desc
-    Label desc = new HeaderLabel("Job Sending", "Send Job to Spark");
+    Label desc = new HeaderLabel(toString(), "Send Job to Spark");
     // Load
     Button load = new SimpleButton("JAR/PY file", Images.JAR, "Load JAR or PY file");
     // File

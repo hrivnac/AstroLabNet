@@ -43,7 +43,7 @@ public class ServerCatalogEventHandler implements EventHandler<ActionEvent> {
   @Override
   public void handle(ActionEvent event) {
     // Desc
-    Label desc = new HeaderLabel("Catalog Search", "Search Catalog Database");
+    Label desc = new HeaderLabel(toString(), "Search Catalog Database");
     // Cmd
     TextArea cmd = new TextArea();
     cmd.setPrefHeight(2000);
@@ -86,7 +86,7 @@ public class ServerCatalogEventHandler implements EventHandler<ActionEvent> {
     
   @Override
   public String toString() {
-    return "Journal on " + _hbase.toString();
+    return "Catalog on " + _hbase.toString();
     }
   
   private BrowserWindow _browser;  

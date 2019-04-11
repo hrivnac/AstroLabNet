@@ -129,7 +129,7 @@ public class HBaseClient extends HBaseRESTClient {
        
   @Override
   public String toString() {
-    return "HBaseClient of " + super.toString();
+    return "HBaseClient(" + url() + ")";
     }
 
   /** Logging . */

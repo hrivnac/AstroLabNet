@@ -50,7 +50,7 @@ public class ServerTopologyEventHandler implements EventHandler<ActionEvent> {
   @Override
   public void handle(ActionEvent event) {
     // Desc
-    Label desc = new HeaderLabel("Topology Search", "Search Topology Database");
+    Label desc = new HeaderLabel(toString(), "Search Topology Database");
     // Cmd
     TextArea cmd = new TextArea();
     cmd.setPrefHeight(2000);
@@ -94,7 +94,7 @@ public class ServerTopologyEventHandler implements EventHandler<ActionEvent> {
     
   @Override
   public String toString() {
-    return "Journal on " + _hbase.toString();
+    return "Topology on " + _hbase.toString();
     }
   
   private BrowserWindow _browser;  
