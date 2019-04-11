@@ -1,5 +1,6 @@
 package com.astrolabsoftware.AstroLabNet.Browser.Reps.EventHandlers;
 
+import com.astrolabsoftware.AstroLabNet.DB.Server;
 import com.astrolabsoftware.AstroLabNet.Browser.Reps.ServerRep;
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.Images;
@@ -44,6 +45,7 @@ public class ServerTopologyEventHandler implements EventHandler<ActionEvent> {
     * @param serverRep The associated {@link ServerRep}. */
   public ServerTopologyEventHandler(ServerRep serverRep) {
     _browser = serverRep.browser();
+    _server  = serverRep.server();
     _hbase   = serverRep.hbase();
     }
  
@@ -94,10 +96,12 @@ public class ServerTopologyEventHandler implements EventHandler<ActionEvent> {
     
   @Override
   public String toString() {
-    return "Topology on " + _hbase.toString();
+    return "Topology on " + _server.name();
     }
   
   private BrowserWindow _browser;  
+    
+  private Server _server;
     
   private HBaseClient _hbase;
   

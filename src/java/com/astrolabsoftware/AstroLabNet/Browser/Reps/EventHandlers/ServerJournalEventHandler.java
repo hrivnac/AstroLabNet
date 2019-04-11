@@ -1,5 +1,6 @@
 package com.astrolabsoftware.AstroLabNet.Browser.Reps.EventHandlers;
 
+import com.astrolabsoftware.AstroLabNet.DB.Server;
 import com.astrolabsoftware.AstroLabNet.Browser.Reps.ServerRep;
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.Images;
@@ -38,7 +39,7 @@ import java.sql.Timestamp;
 // Log4J
 import org.apache.log4j.Logger;
 
-/** <code>ServerTJournalEventHandler</code> implements {@link EventHandler} for {@link ServerRep}.
+/** <code>ServerJournalEventHandler</code> implements {@link EventHandler} for {@link ServerRep}.
   * It handles <em>Journal</em> database.
   * @opt attributes
   * @opt operations
@@ -51,6 +52,7 @@ public class ServerJournalEventHandler implements EventHandler<ActionEvent> {
     * @param serverRep The associated {@link ServerRep}. */
   public ServerJournalEventHandler(ServerRep serverRep) {
     _browser = serverRep.browser();
+    _server  = serverRep.server();
     _hbase   = serverRep.hbase();
     }
  
@@ -177,11 +179,13 @@ public class ServerJournalEventHandler implements EventHandler<ActionEvent> {
     
   @Override
   public String toString() {
-    return "Journal on " + _hbase.toString();
+    return "Journal on " + _server.name();
     }
   
   private BrowserWindow _browser;  
     
+  private Server _server;
+  
   private HBaseClient _hbase;
 
   /** Logging . */
