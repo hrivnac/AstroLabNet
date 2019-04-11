@@ -91,6 +91,11 @@ public class ServerTopologyEventHandler implements EventHandler<ActionEvent> {
     // Show
     Tab tab = _browser.addTab(pane, toString(), Images.TOPOLOGY);
     }
+    
+  @Override
+  public String toString() {
+    return "Journal on " + _hbase.toString();
+    }
   
   private BrowserWindow _browser;  
     

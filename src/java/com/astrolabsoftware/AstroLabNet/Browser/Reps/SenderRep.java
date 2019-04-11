@@ -162,7 +162,7 @@ public class SenderRep extends ElementRep {
     send.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent e) {
-        int id = serverRep().livy().sendJob("local:" + _file.getText(), _className.getText(), Integer.MAX_VALUE, 1);
+        int id = serverRep().livy().sendJob(_file.getText(), _className.getText(), Integer.MAX_VALUE, 1);
         browser().command().addBatch(serverRep().name() + "/" + id, senderRep.sender(), id);
         resultText.getChildren().add(new Text("Job send\n\n"));
         }

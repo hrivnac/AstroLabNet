@@ -172,7 +172,12 @@ public class ServerJournalEventHandler implements EventHandler<ActionEvent> {
         }
       });
     // Show
-    Tab tab = _browser.addTab(pane, "Journal Search", Images.JOURNAL);
+    Tab tab = _browser.addTab(pane, toString(), Images.JOURNAL);
+    }
+    
+  @Override
+  public String toString() {
+    return "Journal on " + _hbase.toString();
     }
   
   private BrowserWindow _browser;  
