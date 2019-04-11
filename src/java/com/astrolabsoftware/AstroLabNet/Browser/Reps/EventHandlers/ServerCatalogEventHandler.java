@@ -25,6 +25,19 @@ import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.geometry.Orientation;
 
+// GraphStream
+import org.graphstream.graph.Edge;
+import org.graphstream.graph.Node;
+import org.graphstream.graph.implementations.MultiGraph;
+import org.graphstream.ui.fx_viewer.FxDefaultView;
+import org.graphstream.ui.fx_viewer.FxViewer;
+import org.graphstream.ui.fx_viewer.util.DefaultApplication;
+import org.graphstream.ui.javafx.FxGraphRenderer;
+import org.graphstream.ui.javafx.util.ImageCache;
+import org.graphstream.ui.view.Viewer;
+import org.graphstream.ui.view.ViewerListener;
+import org.graphstream.ui.view.ViewerPipe;
+
 /** <code>ServerCatalogEventHandler</code> implements {@link EventHandler} for {@link ServerRep}.
   * It handles <em>Catalog</em> database.
   * @opt attributes
@@ -61,25 +74,21 @@ public class ServerCatalogEventHandler implements EventHandler<ActionEvent> {
     cmdBox.setSpacing(5);
     cmdBox.setAlignment(Pos.CENTER);
     cmdBox.getChildren().addAll(desc, cmd, buttonBox);
-    // ResultText
-    TextFlow resultText = new TextFlow(); 
-    Text result0 = new Text();
-    result0.setFill(Color.DARKGREEN);
-    resultText.getChildren().add(result0);
-    // ScrollPane = ResultText
-    ScrollPane scrollPane = new ScrollPane();
-    scrollPane.setFitToWidth(true);
-    scrollPane.setContent(resultText);
+    // ResultGraph
+    MultiGraph graph  = new MultiGraph( "TestSize" );
+	  Viewer viewer = new FxViewer(graph, FxViewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD );
+	  ViewerPipe pipeIn = viewer.newViewerPipe();
+	  FxDefaultView resultGraph = (FxDefaultView)viewer.addView("view1", new FxGraphRenderer() );
     // Pane = Desc + Cmd + ButtonBox + ScrollPane
     SplitPane pane = new SplitPane();
     pane.setDividerPositions(0.5);
     pane.setOrientation(Orientation.VERTICAL);
-    pane.getItems().addAll(cmdBox, scrollPane);
+    pane.getItems().addAll(cmdBox, resultGraph);
     // Actions
     search.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent e) {
-        resultText.getChildren().add(new Text(_hbase.scan("astrolabnet.catalog.1", null, 0, 0, 0)));
+        //resultText.getChildren().add(new Text(_hbase.scan("astrolabnet.catalog.1", null, 0, 0, 0)));
         }
       });
     // Show

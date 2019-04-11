@@ -27,6 +27,8 @@
     <pathelement path="${avro.jar}"/>
     <pathelement path="${jackson.jar}"/>
     <pathelement path="${slf4j.jar}"/>
+    <pathelement path="${graphstream-core.jar}"/>
+    <pathelement path="${graphstream-javafx.jar}"/>
     <pathelement path="${jfxtras-all.jar}"/>
     <fileset dir="../extlib">
       <include name="*.jar"/>
@@ -192,6 +194,8 @@
       <zipfileset includes="**/*" src="${jackson.jar}"/>
       <zipfileset includes="**/*" src="${slf4j.jar}"/>
       <zipfileset includes="**/*" src="${jfxtras-all.jar}"/>
+      <zipfileset includes="**/*" src="${graphstream-core.jar}"/>
+      <zipfileset includes="**/*" src="${graphstream-javafx.jar}"/>
       <zipfileset includes="**/*" src="${slf4jlog4j.jar}"/>
       <manifest>
         <attribute name="Created-By" value="${user.name}"/>
@@ -362,7 +366,9 @@
       <link href="https://commons.apache.org/proper/commons-cli/apidocs"/>
       <link href="https://avro.apache.org/docs/1.8.2/api/java"/>
       <link href="http://jfxtras.org/doc/8.0/jfxtras-controls"/>
-      <!-- TBD Jackson -->
+      <link href="https://data.graphstream-project.org/api/gs-core/current"/>
+      <!-- TBD: gr-ui.javafx -->
+      <!-- TBD: Jackson -->
       <!-- TBD: scala library -->
       <classpath>
         <path refid="classpath.run"/>
