@@ -78,7 +78,7 @@ public class ServerCatalogEventHandler implements EventHandler<ActionEvent> {
     MultiGraph graph  = new MultiGraph( "TestSize" );
 	  Viewer viewer = new FxViewer(graph, FxViewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD );
 	  ViewerPipe pipeIn = viewer.newViewerPipe();
-	  FxDefaultView resultGraph = (FxDefaultView)viewer.addView("view1", new FxGraphRenderer() );
+	  FxDefaultView resultGraph = (FxDefaultView)viewer.addView("GraphView", new FxGraphRenderer() );
     // Pane = Desc + Cmd + ButtonBox + ScrollPane
     SplitPane pane = new SplitPane();
     pane.setDividerPositions(0.5);

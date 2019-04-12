@@ -302,17 +302,19 @@ public class BrowserWindow extends Application {
     
   /** Set the {@link SenderRep} file and className. To be called from {@link JobRep}.
     * @param file      The jar file name to fill in the {@link BatchRep} command.
-    * @param className The main className to fill in the {@link BatchRep} command.*/
+    * @param className The main className to fill in the {@link BatchRep} command. */
   public void setSenderFile(String file,
                             String className) {
     boolean done = false;
     for (Map.Entry<SenderRep, Tab> entry : _senderTabs.entrySet()) {
       if (entry.getValue().isSelected()) {
         SplitPane pane = (SplitPane)(entry.getValue().getContent());
-        VBox vbox = (VBox)(pane.getItems().get(0));
-        HBox hbox = (HBox)(vbox.getChildren().get(1));
-        TextField fileTarget       = (TextField)(hbox.getChildren().get(1));
-        TextField classNameTarget = (TextField)(hbox.getChildren().get(2));
+        VBox cmdBox = (VBox)(pane.getItems().get(0));
+        VBox jobBox = (VBox)(cmdBox.getChildren().get(1));
+        HBox jobBox1 = (HBox)(jobBox.getChildren().get(0));
+        HBox jobBox2 = (HBox)(jobBox.getChildren().get(1));
+        TextField fileTarget      = (TextField)(jobBox1.getChildren().get(2));
+        TextField classNameTarget = (TextField)(jobBox2.getChildren().get(1));
         fileTarget.setText(file);
         classNameTarget.setText(className);
         done = true;

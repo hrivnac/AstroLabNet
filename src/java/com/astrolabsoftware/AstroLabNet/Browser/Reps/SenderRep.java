@@ -20,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -102,17 +103,37 @@ public class SenderRep extends ElementRep {
     Label desc = new HeaderLabel(toString(), "Send Job to Spark");
     // Load
     Button load = new SimpleButton("JAR/PY file", Images.JAR, "Load JAR or PY file");
+    // Place
+    String spark = server().urlSpark();
+    spark = spark.replaceAll("http://", "");
+    spark = spark.substring(0, spark.lastIndexOf(":"));
+    ComboBox<String> place = new ComboBox<>();
+    place.getItems().add("local:");
+    place.getItems().add("hdfs://" + spark);
+    place.getSelectionModel().select(0);    
     // File
     _file = new TextField();
     _file.setPrefColumnCount(50);
-    // ClassNameSender 
+    // JobBox1 = Load + Place + File
+    HBox jobBox1 = new HBox(10);
+    jobBox1.setSpacing(5);
+    jobBox1.setAlignment(Pos.CENTER);
+    jobBox1.getChildren().addAll(load, place, _file);
+    // ClassNameLabel
+    Label classNameLabel = new Label("ClassName:");
+    // ClassName
     _className = new TextField();
     _className.setPrefColumnCount(50);
-    // JobBox = Load + File + ClassName
-    HBox jobBox = new HBox(10);
+    // JobBox2 = ClassNameLabel + ClassName
+    HBox jobBox2 = new HBox(10);
+    jobBox2.setSpacing(5);
+    jobBox2.setAlignment(Pos.CENTER);
+    jobBox2.getChildren().addAll(classNameLabel, _className);
+    // JobBox = JobBox1 + JobBox2 
+    VBox jobBox = new VBox(10);
     jobBox.setSpacing(5);
-    jobBox.setAlignment(Pos.CENTER);
-    jobBox.getChildren().addAll(load, _file, _className);
+    jobBox.setAlignment(Pos.CENTER_LEFT);
+    jobBox.getChildren().addAll(jobBox1, jobBox2);
     // Progress
     _progress = new ProgressBar(0);
     // Send
@@ -138,7 +159,7 @@ public class SenderRep extends ElementRep {
     ScrollPane scrollPane = new ScrollPane();
     scrollPane.setFitToWidth(true);
     scrollPane.setContent(resultText);
-    // Pane = Desc + Cmd + ButtonBox + ScrollPane
+    // Pane = Desc + CmdBox + ButtonBox + ScrollPane
     SplitPane pane = new SplitPane();
     pane.setDividerPositions(0.5);
     pane.setOrientation(Orientation.VERTICAL);
@@ -162,7 +183,7 @@ public class SenderRep extends ElementRep {
     send.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent e) {
-        int id = serverRep().livy().sendJob(_file.getText(), _className.getText(), Integer.MAX_VALUE, 1);
+        int id = serverRep().livy().sendJob(place.getValue() + _file.getText(), _className.getText(), Integer.MAX_VALUE, 1);
         browser().command().addBatch(serverRep().name() + "/" + id, senderRep.sender(), id);
         resultText.getChildren().add(new Text("Job send\n\n"));
         }
