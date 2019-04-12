@@ -116,6 +116,7 @@ public class SessionRep extends ElementRep {
     // ScrollPane = ResultText
     ScrollPane scrollPane = new ScrollPane();
     scrollPane.setFitToWidth(true);
+    scrollPane.vvalueProperty().bind(resultText.heightProperty());
     scrollPane.setContent(resultText);
     // Pane = Desc + Cmd + ButtonBox + ScrollPane
     SplitPane pane = new SplitPane();

@@ -110,6 +110,7 @@ public class SenderRep extends ElementRep {
     ComboBox<String> place = new ComboBox<>();
     place.getItems().add("local:");
     place.getItems().add("hdfs://" + spark);
+    place.getItems().add("");
     place.getSelectionModel().select(0);    
     // File
     _file = new TextField();
@@ -158,6 +159,7 @@ public class SenderRep extends ElementRep {
     // ScrollPane = ResultText
     ScrollPane scrollPane = new ScrollPane();
     scrollPane.setFitToWidth(true);
+    scrollPane.vvalueProperty().bind(resultText.heightProperty());
     scrollPane.setContent(resultText);
     // Pane = Desc + CmdBox + ButtonBox + ScrollPane
     SplitPane pane = new SplitPane();

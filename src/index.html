@@ -136,13 +136,21 @@ ${HBASE_HOME}/bin/hbase shell < ../src/ruby/fillTopology.rb
 <hr/>
 <img src="JavaDoc/com/astrolabsoftware/AstroLabNet/Browser/doc-files/Architecture.jpg" width="800">
 <br/>
-<h4><a name="Bugs-ToDos">Bugs and ToDos</a></h4>
+<h4><a name="Bugs-ToDos">Bugs, Inconsistencies and ToDos</a></h4>
 <b><u>Bugs</u></b>
 <ul>
 <li>Interactive CLI (Swing component in JavaFX Application)
     unresponsive to input. Clash between JavaFX and Swing
     Threads.</li>
 <li>Unspecified search on LAL Jounal fails.</li>
+</ul>
+<b><u>Inconsistencies</u></b>
+<ul>
+<li>Local path for job submissions requires <tt>local:</tt>
+    keyword LAL server, but no keyword on local machine.</li>
+<li>Journal search on LAL server shown have at least one
+    filter.</li>
+<li>Servers time is not synchronised - important for pwriod searches.</li>
 </ul>
 <b><u>ToDos</u></b>
 <ul>

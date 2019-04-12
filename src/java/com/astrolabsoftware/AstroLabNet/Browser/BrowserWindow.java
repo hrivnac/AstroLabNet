@@ -17,6 +17,7 @@ import com.astrolabsoftware.AstroLabNet.Browser.Components.ToolTipper;
 import com.astrolabsoftware.AstroLabNet.Browser.Actions.ExitHandler;
 import com.astrolabsoftware.AstroLabNet.Browser.Actions.ReadScriptHandler;
 import com.astrolabsoftware.AstroLabNet.Browser.Actions.TreeCellCallback;
+import com.astrolabsoftware.AstroLabNet.Utils.Info;
 import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
 import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
 
@@ -155,7 +156,7 @@ public class BrowserWindow extends Application {
     // Scene
     Scene scene = new Scene(all);
     scene.getStylesheets().add("com/astrolabsoftware/AstroLabNet/Browser/BrowserWindow.css"); 
-    stage.setTitle("AstroLabNet Browser"); 
+    stage.setTitle("AstroLabNet Browser (" + Info.release() + ")"); 
     stage.setScene(scene);          
     stage.show(); 
     }
