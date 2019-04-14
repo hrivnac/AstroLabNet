@@ -7,6 +7,9 @@ import com.astrolabsoftware.AstroLabNet.Browser.Components.Images;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.HeaderLabel;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.SimpleButton;
 import com.astrolabsoftware.AstroLabNet.HBaser.HBaseClient;
+import com.astrolabsoftware.AstroLabNet.Catalog.HBase2Graph;
+import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
+import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
 
 // JavaFX
 import javafx.scene.text.Text;
@@ -26,17 +29,24 @@ import javafx.geometry.Pos;
 import javafx.geometry.Orientation;
 
 // GraphStream
+import org.graphstream.graph.Graph;
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.MultiGraph;
 import org.graphstream.ui.fx_viewer.FxDefaultView;
 import org.graphstream.ui.fx_viewer.FxViewer;
+import org.graphstream.ui.fx_viewer.FxViewPanel;
 import org.graphstream.ui.fx_viewer.util.DefaultApplication;
 import org.graphstream.ui.javafx.FxGraphRenderer;
 import org.graphstream.ui.javafx.util.ImageCache;
 import org.graphstream.ui.view.Viewer;
 import org.graphstream.ui.view.ViewerListener;
 import org.graphstream.ui.view.ViewerPipe;
+import org.graphstream.stream.file.FileSourceDGS;
+import org.graphstream.stream.thread.ThreadProxyPipe;
+
+// Log4J
+import org.apache.log4j.Logger;
 
 /** <code>ServerCatalogEventHandler</code> implements {@link EventHandler} for {@link ServerRep}.
   * It handles <em>Catalog</em> database.
@@ -74,21 +84,27 @@ public class ServerCatalogEventHandler implements EventHandler<ActionEvent> {
     cmdBox.setSpacing(5);
     cmdBox.setAlignment(Pos.CENTER);
     cmdBox.getChildren().addAll(desc, cmd, buttonBox);
-    // ResultGraph
-    MultiGraph graph  = new MultiGraph( "TestSize" );
-	  Viewer viewer = new FxViewer(graph, FxViewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD );
-	  ViewerPipe pipeIn = viewer.newViewerPipe();
-	  FxDefaultView resultGraph = (FxDefaultView)viewer.addView("GraphView", new FxGraphRenderer() );
+    // ResultGraph	  
+    Graph graph = new MultiGraph("Catalog");
+    FxViewer viewer = new FxViewer(new ThreadProxyPipe(graph));
+    try {
+		  graph.setAttribute("ui.stylesheet", new StringResource("com/astrolabsoftware/AstroLabNet/Catalog/Catalog.css").toString());
+		  }
+		catch (AstroLabNetException e) {
+		  log.warn("Cannot load GraphStream Stylesheet", e);
+		  }
+		FxViewPanel graphView = (FxViewPanel)viewer.addDefaultView(true);
+		viewer.enableAutoLayout();
     // Pane = Desc + Cmd + ButtonBox + ScrollPane
     SplitPane pane = new SplitPane();
     pane.setDividerPositions(0.5);
     pane.setOrientation(Orientation.VERTICAL);
-    pane.getItems().addAll(cmdBox, resultGraph);
+    pane.getItems().addAll(cmdBox, graphView);
     // Actions
     search.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent e) {
-        //resultText.getChildren().add(new Text(_hbase.scan("astrolabnet.catalog.1", null, 0, 0, 0)));
+        new HBase2Graph().updateGraph(_hbase.scan2JSON("astrolabnet.catalog.1", null, 0, 0, 0), graph);
         }
       });
     // Show
@@ -99,11 +115,14 @@ public class ServerCatalogEventHandler implements EventHandler<ActionEvent> {
   public String toString() {
     return "Catalog on " + _server.name();
     }
-  
+
   private BrowserWindow _browser;  
     
   private Server _server;
     
   private HBaseClient _hbase;
+
+  /** Logging . */
+  private static Logger log = Logger.getLogger(ServerCatalogEventHandler.class);
     
   }

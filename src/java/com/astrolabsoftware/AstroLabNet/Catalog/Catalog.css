@@ -1,0 +1,26 @@
+graph {
+	fill-color: grey;
+  }
+node {
+	shape: circle;
+	fill-mode: plain;
+	fill-color: blue;
+	stroke-mode: plain;
+	stroke-color: black;
+	text-size: 30px;
+	text-mode: normal;
+	size-mode: fit;
+  }
+node.marked {
+  fill-color: red;
+  } 
+node:clicked {
+	fill-color: green;
+  }  
+node#A {
+	fill-color: blue;
+  }
+edge {
+  arrow-shape: arrow;
+  }
+
