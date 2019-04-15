@@ -98,6 +98,13 @@
           tofile="${livy.home}/conf/livy.conf"/>
     </target>
 
+  <!-- Regenerate ===========================================================-->
+
+  <target name="regenerate"
+          depends="clean,avro,tables"
+          description="Regenerate all files for compilation">
+    </target>
+
   <!-- Avro =================================================================-->
 
   <target name="avro"
@@ -120,6 +127,30 @@
       <arg value="../build"/>
       </java>
     </target>
+
+  <!-- Tables ===============================================================-->
+
+  <target name="tables"
+          description="Create Table Entries from HBase">
+    <mkdir dir="../build/com/astrolabsoftware/AstroLabNet/Topology"/>
+    <mkdir dir="../build/com/astrolabsoftware/AstroLabNet/Journal"/>
+    <mkdir dir="../build/com/astrolabsoftware/AstroLabNet/Catalog"/>
+    <exec executable="../src/sh/generateTableRep.sh">
+      <arg value="astrolabnet.topology.1"/>
+      <arg value="com.astrolabsoftware.AstroLabNet.Topology"/>
+      <arg value="../build"/>
+      </exec>
+    <exec executable="../src/sh/generateTableRep.sh">
+      <arg value="astrolabnet.journal.1"/>
+      <arg value="com.astrolabsoftware.AstroLabNet.Journal"/>
+      <arg value="../build"/>
+      </exec>
+    <exec executable="../src/sh/generateTableRep.sh">
+      <arg value="astrolabnet.catalog.1"/>
+      <arg value="com.astrolabsoftware.AstroLabNet.Catalog"/>
+      <arg value="../build"/>
+      </exec>
+   </target>
 
   <!-- Compile ==============================================================-->
 

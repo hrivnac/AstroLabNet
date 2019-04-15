@@ -7,8 +7,10 @@ import com.astrolabsoftware.AstroLabNet.Browser.Components.Images;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.HeaderLabel;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.SimpleButton;
 import com.astrolabsoftware.AstroLabNet.HBaser.HBaseClient;
+import com.astrolabsoftware.AstroLabNet.HBaser.HBaseTableView;
 import com.astrolabsoftware.AstroLabNet.GraphStream.HBase2Graph;
 import com.astrolabsoftware.AstroLabNet.GraphStream.ClickManager;
+import com.astrolabsoftware.AstroLabNet.Catalog.CatalogEntry;
 import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
 import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
 
@@ -78,6 +80,9 @@ public class ServerCatalogEventHandler implements EventHandler<ActionEvent> {
     cmdBox.setSpacing(5);
     cmdBox.setAlignment(Pos.CENTER);
     cmdBox.getChildren().addAll(desc, cmd, buttonBox);
+    // ResultTable
+    HBaseTableView<CatalogEntry> resultTable = new HBaseTableView<>(); 
+    resultTable.setEntryNames(CatalogEntry.ENTRY_NAMES);
     // ResultGraph	  
     Graph graph = new MultiGraph("Catalog");
     FxViewer viewer = new FxViewer(new ThreadProxyPipe(graph));
@@ -110,6 +115,21 @@ public class ServerCatalogEventHandler implements EventHandler<ActionEvent> {
     pane.setOrientation(Orientation.VERTICAL);
     pane.getItems().addAll(cmdBox);
     // Actions
+    searchTable.setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent e) {
+        pane.getItems().addAll(resultTable);
+        //resultText.getChildren().add(new Text(_hbase.scan("astrolabnet.catalog.1", null, 0, 0, 0)));
+        resultTable.getItems().clear();
+        JSONObject json = _hbase.scan2JSON("astrolabnet.catalog.1",
+                                           null,
+                                           0,
+                                           0,
+                                           0);
+        resultTable.addJSONEntry(json, CatalogEntry.class);
+        resultTable.refresh();
+        }
+      });
     searchGraph.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent e) {

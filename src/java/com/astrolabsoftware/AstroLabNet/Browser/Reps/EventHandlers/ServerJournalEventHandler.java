@@ -7,9 +7,10 @@ import com.astrolabsoftware.AstroLabNet.Browser.Components.Images;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.HeaderLabel;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.SimpleButton;
 import com.astrolabsoftware.AstroLabNet.HBaser.HBaseClient;
+import com.astrolabsoftware.AstroLabNet.HBaser.HBaseTableView;
 import com.astrolabsoftware.AstroLabNet.GraphStream.HBase2Graph;
 import com.astrolabsoftware.AstroLabNet.GraphStream.ClickManager;
-import com.astrolabsoftware.AstroLabNet.Journal.JournalTableView;
+import com.astrolabsoftware.AstroLabNet.Journal.JournalEntry;
 import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
 import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
 
@@ -146,8 +147,9 @@ public class ServerJournalEventHandler implements EventHandler<ActionEvent> {
     cmdBox.setAlignment(Pos.CENTER);
     cmdBox.getChildren().addAll(desc, period, selectionBox, buttonBox);
     // ResultTable
-    JournalTableView resultTable = new JournalTableView(); 
-       // ResultGraph	  
+    HBaseTableView<JournalEntry> resultTable = new HBaseTableView<>();
+    resultTable.setEntryNames(JournalEntry.ENTRY_NAMES); // TBD: should be inside
+    // ResultGraph	  
     Graph graph = new MultiGraph("Journal");
     FxViewer viewer = new FxViewer(new ThreadProxyPipe(graph));
     try {
@@ -210,7 +212,7 @@ public class ServerJournalEventHandler implements EventHandler<ActionEvent> {
                                            0,
                                            Timestamp.valueOf(start.getLocalDateTime()).getTime(),
                                            Timestamp.valueOf(stop.getLocalDateTime() ).getTime());
-        resultTable.addJSONEntry(json);
+        resultTable.addJSONEntry(json, JournalEntry.class);
         resultTable.refresh();
         }
       });

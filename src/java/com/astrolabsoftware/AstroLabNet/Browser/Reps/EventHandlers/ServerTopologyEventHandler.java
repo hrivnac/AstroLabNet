@@ -7,9 +7,10 @@ import com.astrolabsoftware.AstroLabNet.Browser.Components.Images;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.HeaderLabel;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.SimpleButton;
 import com.astrolabsoftware.AstroLabNet.HBaser.HBaseClient;
+import com.astrolabsoftware.AstroLabNet.HBaser.HBaseTableView;
 import com.astrolabsoftware.AstroLabNet.GraphStream.HBase2Graph;
 import com.astrolabsoftware.AstroLabNet.GraphStream.ClickManager;
-import com.astrolabsoftware.AstroLabNet.Journal.TopologyTableView;
+import com.astrolabsoftware.AstroLabNet.Topology.TopologyEntry;
 import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
 import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
 
@@ -80,7 +81,8 @@ public class ServerTopologyEventHandler implements EventHandler<ActionEvent> {
     cmdBox.setAlignment(Pos.CENTER);
     cmdBox.getChildren().addAll(desc, cmd, buttonBox);
     // ResultTable
-    TopologyTableView resultTable = new TopologyTableView(); 
+    HBaseTableView<TopologyEntry> resultTable = new HBaseTableView<>(); 
+    resultTable.setEntryNames(TopologyEntry.ENTRY_NAMES);
     // ResultGraph	  
     Graph graph = new MultiGraph("Topology");
     FxViewer viewer = new FxViewer(new ThreadProxyPipe(graph));
@@ -123,7 +125,7 @@ public class ServerTopologyEventHandler implements EventHandler<ActionEvent> {
                                            0,
                                            0,
                                            0);
-        resultTable.addJSONEntry(json);
+        resultTable.addJSONEntry(json, TopologyEntry.class);
         resultTable.refresh();
         }
       });
