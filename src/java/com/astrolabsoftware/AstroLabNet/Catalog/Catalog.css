@@ -1,13 +1,15 @@
 graph {
+	canvas-color: white;
 	fill-color: grey;
+	padding: 60px;
   }
 node {
-	shape: circle;
+	shape: box;
 	fill-mode: plain;
 	fill-color: blue;
 	stroke-mode: plain;
 	stroke-color: black;
-	text-size: 30px;
+	text-size: 10px;
 	text-mode: normal;
 	size-mode: fit;
   }
@@ -17,10 +19,18 @@ node.marked {
 node:clicked {
 	fill-color: green;
   }  
+node:selected {
+	stroke-mode: plain;
+	stroke-color: blue;
+  }
 node#A {
 	fill-color: blue;
   }
 edge {
+  shape: line;
+  size: 5px;
+  fill-color: grey;
+  fill-mode: plain;
   arrow-shape: arrow;
+  arrow-size: 20px, 15px;
   }
-

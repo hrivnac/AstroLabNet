@@ -8,6 +8,7 @@ import com.astrolabsoftware.AstroLabNet.Browser.Components.HeaderLabel;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.SimpleButton;
 import com.astrolabsoftware.AstroLabNet.HBaser.HBaseClient;
 import com.astrolabsoftware.AstroLabNet.Catalog.HBase2Graph;
+import com.astrolabsoftware.AstroLabNet.Catalog.ClickManager;
 import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
 import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
 
@@ -20,6 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -44,6 +46,13 @@ import org.graphstream.ui.view.ViewerListener;
 import org.graphstream.ui.view.ViewerPipe;
 import org.graphstream.stream.file.FileSourceDGS;
 import org.graphstream.stream.thread.ThreadProxyPipe;
+
+// org.json
+import org.json.JSONObject;
+
+// Java
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 
 // Log4J
 import org.apache.log4j.Logger;
@@ -94,6 +103,21 @@ public class ServerCatalogEventHandler implements EventHandler<ActionEvent> {
 		  log.warn("Cannot load GraphStream Stylesheet", e);
 		  }
 		FxViewPanel graphView = (FxViewPanel)viewer.addDefaultView(true);
+		graphView.setMouseManager(new ClickManager(graph));
+    graphView.setOnScroll(
+      new EventHandler<ScrollEvent>() {
+        @Override
+        public void handle(ScrollEvent event) {
+          double zoomFactor = 1.05;
+          double deltaY = event.getDeltaY();          
+          if (deltaY < 0) {
+            zoomFactor = 0.95;
+            }
+          graphView.setScaleX(graphView.getScaleX() * zoomFactor);
+          graphView.setScaleY(graphView.getScaleY() * zoomFactor);
+          event.consume();
+          }
+      });
 		viewer.enableAutoLayout();
     // Pane = Desc + Cmd + ButtonBox + ScrollPane
     SplitPane pane = new SplitPane();
@@ -104,7 +128,12 @@ public class ServerCatalogEventHandler implements EventHandler<ActionEvent> {
     search.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent e) {
-        new HBase2Graph().updateGraph(_hbase.scan2JSON("astrolabnet.catalog.1", null, 0, 0, 0), graph);
+        JSONObject json = _hbase.scan2JSON("astrolabnet.catalog.1",
+                                            null,
+                                            0,
+                                            0,
+                                            0);
+        new HBase2Graph().updateGraph(json, graph);
         }
       });
     // Show
