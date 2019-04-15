@@ -32,7 +32,7 @@ node#A {
 edge {
   shape: line;
   size: 5px;
-  fill-color: grey;
+  fill-color: black;
   fill-mode: plain;
   arrow-shape: arrow;
   arrow-size: 20px, 15px;

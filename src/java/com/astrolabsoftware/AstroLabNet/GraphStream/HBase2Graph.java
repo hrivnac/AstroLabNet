@@ -44,14 +44,14 @@ public class HBase2Graph {
     GraphEntry entry;
     Node node;
     List<GraphEntry> entries = new ArrayList<>();
-    //for (int i = 0; i < rows.length(); i++) {
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < rows.length(); i++) {
       entry = new GraphEntry(Coding.decode(rows.getJSONObject(i).getString("key")));
       cells = rows.getJSONObject(i).getJSONArray("Cell");
       for (int j = 0; j < cells.length(); j++) {
         column = Coding.decode(cells.getJSONObject(j).getString("column"));
         value  = Coding.decode(cells.getJSONObject(j).getString("$"));
         if (column.startsWith("r:")) {
+          log.info(column.substring(2) + " " + entry.id() + ":" + value);
           _relations.put(column.substring(2), entry.id() + ":" + value);
           }  
         else {
@@ -65,10 +65,10 @@ public class HBase2Graph {
       }
     for (Map.Entry<String, String> e : _relations.entrySet()) {
       try {
-        graph.addEdge(e.getValue().split(":")[0], e.getValue().split(":")[1], e.getKey(), true);
+        graph.addEdge(e.getKey(), e.getValue().split(":")[0], e.getValue().split(":")[1], true);
         }
       catch (ElementNotFoundException ex) {
-        log.error("Cannot create Edge TBD");
+        log.error("Cannot create Edge " + e.getKey() + ": " + e.getValue().split(":")[0] + " -> " + e.getValue().split(":")[1], ex);
         }
       }
     }
