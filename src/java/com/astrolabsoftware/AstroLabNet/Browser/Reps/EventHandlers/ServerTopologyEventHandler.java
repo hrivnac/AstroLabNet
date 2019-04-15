@@ -11,16 +11,13 @@ import com.astrolabsoftware.AstroLabNet.Journal.TopologyTableView;
 
 // JavaFX
 import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;

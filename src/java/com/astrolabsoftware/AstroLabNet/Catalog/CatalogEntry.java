@@ -2,25 +2,16 @@ package com.astrolabsoftware.AstroLabNet.Catalog;
 
 // GraphStream
 import org.graphstream.graph.Graph;
-import org.graphstream.graph.Node;
-import org.graphstream.graph.Edge;
-import org.graphstream.graph.implementations.AbstractNode;
-import org.graphstream.graph.implementations.AbstractEdge;
-import org.graphstream.graph.implementations.MultiGraph;
-import org.graphstream.graph.ElementNotFoundException;
 
 // Java
 import java.util.Map;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.stream.Stream;
 
 // Log4J
 import org.apache.log4j.Logger;
 
 /** The <em>CatalogEntry</em> represents one <em>Catalog</em> entry.
   * To be used in <em>GraphStream</em> {@link Graph}.
-  * (It is a <em>JavaBean</em>.) 
   * @opt attributes
   * @opt operations
   * @opt types
@@ -28,23 +19,32 @@ import org.apache.log4j.Logger;
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public class CatalogEntry {
   
-  /** TBD */
+  /** Create.
+    * @param id The entry id. */
   public CatalogEntry(String id) {
     _id = id;
     }
   
-  /** TBD */
+  /** Add one piece of content.
+    * @param name  The item name.
+    * @param value The item value. */
   public void addContent(String name,
-                         String address) {
-    _content.put(name, address);
+                         String value) {
+    _content.put(name, value);
     }
     
-  /** TBD */
+  /** Give full content.
+    * @return The full content. */
   public String content() {
-    return _content.toString();
+    String content = "id: " + _id + "\n";
+    for (Map.Entry<String, String> e : _content.entrySet()) {
+      content += e.getKey() + ": " + e.getValue() + "\n";
+      }
+    return content;
     }
     
-  /** TBD */
+  /** Give entry id.
+    * @return The entry id. */
   public String id() {
     return _id;
     }

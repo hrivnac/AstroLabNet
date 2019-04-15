@@ -30,7 +30,7 @@ import org.apache.log4j.Logger;
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public class HBase2Graph {
     
-  /** TBD */
+  /** Convert <em>Catalog</em> {@link JSONObject} into <em>GraphStream</em> {@link Graph}. */
   public void updateGraph(JSONObject json,
                           Graph      graph) {
     if (json == null || json.equals("")) {

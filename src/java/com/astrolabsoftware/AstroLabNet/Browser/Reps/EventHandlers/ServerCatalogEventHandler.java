@@ -13,8 +13,6 @@ import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
 import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
 
 // JavaFX
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Label;
@@ -24,7 +22,6 @@ import javafx.scene.control.Tab;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
@@ -32,27 +29,15 @@ import javafx.geometry.Orientation;
 
 // GraphStream
 import org.graphstream.graph.Graph;
-import org.graphstream.graph.Edge;
-import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.MultiGraph;
-import org.graphstream.ui.fx_viewer.FxDefaultView;
 import org.graphstream.ui.fx_viewer.FxViewer;
 import org.graphstream.ui.fx_viewer.FxViewPanel;
-import org.graphstream.ui.fx_viewer.util.DefaultApplication;
-import org.graphstream.ui.javafx.FxGraphRenderer;
-import org.graphstream.ui.javafx.util.ImageCache;
-import org.graphstream.ui.view.Viewer;
-import org.graphstream.ui.view.ViewerListener;
-import org.graphstream.ui.view.ViewerPipe;
-import org.graphstream.stream.file.FileSourceDGS;
 import org.graphstream.stream.thread.ThreadProxyPipe;
 
 // org.json
 import org.json.JSONObject;
 
 // Java
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
 
 // Log4J
 import org.apache.log4j.Logger;
