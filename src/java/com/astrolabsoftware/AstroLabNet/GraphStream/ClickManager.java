@@ -1,4 +1,4 @@
-package com.astrolabsoftware.AstroLabNet.Catalog;
+package com.astrolabsoftware.AstroLabNet.GraphStream;
 
 // GraphStream
 import org.graphstream.graph.Graph;
@@ -63,6 +63,6 @@ public class ClickManager extends FxMouseManager {
 	private Graph _graph;
 	  
   /** Logging . */
-  private static Logger log = Logger.getLogger(Click.class);
+  private static Logger log = Logger.getLogger(ClickManager.class);
 
   }

@@ -7,7 +7,11 @@ import com.astrolabsoftware.AstroLabNet.Browser.Components.Images;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.HeaderLabel;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.SimpleButton;
 import com.astrolabsoftware.AstroLabNet.HBaser.HBaseClient;
+import com.astrolabsoftware.AstroLabNet.GraphStream.HBase2Graph;
+import com.astrolabsoftware.AstroLabNet.GraphStream.ClickManager;
 import com.astrolabsoftware.AstroLabNet.Journal.JournalTableView;
+import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
+import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
 
 // JavaFX
 import javafx.scene.control.SplitPane;
@@ -16,6 +20,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tab;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.GridPane;
@@ -23,6 +28,13 @@ import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.geometry.Orientation;
+
+// GraphStream
+import org.graphstream.graph.Graph;
+import org.graphstream.graph.implementations.MultiGraph;
+import org.graphstream.ui.fx_viewer.FxViewer;
+import org.graphstream.ui.fx_viewer.FxViewPanel;
+import org.graphstream.stream.thread.ThreadProxyPipe;
 
 // JFXtras
 import jfxtras.scene.control.LocalDateTimePicker;
@@ -119,13 +131,15 @@ public class ServerJournalEventHandler implements EventHandler<ActionEvent> {
     selectionBox.setSpacing(5);
     selectionBox.setAlignment(Pos.CENTER);
     selectionBox.getChildren().addAll(selection);    
-    // Search
-    Button search = new SimpleButton("Search", "Search Journal Database");
-    // ButtonBox = Search
+    // Search as Table
+    Button searchTable = new SimpleButton("Search as table", "Search Journal Database and present as a table");
+    // Search as Graph
+    Button searchGraph = new SimpleButton("Search as graph", "Search Journal Database and present as a graph");
+    // ButtonBox = SearchTable + SearchGraph
     HBox buttonBox = new HBox(10);
     buttonBox.setSpacing(5);
     buttonBox.setAlignment(Pos.CENTER);
-    buttonBox.getChildren().addAll(search);
+    buttonBox.getChildren().addAll(searchTable, searchGraph);
     // CmdBox = Desc + Period + SelectionBox + ButtonBox 
     VBox cmdBox = new VBox();
     cmdBox.setSpacing(5);
@@ -133,15 +147,42 @@ public class ServerJournalEventHandler implements EventHandler<ActionEvent> {
     cmdBox.getChildren().addAll(desc, period, selectionBox, buttonBox);
     // ResultTable
     JournalTableView resultTable = new JournalTableView(); 
-    // Pane = Desc + Cmd + ButtonBox + ResultTable
+       // ResultGraph	  
+    Graph graph = new MultiGraph("Journal");
+    FxViewer viewer = new FxViewer(new ThreadProxyPipe(graph));
+    try {
+		  graph.setAttribute("ui.stylesheet", new StringResource("com/astrolabsoftware/AstroLabNet/GraphStream/Graph.css").toString());
+		  }
+		catch (AstroLabNetException e) {
+		  log.warn("Cannot load GraphStream Stylesheet", e);
+		  }
+		FxViewPanel graphView = (FxViewPanel)viewer.addDefaultView(true);
+		graphView.setMouseManager(new ClickManager(graph));
+    graphView.setOnScroll(
+      new EventHandler<ScrollEvent>() {
+        @Override
+        public void handle(ScrollEvent event) {
+          double zoomFactor = 1.05;
+          double deltaY = event.getDeltaY();          
+          if (deltaY < 0) {
+            zoomFactor = 0.95;
+            }
+          graphView.setScaleX(graphView.getScaleX() * zoomFactor);
+          graphView.setScaleY(graphView.getScaleY() * zoomFactor);
+          event.consume();
+          }
+      });
+		viewer.enableAutoLayout();
+    // Pane = CmdBox + ...
     SplitPane pane = new SplitPane();
     pane.setDividerPositions(0.5);
     pane.setOrientation(Orientation.VERTICAL);
-    pane.getItems().addAll(cmdBox, resultTable);
+    pane.getItems().addAll(cmdBox);
     // Actions
-    search.setOnAction(new EventHandler<ActionEvent>() {
+    searchTable.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent e) {
+        pane.getItems().addAll(resultTable);
         Map<String, String> filterMap = new HashMap<>();
         String actorV   = actor.getValue();
         String rcV      = rc.getValue();
@@ -171,6 +212,18 @@ public class ServerJournalEventHandler implements EventHandler<ActionEvent> {
                                            Timestamp.valueOf(stop.getLocalDateTime() ).getTime());
         resultTable.addJSONEntry(json);
         resultTable.refresh();
+        }
+      });
+     searchGraph.setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent e) {
+        pane.getItems().addAll(graphView);
+        JSONObject json = _hbase.scan2JSON("astrolabnet.journal.1",
+                                           null,
+                                           0,
+                                           0,
+                                           0);
+        new HBase2Graph().updateGraph(json, graph);
         }
       });
     // Show

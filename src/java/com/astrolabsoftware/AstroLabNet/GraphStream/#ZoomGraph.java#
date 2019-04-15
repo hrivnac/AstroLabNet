@@ -1,0 +1,35 @@
+package com.astrolabsoftware.AstroLabNet.GraphStream;
+
+// GraphStream
+import org.graphstream.ui.fx_viewer.FxViewPanel;
+
+// Java
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
+
+/** <code>ZoomGraph</code> TBD
+  * @opt attributes
+  * @opt operations
+  * @opt types
+  * @opt visibility
+  * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
+public class ZoomGraph {
+
+  /** TBD */
+  public static void zoomGraphMouseWheelMoved(MouseWheelEvent mwe,
+                                              FxViewPanel     viewPanel){
+    if (MouseWheelEvent.ALT_MASK != 0) {            
+      if (mwe.getWheelRotation() > 0) {
+        double newViewPercent = viewPanel.getCamera().getViewPercent() + 0.05;
+        viewPanel.getCamera().setViewPercent(newViewPercent);               
+        }
+      else if (mwe.getWheelRotation() < 0) {
+        double currentViewPercent = viewPanel.getCamera().getViewPercent();
+        if (currentViewPercent > 0.05){
+          viewPanel.getCamera().setViewPercent(currentViewPercent - 0.05);                
+          }
+        }
+      }                     
+    }
+
+  }

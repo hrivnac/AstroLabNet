@@ -1,4 +1,4 @@
-package com.astrolabsoftware.AstroLabNet.Catalog;
+package com.astrolabsoftware.AstroLabNet.GraphStream;
 
 import com.astrolabsoftware.AstroLabNet.Utils.Coding;
 
@@ -21,7 +21,7 @@ import java.util.ArrayList;
 // Log4J
 import org.apache.log4j.Logger;
 
-/** <code>HBase2Graph</code> interprets <em>HBase Catalog</em> data
+/** <code>HBase2Graph</code> interprets <em>HBase</em> data
   * as a <em> GraphStream</em> graph.
   * @opt attributes
   * @opt operations
@@ -30,7 +30,7 @@ import org.apache.log4j.Logger;
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public class HBase2Graph {
     
-  /** Convert <em>Catalog</em> {@link JSONObject} into <em>GraphStream</em> {@link Graph}. */
+  /** Convert <em>HBase</em> {@link JSONObject} into <em>GraphStream</em> {@link Graph}. */
   public void updateGraph(JSONObject json,
                           Graph      graph) {
     if (json == null || json.equals("")) {
@@ -41,12 +41,12 @@ public class HBase2Graph {
     String key;
     String column;
     String value;
-    CatalogEntry entry;
+    GraphEntry entry;
     Node node;
-    List<CatalogEntry> entries = new ArrayList<>();
+    List<GraphEntry> entries = new ArrayList<>();
     //for (int i = 0; i < rows.length(); i++) {
     for (int i = 0; i < 10; i++) {
-      entry = new CatalogEntry(Coding.decode(rows.getJSONObject(i).getString("key")));
+      entry = new GraphEntry(Coding.decode(rows.getJSONObject(i).getString("key")));
       cells = rows.getJSONObject(i).getJSONArray("Cell");
       for (int j = 0; j < cells.length(); j++) {
         column = Coding.decode(cells.getJSONObject(j).getString("column"));

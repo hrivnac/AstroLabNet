@@ -7,8 +7,8 @@ import com.astrolabsoftware.AstroLabNet.Browser.Components.Images;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.HeaderLabel;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.SimpleButton;
 import com.astrolabsoftware.AstroLabNet.HBaser.HBaseClient;
-import com.astrolabsoftware.AstroLabNet.Catalog.HBase2Graph;
-import com.astrolabsoftware.AstroLabNet.Catalog.ClickManager;
+import com.astrolabsoftware.AstroLabNet.GraphStream.HBase2Graph;
+import com.astrolabsoftware.AstroLabNet.GraphStream.ClickManager;
 import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
 import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
 
@@ -37,8 +37,6 @@ import org.graphstream.stream.thread.ThreadProxyPipe;
 // org.json
 import org.json.JSONObject;
 
-// Java
-
 // Log4J
 import org.apache.log4j.Logger;
 
@@ -66,13 +64,15 @@ public class ServerCatalogEventHandler implements EventHandler<ActionEvent> {
     // Cmd
     TextArea cmd = new TextArea();
     cmd.setPrefHeight(2000);
-    // Search
-    Button search = new SimpleButton("Search", "Search Catalog Database");
-    // ButtonBox = Search
+    // Search as Table
+    Button searchTable = new SimpleButton("Search as Table", "Search Catalog Database and present as a table");
+    // Search as Graph
+    Button searchGraph = new SimpleButton("Search as Graph", "Search Catalog Database and present as a graph");
+    // ButtonBox = SearchTable + SearchGraph
     HBox buttonBox = new HBox(10);
     buttonBox.setSpacing(5);
     buttonBox.setAlignment(Pos.CENTER);
-    buttonBox.getChildren().addAll(search);
+    buttonBox.getChildren().addAll(searchTable, searchGraph);
     // CmdBox = Desc + Cmd + ButtonBox 
     VBox cmdBox = new VBox();
     cmdBox.setSpacing(5);
@@ -82,7 +82,7 @@ public class ServerCatalogEventHandler implements EventHandler<ActionEvent> {
     Graph graph = new MultiGraph("Catalog");
     FxViewer viewer = new FxViewer(new ThreadProxyPipe(graph));
     try {
-		  graph.setAttribute("ui.stylesheet", new StringResource("com/astrolabsoftware/AstroLabNet/Catalog/Catalog.css").toString());
+		  graph.setAttribute("ui.stylesheet", new StringResource("com/astrolabsoftware/AstroLabNet/GraphStream/Graph.css").toString());
 		  }
 		catch (AstroLabNetException e) {
 		  log.warn("Cannot load GraphStream Stylesheet", e);
@@ -104,20 +104,21 @@ public class ServerCatalogEventHandler implements EventHandler<ActionEvent> {
           }
       });
 		viewer.enableAutoLayout();
-    // Pane = Desc + Cmd + ButtonBox + ScrollPane
+    // Pane = CmdBox + ...
     SplitPane pane = new SplitPane();
     pane.setDividerPositions(0.5);
     pane.setOrientation(Orientation.VERTICAL);
-    pane.getItems().addAll(cmdBox, graphView);
+    pane.getItems().addAll(cmdBox);
     // Actions
-    search.setOnAction(new EventHandler<ActionEvent>() {
+    searchGraph.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent e) {
+        pane.getItems().addAll(graphView);
         JSONObject json = _hbase.scan2JSON("astrolabnet.catalog.1",
-                                            null,
-                                            0,
-                                            0,
-                                            0);
+                                           null,
+                                           0,
+                                           0,
+                                           0);
         new HBase2Graph().updateGraph(json, graph);
         }
       });

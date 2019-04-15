@@ -1,4 +1,4 @@
-package com.astrolabsoftware.AstroLabNet.Catalog;
+package com.astrolabsoftware.AstroLabNet.GraphStream;
 
 // GraphStream
 import org.graphstream.graph.Graph;
@@ -10,18 +10,18 @@ import java.util.HashMap;
 // Log4J
 import org.apache.log4j.Logger;
 
-/** The <em>CatalogEntry</em> represents one <em>Catalog</em> entry.
+/** The <em>GraphEntry</em> represents one <em>HBase</em> entry.
   * To be used in <em>GraphStream</em> {@link Graph}.
   * @opt attributes
   * @opt operations
   * @opt types
   * @opt visibility
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
-public class CatalogEntry {
+public class GraphEntry {
   
   /** Create.
     * @param id The entry id. */
-  public CatalogEntry(String id) {
+  public GraphEntry(String id) {
     _id = id;
     }
   
@@ -54,6 +54,6 @@ public class CatalogEntry {
   private Map<String, String> _content   = new HashMap<>();
   
   /** Logging . */
-  private static Logger log = Logger.getLogger(CatalogEntry.class);
+  private static Logger log = Logger.getLogger(GraphEntry.class);
  
   }
