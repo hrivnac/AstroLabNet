@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.text.Text;
 import javafx.scene.layout.VBox; 
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 import javafx.stage.Modality;
 import javafx.geometry.Insets;
@@ -40,6 +41,9 @@ public class ClickManager extends FxMouseManager {
     * @param event   The acting {@link MouseEvent}. */
   protected void mouseButtonPressOnElement(GraphicElement element,
 											                      MouseEvent     event) {
+	  if (event.getButton() != MouseButton.SECONDARY) {
+	    return;
+	    }
     final Stage dialog = new Stage();
     dialog.initModality(Modality.WINDOW_MODAL);
     Text content = new Text(_graph.getNode(element.getId()).getAttribute("content").toString());
@@ -50,7 +54,7 @@ public class ClickManager extends FxMouseManager {
         dialog.close();
         }
       }); 
-    VBox dialogVBox = new VBox(20);
+    VBox dialogVBox = new VBox();
     dialogVBox.setMargin(content, new Insets(10));
     dialogVBox.setMargin(button, new Insets(10));
     dialogVBox.getChildren().addAll(content, button);
