@@ -10,6 +10,7 @@ import com.astrolabsoftware.AstroLabNet.HBaser.HBaseClient;
 import com.astrolabsoftware.AstroLabNet.HBaser.HBaseTableView;
 import com.astrolabsoftware.AstroLabNet.GraphStream.HBase2Graph;
 import com.astrolabsoftware.AstroLabNet.GraphStream.ClickManager;
+import com.astrolabsoftware.AstroLabNet.GraphStream.HBGraphView;
 import com.astrolabsoftware.AstroLabNet.Topology.TopologyEntry;
 import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
 import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
@@ -84,30 +85,7 @@ public class ServerTopologyEventHandler implements EventHandler<ActionEvent> {
     HBaseTableView<TopologyEntry> resultTable = new HBaseTableView<>(); 
     resultTable.setEntryNames(TopologyEntry.ENTRY_NAMES);
     // ResultGraph	  
-    Graph graph = new MultiGraph("Topology");
-    FxViewer viewer = new FxViewer(new ThreadProxyPipe(graph));
-    try {
-		  graph.setAttribute("ui.stylesheet", new StringResource("com/astrolabsoftware/AstroLabNet/GraphStream/Graph.css").toString());
-		  }
-		catch (AstroLabNetException e) {
-		  log.warn("Cannot load GraphStream Stylesheet", e);
-		  }
-		FxViewPanel graphView = (FxViewPanel)viewer.addDefaultView(true);
-		graphView.setMouseManager(new ClickManager(graph));
-    graphView.setOnScroll(
-      new EventHandler<ScrollEvent>() {
-        @Override
-        public void handle(ScrollEvent event) {
-          double zoomFactor = 1.05;
-          double deltaY = event.getDeltaY();          
-          if (deltaY < 0) {
-            zoomFactor = 0.95;
-            }
-          graphView.setScaleX(graphView.getScaleX() * zoomFactor);
-          graphView.setScaleY(graphView.getScaleY() * zoomFactor);
-          event.consume();
-          }
-      });
+    HBGraphView resultGraph = new HBGraphView("Topology"); 
     // Pane = CmdBox + ...
     SplitPane pane = new SplitPane();
     pane.setDividerPositions(0.5);
@@ -117,32 +95,33 @@ public class ServerTopologyEventHandler implements EventHandler<ActionEvent> {
     searchTable.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent e) {
-        pane.getItems().addAll(resultTable);
-        //resultText.getChildren().add(new Text(_hbase.scan("astrolabnet.topology.1", null, 0, 0, 0)));
+        JSONObject json = search();
         resultTable.getItems().clear();
-        JSONObject json = _hbase.scan2JSON("astrolabnet.topology.1",
-                                           null,
-                                           0,
-                                           0,
-                                           0);
         resultTable.addJSONEntry(json, TopologyEntry.class);
+        pane.getItems().addAll(resultTable);
         resultTable.refresh();
         }
       });
     searchGraph.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent e) {
-        pane.getItems().addAll(graphView);
-        JSONObject json = _hbase.scan2JSON("astrolabnet.topology.1",
-                                           null,
-                                           0,
-                                           0,
-                                           0);
-        new HBase2Graph().updateGraph(json, graph);
+        JSONObject json = search();
+        pane.getItems().addAll(resultGraph.graphView());
+        new HBase2Graph().updateGraph(json, resultGraph.graph());
         }
       });
     // Show
     Tab tab = _browser.addTab(pane, toString(), Images.TOPOLOGY);
+    }
+    
+  /** TBD */
+  private JSONObject search() {
+    JSONObject json = _hbase.scan2JSON("astrolabnet.topology.1",
+                                       null,
+                                       0,
+                                       0,
+                                       0);
+    return json;
     }
     
   @Override

@@ -10,6 +10,7 @@ import com.astrolabsoftware.AstroLabNet.HBaser.HBaseClient;
 import com.astrolabsoftware.AstroLabNet.HBaser.HBaseTableView;
 import com.astrolabsoftware.AstroLabNet.GraphStream.HBase2Graph;
 import com.astrolabsoftware.AstroLabNet.GraphStream.ClickManager;
+import com.astrolabsoftware.AstroLabNet.GraphStream.HBGraphView;
 import com.astrolabsoftware.AstroLabNet.Journal.JournalEntry;
 import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
 import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
@@ -31,11 +32,14 @@ import javafx.geometry.Pos;
 import javafx.geometry.Orientation;
 
 // GraphStream
+import org.graphstream.graph.Node;
+import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.implementations.MultiGraph;
 import org.graphstream.ui.fx_viewer.FxViewer;
 import org.graphstream.ui.fx_viewer.FxViewPanel;
 import org.graphstream.stream.thread.ThreadProxyPipe;
+import org.graphstream.stream.SinkAdapter;
 
 // JFXtras
 import jfxtras.scene.control.LocalDateTimePicker;
@@ -46,6 +50,7 @@ import org.json.JSONObject;
 // Java
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.time.LocalDateTime;
 import java.sql.Timestamp;
 
@@ -149,32 +154,8 @@ public class ServerJournalEventHandler implements EventHandler<ActionEvent> {
     // ResultTable
     HBaseTableView<JournalEntry> resultTable = new HBaseTableView<>();
     resultTable.setEntryNames(JournalEntry.ENTRY_NAMES); // TBD: should be inside
-    // ResultGraph	  
-    Graph graph = new MultiGraph("Journal");
-    FxViewer viewer = new FxViewer(new ThreadProxyPipe(graph));
-    try {
-		  graph.setAttribute("ui.stylesheet", new StringResource("com/astrolabsoftware/AstroLabNet/GraphStream/Graph.css").toString());
-		  }
-		catch (AstroLabNetException e) {
-		  log.warn("Cannot load GraphStream Stylesheet", e);
-		  }
-		FxViewPanel graphView = (FxViewPanel)viewer.addDefaultView(true);
-		graphView.setMouseManager(new ClickManager(graph));
-    graphView.setOnScroll(
-      new EventHandler<ScrollEvent>() {
-        @Override
-        public void handle(ScrollEvent event) {
-          double zoomFactor = 1.05;
-          double deltaY = event.getDeltaY();          
-          if (deltaY < 0) {
-            zoomFactor = 0.95;
-            }
-          graphView.setScaleX(graphView.getScaleX() * zoomFactor);
-          graphView.setScaleY(graphView.getScaleY() * zoomFactor);
-          event.consume();
-          }
-      });
-		viewer.enableAutoLayout();
+    // ResultGraph
+    HBGraphView resultGraph = new HBGraphView("Journal"); 
     // Pane = CmdBox + ...
     SplitPane pane = new SplitPane();
     pane.setDividerPositions(0.5);
@@ -184,52 +165,60 @@ public class ServerJournalEventHandler implements EventHandler<ActionEvent> {
     searchTable.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent e) {
-        pane.getItems().addAll(resultTable);
-        Map<String, String> filterMap = new HashMap<>();
-        String actorV   = actor.getValue();
-        String rcV      = rc.getValue();
-        String actionV  = action.getText();
-        String resultV  = result.getText();
-        String commentV = comment.getText();
-        if (!actorV.equals("*")) {
-          filterMap.put("i:actor", actorV + ":BinaryComparator");
-          }
-        if (!rcV.equals("*")) {
-          filterMap.put("d:rc", rcV + ":BinaryComparator");
-          }
-        if (!actionV.equals("")) {
-          filterMap.put("i:action", actionV + ":SubstringComparator");
-          }
-         if (!resultV.equals("")) {
-          filterMap.put("d:result", resultV + ":SubstringComparator");
-          }
-        if (!commentV.equals("")) {
-          filterMap.put("c:comment", commentV + ":SubstringComparator");
-          }
+        JSONObject json = search(actor, action, result, rc, comment, start, stop);
         resultTable.getItems().clear();
-        JSONObject json = _hbase.scan2JSON("astrolabnet.journal.1",
-                                           filterMap,
-                                           0,
-                                           Timestamp.valueOf(start.getLocalDateTime()).getTime(),
-                                           Timestamp.valueOf(stop.getLocalDateTime() ).getTime());
         resultTable.addJSONEntry(json, JournalEntry.class);
+        pane.getItems().addAll(resultTable);
         resultTable.refresh();
         }
       });
      searchGraph.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent e) {
-        pane.getItems().addAll(graphView);
-        JSONObject json = _hbase.scan2JSON("astrolabnet.journal.1",
-                                           null,
-                                           0,
-                                           0,
-                                           0);
-        new HBase2Graph().updateGraph(json, graph);
+        JSONObject json = search(actor, action, result, rc, comment, start, stop);
+        pane.getItems().addAll(resultGraph.graphView());
+        new HBase2Graph().updateGraph(json, resultGraph.graph());
         }
       });
     // Show
     Tab tab = _browser.addTab(pane, toString(), Images.JOURNAL);
+    }
+    
+  /** TBD */
+  private JSONObject search(ComboBox<String>    actor,
+                            TextField           action,
+                            TextField           result,
+                            ComboBox<String>    rc,
+                            TextField           comment,
+                            LocalDateTimePicker start,
+                            LocalDateTimePicker stop) {
+    Map<String, String> filterMap = new HashMap<>();
+    String actorV   = actor.getValue();
+    String rcV      = rc.getValue();
+    String actionV  = action.getText();
+    String resultV  = result.getText();
+    String commentV = comment.getText();
+    if (!actorV.equals("*")) {
+      filterMap.put("i:actor", actorV + ":BinaryComparator");
+      }
+    if (!rcV.equals("*")) {
+      filterMap.put("d:rc", rcV + ":BinaryComparator");
+      }
+    if (!actionV.equals("")) {
+      filterMap.put("i:action", actionV + ":SubstringComparator");
+      }
+     if (!resultV.equals("")) {
+      filterMap.put("d:result", resultV + ":SubstringComparator");
+      }
+    if (!commentV.equals("")) {
+      filterMap.put("c:comment", commentV + ":SubstringComparator");
+      }
+    JSONObject json = _hbase.scan2JSON("astrolabnet.journal.1",
+                                       filterMap,
+                                       0,
+                                       Timestamp.valueOf(start.getLocalDateTime()).getTime(),
+                                       Timestamp.valueOf(stop.getLocalDateTime() ).getTime());
+    return json;
     }
     
   @Override

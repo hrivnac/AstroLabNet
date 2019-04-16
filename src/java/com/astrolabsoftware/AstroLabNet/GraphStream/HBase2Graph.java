@@ -51,7 +51,7 @@ public class HBase2Graph {
         column = Coding.decode(cells.getJSONObject(j).getString("column"));
         value  = Coding.decode(cells.getJSONObject(j).getString("$"));
         if (column.startsWith("r:")) {
-          log.info(column.substring(2) + " " + entry.id() + ":" + value);
+          //log.info(column.substring(2) + " " + entry.id() + ":" + value);
           _relations.put(column.substring(2), entry.id() + ":" + value);
           }  
         else {

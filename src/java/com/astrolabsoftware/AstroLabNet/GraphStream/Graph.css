@@ -18,7 +18,11 @@ node {
   }
 node.marked {
   fill-color: yellow;
-  } 
+  }
+node.plus {
+  text-background-color: #F33;
+  text-color: #DDD;
+  }
 node:clicked {
 	fill-color: red;
   }  
@@ -31,9 +35,9 @@ node#A {
   }
 edge {
   shape: line;
-  size: 5px;
+  size: 1px;
   fill-color: black;
   fill-mode: plain;
   arrow-shape: arrow;
-  arrow-size: 20px, 15px;
+  arrow-size: 10px, 5px;
   }

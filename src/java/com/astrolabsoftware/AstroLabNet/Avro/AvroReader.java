@@ -199,7 +199,7 @@ public class AvroReader {
                          String family,
                          String column,
                          String value) {
-    log.info(key + ": " + family + ":" + column + "->" + value);
+    //log.info(key + ": " + family + ":" + column + "->" + value);
     _server.hbase().put("astrolabnet.catalog.1",
                         key,
                         new String[]{family + ":" + column},
