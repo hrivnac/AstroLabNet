@@ -12,6 +12,8 @@ node {
 	stroke-color: black;
 	text-size: 10px;
 	size-mode: dyn-size;
+  text-color: black;
+  text-background-color: white;
 	text-alignment: under;
 	text-offset: 2px;
 	size-mode: fit;
@@ -20,8 +22,9 @@ node.marked {
   fill-color: yellow;
   }
 node.plus {
-  text-background-color: #F33;
-  text-color: #DDD;
+	shape: diamond;
+  text-background-color: grey;
+  text-color: red;
   }
 node:clicked {
 	fill-color: red;

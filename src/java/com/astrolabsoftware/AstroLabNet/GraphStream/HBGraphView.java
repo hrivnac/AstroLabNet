@@ -64,65 +64,6 @@ public class HBGraphView {
     _graph = new MultiGraph(name);
     ThreadProxyPipe pipe = new ThreadProxyPipe(_graph);
     FxViewer viewer = new FxViewer(pipe);
-    pipe.addSink(new SinkAdapter() {
-      @Override
-      public void nodeAttributeAdded(String sourceId, long timeId, String nodeId, String attribute, Object value) {
-        log.info(attribute);
-        if (attribute.equals("ui.clicked")) {
-          toggleNode(nodeId);
-          }
-        }
-      @Override
-      public void nodeAttributeChanged(String sourceId, long timeId, String nodeId, String attribute, Object oldValue, Object newValue) {
-        log.info(attribute);
-        if (attribute.equals("ui.clicked")) {
-          toggleNode(nodeId);
-          }
-        }
-      void toggleNode(String id) {
-        Node n  = _graph.getNode(id);
-        Object[] pos = n.getArray("xyz");
-        Iterator<Node> it = n.getBreadthFirstIterator(true);
-        if (n.hasAttribute("collapsed")) {
-          n.removeAttribute("collapsed");
-          while (it.hasNext()) {
-            Node m  =  it.next();          
-            int im = m.getOutDegree();
-            Edge e;
-            //for (Edge e : m.getLeavingEdgeSet()) {
-            for (int i = 0; i < m.getOutDegree(); i++) {
-              e = m.getLeavingEdge(i);
-              e.removeAttribute("ui.hide");
-              }
-            m.removeAttribute("layout.frozen");
-            m.setAttribute("x", ((double)pos[0]) + Math.random() * 0.0001);
-            m.setAttribute("y", ((double)pos[1]) + Math.random() * 0.0001);
-            m.removeAttribute("ui.hide");
-            }
-          n.removeAttribute("ui.class");          
-          }
-        else {
-          n.setAttribute("ui.class", "plus");
-          n.setAttribute("collapsed");          
-          while (it.hasNext()){
-            Node m  =  it.next();         
-            int im = m.getOutDegree();
-            Edge e;
-            //for (Edge e : m.getLeavingEdgeSet()) {
-            for (int i = 0; i < m.getOutDegree(); i++) {
-              e = m.getLeavingEdge(i);
-              e.setAttribute("ui.hide");
-              if (n != m) {
-                m.setAttribute("layout.frozen");
-                m.setAttribute("x", ((double) pos[0]) + Math.random() * 0.0001);
-                m.setAttribute("y", ((double) pos[1]) + Math.random() * 0.0001);         
-                m.setAttribute("ui.hide");
-                }          
-              }
-            }
-          }
-        }
-      });
     try {
 		  _graph.setAttribute("ui.stylesheet", new StringResource("com/astrolabsoftware/AstroLabNet/GraphStream/Graph.css").toString());
 		  }
