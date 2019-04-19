@@ -1,21 +1,20 @@
 graph {
 	canvas-color: white;
 	fill-color: grey;
-	padding: 60px;
   }
 node {
 	shape: circle;
-	size: 10px;
+	size: 20px;
 	fill-mode: plain;
 	fill-color: blue;
 	stroke-mode: plain;
 	stroke-color: black;
-	text-size: 10px;
+	text-size: 20px;
 	size-mode: dyn-size;
   text-color: black;
   text-background-color: white;
 	text-alignment: under;
-	text-offset: 2px;
+	text-offset: 4px;
 	size-mode: fit;
   }
 node.marked {

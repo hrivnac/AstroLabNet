@@ -21,6 +21,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -130,11 +132,53 @@ public class SenderRep extends ElementRep {
     jobBox2.setSpacing(5);
     jobBox2.setAlignment(Pos.CENTER);
     jobBox2.getChildren().addAll(classNameLabel, _className);
-    // JobBox = JobBox1 + JobBox2 
+    // ArgsLabel
+    Label argsLabel = new Label("args:");
+    // Args
+    _args = new TextField();
+    _args.setPrefColumnCount(50);
+    // JobBox3 = ArgsLabel + Args
+    HBox jobBox3 = new HBox(10);
+    jobBox3.setSpacing(5);
+    jobBox3.setAlignment(Pos.CENTER);
+    jobBox3.getChildren().addAll(argsLabel, _args);
+    // DriverMemoryLabel
+    Label driverMemoryLabel = new Label("DriverMemory:");
+    // DriverMemory
+    _driverMemory = new TextField();
+    _driverMemory.setPrefColumnCount(10);
+    // DriverCoresLabel
+    Label driverCoresLabel = new Label("DriverCores:");
+    // DriverCores
+    _driverCores = new Spinner<Integer>();
+    SpinnerValueFactory<Integer> driverCoresFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 50, 3);
+    _driverCores.setValueFactory(driverCoresFactory);
+    // JobBox4 = DriverMemoryLabel + DriverMemory + DriverCoresLabel + DriverCores
+    HBox jobBox4 = new HBox(10);
+    jobBox4.setSpacing(5);
+    jobBox4.setAlignment(Pos.CENTER);
+    jobBox4.getChildren().addAll(driverMemoryLabel, _driverMemory, driverCoresLabel, _driverCores);
+    // ExecutorMemoryLabel
+    Label executorMemoryLabel = new Label("ExecutorMemory:");
+    // ExecutorMemory
+    _executorMemory = new TextField();
+    _executorMemory.setPrefColumnCount(10);
+    // ExecutorCoresLabel
+    Label executorCoresLabel = new Label("ExecutorCores:");
+    // ExecutorCores
+    _executorCores = new Spinner<Integer>();
+    SpinnerValueFactory<Integer> executorCoresFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 50, 3);
+    _executorCores.setValueFactory(executorCoresFactory);
+    // JobBox4 = ExecutorMemoryLabel + ExecutorMemory + ExecutorCoresLabel + ExecutorCores
+    HBox jobBox5 = new HBox(10);
+    jobBox5.setSpacing(5);
+    jobBox5.setAlignment(Pos.CENTER);
+    jobBox5.getChildren().addAll(executorMemoryLabel, _executorMemory, executorCoresLabel, _executorCores);
+    // JobBox = JobBox1 + JobBox2 + JobBox3 + JobBox4 + JobBox5
     VBox jobBox = new VBox(10);
     jobBox.setSpacing(5);
-    jobBox.setAlignment(Pos.CENTER_LEFT);
-    jobBox.getChildren().addAll(jobBox1, jobBox2);
+    jobBox.setAlignment(Pos.CENTER);
+    jobBox.getChildren().addAll(jobBox1, jobBox2, jobBox3, jobBox4, jobBox5);
     // Progress
     _progress = new ProgressBar(0);
     // Send
@@ -185,7 +229,15 @@ public class SenderRep extends ElementRep {
     send.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent e) {
-        int id = serverRep().livy().sendJob(place.getValue() + _file.getText(), _className.getText(), Integer.MAX_VALUE, 1);
+        int id = serverRep().livy().sendJob(place.getValue() + _file.getText(),
+                                            _className.getText(),
+                                            _args.getText(),
+                                            _driverMemory.getText(),
+                                            _driverCores.getValue(),
+                                            _executorMemory.getText(),
+                                            _executorCores.getValue(),
+                                            Integer.MAX_VALUE,
+                                            1);
         browser().command().addBatch(serverRep().name() + "/" + id, senderRep.sender(), id);
         resultText.getChildren().add(new Text("Job send\n\n"));
         }
@@ -198,7 +250,14 @@ public class SenderRep extends ElementRep {
         dialog.setHeaderText("The name of new Job");
         dialog.setContentText("Please enter the name:");
         Optional<String> answer = dialog.showAndWait();
-        answer.ifPresent(name -> browser().command().addJob(name, _file.getText(), _className.getText()).setNew());
+        answer.ifPresent(name -> browser().command().addJob(name,
+                                                            _file.getText(),
+                                                            _className.getText(),
+                                                            _args.getText(),
+                                                            _driverMemory.getText(),
+                                                            _driverCores.getValue(),
+                                                            _executorMemory.getText(),
+                                                            _executorCores.getValue()).setNew());
         }
       });
     // Set
@@ -276,6 +335,23 @@ public class SenderRep extends ElementRep {
       }
     }
     
+  /** TBD */
+  public void fill(String file,
+                   String className,
+                   String args,
+                   String driverMemory,
+                   int    driverCores,
+                   String executorMemory,
+                   int    executorCores) {
+    _file.setText(file);
+    _className.setText(className);
+    _args.setText(args);
+    _driverMemory.setText(driverMemory);
+    _driverCores.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 50, driverCores));
+    _executorMemory.setText(executorMemory);
+    _executorCores.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 50, driverCores));
+    }
+    
   /** Give the SenderRep keeping {@link Server}.
     * @return The SenderRep keeping {@link Server}. */
   public Server server() {
@@ -293,13 +369,23 @@ public class SenderRep extends ElementRep {
     return sender().toString();
     }
     
-  private TextField _file;  
+  private TextField        _file;  
     
-  private TextField _className;  
+  private TextField        _className;  
   
-  private TextFlow _resultRef;
+  private TextField        _args;
   
-  private ProgressBar _progress;
+  private TextField        _driverMemory;
+  
+  private Spinner<Integer> _driverCores;
+  
+  private TextField        _executorMemory;
+  
+  private Spinner<Integer> _executorCores;
+  
+  private TextFlow         _resultRef;
+  
+  private ProgressBar      _progress;
   
   /** Logging . */
   private static Logger log = Logger.getLogger(SenderRep.class);

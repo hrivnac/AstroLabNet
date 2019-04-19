@@ -73,7 +73,12 @@ public class HBaseTableView<T extends TableEntry> extends TableView {
       for (int j = 0; j < cells.length(); j++) {
         column = Coding.decode(cells.getJSONObject(j).getString("column"));
         value  = Coding.decode(cells.getJSONObject(j).getString("$"));
-        entry.set(column, value);
+        if (column.equals("b")) {
+          entry.set(column, "*binary*"); // TBD: process and handle
+          }
+        else {
+          entry.set(column, value); // TBD: hadle r:
+          }
         }
       if (entry != null) {
         getItems().add(entry);

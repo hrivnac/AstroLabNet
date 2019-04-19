@@ -181,7 +181,8 @@ public class AvroReader {
       Object o = record.get(s);
       if (o instanceof ByteBuffer) {
         byte[] b = ((ByteBuffer)o).array();
-        toCatalog(key, family, s, new String(b));
+        log.debug("Changing family from " + family + " to b for " + s);
+        toCatalog(key, "b", s, new String(b));
         }
       else {
         toCatalog(key, family, s, o.toString());

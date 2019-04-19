@@ -90,8 +90,8 @@ public class SessionRep extends ElementRep {
     // Desc
     Label desc = new HeaderLabel(toString(), "Execute Action in " + language());
     // Cmd
-    TextArea cmd = new TextArea();
-    cmd.setPrefHeight(2000);
+    _cmd = new TextArea();
+    _cmd.setPrefHeight(2000);
     // Progress
     _progress = new ProgressBar(0);
     // Button
@@ -107,7 +107,7 @@ public class SessionRep extends ElementRep {
     VBox cmdBox = new VBox();
     cmdBox.setSpacing(5);
     cmdBox.setAlignment(Pos.CENTER);
-    cmdBox.getChildren().addAll(desc, cmd, buttonBox);
+    cmdBox.getChildren().addAll(desc, _cmd, buttonBox);
     // ResultText
     TextFlow resultText = new TextFlow(); 
     Text result0 = new Text("Fill in or select Action\n\n");
@@ -128,7 +128,7 @@ public class SessionRep extends ElementRep {
     execute.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent e) {
-        int id = serverRep().livy().sendCommand(id(), cmd.getText(), Integer.MAX_VALUE, 1);
+        int id = serverRep().livy().sendCommand(id(), _cmd.getText(), Integer.MAX_VALUE, 1);
         browser().command().addTask(serverRep().name() + "/" + id() + "/" + id, sessionRep.session(), id);
         resultText.getChildren().add(new Text("Command send to Session\n\n"));
         }
@@ -141,7 +141,7 @@ public class SessionRep extends ElementRep {
         dialog.setHeaderText("The name of new Action");
         dialog.setContentText("Please enter the name:");
         Optional<String> answer = dialog.showAndWait();
-        answer.ifPresent(name -> browser().command().addAction(name, cmd.getText(), sessionRep.language()).setNew());
+        answer.ifPresent(name -> browser().command().addAction(name, _cmd.getText(), sessionRep.language()).setNew());
         }
       });
     // Set
@@ -177,6 +177,11 @@ public class SessionRep extends ElementRep {
     _progress.setProgress(p);
     }   
     
+  /** TBD */
+  public void fill(String txt) {
+    _cmd.setText(txt);
+    }
+    
   /** Give the SessionRep id.
     * @return The SessionRep id. */
   public int id() {
@@ -206,6 +211,8 @@ public class SessionRep extends ElementRep {
     return session().toString();
     }
   
+  private TextArea _cmd;  
+    
   private TextFlow _resultRef;
   
   private ProgressBar _progress;

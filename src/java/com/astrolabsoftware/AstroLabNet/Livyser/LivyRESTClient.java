@@ -203,11 +203,21 @@ public class LivyRESTClient {
     * @param file      The jar or py filename.
     * @param className The <em>main</em> className
     *                  or <tt>null</tt> for py file.
+    * @param args           The Job args, if any. 
+    * @param driverMemory   The Job driver memory or <tt>null</tt>. 
+    * @param driverCores    The Job driver cores or <tt>0</tt>.  
+    * @param executorMemory The Job executor memory or <tt>null</tt>. 
+    * @param executorCores  The Job executor cores or <tt>0</tt>. 
     * @param tries     How many times to try.
     * @param sleep     How many <tt>s</tt> wait between tries.
-    * @return         The new statement id. */
+    * @return          The new statement id. */
   public int sendJob(String file,
                      String className,
+                     String args,
+                     String driverMemory,
+                     int    driverCores,
+                     String executorMemory,
+                     int    executorCores,
                      int    tries,
                      int    sleep) {
     if (className == null) {
@@ -451,13 +461,31 @@ public class LivyRESTClient {
     }
     
   /** Send job, try until succeeds, wait for result.
-    * @param file      The jar filename.
-    * @param className The <em>main</em> className.
-    * @return          The result as <em>Json</em> string. */
+    * @param file           The jar filename.
+    * @param className      The <em>main</em> className.
+    * @param args           The Job args, if any. 
+    * @param driverMemory   The Job driver memory or <tt>null</tt>. 
+    * @param driverCores    The Job driver cores or <tt>0</tt>.  
+    * @param executorMemory The Job executor memory or <tt>null</tt>. 
+    * @param executorCores  The Job executor cores or <tt>0</tt>. 
+    * @return               The result as <em>Json</em> string. */
   public String sendJob(String file,
-                        String className) {
+                        String className,
+                        String args,
+                        String driverMemory,
+                        int    driverCores,
+                        String executorMemory,
+                        int    executorCores) {
     log.info("Sending '" + className + "' in " + file + " and waiting for result");
-    int batchId = sendJob(file, className,    Integer.MAX_VALUE, 1);
+    int batchId = sendJob(file,
+                          className,
+                          args,
+                          driverMemory,
+                          driverCores,
+                          executorMemory,
+                          executorCores,
+                          Integer.MAX_VALUE,
+                          1);
     return waitForJobResult(batchId, Integer.MAX_VALUE, 1) + "\n\n" + 
            getBatchLog(     batchId, Integer.MAX_VALUE, 1);
     }

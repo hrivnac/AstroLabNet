@@ -12,16 +12,31 @@ import org.apache.log4j.Logger;
 public class Job extends Element {  
   
   /** Create new Job.
-    * @param name      The Job name.
-    * @param file      The jar or py filename.
-    * @param className The <em>main</em> className for jar file,
-    *                  <tt>null</tt> for py file. */
-  public Job(String        name,
-             String        file,
-             String        className) {
+    * @param name           The Job name.
+    * @param file           The jar or py filename.
+    * @param className      The <em>main</em> className for jar file,
+    *                       <tt>null</tt> for py file.
+    * @param args           The Job args, if any. 
+    * @param driverMemory   The Job driver memory or <tt>null</tt>. 
+    * @param driverCores    The Job driver cores or <tt>0</tt>.  
+    * @param executorMemory The Job executor memory or <tt>null</tt>. 
+    * @param executorCores  The Job executor cores or <tt>0</tt>. */
+  public Job(String name,
+             String file,
+             String className,
+             String args,
+             String driverMemory,
+             int    driverCores,
+             String executorMemory,
+             int    executorCores) {
     super(name);
-    _file      = file;
-    _className = className;
+    _file           = file;
+    _className      = className;
+    _args           = args;
+    _driverMemory   = driverMemory;
+    _driverCores    = driverCores;
+    _executorMemory = executorMemory;
+    _executorCores  = executorCores;
     }
 
   /** Give the Job jar or py filename.
@@ -34,6 +49,36 @@ public class Job extends Element {
     * @return The <em>main</em> className or <tt>null</tt> for py file. */
   public String className() {
     return _className;
+    }
+    
+  /** Give the Job args.
+    * @return The Job args, if any. */
+  public String args() {
+    return _args;
+    }
+    
+  /** Give the Job driver memory.
+    * @return The Job driver memory, can be <tt>null</tt>. */
+  public String driverMemory() {
+    return _driverMemory;
+    }
+    
+  /** Give the Job driver cores.
+    * @return The Job driver cores, can be <tt>0</tt>. */
+  public int driverCores() {
+    return _driverCores;
+    }
+    
+  /** Give the Job executor memory.
+    * @return The Job executor memory, can be <tt>null</tt>. */
+  public String executorMemory() {
+    return _executorMemory;
+    }
+    
+  /** Give the Job executor cores.
+    * @return The Job executor cores, can be <tt>0</tt>. */
+  public int executorCores() {
+    return _executorCores;
     }
     
   /** Set as a new Job, so it will be stored on Exit. */
@@ -52,9 +97,19 @@ public class Job extends Element {
     return name() + " (" + _className + "  from " + _file + ")";
     }
 
-  private String _file;
+  private String  _file;
   
-  private String _className;
+  private String  _className;
+  
+  private String  _args;
+  
+  private String  _driverMemory;
+  
+  private int     _driverCores;
+  
+  private String  _executorMemory;
+  
+  private int     _executorCores;
    
   private boolean _new = false;
  

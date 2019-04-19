@@ -80,13 +80,23 @@ public interface Interacter {
                           Language language);
   
   /** Add {@link Job}.
-    * @param name      The {@link Job} name
-    * @param file      The jar or py filename.
-    * @param className The <em>main</em> className or <tt>null</tt> for py file..
-    * @return          The added {@link Job}. */
+    * @param name           The {@link Job} name
+    * @param file           The jar or py filename.
+    * @param className      The <em>main</em> className or <tt>null</tt> for py file.
+    * @param args           The Job args, if any. 
+    * @param driverMemory   The Job driver memory or <tt>null</tt>. 
+    * @param driverCores    The Job driver cores or <tt>0</tt>.  
+    * @param executorMemory The Job executor memory or <tt>null</tt>. 
+    * @param executorCores  The Job executor cores or <tt>0</tt>. 
+    * @return               The added {@link Job}. */
   public Job addJob(String name,
-                    String  file,
-                    String  className);
+                    String file,
+                    String className,
+                    String args,
+                    String driverMemory,
+                    int    driverCores,
+                    String executorMemory,
+                    int    executorCores);
   
   /** Add {@link Data}.
     * @param name The {@link Data} name

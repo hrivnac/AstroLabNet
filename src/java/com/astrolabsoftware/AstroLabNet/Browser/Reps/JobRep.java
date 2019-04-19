@@ -46,7 +46,13 @@ public class JobRep extends ElementRep {
       log.error("No Batch is selected");
       }
     else {
-       browser().setSenderFile(file(), className());
+       browser().setSenderFile(file(),
+                               className(),
+                               args(),
+                               driverMemory(),
+                               driverCores(),
+                               executorMemory(),
+                               executorCores());
       }
     }
 
@@ -56,12 +62,42 @@ public class JobRep extends ElementRep {
     return job().file();
     }
     
-  /** Give the Job <em>main</em> className or <tt>null</tt> for py file..
-    * @return The <em>main</em> classNameor <tt>null</tt> for py file.. */
+  /** Give the Job <em>main</em> className or <tt>null</tt> for py file.
+    * @return The <em>main</em> classNameor <tt>null</tt> for py file. */
   public String className() {
     return job().className();
     }
     
+  /** Give the Job args.
+    * @return The Job args, if any. */
+   public String args() {
+    return job().args();
+    }
+     
+  /** Give the Job driver memory.
+    * @return The Job driver memory, can be <tt>null</tt>. */
+  public String driverMemory() {
+    return job().driverMemory();
+    }
+    
+  /** Give the Job driver cores.
+    * @return The Job driver cores, can be <tt>0</tt>. */
+  public int driverCores() {
+    return job().driverCores();
+    }
+    
+  /** Give the Job executor memory.
+    * @return The Job executor memory, can be <tt>null</tt>. */
+  public String executorMemory() {
+    return job().executorMemory();
+    }
+    
+  /** Give the Job executor cores.
+    * @return The Job executor cores, can be <tt>0</tt>. */
+  public int executorCores() {
+    return job().executorCores();
+    }
+   
   /** Give the referenced {@link Job}.
     * @return The referenced {@link Job}. */
   public Job job() {

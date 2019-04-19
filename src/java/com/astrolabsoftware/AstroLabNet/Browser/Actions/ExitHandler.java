@@ -45,12 +45,14 @@ public final class ExitHandler implements EventHandler<ActionEvent> {
         }
       for (Job job : _w.command().jobs()) {
         if (job.isNew()) {
-          if (job.className() == null) {
-            writer.println("w.addJob(\"" + job.name() + "\", \"" + job.file() + "\", null).setNew();");
-            }
-          else {
-            writer.println("w.addJob(\"" + job.name() + "\", \"" + job.file() + "\", \"" + job.className() + "\").setNew();");
-            }
+          writer.println("w.addJob(" + considerNull(job.name())           + ", "
+                                     + considerNull(job.file())           + ", "
+                                     + considerNull(job.className())      + ", " 
+                                     + considerNull(job.args())           + ", " 
+                                     + considerNull(job.driverMemory())   + ", " 
+                                     +              job.driverCores()     + ", " 
+                                     + considerNull(job.executorMemory()) + ", " 
+                                     +              job.executorCores()   + ").setNew();");
           }
         }
       writer.close();
@@ -59,6 +61,14 @@ public final class ExitHandler implements EventHandler<ActionEvent> {
       log.error("Cannot write .state.bsh");
       }
     _w.close();
+    }
+    
+  /** TBD */
+  private String considerNull(String x) {
+    if (x == null) {
+      return "null";
+      }
+    return "\"" + x + "\"";
     }
     
   private BrowserWindow _w;

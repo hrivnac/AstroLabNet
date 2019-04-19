@@ -51,9 +51,11 @@ public class HBase2Graph {
         column = Coding.decode(cells.getJSONObject(j).getString("column"));
         value  = Coding.decode(cells.getJSONObject(j).getString("$"));
         if (column.startsWith("r:")) {
-          //log.info(column.substring(2) + " " + entry.id() + ":" + value);
           _relations.put(column.substring(2), entry.id() + ":" + value);
           }  
+        else if (column.startsWith("b")) {
+          entry.addContent(column.substring(2), "*binary*"); // TBD: process
+          }
         else {
           entry.addContent(column.substring(2), value);
           }

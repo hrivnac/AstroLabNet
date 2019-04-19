@@ -288,10 +288,7 @@ public class BrowserWindow extends Application {
     boolean done = false;
     for (Map.Entry<SessionRep, Tab> entry : _sessionTabs.entrySet()) {
       if (entry.getValue().isSelected()) {
-        SplitPane pane = (SplitPane)(entry.getValue().getContent());
-        VBox vbox = (VBox)(pane.getItems().get(0));
-        TextArea actionTarget = (TextArea)(vbox.getChildren().get(1));
-        actionTarget.setText(txt);
+        entry.getKey().fill(txt);
         done = true;
         break;
         }
@@ -303,21 +300,25 @@ public class BrowserWindow extends Application {
     
   /** Set the {@link SenderRep} file and className. To be called from {@link JobRep}.
     * @param file      The jar file name to fill in the {@link BatchRep} command.
-    * @param className The main className to fill in the {@link BatchRep} command. */
+    * @param className The main className to fill in the {@link BatchRep} command. 
+    * TDB */
   public void setSenderFile(String file,
-                            String className) {
+                            String className,
+                            String args,
+                            String driverMemory,
+                            int    driverCores,
+                            String executorMemory,
+                            int    executorCores) {
     boolean done = false;
     for (Map.Entry<SenderRep, Tab> entry : _senderTabs.entrySet()) {
       if (entry.getValue().isSelected()) {
-        SplitPane pane = (SplitPane)(entry.getValue().getContent());
-        VBox cmdBox = (VBox)(pane.getItems().get(0));
-        VBox jobBox = (VBox)(cmdBox.getChildren().get(1));
-        HBox jobBox1 = (HBox)(jobBox.getChildren().get(0));
-        HBox jobBox2 = (HBox)(jobBox.getChildren().get(1));
-        TextField fileTarget      = (TextField)(jobBox1.getChildren().get(2));
-        TextField classNameTarget = (TextField)(jobBox2.getChildren().get(1));
-        fileTarget.setText(file);
-        classNameTarget.setText(className);
+        entry.getKey().fill(file,
+                            className,
+                            args,
+                            driverMemory,
+                            driverCores,
+                            executorMemory,
+                            executorCores);
         done = true;
         break;
         }

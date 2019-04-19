@@ -103,8 +103,20 @@ public class BrowserCommand extends CommandLine {
   @Override
   public Job addJob(String  name,
                     String  file,
-                    String  className) {
-    Job job = super.addJob(name, file, className);
+                    String  className,
+                    String  args,
+                    String  driverMemory,
+                    int     driverCores,
+                    String  executorMemory,
+                    int     executorCores) {
+    Job job = super.addJob(name,
+                           file,
+                           className,
+                           args,
+                           driverMemory,
+                           driverCores,
+                           executorMemory,
+                           executorCores);
     JobRep jobRep = new JobRep(job, _window);
     if (!_jobReps.getChildren().contains(jobRep.item())) {
       log.info("Adding JobRep: " + jobRep);
