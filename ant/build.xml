@@ -137,17 +137,20 @@
     <mkdir dir="../build/com/astrolabsoftware/AstroLabNet/Catalog"/>
     <exec executable="../src/sh/generateTableRep.sh">
       <arg value="astrolabnet.topology.1"/>
-      <arg value="com.astrolabsoftware.AstroLabNet.Topology"/>
+      <arg value="com.astrolabsoftware.AstroLabNet"/>
+      <arg value="Topology"/>
       <arg value="../build"/>
       </exec>
     <exec executable="../src/sh/generateTableRep.sh">
       <arg value="astrolabnet.journal.1"/>
-      <arg value="com.astrolabsoftware.AstroLabNet.Journal"/>
+      <arg value="com.astrolabsoftware.AstroLabNet"/>
+      <arg value="Journal"/>
       <arg value="../build"/>
       </exec>
     <exec executable="../src/sh/generateTableRep.sh">
       <arg value="astrolabnet.catalog.1"/>
-      <arg value="com.astrolabsoftware.AstroLabNet.Catalog"/>
+      <arg value="com.astrolabsoftware.AstroLabNet"/>
+      <arg value="Catalog"/>
       <arg value="../build"/>
       </exec>
    </target>
@@ -194,7 +197,7 @@
         </fileset>
       </path>
     <property name="classpath.libs" refid="libs"/>
-    <jar jarfile="../lib/AstroLabNet.jar" index="yes">
+    <jar jarfile="../lib/AstroLabNet-${version}.jar" index="yes">
       <fileset dir="../build"    includes="**/*.class"/>
       <fileset dir="../src/java" includes="com/astrolabsoftware/AstroLabNet/**/*.properties"/>
       <fileset dir="../src/java" includes="com/astrolabsoftware/AstroLabNet/**/*.bsh"/>
@@ -209,8 +212,8 @@
         <attribute name="AppVersion" value="${version} ${TSTAMP}"/>
         </manifest>
       </jar>
-    <jar jarfile="../lib/AstroLabNet.exe.jar" index="yes">
-      <zipfileset includes="**/*" src="../lib/AstroLabNet.jar"/>
+    <jar jarfile="../lib/AstroLabNet-${version}.exe.jar" index="yes">
+      <zipfileset includes="**/*" src="../lib/AstroLabNet-${version}.jar"/>
       <zipfileset includes="**/*" src="${log4j.jar}"/>
       <zipfileset includes="**/*" src="${bsh.jar}"/>
       <zipfileset includes="**/*" src="${scala.jar}"/>
@@ -236,7 +239,7 @@
         </manifest>
       </jar>
     <jar jarfile="../lib/JavaPiJob.jar" index="yes">
-      <zipfileset includes="**/*" src="../lib/AstroLabNet.jar"/>
+      <zipfileset includes="**/*" src="../lib/AstroLabNet-${version}.jar"/>
       <zipfileset includes="**/*" src="${livy.jar}"/>
       <fileset dir="../build"    includes="com/astrolabsoftware/AstroLabNet/DB/Jobs/JavaPiJob.class"/>
       <manifest>
@@ -247,7 +250,7 @@
         </manifest>
       </jar>
     <jar jarfile="../lib/ScalaPiJob.jar" index="yes">
-      <zipfileset includes="**/*" src="../lib/AstroLabNet.jar"/>
+      <zipfileset includes="**/*" src="../lib/AstroLabNet-${version}.jar"/>
       <zipfileset includes="**/*" src="${livy.jar}"/>
       <fileset dir="../build"    includes="com/astrolabsoftware/AstroLabNet/DB/Jobs/ScalaPiJob.class"/>
       <manifest>
@@ -269,7 +272,7 @@
   <target name="run"
            description="Run in Browser">
     <echo>Browser Run</echo>
-    <java jar="../lib/AstroLabNet.exe.jar"
+    <java jar="../lib/AstroLabNet-${version}.exe.jar"
           fork="true"
           failonerror="true">
       <arg value="-b"/>
@@ -282,7 +285,7 @@
  		<copy todir=".">
 			<fileset dir="../src/java/com/astrolabsoftware/AstroLabNet/Core" includes="init.bsh"/>
       </copy>
-    <java jar="../lib/AstroLabNet.exe.jar"
+    <java jar="../lib/AstroLabNet-${version}.exe.jar"
           fork="true"
           failonerror="true">
       <arg value="-c"/>
@@ -295,7 +298,7 @@
  		<copy todir=".">
 			<fileset dir="../src/java/com/astrolabsoftware/AstroLabNet/Core" includes="init.bsh"/>
       </copy>
-    <java jar="../lib/AstroLabNet.exe.jar"
+    <java jar="../lib/AstroLabNet-${version}.exe.jar"
           fork="true"
           failonerror="true">
       <arg value="-h"/>
@@ -538,7 +541,7 @@
         <path refid="classpath.run"/>
         </auxClasspath>
       <sourcePath path="../src" />
-      <class location="../lib/AstroLabNet.exe.jar" />
+      <class location="../lib/AstroLabNet-${version}.exe.jar" />
       </findbugs>   
     </target>
 

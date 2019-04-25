@@ -7,28 +7,28 @@ import java.io.PrintWriter;
 // Log4J
 import org.apache.log4j.Logger;
 
-/** <code>AstroLabNetException</code> provides the customised
-  * {@link Exception} behaviour for <em>AstroLabNet</em>.
+/** <code>CommonException</code> provides the customised
+  * {@link Exception} behaviour.
   * @opt attributes
   * @opt operations
   * @opt types
   * @opt visibility
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
-public class AstroLabNetException extends Exception {
+public class CommonException extends Exception {
 
-  public AstroLabNetException() {
+  public CommonException() {
     super();
     }
 
-  public AstroLabNetException(String msg) {
+  public CommonException(String msg) {
     super(msg);
     }
 
-  public AstroLabNetException(Throwable nested) {
+  public CommonException(Throwable nested) {
     super(nested);
     }
 
-  public AstroLabNetException(String msg,
+  public CommonException(String msg,
                               Throwable nested) {
     super(msg, nested);
     }

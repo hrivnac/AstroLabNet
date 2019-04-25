@@ -16,6 +16,18 @@ public class Info {
     return _version + " [" + _build + " by " + _builder + "]";
     }
 
+  /** Give application name.
+    * @return The application name. */
+  public final static String name() {
+    return _name;
+    }
+    
+  /** Give application url.
+    * @return The application url. */
+  public final static String url() {
+    return _url;
+    }
+
   /** Give catalog HBase table name.
     * @return The catalog HBase table name. */
   public final static String catalog() {
@@ -34,6 +46,8 @@ public class Info {
     return _journal;
     }
     
+  private static final String _name     = "AstroLabNet";
+  private static final String _url      = "https://astrolabsoftware.github.io";
   private static final String _version  = "@version@";
   private static final String _build    = "@TSTAMP@";
   private static final String _builder  = "@user.name@";

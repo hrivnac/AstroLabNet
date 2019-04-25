@@ -16,7 +16,7 @@ import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
 import com.astrolabsoftware.AstroLabNet.Utils.Init;
 import com.astrolabsoftware.AstroLabNet.Utils.Info;
 import com.astrolabsoftware.AstroLabNet.Utils.Network;
-import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
+import com.astrolabsoftware.AstroLabNet.Utils.CommonException;
 import com.astrolabsoftware.AstroLabNet.Livyser.Language;
 import com.astrolabsoftware.AstroLabNet.Core.Interacter;
 
@@ -72,7 +72,7 @@ public abstract class DefaultInteracter implements Interacter {
           } 
         addAction(actionTxt.substring(0, actionTxt.lastIndexOf(".")), new StringResource("com/astrolabsoftware/AstroLabNet/DB/Actions/" + actionTxt).toString(), lang);
         }
-      catch (AstroLabNetException e) {
+      catch (CommonException e) {
         log.error("Cannot load Action from " + actionTxt, e);
         }
       }
@@ -104,7 +104,7 @@ public abstract class DefaultInteracter implements Interacter {
       init = new StringFile("init.bsh").toString();
       interpreter.eval(init);
       }
-    catch (AstroLabNetException e) {
+    catch (CommonException e) {
       log.warn("init.bsh file cannot be read.");
       log.debug("init.bsh file cannot be read.", e);
       }
@@ -117,7 +117,7 @@ public abstract class DefaultInteracter implements Interacter {
       init = new StringResource("com/astrolabsoftware/AstroLabNet/Core/" + Init.profile() + ".bsh").toString();
       interpreter.eval(init);
       }
-    catch (AstroLabNetException e) {
+    catch (CommonException e) {
       log.warn("Site profile " + Init.profile() + " cannot be loaded.");
       log.debug("Site profile " + Init.profile() + " cannot be loaded.", e);
       }
@@ -140,7 +140,7 @@ public abstract class DefaultInteracter implements Interacter {
       init = new StringFile(".state.bsh").toString();
       interpreter.eval(init);
       }
-    catch (AstroLabNetException e) {
+    catch (CommonException e) {
       log.warn(".state.bsh file cannot be read.");
       log.debug(".state.bsh file cannot be read.", e);
       }
@@ -154,7 +154,7 @@ public abstract class DefaultInteracter implements Interacter {
         init = new StringFile(Init.source()).toString();
         interpreter.eval(init);
         }
-      catch (AstroLabNetException e) {
+      catch (CommonException e) {
         log.warn(Init.source() + " file cannot be read.");
         log.debug(Init.source() + " file cannot be read.", e);
         }

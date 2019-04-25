@@ -41,8 +41,8 @@ public class SmallHttpClient {
 
   /** Make http get call.
     * @param args[0] The http request.
-    * @throws AstroLabNetException If anything goes wrong. */
-  public static void main(String[] args) throws AstroLabNetException {
+    * @throws CommonException If anything goes wrong. */
+  public static void main(String[] args) throws CommonException {
     System.out.println(get(args[0]));
     }
   
@@ -51,8 +51,8 @@ public class SmallHttpClient {
   /** Make http get call.
     * @param question The http request.
     * @return         The answer.
-    * @throws AstroLabNetException If anything goes wrong. */
-  public static String get(String question) throws AstroLabNetException {
+    * @throws CommonException If anything goes wrong. */
+  public static String get(String question) throws CommonException {
     return get(question, null);
     }
    
@@ -60,9 +60,9 @@ public class SmallHttpClient {
     * @param question The http request.
     * @param headers  The additional headers.
     * @return         The answer.
-    * @throws AstroLabNetException If anything goes wrong. */
+    * @throws CommonException If anything goes wrong. */
   public static String get(String              question,
-                           Map<String, String> headers) throws AstroLabNetException {
+                           Map<String, String> headers) throws CommonException {
     String answer = "";
     DefaultHttpClient client = new DefaultHttpClient();
     HttpGet get = new HttpGet(question);
@@ -77,14 +77,14 @@ public class SmallHttpClient {
       StatusLine statusLine = response.getStatusLine();
       int statusCode = statusLine.getStatusCode();
       if (statusCode != HttpStatus.SC_OK && statusCode != HttpStatus.SC_CREATED) {
-        throw new AstroLabNetException("Call to " + question + " failed: " + statusLine.getReasonPhrase());
+        throw new CommonException("Call to " + question + " failed: " + statusLine.getReasonPhrase());
         }
       else {
         answer = getResponseBody(response);   
         }
       }
     catch (Exception e) {
-      throw new AstroLabNetException("Call to " + question + " failed", e);
+      throw new CommonException("Call to " + question + " failed", e);
       }
     finally {
       get.releaseConnection();
@@ -98,9 +98,9 @@ public class SmallHttpClient {
     * @param url The http url.
     * @param params The request parameters.
     * @return       The answer.
-    * @throws AstroLabNetException If anything goes wrong. */
+    * @throws CommonException If anything goes wrong. */
   public static String post(String              question,
-                            Map<String, String> params) throws AstroLabNetException {
+                            Map<String, String> params) throws CommonException {
     return post(question, params, null);
     }
 
@@ -109,10 +109,10 @@ public class SmallHttpClient {
     * @param params  The request parameters.
     * @param headers The additional headers.
     * @return        The answer.
-    * @throws AstroLabNetException If anything goes wrong. */
+    * @throws CommonException If anything goes wrong. */
   public static String post(String              url,
                             Map<String, String> params,
-                            Map<String, String> headers) throws AstroLabNetException {
+                            Map<String, String> headers) throws CommonException {
     String answer = "";
     DefaultHttpClient client = new DefaultHttpClient();
     HttpPost post = new HttpPost(url);
@@ -137,14 +137,14 @@ public class SmallHttpClient {
       StatusLine statusLine = response.getStatusLine();
       int statusCode = statusLine.getStatusCode();
       if (statusCode != HttpStatus.SC_OK && statusCode != HttpStatus.SC_CREATED) {
-        throw new AstroLabNetException("Post to " + url + " " + params + " failed: " + statusLine.getReasonPhrase());
+        throw new CommonException("Post to " + url + " " + params + " failed: " + statusLine.getReasonPhrase());
         }
       else {
         answer = getResponseBody(response);   
         }
       }
     catch (Exception e) {
-      throw new AstroLabNetException("Post to " + url + " " + params + " failed", e);
+      throw new CommonException("Post to " + url + " " + params + " failed", e);
       }
     finally {
       post.releaseConnection();
@@ -158,12 +158,12 @@ public class SmallHttpClient {
     * @param headers The additional headers. May be <code>null</code>.
     * @param header  The requested header (instead of answer body). May be <code>null</code>.
     * @return        The answer.
-    * @throws AstroLabNetException If anything goes wrong. */
+    * @throws CommonException If anything goes wrong. */
   // TBD: header should be more generic
   public static String postJSON(String              url,
                                 String              json,
                                 Map<String, String> headers,
-                                String              header) throws AstroLabNetException {
+                                String              header) throws CommonException {
     String answer = "";
     DefaultHttpClient client = new DefaultHttpClient();
     HttpPost post = new HttpPost(url);
@@ -186,7 +186,7 @@ public class SmallHttpClient {
       StatusLine statusLine = response.getStatusLine();
       int statusCode = statusLine.getStatusCode();
       if (statusCode != HttpStatus.SC_OK && statusCode != HttpStatus.SC_CREATED) {
-        throw new AstroLabNetException("Post to " + url + " " + json + " failed: " + statusLine.getReasonPhrase());
+        throw new CommonException("Post to " + url + " " + json + " failed: " + statusLine.getReasonPhrase());
         }
       else {
         if (header != null) {
@@ -198,7 +198,7 @@ public class SmallHttpClient {
         }
       }
     catch (Exception e) {
-      throw new AstroLabNetException("Post to " + url + " " + json + " failed", e);
+      throw new CommonException("Post to " + url + " " + json + " failed", e);
       }
     finally {
       post.releaseConnection();
@@ -212,12 +212,12 @@ public class SmallHttpClient {
     * @param headers The additional headers. May be <code>null</code>.
     * @param header  The requested header (instead of answer body). May be <code>null</code>.
     * @return        The answer.
-    * @throws AstroLabNetException If anything goes wrong. */
+    * @throws CommonException If anything goes wrong. */
   // TBD: header should be more generic
   public static String postXML(String              url,
                                String              json,
                                Map<String, String> headers,
-                               String              header) throws AstroLabNetException {
+                               String              header) throws CommonException {
     String answer = "";
     DefaultHttpClient client = new DefaultHttpClient();
     HttpPost post = new HttpPost(url);
@@ -240,7 +240,7 @@ public class SmallHttpClient {
       StatusLine statusLine = response.getStatusLine();
       int statusCode = statusLine.getStatusCode();
       if (statusCode != HttpStatus.SC_OK && statusCode != HttpStatus.SC_CREATED) {
-        throw new AstroLabNetException("Post to " + url + " " + json + " failed: " + statusLine.getReasonPhrase());
+        throw new CommonException("Post to " + url + " " + json + " failed: " + statusLine.getReasonPhrase());
         }
       else {
         if (header != null) {
@@ -252,7 +252,7 @@ public class SmallHttpClient {
         }
       }
     catch (Exception e) {
-      throw new AstroLabNetException("Post to " + url + " " + json + " failed", e);
+      throw new CommonException("Post to " + url + " " + json + " failed", e);
       }
     finally {
       post.releaseConnection();
@@ -266,9 +266,9 @@ public class SmallHttpClient {
     * @param url The http url.
     * @param params The request parameters.
     * @return       The answer.
-    * @throws AstroLabNetException If anything goes wrong. */
+    * @throws CommonException If anything goes wrong. */
   public static String put(String              question,
-                           Map<String, String> params) throws AstroLabNetException {
+                           Map<String, String> params) throws CommonException {
     return put(question, params, null);
     }
 
@@ -277,10 +277,10 @@ public class SmallHttpClient {
     * @param params  The request parameters.
     * @param headers The additional headers.
     * @return        The answer.
-    * @throws AstroLabNetException If anything goes wrong. */
+    * @throws CommonException If anything goes wrong. */
   public static String put(String              url,
                            Map<String, String> params,
-                           Map<String, String> headers) throws AstroLabNetException {
+                           Map<String, String> headers) throws CommonException {
     String answer = "";
     DefaultHttpClient client = new DefaultHttpClient();
     HttpPut put = new HttpPut(url);
@@ -305,14 +305,14 @@ public class SmallHttpClient {
       StatusLine statusLine = response.getStatusLine();
       int statusCode = statusLine.getStatusCode();
       if (statusCode != HttpStatus.SC_OK && statusCode != HttpStatus.SC_CREATED) {
-        throw new AstroLabNetException("Put to " + url + " " + params + " failed: " + statusLine.getReasonPhrase());
+        throw new CommonException("Put to " + url + " " + params + " failed: " + statusLine.getReasonPhrase());
         }
       else {
         answer = getResponseBody(response);   
         }
       }
     catch (Exception e) {
-      throw new AstroLabNetException("Put to " + url + " " + params + " failed", e);
+      throw new CommonException("Put to " + url + " " + params + " failed", e);
       }
     finally {
       put.releaseConnection();
@@ -326,12 +326,12 @@ public class SmallHttpClient {
     * @param headers The additional headers. May be <code>null</code>.
     * @param header  The requested header (instead of answer body). May be <code>null</code>.
     * @return        The answer.
-    * @throws AstroLabNetException If anything goes wrong. */
+    * @throws CommonException If anything goes wrong. */
   // TBD: header should be more generic
   public static String putJSON(String              url,
                                String              json,
                                Map<String, String> headers,
-                               String              header) throws AstroLabNetException {
+                               String              header) throws CommonException {
     String answer = "";
     DefaultHttpClient client = new DefaultHttpClient();
     HttpPut put = new HttpPut(url);
@@ -354,7 +354,7 @@ public class SmallHttpClient {
       StatusLine statusLine = response.getStatusLine();
       int statusCode = statusLine.getStatusCode();
       if (statusCode != HttpStatus.SC_OK && statusCode != HttpStatus.SC_CREATED) {
-        throw new AstroLabNetException("Put to " + url + " " + json + " failed: " + statusLine.getReasonPhrase());
+        throw new CommonException("Put to " + url + " " + json + " failed: " + statusLine.getReasonPhrase());
         }
       else {
         if (header != null) {
@@ -366,7 +366,7 @@ public class SmallHttpClient {
         }
       }
     catch (Exception e) {
-      throw new AstroLabNetException("Put to " + url + " " + json + " failed", e);
+      throw new CommonException("Put to " + url + " " + json + " failed", e);
       }
     finally {
       put.releaseConnection();
@@ -380,12 +380,12 @@ public class SmallHttpClient {
     * @param headers The additional headers. May be <code>null</code>.
     * @param header  The requested header (instead of answer body). May be <code>null</code>.
     * @return        The answer.
-    * @throws AstroLabNetException If anything goes wrong. */
+    * @throws CommonException If anything goes wrong. */
   // TBD: header should be more generic
   public static String putXML(String              url,
                               String              json,
                               Map<String, String> headers,
-                              String              header) throws AstroLabNetException {
+                              String              header) throws CommonException {
     String answer = "";
     DefaultHttpClient client = new DefaultHttpClient();
     HttpPut put = new HttpPut(url);
@@ -408,7 +408,7 @@ public class SmallHttpClient {
       StatusLine statusLine = response.getStatusLine();
       int statusCode = statusLine.getStatusCode();
       if (statusCode != HttpStatus.SC_OK && statusCode != HttpStatus.SC_CREATED) {
-        throw new AstroLabNetException("Put to " + url + " " + json + " failed: " + statusLine.getReasonPhrase());
+        throw new CommonException("Put to " + url + " " + json + " failed: " + statusLine.getReasonPhrase());
         }
       else {
         if (header != null) {
@@ -420,7 +420,7 @@ public class SmallHttpClient {
         }
       }
     catch (Exception e) {
-      throw new AstroLabNetException("Put to " + url + " " + json + " failed", e);
+      throw new CommonException("Put to " + url + " " + json + " failed", e);
       }
     finally {
       put.releaseConnection();

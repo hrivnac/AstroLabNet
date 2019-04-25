@@ -13,7 +13,7 @@ import com.astrolabsoftware.AstroLabNet.GraphStream.ClickManager;
 import com.astrolabsoftware.AstroLabNet.GraphStream.HBGraphView;
 import com.astrolabsoftware.AstroLabNet.Journal.JournalEntry;
 import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
-import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
+import com.astrolabsoftware.AstroLabNet.Utils.CommonException;
 
 // JavaFX
 import javafx.scene.control.SplitPane;
@@ -67,7 +67,7 @@ public class HBGraphView {
     try {
 		  _graph.setAttribute("ui.stylesheet", new StringResource("com/astrolabsoftware/AstroLabNet/GraphStream/Graph.css").toString());
 		  }
-		catch (AstroLabNetException e) {
+		catch (CommonException e) {
 		  log.warn("Cannot load GraphStream Stylesheet", e);
 		  }
 		_graphView = (FxViewPanel)viewer.addDefaultView(true);

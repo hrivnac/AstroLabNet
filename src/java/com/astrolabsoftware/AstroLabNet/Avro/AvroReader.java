@@ -1,6 +1,6 @@
 package com.astrolabsoftware.AstroLabNet.Avro;
 
-import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
+import com.astrolabsoftware.AstroLabNet.Utils.CommonException;
 import com.astrolabsoftware.AstroLabNet.DB.Server;
 
 // Avro
@@ -74,7 +74,7 @@ public class AvroReader {
           process(dirFN + "/" + dataFN);
           i++;
           }
-        catch (IOException | AstroLabNetException e) {
+        catch (IOException | CommonException e) {
           log.error("Failed to process " + dirFN + "/" + dataFN, e);
           }
         }
@@ -89,9 +89,9 @@ public class AvroReader {
      * @param fn The filename of the data file
      *           or directory with files.
      * @thows IOException If problem with file reading.
-     * @throws AstroLabNetException If anything wrong. */
+     * @throws CommonException If anything wrong. */
   // TBD: use generated schema (problem: it mixes ztf.alert namespace and class
-  public void process(String fn) throws IOException, AstroLabNetException  {
+  public void process(String fn) throws IOException, CommonException  {
     log.info("Loading " + fn);
     File file = new File(fn);
     if (file.isDirectory()) {

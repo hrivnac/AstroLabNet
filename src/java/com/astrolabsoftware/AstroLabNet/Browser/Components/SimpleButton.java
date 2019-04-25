@@ -16,16 +16,6 @@ public final class SimpleButton extends Button {
 
   /** TBD */
   public SimpleButton(String name,
-                      String tooltip,
-                      EventHandler handler) {
-    super(name);
-    setGraphic(new ImageView(Images.ASTROLAB));
-    new ToolTipper(this, tooltip);
-    setOnAction(handler);
-    }
-    
-  /** TBD */
-  public SimpleButton(String name,
                       String tooltip) {
     super(name);
     new ToolTipper(this, tooltip);

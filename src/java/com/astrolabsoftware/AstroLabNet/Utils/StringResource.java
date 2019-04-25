@@ -22,8 +22,8 @@ public class StringResource {
     
   /** Create.
     * @param resource The resource path. 
-    * @throws AstroLabNetException If resource can't be read. */      
-  public StringResource(String resource) throws AstroLabNetException {
+    * @throws CommonException If resource can't be read. */      
+  public StringResource(String resource) throws CommonException {
     try {
       InputStream       is  = StringResource.class.getClassLoader().getResourceAsStream(resource);
       InputStreamReader isr = new InputStreamReader(is);
@@ -38,7 +38,7 @@ public class StringResource {
       _content = buffer.toString();
       }
     catch (IOException | NullPointerException e) {
-      throw new AstroLabNetException("Resource " + resource + " cannot be read !", e);
+      throw new CommonException("Resource " + resource + " cannot be read !", e);
       }
     }
 
@@ -50,8 +50,8 @@ public class StringResource {
 
   /** Write the contained {@link String} to a file.
     * @param fn The filename to write the content 
-    * @throws AstroLabNetException If resource can't be read. */      
-  public void toFile(String fn) throws AstroLabNetException {
+    * @throws CommonException If resource can't be read. */      
+  public void toFile(String fn) throws CommonException {
     try {
       FileWriter fstream = new FileWriter(fn);
       BufferedWriter out = new BufferedWriter(fstream);
@@ -59,7 +59,7 @@ public class StringResource {
       out.close();
       }
     catch (Exception e){
-      throw new AstroLabNetException("Cannot write into file " + fn + " !", e);
+      throw new CommonException("Cannot write into file " + fn + " !", e);
       }
     }
      

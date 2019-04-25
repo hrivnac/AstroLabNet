@@ -21,15 +21,15 @@ public class StringFile {
     
   /** Create.
     * @param fn The file path.
-    * @throws AstroLabNetException If file can't be read. */      
-  public StringFile(String fn) throws AstroLabNetException {
+    * @throws CommonException If file can't be read. */      
+  public StringFile(String fn) throws CommonException {
     this(new File(fn));
     }
     
   /** Create.
     * @param file The file.
-    * @throws AstroLabNetException If file can't be read. */      
-  public StringFile(File file) throws AstroLabNetException {
+    * @throws CommonException If file can't be read. */      
+  public StringFile(File file) throws CommonException {
     FileInputStream     fis = null;
     BufferedInputStream bis = null;
     DataInputStream     dis = null;
@@ -47,10 +47,10 @@ public class StringFile {
       _content = buffer.toString();
       }
     catch (FileNotFoundException e) {
-      throw new AstroLabNetException("File " + file.getPath() + " not found !", e);
+      throw new CommonException("File " + file.getPath() + " not found !", e);
       }
     catch (IOException e) {
-      throw new AstroLabNetException("File " + file.getPath() + " cannot be read !", e);
+      throw new CommonException("File " + file.getPath() + " cannot be read !", e);
       }
     }
 

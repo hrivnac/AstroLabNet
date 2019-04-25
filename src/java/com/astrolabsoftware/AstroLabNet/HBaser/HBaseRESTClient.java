@@ -2,7 +2,7 @@ package com.astrolabsoftware.AstroLabNet.HBaser;
 
 import com.astrolabsoftware.AstroLabNet.Utils.SmallHttpClient;
 import com.astrolabsoftware.AstroLabNet.Utils.Coding;
-import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
+import com.astrolabsoftware.AstroLabNet.Utils.CommonException;
 
 // org.json
 import org.json.JSONObject;
@@ -45,9 +45,9 @@ public class HBaseRESTClient {
                    + SmallHttpClient.get(_url + "/status/cluster",  null) + "\n"
                    + SmallHttpClient.get(_url + "/",                null);
       }
-    catch (AstroLabNetException e) {
+    catch (CommonException e) {
       log.info(e);
-      AstroLabNetException.reportException("Request has failed", e, log);
+      CommonException.reportException("Request has failed", e, log);
       }
     log.debug("Result:\n" + resultString.trim());
     return resultString;
@@ -90,9 +90,9 @@ public class HBaseRESTClient {
     try {
       resultString = SmallHttpClient.putXML(_url + "/" + table + "/scanner", scanner, null, "Location");
       }
-    catch (AstroLabNetException e) {
+    catch (CommonException e) {
       log.info(e);
-      AstroLabNetException.reportException("Request has failed", e, log);
+      CommonException.reportException("Request has failed", e, log);
       return "";
       }
     log.debug("Result:\n" + resultString.trim());
@@ -118,9 +118,9 @@ public class HBaseRESTClient {
       resultString = SmallHttpClient.get(_url + "/" + table + "/scanner/" + scannerId, headers);
       result = new JSONObject(resultString);
       }
-    catch (AstroLabNetException e) {
+    catch (CommonException e) {
       log.info(e);
-      AstroLabNetException.reportException("Request has failed", e, log);
+      CommonException.reportException("Request has failed", e, log);
       }
     if (result == null) {
       return "";
@@ -165,9 +165,9 @@ public class HBaseRESTClient {
     try {
       SmallHttpClient.putXML(_url + "/" + table + "/fakerow", rowsXML, null, null);
       }
-    catch (AstroLabNetException e) {
+    catch (CommonException e) {
       log.info(e);
-      AstroLabNetException.reportException("Request has failed", e, log);
+      CommonException.reportException("Request has failed", e, log);
       return;
       }
     }

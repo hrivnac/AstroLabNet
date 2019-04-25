@@ -1,7 +1,7 @@
 package com.astrolabsoftware.AstroLabNet.Livyser;
 
 import com.astrolabsoftware.AstroLabNet.Utils.SmallHttpClient;
-import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
+import com.astrolabsoftware.AstroLabNet.Utils.CommonException;
 
 // JavaFX
 import javafx.util.Pair;
@@ -57,7 +57,7 @@ public class LivyRESTClient {
         result = SmallHttpClient.postJSON(_url + "/sessions", "{\"kind\":\"" + language.asSpark() + "\"}", null, null);
         success = true;
         }
-      catch (AstroLabNetException e) {
+      catch (CommonException e) {
         log.debug("Request has failed", e);
         }
       catch (InterruptedException e) {
@@ -84,8 +84,8 @@ public class LivyRESTClient {
     try {
       result = SmallHttpClient.get(_url + "/sessions", null);
       }
-    catch (AstroLabNetException e) {
-      AstroLabNetException.reportException("Request has failed", e, log);
+    catch (CommonException e) {
+      CommonException.reportException("Request has failed", e, log);
       return ss;
       }
     try {
@@ -97,7 +97,7 @@ public class LivyRESTClient {
         }
       }
     catch (JSONException e) {
-      AstroLabNetException.reportException("Request has failed", e, log);
+      CommonException.reportException("Request has failed", e, log);
       return ss;
       }
     return ss;
@@ -114,8 +114,8 @@ public class LivyRESTClient {
     try {
       result = SmallHttpClient.get(_url + "/batches", null);
       }
-    catch (AstroLabNetException e) {
-      AstroLabNetException.reportException("Request has failed", e, log);
+    catch (CommonException e) {
+      CommonException.reportException("Request has failed", e, log);
       return ss;
       }
     try {
@@ -125,7 +125,7 @@ public class LivyRESTClient {
         }
       }
     catch (JSONException e) {
-      AstroLabNetException.reportException("Request has failed", e, log);
+      CommonException.reportException("Request has failed", e, log);
       return ss;
       }
     return ss;
@@ -143,8 +143,8 @@ public class LivyRESTClient {
     try {
       result = SmallHttpClient.get(_url + "/sessions/" + idSession + "/statements", null);
       }
-    catch (AstroLabNetException e) {
-      AstroLabNetException.reportException("Request has failed", e, log);
+    catch (CommonException e) {
+      CommonException.reportException("Request has failed", e, log);
       return ss;
       }
     JSONArray statements = new JSONObject(result).getJSONArray("statements");
@@ -180,7 +180,7 @@ public class LivyRESTClient {
         result = SmallHttpClient.postJSON(_url + "/sessions/" + idSession + "/statements", "{\"code\":\"" + code + "\"}", null, null);
         success = true;
         }
-      catch (AstroLabNetException e) {
+      catch (CommonException e) {
         log.debug("Request has failed", e);
         }
       catch (InterruptedException e) {
@@ -240,7 +240,7 @@ public class LivyRESTClient {
           }
         success = true;
         }
-      catch (AstroLabNetException e) {
+      catch (CommonException e) {
         log.debug("Request has failed", e);
         }
       catch (InterruptedException e) {
@@ -278,7 +278,7 @@ public class LivyRESTClient {
         result = SmallHttpClient.get(_url + "/sessions/" + idSession + "/statements/" + idStatement, null);
         success = true;
         }
-      catch (AstroLabNetException e) {
+      catch (CommonException e) {
         log.debug("Request has failed", e);
         }
       catch (InterruptedException e) {
@@ -316,7 +316,7 @@ public class LivyRESTClient {
         result = new JSONObject(resultString);
         success = true;
         }
-      catch (AstroLabNetException e) {
+      catch (CommonException e) {
         log.debug("Request has failed", e);
         }
       catch (InterruptedException e) {
@@ -354,7 +354,7 @@ public class LivyRESTClient {
         result = new JSONObject(resultString);
         success = true;
         }
-      catch (AstroLabNetException e) {
+      catch (CommonException e) {
         log.debug("Request has failed", e);
         }
       catch (InterruptedException e) {

@@ -19,7 +19,7 @@ import com.astrolabsoftware.AstroLabNet.Browser.Actions.ReadScriptHandler;
 import com.astrolabsoftware.AstroLabNet.Browser.Actions.TreeCellCallback;
 import com.astrolabsoftware.AstroLabNet.Utils.Info;
 import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
-import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
+import com.astrolabsoftware.AstroLabNet.Utils.CommonException;
 
 // Swing
 import javax.swing.JComponent;
@@ -76,7 +76,7 @@ public class BrowserWindow extends Application {
   
   @Override
   public void start(Stage stage) {
-    _console = new Console(this);
+    _console = new Console(Info.name(), Info.url(), Info.release());
     _command = new BrowserCommand(this);
     _command.setupInterpreter(_console.interpreter());
     setupGUI(stage);
@@ -125,7 +125,7 @@ public class BrowserWindow extends Application {
       try {
         helpText += new StringResource("com/astrolabsoftware/AstroLabNet/" + helpPage + "Help.txt").toString();
         }
-      catch (AstroLabNetException e) {
+      catch (CommonException e) {
         log.error("Cannot load help page " + helpPage, e);
         }
       helpText += "<hr/>";

@@ -2,14 +2,16 @@
 # Generate Entry class for FX Java Table
 # astrolabnet.topology.1
 # com.astrolabsoftware.AstroLabNet
+# Topology
 # ../build
-########################################
+###########################################
 TABLE=${1}
 PACKAGE=${2}
-DIR=${3}
+SUBPACKAGE=${3}
+DIR=${4}
 TABLENAME=`echo ${TABLE} | awk -F. '{print $2}'`
 T="${(C)TABLENAME}"
-ENTRYCLASS="${DIR}/`echo ${PACKAGE} | sed 's#\.#/#g'`/${T}Entry.java"
+ENTRYCLASS="${DIR}/`echo ${PACKAGE}.${SUBPACKAGE} | sed 's#\.#/#g'`/${T}Entry.java"
 echo "Generating ${ENTRYCLASS} from ${TABLE}"
 echo "scan \"${TABLE}\"" | /opt/hbase/bin/hbase shell | grep 'column=' | while read L; do echo $L | awk '{print $2}' | sed 's/column=//g' | sed 's/,//g'; done | sort | uniq | tr '\n' ' ' | read COLS
 COLS="x:key ${COLS}"
@@ -17,8 +19,8 @@ LASTCOL=`echo ${COLS} | awk '{print $NF}'`
 
 # Entry
 /bin/rm -f "${ENTRYCLASS}"
-echo "package ${PACKAGE};" > "${ENTRYCLASS}"
-echo "import com.astrolabsoftware.AstroLabNet.HBaser.TableEntry;" >> "${ENTRYCLASS}"
+echo "package ${PACKAGE}.${SUBPACKAGE};" > "${ENTRYCLASS}"
+echo "import ${PACKAGE}.HBaser.TableEntry;" >> "${ENTRYCLASS}"
 echo "import org.apache.log4j.Logger;" >> "${ENTRYCLASS}"
 echo "" >> "${ENTRYCLASS}"
 echo "// Generated class - do not edit" >> "${ENTRYCLASS}"

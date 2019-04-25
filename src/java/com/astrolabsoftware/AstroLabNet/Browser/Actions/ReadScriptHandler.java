@@ -2,7 +2,7 @@ package com.astrolabsoftware.AstroLabNet.Browser.Actions;
 
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
 import com.astrolabsoftware.AstroLabNet.Utils.StringFile;
-import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
+import com.astrolabsoftware.AstroLabNet.Utils.CommonException;
 
 // JavaFX
 import javafx.event.ActionEvent;
@@ -48,7 +48,7 @@ public final class ReadScriptHandler implements EventHandler<ActionEvent> {
         String text = new StringFile(selectedFile).toString();
         _w.command().interpret(text);
         }
-      catch (AstroLabNetException e) {
+      catch (CommonException e) {
         log.error("Cannot read " + selectedFile);
         }
       }

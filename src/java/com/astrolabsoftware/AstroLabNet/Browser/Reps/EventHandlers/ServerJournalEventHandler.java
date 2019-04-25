@@ -13,7 +13,7 @@ import com.astrolabsoftware.AstroLabNet.GraphStream.ClickManager;
 import com.astrolabsoftware.AstroLabNet.GraphStream.HBGraphView;
 import com.astrolabsoftware.AstroLabNet.Journal.JournalEntry;
 import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
-import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
+import com.astrolabsoftware.AstroLabNet.Utils.CommonException;
 
 // JavaFX
 import javafx.scene.control.SplitPane;

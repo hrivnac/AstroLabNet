@@ -1,8 +1,5 @@
 package com.astrolabsoftware.AstroLabNet.Browser.Components;
 
-import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
-import com.astrolabsoftware.AstroLabNet.Utils.Info;
-
 // AWT
 import java.awt.Color;
 import java.awt.Font;
@@ -27,10 +24,10 @@ import org.apache.log4j.Logger;
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public final class Console extends JConsole {
 
-  /** Create.
-    * @param browser The hosting {@link BrowserWindow}. */
-  public Console(BrowserWindow browser) {
-    _browser = browser;
+  /** Create. TBD */
+  public Console(String name,
+                 String url,
+                 String release) {
     _this = this;
     setFont(new Font("Helvetica", Font.PLAIN, 15));
     setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -40,8 +37,8 @@ public final class Console extends JConsole {
     setMinimumSize(new Dimension(200,               200));
     setWaitFeedback(true);
     _interpreter = new Interpreter(this);
-    print("Welcome to AstroLabNet " + Info.release() + "\n", new Font("Helvetica", Font.BOLD, 15), Color.red);
-    print("https://astrolabsoftware.github.io\n", new Font("Helvetica", Font.PLAIN, 15), Color.red);
+    print("Welcome to " + name + " " + release + "\n", new Font("Helvetica", Font.BOLD, 15), Color.red);
+    print(url + "\n", new Font("Helvetica", Font.PLAIN, 15), Color.red);
     new Thread(_interpreter).start();
     }    
     
@@ -76,8 +73,6 @@ public final class Console extends JConsole {
     }
     
   private Interpreter _interpreter;  
-  
-  private BrowserWindow _browser;
   
   private static Console _this;
     

@@ -2,7 +2,7 @@ package com.astrolabsoftware.AstroLabNet.Browser.Actions;
 
 import com.astrolabsoftware.AstroLabNet.Browser.Reps.ElementRep;
 import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
-import com.astrolabsoftware.AstroLabNet.Utils.AstroLabNetException;
+import com.astrolabsoftware.AstroLabNet.Utils.CommonException;
 
 // JavaFX
 import javafx.scene.control.TreeCell;
@@ -48,7 +48,7 @@ public final class TreeCellContextMenuEventHandler implements EventHandler {
         try {
           helpText = new StringResource("com/astrolabsoftware/AstroLabNet/DB/" + elementName.replaceAll("Rep", "") + "Help.txt").toString();
           }
-        catch (AstroLabNetException e) {
+        catch (CommonException e) {
           log.error("Cannot load help page for " + elementName);
           log.debug("Cannot load help page for " + elementName, e);
           }
