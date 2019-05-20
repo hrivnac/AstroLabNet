@@ -14,3 +14,5 @@ put 'astrolabnet.topology.1', 'LAL', 'd:spark',    'http://vm-75222.lal.in2p3.fr
 put 'astrolabnet.topology.1', 'LAL', 'd:livy',     'http://vm-75222.lal.in2p3.fr:21111'
 put 'astrolabnet.topology.1', 'LAL', 'd:hbase',    'http://134.158.74.54:8080'
 put 'astrolabnet.topology.1', 'LAL', 'c:comment',  'Institute server'
+#
+exit

@@ -238,6 +238,25 @@
         <attribute name="Main-Class" value="com.astrolabsoftware.AstroLabNet.Core.This"/>
         </manifest>
       </jar>
+    <jar jarfile="../lib/AvroReader-${version}.exe.jar" index="yes">
+      <zipfileset includes="**/*" src="../lib/AstroLabNet-${version}.jar"/>
+      <zipfileset includes="**/*" src="${log4j.jar}"/>
+      <zipfileset includes="**/*" src="${httpclient.jar}"/>
+      <zipfileset includes="**/*" src="${httpcore.jar}"/>
+      <zipfileset includes="**/*" src="${logging.jar}"/>
+      <zipfileset includes="**/*" src="${cli.jar}"/>
+      <zipfileset includes="**/*" src="${orgjson.jar}"/>
+      <zipfileset includes="**/*" src="${avro.jar}"/>
+      <zipfileset includes="**/*" src="${jackson.jar}"/>
+      <zipfileset includes="**/*" src="${slf4j.jar}"/>
+      <zipfileset includes="**/*" src="${slf4jlog4j.jar}"/>
+      <manifest>
+        <attribute name="Created-By" value="${user.name}"/>
+        <attribute name="AppName"    value="AvroReader"/>
+        <attribute name="AppVersion" value="${version} ${TSTAMP}"/>
+        <attribute name="Main-Class" value="com.astrolabsoftware.AstroLabNet.Avro.AvroReader"/>
+        </manifest>
+      </jar>
     <jar jarfile="../lib/JavaPiJob.jar" index="yes">
       <zipfileset includes="**/*" src="../lib/AstroLabNet-${version}.jar"/>
       <zipfileset includes="**/*" src="${livy.jar}"/>

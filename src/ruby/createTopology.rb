@@ -16,3 +16,4 @@
 # b = binary data
 #############################################
 create 'astrolabnet.topology.1', 'i', 'd', 'r', 'c', 'a', 'b'
+exit

@@ -1,7 +1,9 @@
 package com.astrolabsoftware.AstroLabNet.Avro;
 
 import com.astrolabsoftware.AstroLabNet.Utils.CommonException;
+import com.astrolabsoftware.AstroLabNet.Utils.Init;
 import com.astrolabsoftware.AstroLabNet.DB.Server;
+import com.astrolabsoftware.AstroLabNet.HBaser.HBaseClient;
 
 // Avro
 import org.apache.avro.Schema;
@@ -35,6 +37,19 @@ import org.apache.log4j.Logger;
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public class AvroReader {
         
+  /** Import Avro files or directory. 
+    * @param args[0] The HBase url. 
+    * @param args[1] The Avro file or directory with Avro files. */
+  public static void main(String[] args) throws IOException, CommonException {
+    Init.init();
+    if (args.length != 2) {
+      log.error("AvroReader.exe.jar <hbase url> [<file>|<directory>]");
+      System.exit(-1);
+      }
+    AvroReader reader = new AvroReader(args[0]);
+    reader.process(args[1]);
+    }
+  
   /** Create.
     * @param server   The {@link Server} to use for <em>Catalog</em>.
     * @param schemaFN The filename of the schema file.
@@ -42,7 +57,7 @@ public class AvroReader {
   public AvroReader(Server server,
                     String schemaFN) {
     log.info("Using server " + server);
-    _server = server;
+    _hbase = server.hbase();
     if (schemaFN == null) {
       _schema = null;
       }
@@ -56,10 +71,18 @@ public class AvroReader {
         }
       }
     }
-  /** Create.
+    
+  /** Create from the complete {@link Server}.
     * @param server The {@link Server} to use for <em>Catalog</em>. */
   public AvroReader(Server server) {
     this(server, null);
+    }
+    
+  /** Create from the HBase url.
+    * @param hbaseUrl The HBase url of <em>Catalog</em>. */
+  public AvroReader(String hbaseUrl) {
+    _hbase = new HBaseClient(hbaseUrl);
+    log.info("Using server " + _hbase);
     }
         
   /** Process directory with <em>Avro</em> alert files.
@@ -201,10 +224,10 @@ public class AvroReader {
                          String column,
                          String value) {
     //log.info(key + ": " + family + ":" + column + "->" + value);
-    _server.hbase().put("astrolabnet.catalog.1",
-                        key,
-                        new String[]{family + ":" + column},
-                        new String[]{value});
+    _hbase.put("astrolabnet.catalog.1",
+               key,
+               new String[]{family + ":" + column},
+               new String[]{value});
     }
   
   /** Get {@link Field}s corresponding to simple types
@@ -241,7 +264,7 @@ public class AvroReader {
     return fields.toArray(new String[]{});
     }
     
-  private Server _server;  
+  private HBaseClient _hbase;  
     
   private Schema _schema;
     

@@ -17,3 +17,4 @@
 # b = binary data
 #############################################
 create 'astrolabnet.journal.1', 'i', 'd', 'r', 'c', 'a', 'b'
+exit

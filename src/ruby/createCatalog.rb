@@ -9,3 +9,4 @@
 # b = binary data
 #############################################
 create 'astrolabnet.catalog.1', 'i', 'd', 'r', 'c', 'a', 'b'
+exit

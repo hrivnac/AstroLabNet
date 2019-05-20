@@ -34,6 +34,13 @@ public class Init {
     init(args, false);
     }
 
+  /** Minimal initialisation of <em>AstroLabNet</em>. */
+  public static void init() {
+    PropertyConfigurator.configure(Init.class.getClassLoader().getResource(PROPERTIES_MINIMAL));
+    fixLog4J();
+    Notifier.notify("AvroReader");
+    }
+    
   /** Initialise <em>AstroLabNet</em>.
     * @param args    The cli arguments.
     * @param minimal Whether to use minimal properties (without Browser). */
