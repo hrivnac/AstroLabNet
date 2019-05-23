@@ -16,7 +16,7 @@
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
   <link href="vis-4.21.0/dist/vis-network.min.css" rel="stylesheet" type="text/css"/>  
   <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/start/jquery-ui.css" rel="stylesheet"  type="text/css"/>
-  <link href="Right.css" rel="stylesheet"  type="text/css"/>
+  <link href="CommandCenter.css" rel="stylesheet"  type="text/css"/>
   </head>
   
 <body>
@@ -25,6 +25,13 @@
       <td bgcolor="#ddffdd" height="20%">
         <div id="commands" title="commands">
           --- commands ---
+          </div>
+        </td>
+      </tr>
+    <tr height="10%">
+      <td bgcolor="#ddddff">
+        <div id="feedback" title="operation feedback">
+          --- operation feedback ---
           </div>
         </td>
       </tr>
@@ -42,15 +49,8 @@
         filter: <input type="text" name="filter" value="" id="filter" title="show only nodes with a string in their label"/>
         </td>
       </tr>
-    <tr height="10%">
-      <td bgcolor="#ddddff">
-        <div id="feedback" title="operation feedback">
-          --- operation feedback ---
-          </div>
-        </td>
-      </tr>
     </table>
-  <div id="visnetwork">
+  <div id="visnetwork" height="70%">
     --- graph network ---
     </div>
   <script type="text/javascript" src="Actions.js"></script>

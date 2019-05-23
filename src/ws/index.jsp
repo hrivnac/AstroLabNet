@@ -7,8 +7,8 @@
 <!DOCTYPE html>
 <html>
   <head><title>AstroLabNet JSP</title></head>
-  <frameset rows="30%,70%">
-    <frame src="Result.jsp" name="RESULT">
-    <frame src="Right.jsp"  name="RIGHT">
+  <frameset cols="40%,60%">
+    <frame src="CommandCenter.jsp"  name="COMMAND">
+    <frame src="Result.jsp"         name="RESULT">
     </frameset>
   </html>

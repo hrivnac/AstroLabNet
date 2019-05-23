@@ -45,7 +45,7 @@ public class WSCommand extends DefaultInteracter {
       node = new Node("Server",
                       server.name(),
                       server.name(),
-                      server.toString(),
+                      server.urlLivy() + " " + server.urlSpark() + " " + server.urlHBase(),
                       server.name(),
                       " ",
                       "0");
