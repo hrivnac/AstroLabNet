@@ -38,7 +38,7 @@ public class Init {
   public static void init() {
     PropertyConfigurator.configure(Init.class.getClassLoader().getResource(PROPERTIES_MINIMAL));
     fixLog4J();
-    Notifier.notify("AvroReader");
+    Notifier.notify("");
     }
     
   /** Initialise <em>AstroLabNet</em>.

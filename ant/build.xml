@@ -283,7 +283,51 @@
 			<fileset dir="../src/java/com/astrolabsoftware/AstroLabNet/DB/Jobs" includes="*py"/>
       </copy>
     </target>
-       
+    
+  <!-- WAR ==================================================================-->
+
+  <target name="war"
+          depends="jar"
+          description="Create WAR">
+    <war destfile="../lib/AstroLabNet.war" webxml="../src/ws/web.xml">
+      <fileset dir="../src/ws">
+        <include name="*.jsp"/>
+        <include name="**/*.html"/>
+        <include name="**/*.js"/>
+	    	<include name="**/*.css"/>
+	    	<include name="**/*.json"/>
+	    	<include name="**/*.jpeg"/>
+	    	<include name="**/*.gif"/>
+	    	<include name="**/*.png"/>
+        <include name="vis-4.21.0/**/*"/>
+        </fileset>
+      <lib file="../lib/AstroLabNet-${version}.jar"/>
+      <lib file="${log4j.jar}"/>
+      <lib file="${cli.jar}"/>
+      <manifest>
+        <attribute name="Created-By" value="${user.name}"/>
+        <attribute name="AppName"    value="AstroLabNet"/>
+        <attribute name="AppVersion" value="${version} ${TSTAMP}"/>
+        </manifest>
+      </war>
+    </target>
+
+  <!-- Tomcat ===============================================================-->
+    
+  <target name="deploy"
+          depends="war"
+          description="Deploy Development WS">
+    <copy file="../lib/AstroLabNet.war"
+          tofile="${server_dir}/${user.name}-AstroLabNet.war"/>
+    </target>
+    
+  <target name="deploy-prod"
+          depends="war"
+          description="Deploy Production WS">
+    <copy file="../lib/AstroLabNet.war"
+          tofile="${server_dir}/AstroLabNet.war"/>
+    </target>
+      
   <!-- Check ================================================================-->
             
   <!-- Run ==================================================================-->
