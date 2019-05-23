@@ -5,6 +5,7 @@
 
 <%@ page import="com.astrolabsoftware.AstroLabNet.Utils.Init" %>
 <%@ page import="com.astrolabsoftware.AstroLabNet.Utils.Info" %>
+<%@ page import="com.astrolabsoftware.AstroLabNet.WebService.WSCommand" %>
 
 <!--%@ page errorPage="ExceptionHandler.jsp" %-->
 
@@ -57,18 +58,15 @@
   <script type="text/javascript" src="GraphView.js"></script>
   <%  
     Init.init(); 
-    String element = "xxx";
-    String nodesS = "";
+    WSCommand wsc = new WSCommand();
+    String nodesS = wsc.servers2Nodes().toJSONArray().toString();
     String edgesS = "";
    %>
   <script type="text/javascript" src ="resizableTable.js"></script>
   <script type="text/javascript">
-    var element = "<%=element%>";
     var nodesS  = '<%=nodesS%>';
     var edgesS  = '<%=edgesS%>';
-    if (element != "null") {
-      document.getElementById("feedback").innerHTML += "<br/>Loading " + element + " " + id;
-      show(nodesS, edgesS);
-      }      
+    document.getElementById("feedback").innerHTML += "<br/>Loading servers";
+    show(nodesS, edgesS);
     </script>
   </body>

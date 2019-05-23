@@ -6,7 +6,7 @@
 <%@ page errorPage="ExceptionHandler.jsp" %>
 <!DOCTYPE html>
 <html>
-  <head><title>Event Index JSP</title></head>
+  <head><title>AstroLabNet JSP</title></head>
   <frameset rows="30%,70%">
     <frame src="Result.jsp" name="RESULT">
     <frame src="Right.jsp"  name="RIGHT">
