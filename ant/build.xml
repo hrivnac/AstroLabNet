@@ -299,6 +299,7 @@
 	    	<include name="**/*.jpeg"/>
 	    	<include name="**/*.gif"/>
 	    	<include name="**/*.png"/>
+	    	<include name="images/*.png"/>
         <include name="vis-4.21.0/**/*"/>
         </fileset>
       <lib file="../lib/AstroLabNet-${version}.jar"/>

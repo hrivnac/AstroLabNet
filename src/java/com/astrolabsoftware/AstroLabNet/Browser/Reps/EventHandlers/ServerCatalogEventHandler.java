@@ -9,11 +9,8 @@ import com.astrolabsoftware.AstroLabNet.Browser.Components.SimpleButton;
 import com.astrolabsoftware.AstroLabNet.HBaser.HBaseClient;
 import com.astrolabsoftware.AstroLabNet.HBaser.HBaseTableView;
 import com.astrolabsoftware.AstroLabNet.GraphStream.HBase2Graph;
-import com.astrolabsoftware.AstroLabNet.GraphStream.ClickManager;
 import com.astrolabsoftware.AstroLabNet.GraphStream.HBGraphView;
 import com.astrolabsoftware.AstroLabNet.Catalog.CatalogEntry;
-import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
-import com.astrolabsoftware.AstroLabNet.Utils.CommonException;
 
 // JavaFX
 import javafx.scene.control.SplitPane;
@@ -21,7 +18,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
-import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.event.EventHandler;
@@ -31,10 +27,6 @@ import javafx.geometry.Orientation;
 
 // GraphStream
 import org.graphstream.graph.Graph;
-import org.graphstream.graph.implementations.MultiGraph;
-import org.graphstream.ui.fx_viewer.FxViewer;
-import org.graphstream.ui.fx_viewer.FxViewPanel;
-import org.graphstream.stream.thread.ThreadProxyPipe;
 
 // org.json
 import org.json.JSONObject;

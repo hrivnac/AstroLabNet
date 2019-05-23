@@ -4,14 +4,8 @@ package com.astrolabsoftware.AstroLabNet.GraphStream;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
-import org.graphstream.graph.implementations.MultiGraph;
 import org.graphstream.ui.graphicGraph.GraphicElement;
 import org.graphstream.ui.fx_viewer.util.FxMouseManager;
-import org.graphstream.ui.fx_viewer.FxViewer;
-import org.graphstream.ui.fx_viewer.FxViewPanel;
-import org.graphstream.stream.thread.ThreadProxyPipe;
-import org.graphstream.stream.SinkAdapter;
-import org.graphstream.stream.ProxyPipe;
 
 // JavaFx
 import javafx.scene.input.MouseEvent;
@@ -27,9 +21,6 @@ import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
 
 // Java
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Iterator;
 
 // Log4J
 import org.apache.log4j.Logger;

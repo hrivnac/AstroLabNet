@@ -1,6 +1,5 @@
 package com.astrolabsoftware.AstroLabNet.Graph;
 
-
 // org.json      
 import org.json.JSONObject;
 
@@ -18,8 +17,8 @@ public class Edge extends JSONObject
                   implements Comparable<Edge> {
     
   /** Create.
-    * @param from     The id represented by this Edge start.
-    * @param to       The id represented by this Edge end.
+    * @param from     The Edge start.
+    * @param to       The Edge end.
     * @param label    The Edge label.
     * @param title    The Edge title.
     * @param subtitle The Edge subtitle.
@@ -27,8 +26,8 @@ public class Edge extends JSONObject
     * @param arrows   The Edge arrows. Blank separated list of <tt>middle to from</tt>.
     * @param color    The Edge color. If <tt>null</tt>, color willbe inheriten from the {@link Node}.
     * @param value    The Node value. */
-  public Edge(String  from,
-              String  to,
+  public Edge(Node    from,
+              Node    to,
               String  label,
               String  title,
               String  subtitle,
@@ -37,8 +36,8 @@ public class Edge extends JSONObject
               String  color,
               String  value) {
     super();
-    put("from",     from);
-    put("to",       to);
+    put("from",     from.getString("id"));
+    put("to",       to.getString("id"));
     put("label",    label);
     put("title",    title);
     put("subtitle", subtitle);

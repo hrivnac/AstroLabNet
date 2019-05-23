@@ -167,7 +167,7 @@ public abstract class DefaultInteracter implements Interacter {
   /** Get new {@link Server}s from topology table.
     * Runs recursively, stops whje n no new {@link Server} found.
     * @param servers The {@link List} of existing {@link Server}s to scan for new {@link Server}s. */
-  private void getServersFromTopology(List<Server> servers) {
+  public void getServersFromTopology(List<Server> servers) {
     log.info("Populating Servers");
     List<Server> knownServers = new ArrayList<>();
     List<Server> newServers   = new ArrayList<>();

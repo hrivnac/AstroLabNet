@@ -59,8 +59,8 @@
   <%  
     Init.init(); 
     WSCommand wsc = new WSCommand();
-    String nodesS = wsc.servers2Nodes().toJSONArray().toString();
-    String edgesS = "";
+    String nodesS = wsc.nodes().toJSONArray().toString();
+    String edgesS = wsc.edges().toJSONArray().toString();;
    %>
   <script type="text/javascript" src ="resizableTable.js"></script>
   <script type="text/javascript">
