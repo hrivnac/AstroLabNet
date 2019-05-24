@@ -46,19 +46,24 @@ function show(nodesS, edgesS) {
       else {
         selectedNode = findObjectByKey(nodes, 'id', params.nodes[0]);
         type = selectedNode.title.split(":")[0];
-        document.getElementById("commands").innerHTML = "<b><u>" + type + ": " + selectedNode.label + "</u></u>"
-                                                      + "&nbsp;<input type='button' onclick='removeNode(\"" + selectedNode.id + "\", \"" + type + "\")' value='Remove'>"
-                                                      + "&nbsp;<input type='button' onclick='describe(\""   + selectedNode.id + "\", \"" + type + "\")' value='Describe'><br/>"
-                                                      + formNodeActions(selectedNode);
+        if (executeNodeAction(selectedNode) != null) {
+          eval(executeNodeAction(selectedNode));
+          }
+        else {
+          document.getElementById("commands").innerHTML = "<b><u>" + type + ": " + selectedNode.label + "</u></u>"
+                                                        + "&nbsp;<input type='button' onclick='removeNode(\"" + selectedNode.id + "\", \"" + type + "\")' value='Remove'>"
+                                                        + "&nbsp;<input type='button' onclick='describe(\""   + selectedNode.id + "\", \"" + type + "\")' value='Describe'><br/>"
+                                                        + formNodeAction(selectedNode);
+          }
         }
       }
     else if (params.edges.length == 1) {
       selectedEdge = findObjectByKey(edges, 'id', params.edges[0]);
-      if (selectedEdge) { // TBD: should test on cluster
+      if (selectedEdge) { // TBD: should test on cluster, should do executeEdgeAction
         document.getElementById("commands").innerHTML = "<b><u>" + selectedEdge.label + "</u></u>"
                                                       + "&nbsp;<input type='button' onclick='removeEdge(\"" + selectedEdge.id + "\")' value='Remove'>"
                                                       + "&nbsp;<input type='button' onclick='describe(\""   + selectedEdge.id + "\")' value='Describe'><br/>"
-                                                      + formEdgeActions(selectedEdge);
+                                                      + formEdgeAction(selectedEdge);
         }
       }
     });
@@ -223,3 +228,4 @@ function callInfo(element, key) {
   http.send();
   return http.responseText;
   }
+  

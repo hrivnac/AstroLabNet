@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<!-- AstroLabNet Right-->
+<!-- AstroLabNet Command Center-->
 <!-- @author Julius.Hrivnac@cern.ch  -->
+
+<jsp:useBean id="wsc" class="com.astrolabsoftware.AstroLabNet.WebService.WSCommand" scope="application" />
 
 <%@ page import="com.astrolabsoftware.AstroLabNet.Utils.Init" %>
 <%@ page import="com.astrolabsoftware.AstroLabNet.Utils.Info" %>
@@ -24,7 +26,16 @@
     <tr height="20%">
       <td bgcolor="#ddffdd" height="20%">
         <div id="commands" title="commands">
-          --- commands ---
+          <table>
+            <tr>
+              <td><img src="images/AstroLab.png" width="100"/></td>
+              <td><h1>AstroLabNet</h1>
+                  <h2>@VERSION@ [@BUILD@]</h2>
+                  </td>
+              <td><a href="https://hrivnac.web.cern.ch/hrivnac/Activities/Packages/AstroLabNet" target="RESULT">AstroLabNet Home</a><br/>
+                  <a href="https://astrolabsoftware.github.io" target="RESULT">AstroLab Sotfware Home</a></td>
+              </tr>
+            </table>
           </div>
         </td>
       </tr>
@@ -58,7 +69,7 @@
   <script type="text/javascript" src="GraphView.js"></script>
   <%  
     Init.init(); 
-    WSCommand wsc = new WSCommand();
+    // by Bean: WSCommand wsc = new WSCommand();
     String nodesS = wsc.nodes().toJSONArray().toString();
     String edgesS = wsc.edges().toJSONArray().toString();;
    %>

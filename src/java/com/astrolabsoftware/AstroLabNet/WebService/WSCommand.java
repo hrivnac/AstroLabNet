@@ -8,6 +8,7 @@ import com.astrolabsoftware.AstroLabNet.Graph.Node;
 import com.astrolabsoftware.AstroLabNet.Graph.Nodes;
 import com.astrolabsoftware.AstroLabNet.Graph.Edge;
 import com.astrolabsoftware.AstroLabNet.Graph.Edges;
+import com.astrolabsoftware.AstroLabNet.Utils.Coding;
 
 // Log4J
 import org.apache.log4j.Logger;
@@ -41,6 +42,8 @@ public class WSCommand extends DefaultInteracter {
     Node topologyNode;
     Node catalogNode;
     Node journalNode;
+    Node actionNode;
+    Node jobNode;
     for (Server server : servers()) {
       node = new Node("Server",
                       server.name(),
@@ -51,49 +54,49 @@ public class WSCommand extends DefaultInteracter {
                       "0");
       _nodes.add(node);
       pythonSessionNode = new Node("Session",
-                                   "Python Session",
+                                   "Python Session on " + server.name(),
                                    "Python",
                                    "Python",
                                    server.name(),
                                    " ",
                                    "0");
       scalaSessionNode = new Node("Session",
-                                  "Scala Session",
+                                  "Scala Session on " + server.name(),
                                   "Scala",
                                   "Scala",
                                   server.name(),
                                   " ",
                                   "0");
       senderNode = new Node("Sender",
-                             "Job Sender",
+                             "Job Sender on " + server.name(),
                              " ",
                              " ",
                              server.name(),
                              " ",
                              "0");
       sourceNode = new Node("Source",
-                            "Data Source",
+                            "Data Source on " + server.name(),
                             " ",
                             " ",
                             server.name(),
                             " ",
                             "0");
       topologyNode = new Node("Topology",
-                              "Topology",
+                              "Topology of " + server.name(),
                               " ",
                               " ",
                               server.name(),
                               " ",
                               "0");
       catalogNode = new Node("Catalog",
-                             "Catalog",
+                             "Catalog of " + server.name(),
                              " ",
                              " ",
                              server.name(),
                              " ",
                              "0");
       journalNode = new Node("Journal",
-                             "Journal",
+                             "Journal of " + server.name(),
                              " ",
                              " ",
                              server.name(),
@@ -170,24 +173,53 @@ public class WSCommand extends DefaultInteracter {
                           " ",
                           "0"));
       }
+    Node aj = new Node("Group",
+                       "Actions and Jobs",
+                       "Actions and Jobs",
+                       " ",
+                       "ActionJob",
+                       "hexagon",
+                       "0");
+    _nodes.add(aj);
     for (Action action : actions()) {
-      _nodes.add(new Node("Action",
-                          action.name(),
-                          action.name(),
-                          action.toString(),
-                          "Action",
+      actionNode = new Node("Action",
+                            action.name() + " in " + action.language().toString(),
+                            action.name(),
+                            action.toString(),
+                            "ActionJob",
+                            " ",
+                            "0");
+      actionNode.put("cmd", Coding.encode(action.cmd()));
+      _nodes.add(actionNode);
+      _edges.add(new Edge(aj,
+                          actionNode,
+                          " ",
+                          " ",
+                          " ",
+                          " ",
+                          "to",
                           " ",
                           "0"));
-      }
+     }
     for (Job job : jobs()) {
-      _nodes.add(new Node("Job",
-                          job.name(),
-                          job.name(),
-                          job.toString(),
-                          "Job",
+      jobNode = new Node("Job",
+                         job.name(),
+                         job.name(),
+                         job.toString(),
+                         "ActionJob",
+                         " ",
+                         "0");
+      _nodes.add(jobNode);
+      _edges.add(new Edge(aj,
+                          jobNode,
+                          " ",
+                          " ",
+                          " ",
+                          " ",
+                          "to",
                           " ",
                           "0"));
-      }
+     }
     }
       
   /** TBD */

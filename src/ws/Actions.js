@@ -1,10 +1,9 @@
 // Form Actions
 
-function formNodeActions(node) {
+function formNodeAction(node) {
   var html = "";
   switch (node.id.split(":")[0]) {
     case "Server":
-      console.log(node.title.split("</br>")[2].split());
       var urls = node.title.split("</br>")[2].split(" ");
       html += "<a href='" + urls[0] + "' target='RESULT'>Livy</a>&nbsp;";
       html += "<a href='" + urls[1] + "' target='RESULT'>Spark</a>&nbsp;";
@@ -15,6 +14,23 @@ function formNodeActions(node) {
     case "Job":
       break;
     case "Session":
+      var opts = node.id.split(":")[1].split(" ")
+      html += "<table>";
+      html += "  <tr>";
+      html += "    <td>";
+      html += "      <textarea rows='5' cols='50' name='script' form='session' id='script'>";
+      html += "        </textarea>";
+      html += "      </td>";
+      html += "    <td>";
+      html += "      <form action='Session.jsp' id='session' target='RESULT'>";
+      html += "        <input type='hidden' name='name' id='actionName'>";
+      html += "        <input type='hidden' name='language' value='" + opts[0] + "'>";
+      html += "        <input type='hidden' name='server'   value='" + opts[3] + "'>";
+      html += "        <input type='submit' value='Execute'>";
+      html += "        </form>";
+      html += "      </td>";
+      html += "    </tr>";
+      html += "  </table>";
       break;
     case "Sender":
       break;
@@ -32,7 +48,19 @@ function formNodeActions(node) {
   return html;
   }
   
-function formEdgeActions(node) {
+function formEdgeAction(node) {
   var html = "";
   return html;
+  }
+  
+function executeNodeAction(node) {
+  switch (node.id.split(":")[0]) {
+    case "Action":
+      return "document.getElementById('script').innerHTML = atob('" + node.cmd + "');"
+           + "document.getElementById('actionName').value = '" + node.label + "';";
+      break;
+    default:
+      return null;
+      break;     
+    }
   }

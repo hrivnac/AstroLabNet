@@ -289,9 +289,15 @@
   <target name="war"
           depends="jar"
           description="Create WAR">
+ 		<copy todir="../build">
+			<fileset dir="../src/ws" includes="CommandCenter.jsp"/>
+      </copy>
+    <replace file="../build/CommandCenter.jsp" token="@VERSION@" value="${version}"/>
+    <replace file="../build/CommandCenter.jsp" token="@BUILD@"   value="${TSTAMP} by ${user.name}"/>
     <war destfile="../lib/AstroLabNet.war" webxml="../src/ws/web.xml">
       <fileset dir="../src/ws">
         <include name="*.jsp"/>
+        <exclude name="CommandCenter.jsp"/>
         <include name="**/*.html"/>
         <include name="**/*.js"/>
 	    	<include name="**/*.css"/>
@@ -301,6 +307,9 @@
 	    	<include name="**/*.png"/>
 	    	<include name="images/*.png"/>
         <include name="vis-4.21.0/**/*"/>
+        </fileset>
+      <fileset dir="../build">
+        <include name="CommandCenter.jsp"/>
         </fileset>
       <lib file="../lib/AstroLabNet-${version}.jar"/>
       <lib file="${log4j.jar}"/>
