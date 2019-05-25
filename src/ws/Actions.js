@@ -37,10 +37,16 @@ function formNodeAction(node) {
     case "Source":
       break;
     case "Topology":
+      var server = node.label.split(" ")[2];
+      html += "<a href='HBaseTable.jsp?server=" + server + "&table=topology' target='RESULT'>Show</a>";
       break;
     case "Catalog":
+      var server = node.label.split(" ")[2];
+      html += "<a href='HBaseTable.jsp?server=" + server + "&table=catalog' target='RESULT'>Show</a>";
       break;
     case "Journal":
+      var server = node.label.split(" ")[2];
+      html += "<a href='HBaseTable.jsp?server=" + server + "&table=journal' target='RESULT'>Show</a>";
       break;
     default:
       break;     
