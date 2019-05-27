@@ -69,7 +69,12 @@
   <script type="text/javascript" src="GraphView.js"></script>
   <%  
     Init.init(); 
+    String name  = request.getParameter("name");
+    String spark = request.getParameter("spark");
+    String livy  = request.getParameter("livy");
+    String hbase = request.getParameter("hbase");
     // by Bean: WSCommand wsc = new WSCommand();
+    wsc.setup(name, spark, livy, hbase);
     String nodesS = wsc.nodes().toJSONArray().toString();
     String edgesS = wsc.edges().toJSONArray().toString();;
    %>

@@ -26,7 +26,9 @@ import org.apache.log4j.Logger;
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public class HBase2Table {
     
-  /** Convert <em>HBase</em> {@link JSONObject} table */
+  /** Convert <em>HBase</em> {@link JSONObject} into table.
+    * @param json The {@link JSONObject} representation of the HBader table.
+    * @return     The table as {@link Map}. */
   public Map<String, Map<String, String>> table(JSONObject json) {
     if (json == null || json.equals("")) {
       return null;
@@ -64,7 +66,9 @@ public class HBase2Table {
     return entries;
     }
     
-  /** TBD */
+  /** Convert <em>HBase</em> {@link JSONObject} into table.
+    * @param json The {@link JSONObject} representation of the HBader table.
+    * @return     The table as html string. */
   public String htmlTable(JSONObject json) {
     Map<String, Map<String, String>> table = table(json);
     if (table == null) {

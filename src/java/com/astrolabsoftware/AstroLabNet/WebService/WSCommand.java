@@ -22,10 +22,21 @@ import org.apache.log4j.Logger;
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public class WSCommand extends DefaultInteracter {
     
-  /** Create. */
-  public WSCommand() { 
+  /** Setup. Can specify some server params.
+    * @param name  The server name. May be <tt>null</tt>.
+    * @param spark The server spark url. May be <tt>null</tt>.
+    * @param livy  The server spark url. May be <tt>null</tt>.
+    * @param hbase The server spark url. May be <tt>null</tt>. */
+  public void setup(String name,
+                    String spark,
+                    String livy,
+                    String hbase) {
+    String nameX  = (name  == null || name.equals( "null")) ? "Local"                 : name;
+    String sparkX = (spark == null || spark.equals("null")) ? "http://localhost:8998" : spark;
+    String livyX  = (livy  == null || livy.equals( "null")) ? "http://localhost:4040" : livy;
+    String hbaseX = (hbase == null || hbase.equals("null")) ? "http://localhost:8080" : hbase;
     // Populate Servers
-    addServer("Local", "http://localhost:8998", "http://localhost:4040", "http://localhost:8080");
+    addServer(nameX, sparkX, livyX, hbaseX);
     getServersFromTopology(servers());
     // Read Actions
     readActions();
@@ -219,15 +230,17 @@ public class WSCommand extends DefaultInteracter {
                           "to",
                           " ",
                           "0"));
-     }
+      }
     }
       
-  /** TBD */
+  /** Give all {@link Nodes}.
+    * @return The {@link Nodes}. */
   public Nodes nodes() {
      return _nodes;
     }
     
-  /** TBD */
+  /** Give all {@link Edges}.
+    * @return The {@link Edges}. */
   public Edges edges() {
      return _edges;
     }
