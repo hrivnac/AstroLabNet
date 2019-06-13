@@ -5,8 +5,10 @@ import com.astrolabsoftware.AstroLabNet.DB.Session;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.Images;
 import com.astrolabsoftware.AstroLabNet.Browser.Reps.EventHandlers.TaskEventHandler;
 import com.astrolabsoftware.AstroLabNet.Journal.Record;
-import com.astrolabsoftware.AstroLabNet.Utils.IDFactory;
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
+
+// JHTools
+import com.JHTools.Utils.IDFactory;
 
 // JavaFX
 import javafx.application.Platform;

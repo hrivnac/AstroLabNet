@@ -18,8 +18,10 @@ import com.astrolabsoftware.AstroLabNet.Browser.Actions.ExitHandler;
 import com.astrolabsoftware.AstroLabNet.Browser.Actions.ReadScriptHandler;
 import com.astrolabsoftware.AstroLabNet.Browser.Actions.TreeCellCallback;
 import com.astrolabsoftware.AstroLabNet.Utils.Info;
-import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
-import com.astrolabsoftware.AstroLabNet.Utils.CommonException;
+
+// JHTools
+import com.JHTools.Utils.StringResource;
+import com.JHTools.Utils.CommonException;
 
 // Swing
 import javax.swing.JComponent;

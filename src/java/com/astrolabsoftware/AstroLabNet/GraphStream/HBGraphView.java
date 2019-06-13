@@ -2,8 +2,10 @@ package com.astrolabsoftware.AstroLabNet.GraphStream;
 
 import com.astrolabsoftware.AstroLabNet.GraphStream.ClickManager;
 import com.astrolabsoftware.AstroLabNet.GraphStream.HBGraphView;
-import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
-import com.astrolabsoftware.AstroLabNet.Utils.CommonException;
+
+// JHTools
+import com.JHTools.Utils.StringResource;
+import com.JHTools.Utils.CommonException;
 
 // JavaFX
 import javafx.scene.input.ScrollEvent;

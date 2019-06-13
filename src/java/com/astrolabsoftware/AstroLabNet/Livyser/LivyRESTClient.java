@@ -1,7 +1,8 @@
 package com.astrolabsoftware.AstroLabNet.Livyser;
 
-import com.astrolabsoftware.AstroLabNet.Utils.SmallHttpClient;
-import com.astrolabsoftware.AstroLabNet.Utils.CommonException;
+// JHTools
+import com.JHTools.Utils.SmallHttpClient;
+import com.JHTools.Utils.CommonException;
 
 // JavaFX
 import javafx.util.Pair;

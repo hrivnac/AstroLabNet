@@ -1,6 +1,7 @@
 package com.astrolabsoftware.AstroLabNet.HBaser;
 
-import com.astrolabsoftware.AstroLabNet.Utils.Coding;
+// JHTools
+import com.JHTools.Utils.Coding;
 
 // JavaFX
 import javafx.scene.control.TableColumn;

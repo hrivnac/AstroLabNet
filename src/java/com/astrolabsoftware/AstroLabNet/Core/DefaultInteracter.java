@@ -11,14 +11,16 @@ import com.astrolabsoftware.AstroLabNet.DB.Search;
 import com.astrolabsoftware.AstroLabNet.DB.Session;
 import com.astrolabsoftware.AstroLabNet.DB.Source;
 import com.astrolabsoftware.AstroLabNet.DB.Sender;
-import com.astrolabsoftware.AstroLabNet.Utils.StringFile;
-import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
 import com.astrolabsoftware.AstroLabNet.Utils.Init;
 import com.astrolabsoftware.AstroLabNet.Utils.Info;
-import com.astrolabsoftware.AstroLabNet.Utils.Network;
-import com.astrolabsoftware.AstroLabNet.Utils.CommonException;
 import com.astrolabsoftware.AstroLabNet.Livyser.Language;
 import com.astrolabsoftware.AstroLabNet.Core.Interacter;
+
+// JHTools
+import com.JHTools.Utils.StringFile;
+import com.JHTools.Utils.StringResource;
+import com.JHTools.Utils.Network;
+import com.JHTools.Utils.CommonException;
 
 // Bean Shell
 import bsh.Interpreter;

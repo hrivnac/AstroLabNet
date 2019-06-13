@@ -8,7 +8,9 @@ import com.astrolabsoftware.AstroLabNet.Graph.Node;
 import com.astrolabsoftware.AstroLabNet.Graph.Nodes;
 import com.astrolabsoftware.AstroLabNet.Graph.Edge;
 import com.astrolabsoftware.AstroLabNet.Graph.Edges;
-import com.astrolabsoftware.AstroLabNet.Utils.Coding;
+
+// JHTools
+import com.JHTools.Utils.Coding;
 
 // Bean Shell
 import bsh.Interpreter;

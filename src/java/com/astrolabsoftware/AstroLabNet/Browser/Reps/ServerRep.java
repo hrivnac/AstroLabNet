@@ -12,9 +12,11 @@ import com.astrolabsoftware.AstroLabNet.Browser.Reps.EventHandlers.ServerCatalog
 import com.astrolabsoftware.AstroLabNet.Browser.Reps.EventHandlers.ServerJournalEventHandler;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.Images;
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
-import com.astrolabsoftware.AstroLabNet.HBaser.HBaseClient;
 import com.astrolabsoftware.AstroLabNet.Livyser.LivyClient;
 import com.astrolabsoftware.AstroLabNet.Livyser.Language;
+
+// JHTools
+import com.JHTools.HBaser.HBaseClient;
 
 // JavaFX
 import javafx.scene.control.TreeItem;

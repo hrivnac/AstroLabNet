@@ -6,11 +6,13 @@ import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.Images;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.HeaderLabel;
 import com.astrolabsoftware.AstroLabNet.Browser.Components.SimpleButton;
-import com.astrolabsoftware.AstroLabNet.HBaser.HBaseClient;
 import com.astrolabsoftware.AstroLabNet.HBaser.HBaseTableView;
 import com.astrolabsoftware.AstroLabNet.GraphStream.HBase2Graph;
 import com.astrolabsoftware.AstroLabNet.GraphStream.HBGraphView;
 import com.astrolabsoftware.AstroLabNet.Journal.JournalEntry;
+
+// JHTools
+import com.JHTools.HBaser.HBaseClient;
 
 // JavaFX
 import javafx.scene.control.SplitPane;

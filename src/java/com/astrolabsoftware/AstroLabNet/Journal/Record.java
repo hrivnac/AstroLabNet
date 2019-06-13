@@ -1,7 +1,9 @@
 package com.astrolabsoftware.AstroLabNet.Journal;
 
 import com.astrolabsoftware.AstroLabNet.DB.Server;
-import com.astrolabsoftware.AstroLabNet.HBaser.HBaseClient;
+
+// JHTools
+import com.JHTools.HBaser.HBaseClient;
 
 // Log4J
 import org.apache.log4j.Logger;

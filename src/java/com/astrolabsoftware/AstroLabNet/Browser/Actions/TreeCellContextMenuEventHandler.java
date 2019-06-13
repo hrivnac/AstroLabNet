@@ -1,8 +1,10 @@
 package com.astrolabsoftware.AstroLabNet.Browser.Actions;
 
 import com.astrolabsoftware.AstroLabNet.Browser.Reps.ElementRep;
-import com.astrolabsoftware.AstroLabNet.Utils.StringResource;
-import com.astrolabsoftware.AstroLabNet.Utils.CommonException;
+
+// JHTools
+import com.JHTools.Utils.StringResource;
+import com.JHTools.Utils.CommonException;
 
 // JavaFX
 import javafx.scene.control.TreeCell;

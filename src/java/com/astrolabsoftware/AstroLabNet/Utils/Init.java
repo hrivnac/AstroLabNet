@@ -1,5 +1,8 @@
 package com.astrolabsoftware.AstroLabNet.Utils;
 
+// JHTools
+import com.JHTools.Utils.Notifier;
+
 // Log4J
 import org.apache.log4j.Logger;
 import org.apache.log4j.LogManager;
@@ -38,7 +41,7 @@ public class Init {
   public static void init() {
     PropertyConfigurator.configure(Init.class.getClassLoader().getResource(PROPERTIES_MINIMAL));
     fixLog4J();
-    Notifier.notify("");
+    Notifier.notify("", "AstroLabNet");
     }
     
   /** Initialise <em>AstroLabNet</em>.
@@ -57,7 +60,7 @@ public class Init {
       PropertyConfigurator.configure(Init.class.getClassLoader().getResource(PROPERTIES));
       }
     fixLog4J();
-    Notifier.notify(Arrays.toString(args));
+    Notifier.notify(Arrays.toString(args), "AstroLabNet");
     }
     
   /** Modify the default Log4J setup for external packages. */

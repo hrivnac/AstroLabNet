@@ -1,9 +1,11 @@
 package com.astrolabsoftware.AstroLabNet.Avro;
 
-import com.astrolabsoftware.AstroLabNet.Utils.CommonException;
 import com.astrolabsoftware.AstroLabNet.Utils.Init;
 import com.astrolabsoftware.AstroLabNet.DB.Server;
-import com.astrolabsoftware.AstroLabNet.HBaser.HBaseClient;
+
+// JHTools
+import com.JHTools.HBaser.HBaseClient;
+import com.JHTools.Utils.CommonException;
 
 // Avro
 import org.apache.avro.Schema;

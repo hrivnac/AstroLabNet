@@ -1,8 +1,10 @@
 package com.astrolabsoftware.AstroLabNet.Browser.Actions;
 
 import com.astrolabsoftware.AstroLabNet.Browser.BrowserWindow;
-import com.astrolabsoftware.AstroLabNet.Utils.StringFile;
-import com.astrolabsoftware.AstroLabNet.Utils.CommonException;
+
+// JHTools
+import com.JHTools.Utils.StringFile;
+import com.JHTools.Utils.CommonException;
 
 // JavaFX
 import javafx.event.ActionEvent;

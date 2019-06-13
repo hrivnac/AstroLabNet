@@ -1,6 +1,7 @@
 package com.astrolabsoftware.AstroLabNet.GraphStream;
 
-import com.astrolabsoftware.AstroLabNet.Utils.Coding;
+// JHTools
+import com.JHTools.Utils.Coding;
 
 // GraphStream
 import org.graphstream.graph.Graph;
