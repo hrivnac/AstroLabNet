@@ -10,6 +10,9 @@ import com.astrolabsoftware.AstroLabNet.Graph.Edge;
 import com.astrolabsoftware.AstroLabNet.Graph.Edges;
 import com.astrolabsoftware.AstroLabNet.Utils.Coding;
 
+// Bean Shell
+import bsh.Interpreter;
+
 // Log4J
 import org.apache.log4j.Logger;
 
@@ -22,26 +25,10 @@ import org.apache.log4j.Logger;
   * @author <a href="mailto:Julius.Hrivnac@cern.ch">J.Hrivnac</a> */
 public class WSCommand extends DefaultInteracter {
     
-  /** Setup. Can specify some server params.
-    * @param name  The server name. May be <tt>null</tt>.
-    * @param spark The server spark url. May be <tt>null</tt>.
-    * @param livy  The server spark url. May be <tt>null</tt>.
-    * @param hbase The server spark url. May be <tt>null</tt>. */
-  public void setup(String name,
-                    String spark,
-                    String livy,
-                    String hbase) {
-    String nameX  = (name  == null || name.equals( "null")) ? "Local"                 : name;
-    String sparkX = (spark == null || spark.equals("null")) ? "http://localhost:8998" : spark;
-    String livyX  = (livy  == null || livy.equals( "null")) ? "http://localhost:4040" : livy;
-    String hbaseX = (hbase == null || hbase.equals("null")) ? "http://localhost:8080" : hbase;
-    // Populate Servers
-    addServer(nameX, sparkX, livyX, hbaseX);
-    getServersFromTopology(servers());
-    // Read Actions
-    readActions();
-    // Read Jobs
-    readJobs();
+  /** Setup. */
+  public void setup() {
+    Interpreter interpreter = new Interpreter();
+    setupInterpreter(interpreter);
     // Construct Graph  
     _nodes = new Nodes();
     _edges = new Edges();

@@ -11,8 +11,10 @@
   <property environment="env"/>
   <property file="../ant/build-global.properties"/>
   <property file="../ant/build.properties"/>
+  <property name="site" value="Local"/>
 
   <path id="classpath.build">
+    <pathelement path="${jhtools.jar}"/>
     <pathelement path="${log4j.jar}"/>
     <pathelement path="${bsh.jar}"/>
     <pathelement path="${scala.jar}"/>
@@ -214,6 +216,7 @@
       </jar>
     <jar jarfile="../lib/AstroLabNet-${version}.exe.jar" index="yes">
       <zipfileset includes="**/*" src="../lib/AstroLabNet-${version}.jar"/>
+      <zipfileset includes="**/*" src="${jhtools.jar}"/>
       <zipfileset includes="**/*" src="${log4j.jar}"/>
       <zipfileset includes="**/*" src="${bsh.jar}"/>
       <zipfileset includes="**/*" src="${scala.jar}"/>
@@ -289,6 +292,7 @@
   <target name="war"
           depends="jar"
           description="Create WAR">
+ 		<copy file="../src/ws/index${site}.jsp" tofile="../build/index.jsp" overwrite="true"/>
  		<copy todir="../build">
 			<fileset dir="../src/ws" includes="CommandCenter.jsp"/>
       </copy>
@@ -297,6 +301,7 @@
     <war destfile="../lib/AstroLabNet.war" webxml="../src/ws/web.xml">
       <fileset dir="../src/ws">
         <include name="*.jsp"/>
+        <exclude name="index*.jsp"/>
         <exclude name="CommandCenter.jsp"/>
         <include name="**/*.html"/>
         <include name="**/*.js"/>
@@ -309,6 +314,7 @@
         <include name="vis-4.21.0/**/*"/>
         </fileset>
       <fileset dir="../build">
+        <include name="index.jsp"/>
         <include name="CommandCenter.jsp"/>
         </fileset>
       <lib file="../lib/AstroLabNet-${version}.jar"/>
@@ -475,6 +481,7 @@
       <group title="Catalog"            packages="com.astrolabsoftware.AstroLabNet.Catalog*"/>
       <group title="ZTF Avro"           packages="ztf*"/>
       <link href="http://docs.oracle.com/javase/8/docs/api"/>
+      <link href="https://hrivnac.web.cern.ch/hrivnac/Activities/Packages/JHTools/JavaDoc"/>
       <link href="http://www.beanshell.org/javadoc/"/>
       <link href="https://logging.apache.org/log4j/1.2/apidocs"/>
       <link href="https://livy.incubator.apache.org/docs/latest/api/java"/>

@@ -3,7 +3,7 @@
 <!-- AstroLabNet Command Center-->
 <!-- @author Julius.Hrivnac@cern.ch  -->
 
-<jsp:useBean id="wsc" class="com.astrolabsoftware.AstroLabNet.WebService.WSCommand" scope="application" />
+<jsp:useBean id="wsc" class="com.astrolabsoftware.AstroLabNet.WebService.WSCommand" scope="session" />
 
 <%@ page import="com.astrolabsoftware.AstroLabNet.Utils.Init" %>
 <%@ page import="com.astrolabsoftware.AstroLabNet.Utils.Info" %>
@@ -68,13 +68,8 @@
   <script type="text/javascript" src="PostProc.js"></script>
   <script type="text/javascript" src="GraphView.js"></script>
   <%  
-    Init.init(); 
-    String name  = request.getParameter("name");
-    String spark = request.getParameter("spark");
-    String livy  = request.getParameter("livy");
-    String hbase = request.getParameter("hbase");
     // by Bean: WSCommand wsc = new WSCommand();
-    wsc.setup(name, spark, livy, hbase);
+    wsc.setup();
     String nodesS = wsc.nodes().toJSONArray().toString();
     String edgesS = wsc.edges().toJSONArray().toString();;
    %>
