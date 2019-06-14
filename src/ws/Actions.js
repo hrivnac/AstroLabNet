@@ -14,7 +14,7 @@ function formNodeAction(node) {
     case "Job":
       break;
     case "Session":
-      var opts = node.id.split(":")[1].split(" ")
+      var opts = node.id.split(":")[1].split(" ");
       html += "<table>";
       html += "  <tr>";
       html += "    <td>";

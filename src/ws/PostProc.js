@@ -14,11 +14,7 @@ function postProcNode(node) {
       node.shape = "image";
       node.image = "images/Job.png";
       break;
-    case "PythonSession":
-      node.shape = "image";
-      node.image = "images/Session.png";
-      break;
-    case "ScalaSession":
+    case "Session":
       node.shape = "image";
       node.image = "images/Session.png";
       break;

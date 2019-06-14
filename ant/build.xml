@@ -243,6 +243,7 @@
       </jar>
     <jar jarfile="../lib/AvroReader-${version}.exe.jar" index="yes">
       <zipfileset includes="**/*" src="../lib/AstroLabNet-${version}.jar"/>
+      <zipfileset includes="**/*" src="${jhtools.jar}"/>
       <zipfileset includes="**/*" src="${log4j.jar}"/>
       <zipfileset includes="**/*" src="${httpclient.jar}"/>
       <zipfileset includes="**/*" src="${httpcore.jar}"/>
