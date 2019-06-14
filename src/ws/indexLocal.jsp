@@ -5,7 +5,7 @@
 
 <%@ page import="com.astrolabsoftware.AstroLabNet.Utils.Init" %>
 
-<%@ page errorPage="ExceptionHandler.jsp" %>
+<!--%@ page errorPage="ExceptionHandler.jsp" %-->
 
 <!DOCTYPE html>
 <html>

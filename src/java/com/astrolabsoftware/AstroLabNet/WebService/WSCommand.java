@@ -54,7 +54,7 @@ public class WSCommand extends DefaultInteracter {
                       " ",
                       "0");
       _nodes.add(node);
-      pythonSessionNode = new Node("Session:" + server.name(),
+      pythonSessionNode = new Node("PythonSession:" + server.name(),
                                    "Session",
                                    "Python Session on " + server.name(),
                                    "Python",
@@ -62,7 +62,7 @@ public class WSCommand extends DefaultInteracter {
                                    server.name(),
                                    " ",
                                    "0");
-      scalaSessionNode = new Node("Session:" + server.name(),
+      scalaSessionNode = new Node("ScalaSession:" + server.name(),
                                   "Session",
                                   "Scala Session on " + server.name(),
                                   "Scala",

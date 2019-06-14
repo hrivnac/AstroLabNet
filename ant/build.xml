@@ -317,7 +317,11 @@
         <include name="index.jsp"/>
         <include name="CommandCenter.jsp"/>
         </fileset>
+      <fileset dir="${jhtools.ws}">
+        <include name="*"/>
+        </fileset>
       <lib file="../lib/AstroLabNet-${version}.jar"/>
+      <lib file="${jhtools.jar}"/>
       <lib file="${log4j.jar}"/>
       <lib file="${cli.jar}"/>
       <lib file="${bsh.jar}"/>
