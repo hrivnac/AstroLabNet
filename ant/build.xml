@@ -474,7 +474,6 @@
       <group title="DB"                 packages="com.astrolabsoftware.AstroLabNet.DB*"/>
       <group title="Jobs"               packages="com.astrolabsoftware.AstroLabNet.DB.Jobs*"/>
       <group title="Avro"               packages="com.astrolabsoftware.AstroLabNet.Avro*"/>
-      <group title="Graph"              packages="com.astrolabsoftware.AstroLabNet.Graph*"/>
       <group title="GraphStream"        packages="com.astrolabsoftware.AstroLabNet.GraphStream*"/>
       <group title="Journal"            packages="com.astrolabsoftware.AstroLabNet.Journal*"/>
       <group title="Topology"           packages="com.astrolabsoftware.AstroLabNet.Topology*"/>
