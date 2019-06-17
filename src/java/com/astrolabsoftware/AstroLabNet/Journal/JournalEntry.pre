@@ -1,0 +1,46 @@
+package com.astrolabsoftware.AstroLabNet.Journal;
+import com.astrolabsoftware.AstroLabNet.HBaser.TableEntry;
+import org.apache.log4j.Logger;
+
+// Generated class - do not edit
+
+public class JournalEntry implements TableEntry {
+
+public JournalEntry() {}
+
+public JournalEntry(
+String xkey
+)
+{
+_xkey = xkey;
+}
+
+public void setXkey(String xkey) {_xkey = xkey;}
+
+public String getXkey() {return _xkey;}
+
+private String _xkey = null;
+
+@Override
+public void set(String name, String value) {
+switch (name) {
+case "x:key":
+setXkey(value);
+break;
+default:
+log.error("Cannot show " + name + " = " + value);
+}
+}
+
+@Override
+public void reset() {
+_xkey = null;
+}
+
+public static String[] ENTRY_NAMES = new String[]{
+"xkey"
+};
+
+private static Logger log = Logger.getLogger(JournalEntry.class);
+
+}

@@ -1,0 +1,800 @@
+package com.astrolabsoftware.AstroLabNet.Catalog;
+import com.astrolabsoftware.AstroLabNet.HBaser.TableEntry;
+import org.apache.log4j.Logger;
+
+// Generated class - do not edit
+
+public class CatalogEntry implements TableEntry {
+
+public CatalogEntry() {}
+
+public CatalogEntry(
+String xkey,
+String bstampData,
+String dcandid,
+String ddec,
+String ddecnr,
+String dfid,
+String dfileName,
+String disdiffpos,
+String djd,
+String djdendref,
+String djdstartref,
+String dmagpsf,
+String dncovhist,
+String dndethist,
+String dnframesref,
+String dnmatches,
+String dnmtchps,
+String dobjectId,
+String dpid,
+String dprogramid,
+String dpublisher,
+String dra,
+String dranr,
+String drbversion,
+String drfid,
+String dschemavsn,
+String dsigmapsf,
+String itype,
+String rcandid,
+String rprv_candid_1,
+String rprv_candid_10,
+String rprv_candid_11,
+String rprv_candid_12,
+String rprv_candid_13,
+String rprv_candid_14,
+String rprv_candid_15,
+String rprv_candid_16,
+String rprv_candid_17,
+String rprv_candid_18,
+String rprv_candid_19,
+String rprv_candid_2,
+String rprv_candid_20,
+String rprv_candid_21,
+String rprv_candid_22,
+String rprv_candid_23,
+String rprv_candid_24,
+String rprv_candid_25,
+String rprv_candid_26,
+String rprv_candid_27,
+String rprv_candid_28,
+String rprv_candid_29,
+String rprv_candid_3,
+String rprv_candid_30,
+String rprv_candid_4,
+String rprv_candid_5,
+String rprv_candid_6,
+String rprv_candid_7,
+String rprv_candid_8,
+String rprv_candid_9
+)
+{
+_xkey = xkey;
+_bstampData = bstampData;
+_dcandid = dcandid;
+_ddec = ddec;
+_ddecnr = ddecnr;
+_dfid = dfid;
+_dfileName = dfileName;
+_disdiffpos = disdiffpos;
+_djd = djd;
+_djdendref = djdendref;
+_djdstartref = djdstartref;
+_dmagpsf = dmagpsf;
+_dncovhist = dncovhist;
+_dndethist = dndethist;
+_dnframesref = dnframesref;
+_dnmatches = dnmatches;
+_dnmtchps = dnmtchps;
+_dobjectId = dobjectId;
+_dpid = dpid;
+_dprogramid = dprogramid;
+_dpublisher = dpublisher;
+_dra = dra;
+_dranr = dranr;
+_drbversion = drbversion;
+_drfid = drfid;
+_dschemavsn = dschemavsn;
+_dsigmapsf = dsigmapsf;
+_itype = itype;
+_rcandid = rcandid;
+_rprv_candid_1 = rprv_candid_1;
+_rprv_candid_10 = rprv_candid_10;
+_rprv_candid_11 = rprv_candid_11;
+_rprv_candid_12 = rprv_candid_12;
+_rprv_candid_13 = rprv_candid_13;
+_rprv_candid_14 = rprv_candid_14;
+_rprv_candid_15 = rprv_candid_15;
+_rprv_candid_16 = rprv_candid_16;
+_rprv_candid_17 = rprv_candid_17;
+_rprv_candid_18 = rprv_candid_18;
+_rprv_candid_19 = rprv_candid_19;
+_rprv_candid_2 = rprv_candid_2;
+_rprv_candid_20 = rprv_candid_20;
+_rprv_candid_21 = rprv_candid_21;
+_rprv_candid_22 = rprv_candid_22;
+_rprv_candid_23 = rprv_candid_23;
+_rprv_candid_24 = rprv_candid_24;
+_rprv_candid_25 = rprv_candid_25;
+_rprv_candid_26 = rprv_candid_26;
+_rprv_candid_27 = rprv_candid_27;
+_rprv_candid_28 = rprv_candid_28;
+_rprv_candid_29 = rprv_candid_29;
+_rprv_candid_3 = rprv_candid_3;
+_rprv_candid_30 = rprv_candid_30;
+_rprv_candid_4 = rprv_candid_4;
+_rprv_candid_5 = rprv_candid_5;
+_rprv_candid_6 = rprv_candid_6;
+_rprv_candid_7 = rprv_candid_7;
+_rprv_candid_8 = rprv_candid_8;
+_rprv_candid_9 = rprv_candid_9;
+}
+
+public void setXkey(String xkey) {_xkey = xkey;}
+
+public String getXkey() {return _xkey;}
+
+private String _xkey = null;
+
+public void setBstampdata(String bstampData) {_bstampData = bstampData;}
+
+public String getBstampdata() {return _bstampData;}
+
+private String _bstampData = null;
+
+public void setDcandid(String dcandid) {_dcandid = dcandid;}
+
+public String getDcandid() {return _dcandid;}
+
+private String _dcandid = null;
+
+public void setDdec(String ddec) {_ddec = ddec;}
+
+public String getDdec() {return _ddec;}
+
+private String _ddec = null;
+
+public void setDdecnr(String ddecnr) {_ddecnr = ddecnr;}
+
+public String getDdecnr() {return _ddecnr;}
+
+private String _ddecnr = null;
+
+public void setDfid(String dfid) {_dfid = dfid;}
+
+public String getDfid() {return _dfid;}
+
+private String _dfid = null;
+
+public void setDfilename(String dfileName) {_dfileName = dfileName;}
+
+public String getDfilename() {return _dfileName;}
+
+private String _dfileName = null;
+
+public void setDisdiffpos(String disdiffpos) {_disdiffpos = disdiffpos;}
+
+public String getDisdiffpos() {return _disdiffpos;}
+
+private String _disdiffpos = null;
+
+public void setDjd(String djd) {_djd = djd;}
+
+public String getDjd() {return _djd;}
+
+private String _djd = null;
+
+public void setDjdendref(String djdendref) {_djdendref = djdendref;}
+
+public String getDjdendref() {return _djdendref;}
+
+private String _djdendref = null;
+
+public void setDjdstartref(String djdstartref) {_djdstartref = djdstartref;}
+
+public String getDjdstartref() {return _djdstartref;}
+
+private String _djdstartref = null;
+
+public void setDmagpsf(String dmagpsf) {_dmagpsf = dmagpsf;}
+
+public String getDmagpsf() {return _dmagpsf;}
+
+private String _dmagpsf = null;
+
+public void setDncovhist(String dncovhist) {_dncovhist = dncovhist;}
+
+public String getDncovhist() {return _dncovhist;}
+
+private String _dncovhist = null;
+
+public void setDndethist(String dndethist) {_dndethist = dndethist;}
+
+public String getDndethist() {return _dndethist;}
+
+private String _dndethist = null;
+
+public void setDnframesref(String dnframesref) {_dnframesref = dnframesref;}
+
+public String getDnframesref() {return _dnframesref;}
+
+private String _dnframesref = null;
+
+public void setDnmatches(String dnmatches) {_dnmatches = dnmatches;}
+
+public String getDnmatches() {return _dnmatches;}
+
+private String _dnmatches = null;
+
+public void setDnmtchps(String dnmtchps) {_dnmtchps = dnmtchps;}
+
+public String getDnmtchps() {return _dnmtchps;}
+
+private String _dnmtchps = null;
+
+public void setDobjectid(String dobjectId) {_dobjectId = dobjectId;}
+
+public String getDobjectid() {return _dobjectId;}
+
+private String _dobjectId = null;
+
+public void setDpid(String dpid) {_dpid = dpid;}
+
+public String getDpid() {return _dpid;}
+
+private String _dpid = null;
+
+public void setDprogramid(String dprogramid) {_dprogramid = dprogramid;}
+
+public String getDprogramid() {return _dprogramid;}
+
+private String _dprogramid = null;
+
+public void setDpublisher(String dpublisher) {_dpublisher = dpublisher;}
+
+public String getDpublisher() {return _dpublisher;}
+
+private String _dpublisher = null;
+
+public void setDra(String dra) {_dra = dra;}
+
+public String getDra() {return _dra;}
+
+private String _dra = null;
+
+public void setDranr(String dranr) {_dranr = dranr;}
+
+public String getDranr() {return _dranr;}
+
+private String _dranr = null;
+
+public void setDrbversion(String drbversion) {_drbversion = drbversion;}
+
+public String getDrbversion() {return _drbversion;}
+
+private String _drbversion = null;
+
+public void setDrfid(String drfid) {_drfid = drfid;}
+
+public String getDrfid() {return _drfid;}
+
+private String _drfid = null;
+
+public void setDschemavsn(String dschemavsn) {_dschemavsn = dschemavsn;}
+
+public String getDschemavsn() {return _dschemavsn;}
+
+private String _dschemavsn = null;
+
+public void setDsigmapsf(String dsigmapsf) {_dsigmapsf = dsigmapsf;}
+
+public String getDsigmapsf() {return _dsigmapsf;}
+
+private String _dsigmapsf = null;
+
+public void setItype(String itype) {_itype = itype;}
+
+public String getItype() {return _itype;}
+
+private String _itype = null;
+
+public void setRcandid(String rcandid) {_rcandid = rcandid;}
+
+public String getRcandid() {return _rcandid;}
+
+private String _rcandid = null;
+
+public void setRprv_Candid_1(String rprv_candid_1) {_rprv_candid_1 = rprv_candid_1;}
+
+public String getRprv_Candid_1() {return _rprv_candid_1;}
+
+private String _rprv_candid_1 = null;
+
+public void setRprv_Candid_10(String rprv_candid_10) {_rprv_candid_10 = rprv_candid_10;}
+
+public String getRprv_Candid_10() {return _rprv_candid_10;}
+
+private String _rprv_candid_10 = null;
+
+public void setRprv_Candid_11(String rprv_candid_11) {_rprv_candid_11 = rprv_candid_11;}
+
+public String getRprv_Candid_11() {return _rprv_candid_11;}
+
+private String _rprv_candid_11 = null;
+
+public void setRprv_Candid_12(String rprv_candid_12) {_rprv_candid_12 = rprv_candid_12;}
+
+public String getRprv_Candid_12() {return _rprv_candid_12;}
+
+private String _rprv_candid_12 = null;
+
+public void setRprv_Candid_13(String rprv_candid_13) {_rprv_candid_13 = rprv_candid_13;}
+
+public String getRprv_Candid_13() {return _rprv_candid_13;}
+
+private String _rprv_candid_13 = null;
+
+public void setRprv_Candid_14(String rprv_candid_14) {_rprv_candid_14 = rprv_candid_14;}
+
+public String getRprv_Candid_14() {return _rprv_candid_14;}
+
+private String _rprv_candid_14 = null;
+
+public void setRprv_Candid_15(String rprv_candid_15) {_rprv_candid_15 = rprv_candid_15;}
+
+public String getRprv_Candid_15() {return _rprv_candid_15;}
+
+private String _rprv_candid_15 = null;
+
+public void setRprv_Candid_16(String rprv_candid_16) {_rprv_candid_16 = rprv_candid_16;}
+
+public String getRprv_Candid_16() {return _rprv_candid_16;}
+
+private String _rprv_candid_16 = null;
+
+public void setRprv_Candid_17(String rprv_candid_17) {_rprv_candid_17 = rprv_candid_17;}
+
+public String getRprv_Candid_17() {return _rprv_candid_17;}
+
+private String _rprv_candid_17 = null;
+
+public void setRprv_Candid_18(String rprv_candid_18) {_rprv_candid_18 = rprv_candid_18;}
+
+public String getRprv_Candid_18() {return _rprv_candid_18;}
+
+private String _rprv_candid_18 = null;
+
+public void setRprv_Candid_19(String rprv_candid_19) {_rprv_candid_19 = rprv_candid_19;}
+
+public String getRprv_Candid_19() {return _rprv_candid_19;}
+
+private String _rprv_candid_19 = null;
+
+public void setRprv_Candid_2(String rprv_candid_2) {_rprv_candid_2 = rprv_candid_2;}
+
+public String getRprv_Candid_2() {return _rprv_candid_2;}
+
+private String _rprv_candid_2 = null;
+
+public void setRprv_Candid_20(String rprv_candid_20) {_rprv_candid_20 = rprv_candid_20;}
+
+public String getRprv_Candid_20() {return _rprv_candid_20;}
+
+private String _rprv_candid_20 = null;
+
+public void setRprv_Candid_21(String rprv_candid_21) {_rprv_candid_21 = rprv_candid_21;}
+
+public String getRprv_Candid_21() {return _rprv_candid_21;}
+
+private String _rprv_candid_21 = null;
+
+public void setRprv_Candid_22(String rprv_candid_22) {_rprv_candid_22 = rprv_candid_22;}
+
+public String getRprv_Candid_22() {return _rprv_candid_22;}
+
+private String _rprv_candid_22 = null;
+
+public void setRprv_Candid_23(String rprv_candid_23) {_rprv_candid_23 = rprv_candid_23;}
+
+public String getRprv_Candid_23() {return _rprv_candid_23;}
+
+private String _rprv_candid_23 = null;
+
+public void setRprv_Candid_24(String rprv_candid_24) {_rprv_candid_24 = rprv_candid_24;}
+
+public String getRprv_Candid_24() {return _rprv_candid_24;}
+
+private String _rprv_candid_24 = null;
+
+public void setRprv_Candid_25(String rprv_candid_25) {_rprv_candid_25 = rprv_candid_25;}
+
+public String getRprv_Candid_25() {return _rprv_candid_25;}
+
+private String _rprv_candid_25 = null;
+
+public void setRprv_Candid_26(String rprv_candid_26) {_rprv_candid_26 = rprv_candid_26;}
+
+public String getRprv_Candid_26() {return _rprv_candid_26;}
+
+private String _rprv_candid_26 = null;
+
+public void setRprv_Candid_27(String rprv_candid_27) {_rprv_candid_27 = rprv_candid_27;}
+
+public String getRprv_Candid_27() {return _rprv_candid_27;}
+
+private String _rprv_candid_27 = null;
+
+public void setRprv_Candid_28(String rprv_candid_28) {_rprv_candid_28 = rprv_candid_28;}
+
+public String getRprv_Candid_28() {return _rprv_candid_28;}
+
+private String _rprv_candid_28 = null;
+
+public void setRprv_Candid_29(String rprv_candid_29) {_rprv_candid_29 = rprv_candid_29;}
+
+public String getRprv_Candid_29() {return _rprv_candid_29;}
+
+private String _rprv_candid_29 = null;
+
+public void setRprv_Candid_3(String rprv_candid_3) {_rprv_candid_3 = rprv_candid_3;}
+
+public String getRprv_Candid_3() {return _rprv_candid_3;}
+
+private String _rprv_candid_3 = null;
+
+public void setRprv_Candid_30(String rprv_candid_30) {_rprv_candid_30 = rprv_candid_30;}
+
+public String getRprv_Candid_30() {return _rprv_candid_30;}
+
+private String _rprv_candid_30 = null;
+
+public void setRprv_Candid_4(String rprv_candid_4) {_rprv_candid_4 = rprv_candid_4;}
+
+public String getRprv_Candid_4() {return _rprv_candid_4;}
+
+private String _rprv_candid_4 = null;
+
+public void setRprv_Candid_5(String rprv_candid_5) {_rprv_candid_5 = rprv_candid_5;}
+
+public String getRprv_Candid_5() {return _rprv_candid_5;}
+
+private String _rprv_candid_5 = null;
+
+public void setRprv_Candid_6(String rprv_candid_6) {_rprv_candid_6 = rprv_candid_6;}
+
+public String getRprv_Candid_6() {return _rprv_candid_6;}
+
+private String _rprv_candid_6 = null;
+
+public void setRprv_Candid_7(String rprv_candid_7) {_rprv_candid_7 = rprv_candid_7;}
+
+public String getRprv_Candid_7() {return _rprv_candid_7;}
+
+private String _rprv_candid_7 = null;
+
+public void setRprv_Candid_8(String rprv_candid_8) {_rprv_candid_8 = rprv_candid_8;}
+
+public String getRprv_Candid_8() {return _rprv_candid_8;}
+
+private String _rprv_candid_8 = null;
+
+public void setRprv_Candid_9(String rprv_candid_9) {_rprv_candid_9 = rprv_candid_9;}
+
+public String getRprv_Candid_9() {return _rprv_candid_9;}
+
+private String _rprv_candid_9 = null;
+
+@Override
+public void set(String name, String value) {
+switch (name) {
+case "x:key":
+setXkey(value);
+break;
+case "b:stampData":
+setBstampdata(value);
+break;
+case "d:candid":
+setDcandid(value);
+break;
+case "d:dec":
+setDdec(value);
+break;
+case "d:decnr":
+setDdecnr(value);
+break;
+case "d:fid":
+setDfid(value);
+break;
+case "d:fileName":
+setDfilename(value);
+break;
+case "d:isdiffpos":
+setDisdiffpos(value);
+break;
+case "d:jd":
+setDjd(value);
+break;
+case "d:jdendref":
+setDjdendref(value);
+break;
+case "d:jdstartref":
+setDjdstartref(value);
+break;
+case "d:magpsf":
+setDmagpsf(value);
+break;
+case "d:ncovhist":
+setDncovhist(value);
+break;
+case "d:ndethist":
+setDndethist(value);
+break;
+case "d:nframesref":
+setDnframesref(value);
+break;
+case "d:nmatches":
+setDnmatches(value);
+break;
+case "d:nmtchps":
+setDnmtchps(value);
+break;
+case "d:objectId":
+setDobjectid(value);
+break;
+case "d:pid":
+setDpid(value);
+break;
+case "d:programid":
+setDprogramid(value);
+break;
+case "d:publisher":
+setDpublisher(value);
+break;
+case "d:ra":
+setDra(value);
+break;
+case "d:ranr":
+setDranr(value);
+break;
+case "d:rbversion":
+setDrbversion(value);
+break;
+case "d:rfid":
+setDrfid(value);
+break;
+case "d:schemavsn":
+setDschemavsn(value);
+break;
+case "d:sigmapsf":
+setDsigmapsf(value);
+break;
+case "i:type":
+setItype(value);
+break;
+case "r:candid":
+setRcandid(value);
+break;
+case "r:prv_candid_1":
+setRprv_Candid_1(value);
+break;
+case "r:prv_candid_10":
+setRprv_Candid_10(value);
+break;
+case "r:prv_candid_11":
+setRprv_Candid_11(value);
+break;
+case "r:prv_candid_12":
+setRprv_Candid_12(value);
+break;
+case "r:prv_candid_13":
+setRprv_Candid_13(value);
+break;
+case "r:prv_candid_14":
+setRprv_Candid_14(value);
+break;
+case "r:prv_candid_15":
+setRprv_Candid_15(value);
+break;
+case "r:prv_candid_16":
+setRprv_Candid_16(value);
+break;
+case "r:prv_candid_17":
+setRprv_Candid_17(value);
+break;
+case "r:prv_candid_18":
+setRprv_Candid_18(value);
+break;
+case "r:prv_candid_19":
+setRprv_Candid_19(value);
+break;
+case "r:prv_candid_2":
+setRprv_Candid_2(value);
+break;
+case "r:prv_candid_20":
+setRprv_Candid_20(value);
+break;
+case "r:prv_candid_21":
+setRprv_Candid_21(value);
+break;
+case "r:prv_candid_22":
+setRprv_Candid_22(value);
+break;
+case "r:prv_candid_23":
+setRprv_Candid_23(value);
+break;
+case "r:prv_candid_24":
+setRprv_Candid_24(value);
+break;
+case "r:prv_candid_25":
+setRprv_Candid_25(value);
+break;
+case "r:prv_candid_26":
+setRprv_Candid_26(value);
+break;
+case "r:prv_candid_27":
+setRprv_Candid_27(value);
+break;
+case "r:prv_candid_28":
+setRprv_Candid_28(value);
+break;
+case "r:prv_candid_29":
+setRprv_Candid_29(value);
+break;
+case "r:prv_candid_3":
+setRprv_Candid_3(value);
+break;
+case "r:prv_candid_30":
+setRprv_Candid_30(value);
+break;
+case "r:prv_candid_4":
+setRprv_Candid_4(value);
+break;
+case "r:prv_candid_5":
+setRprv_Candid_5(value);
+break;
+case "r:prv_candid_6":
+setRprv_Candid_6(value);
+break;
+case "r:prv_candid_7":
+setRprv_Candid_7(value);
+break;
+case "r:prv_candid_8":
+setRprv_Candid_8(value);
+break;
+case "r:prv_candid_9":
+setRprv_Candid_9(value);
+break;
+default:
+log.error("Cannot show " + name + " = " + value);
+}
+}
+
+@Override
+public void reset() {
+_xkey = null;
+_bstampData = null;
+_dcandid = null;
+_ddec = null;
+_ddecnr = null;
+_dfid = null;
+_dfileName = null;
+_disdiffpos = null;
+_djd = null;
+_djdendref = null;
+_djdstartref = null;
+_dmagpsf = null;
+_dncovhist = null;
+_dndethist = null;
+_dnframesref = null;
+_dnmatches = null;
+_dnmtchps = null;
+_dobjectId = null;
+_dpid = null;
+_dprogramid = null;
+_dpublisher = null;
+_dra = null;
+_dranr = null;
+_drbversion = null;
+_drfid = null;
+_dschemavsn = null;
+_dsigmapsf = null;
+_itype = null;
+_rcandid = null;
+_rprv_candid_1 = null;
+_rprv_candid_10 = null;
+_rprv_candid_11 = null;
+_rprv_candid_12 = null;
+_rprv_candid_13 = null;
+_rprv_candid_14 = null;
+_rprv_candid_15 = null;
+_rprv_candid_16 = null;
+_rprv_candid_17 = null;
+_rprv_candid_18 = null;
+_rprv_candid_19 = null;
+_rprv_candid_2 = null;
+_rprv_candid_20 = null;
+_rprv_candid_21 = null;
+_rprv_candid_22 = null;
+_rprv_candid_23 = null;
+_rprv_candid_24 = null;
+_rprv_candid_25 = null;
+_rprv_candid_26 = null;
+_rprv_candid_27 = null;
+_rprv_candid_28 = null;
+_rprv_candid_29 = null;
+_rprv_candid_3 = null;
+_rprv_candid_30 = null;
+_rprv_candid_4 = null;
+_rprv_candid_5 = null;
+_rprv_candid_6 = null;
+_rprv_candid_7 = null;
+_rprv_candid_8 = null;
+_rprv_candid_9 = null;
+}
+
+public static String[] ENTRY_NAMES = new String[]{
+"xkey",
+"bstampData",
+"dcandid",
+"ddec",
+"ddecnr",
+"dfid",
+"dfileName",
+"disdiffpos",
+"djd",
+"djdendref",
+"djdstartref",
+"dmagpsf",
+"dncovhist",
+"dndethist",
+"dnframesref",
+"dnmatches",
+"dnmtchps",
+"dobjectId",
+"dpid",
+"dprogramid",
+"dpublisher",
+"dra",
+"dranr",
+"drbversion",
+"drfid",
+"dschemavsn",
+"dsigmapsf",
+"itype",
+"rcandid",
+"rprv_candid_1",
+"rprv_candid_10",
+"rprv_candid_11",
+"rprv_candid_12",
+"rprv_candid_13",
+"rprv_candid_14",
+"rprv_candid_15",
+"rprv_candid_16",
+"rprv_candid_17",
+"rprv_candid_18",
+"rprv_candid_19",
+"rprv_candid_2",
+"rprv_candid_20",
+"rprv_candid_21",
+"rprv_candid_22",
+"rprv_candid_23",
+"rprv_candid_24",
+"rprv_candid_25",
+"rprv_candid_26",
+"rprv_candid_27",
+"rprv_candid_28",
+"rprv_candid_29",
+"rprv_candid_3",
+"rprv_candid_30",
+"rprv_candid_4",
+"rprv_candid_5",
+"rprv_candid_6",
+"rprv_candid_7",
+"rprv_candid_8",
+"rprv_candid_9"
+};
+
+private static Logger log = Logger.getLogger(CatalogEntry.class);
+
+}

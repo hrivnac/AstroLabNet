@@ -1,0 +1,124 @@
+package com.astrolabsoftware.AstroLabNet.Topology;
+import com.astrolabsoftware.AstroLabNet.HBaser.TableEntry;
+import org.apache.log4j.Logger;
+
+// Generated class - do not edit
+
+public class TopologyEntry implements TableEntry {
+
+public TopologyEntry() {}
+
+public TopologyEntry(
+String xkey,
+String ccomment,
+String dhbase,
+String dlivy,
+String dspark,
+String ilocation,
+String iname
+)
+{
+_xkey = xkey;
+_ccomment = ccomment;
+_dhbase = dhbase;
+_dlivy = dlivy;
+_dspark = dspark;
+_ilocation = ilocation;
+_iname = iname;
+}
+
+public void setXkey(String xkey) {_xkey = xkey;}
+
+public String getXkey() {return _xkey;}
+
+private String _xkey = null;
+
+public void setCcomment(String ccomment) {_ccomment = ccomment;}
+
+public String getCcomment() {return _ccomment;}
+
+private String _ccomment = null;
+
+public void setDhbase(String dhbase) {_dhbase = dhbase;}
+
+public String getDhbase() {return _dhbase;}
+
+private String _dhbase = null;
+
+public void setDlivy(String dlivy) {_dlivy = dlivy;}
+
+public String getDlivy() {return _dlivy;}
+
+private String _dlivy = null;
+
+public void setDspark(String dspark) {_dspark = dspark;}
+
+public String getDspark() {return _dspark;}
+
+private String _dspark = null;
+
+public void setIlocation(String ilocation) {_ilocation = ilocation;}
+
+public String getIlocation() {return _ilocation;}
+
+private String _ilocation = null;
+
+public void setIname(String iname) {_iname = iname;}
+
+public String getIname() {return _iname;}
+
+private String _iname = null;
+
+@Override
+public void set(String name, String value) {
+switch (name) {
+case "x:key":
+setXkey(value);
+break;
+case "c:comment":
+setCcomment(value);
+break;
+case "d:hbase":
+setDhbase(value);
+break;
+case "d:livy":
+setDlivy(value);
+break;
+case "d:spark":
+setDspark(value);
+break;
+case "i:location":
+setIlocation(value);
+break;
+case "i:name":
+setIname(value);
+break;
+default:
+log.error("Cannot show " + name + " = " + value);
+}
+}
+
+@Override
+public void reset() {
+_xkey = null;
+_ccomment = null;
+_dhbase = null;
+_dlivy = null;
+_dspark = null;
+_ilocation = null;
+_iname = null;
+}
+
+public static String[] ENTRY_NAMES = new String[]{
+"xkey",
+"ccomment",
+"dhbase",
+"dlivy",
+"dspark",
+"ilocation",
+"iname"
+};
+
+private static Logger log = Logger.getLogger(TopologyEntry.class);
+
+}
