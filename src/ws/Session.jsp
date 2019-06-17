@@ -38,12 +38,12 @@
         // TBD
         break;
       }
+    Action action = wsc.addAction(name, script, language);
+    Server server = wsc.server(serverS);
     out.println("<u>Executing " + name + " on " + serverS + "  in " + language + "</u><br/>");
     out.println("<pre>" + script + "</pre>");
     out.println("<hr/>");
     out.flush();
-    Action action = wsc.addAction(name, script, language);
-    Server server = wsc.server(serverS);
     String resultString = server.livy().executeAction(action);
     String resultFormed = new JSONObject(resultString).toString(2);
     out.println("<pre>" + resultFormed + "</pre>");

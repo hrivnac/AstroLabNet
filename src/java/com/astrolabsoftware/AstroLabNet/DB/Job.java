@@ -1,5 +1,9 @@
 package com.astrolabsoftware.AstroLabNet.DB;
 
+// Java
+import java.io.File;
+import java.io.IOException;
+
 // Log4J
 import org.apache.log4j.Logger;
 
@@ -30,7 +34,13 @@ public class Job extends Element {
              String executorMemory,
              int    executorCores) {
     super(name);
-    _file           = file;
+    _file = file;
+    try {
+      _file = new File(_file).getCanonicalPath();
+      }
+    catch (IOException e) {
+      log.error("Cannot convert to cannonical path: " + _file);
+      }
     _className      = className;
     if (args != null) {
       _args           = args;
