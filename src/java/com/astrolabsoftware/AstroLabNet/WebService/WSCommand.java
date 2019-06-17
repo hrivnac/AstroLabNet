@@ -220,6 +220,13 @@ public class WSCommand extends DefaultInteracter {
                          "ActionJob",
                          " ",
                          "0");
+      jobNode.put("file",           job.file());
+      jobNode.put("className",      job.className());
+      jobNode.put("args",           job.args());
+      jobNode.put("driverMemory",   job.driverMemory());
+      jobNode.put("driverCores"   , String.valueOf(job.driverCores()));
+      jobNode.put("executorMemory", job.executorMemory());
+      jobNode.put("executorCores",  String.valueOf(job.executorCores()));
       _nodes.add(jobNode);
       _edges.add(new Edge(aj,
                           jobNode,

@@ -32,11 +32,21 @@ public class Job extends Element {
     super(name);
     _file           = file;
     _className      = className;
-    _args           = args;
-    _driverMemory   = driverMemory;
-    _driverCores    = driverCores;
-    _executorMemory = executorMemory;
-    _executorCores  = executorCores;
+    if (args != null) {
+      _args           = args;
+      }
+    if (driverMemory != null) {
+      _driverMemory   = driverMemory;
+      }
+    if (driverCores != 0) {
+      _driverCores    = driverCores;
+      }
+    if (executorMemory != null) {
+      _executorMemory = executorMemory;
+      }
+    if (executorCores != 0) {
+      _executorCores  = executorCores;
+      }
     }
 
   /** Give the Job jar or py filename.
@@ -101,15 +111,15 @@ public class Job extends Element {
   
   private String  _className;
   
-  private String  _args;
+  private String  _args = "";
   
-  private String  _driverMemory;
+  private String  _driverMemory = "1g";
   
-  private int     _driverCores;
+  private int     _driverCores = 3;
   
-  private String  _executorMemory;
+  private String  _executorMemory = "1g";
   
-  private int     _executorCores;
+  private int     _executorCores = 3;
    
   private boolean _new = false;
  
