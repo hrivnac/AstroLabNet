@@ -77,7 +77,7 @@
   <script type="text/javascript">
     var nodesS  = '<%=nodesS%>';
     var edgesS  = '<%=edgesS%>';
-    document.getElementById("feedback").innerHTML += "<br/>Loading servers";
+    document.getElementById("feedback").innerHTML += "<br/>Loading Servers";
     show(nodesS, edgesS);
     </script>
   </body>

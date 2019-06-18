@@ -324,11 +324,8 @@
   <target name="war"
           depends="jar"
           description="Create WAR">
- 		<copy file="../src/ws/index${site}.jsp" tofile="../build/index.jsp" overwrite="true"/>
- 		<copy todir="../build"
- 		      ovewrite="true">
-			<fileset dir="../src/ws" includes="CommandCenter.jsp"/>
-      </copy>
+ 		<copy file="../src/ws/index${site}.jsp"  tofile="../build/index.jsp"         overwrite="true"/>
+ 		<copy file="../src/ws/CommandCenter.jsp" tofile="../build/CommandCenter.jsp" overwrite="true"/>
     <replace file="../build/CommandCenter.jsp" token="@VERSION@" value="${version}"/>
     <replace file="../build/CommandCenter.jsp" token="@SITE@"    value="${site}"/>
     <replace file="../build/CommandCenter.jsp" token="@BUILD@"   value="${TSTAMP} by ${user.name}"/>

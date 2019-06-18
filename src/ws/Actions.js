@@ -26,7 +26,7 @@ function formNodeAction(node) {
       html += "        <input type='hidden' name='name'     id='actionName'>";
       html += "        <input type='hidden' name='language' value='" + opts[0] + "'>";
       html += "        <input type='hidden' name='server'   value='" + opts[3] + "'>";
-      html += "        <input type='submit'                 value='Execute'>";
+      html += "        <input type='submit'                 value='Execute' onclick='document.getElementById(\"feedback\").innerHTML += \"<br/>Sending Action to Session\"'>";
       html += "        </form>";
       html += "      </td>";
       html += "    </tr>";
@@ -52,7 +52,7 @@ function formNodeAction(node) {
       html += "        <tr><td>Executor Memory:</td><td><input type='text' name='executorMemory' value='' size='10' id='executorMemory'></td>";
       html += "            <td>Executor Cores:</td><td><input type='number' name='executorCores' value='3' size='2' id='executorCores'></td></tr>";
       html += "        </table>";
-      html += "        <input type='submit'                 value='Execute'>";
+      html += "        <input type='submit' value='Execute' onclick='document.getElementById(\"feedback\").innerHTML += \"<br/>Sending Job to Sender\"'>";
       html += "        </form>";            
       html += "      </td>";
       html += "    </tr>";
@@ -86,8 +86,8 @@ function formEdgeAction(node) {
 function executeNodeAction(node) {
   switch (node.id.split(":")[0]) {
     case "Action":
-      return "document.getElementById('script').innerHTML = atob('" + node.cmd + "');"
-           + "document.getElementById('actionName').value = '" + node.label + "';";
+      return "document.getElementById('script').innerHTML = atob('" + node.cmd   + "');"
+           + "document.getElementById('actionName').value = '"      + node.label + "';";
       break;
     case "Job":
       return "document.getElementById('jarName').value        = '" + node.file           + "';"
@@ -104,3 +104,4 @@ function executeNodeAction(node) {
       break;     
     }
   }
+  
