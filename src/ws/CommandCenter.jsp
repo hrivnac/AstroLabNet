@@ -29,7 +29,7 @@
           <table>
             <tr>
               <td><img src="images/AstroLab.png" width="100"/></td>
-              <td><h1>AstroLabNet</h1>
+              <td><h1>AstroLabNet for @SITE@</h1>
                   <h2>@VERSION@ [@BUILD@]</h2>
                   </td>
               <td><a href="https://hrivnac.web.cern.ch/hrivnac/Activities/Packages/AstroLabNet" target="RESULT">AstroLabNet Home</a><br/>

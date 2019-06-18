@@ -56,6 +56,9 @@ public class Init {
     else if (asCLI()) {
       PropertyConfigurator.configure(Init.class.getClassLoader().getResource(PROPERTIES_MINIMAL));
       }
+    else if (asWS()) {
+      PropertyConfigurator.configure(Init.class.getClassLoader().getResource(PROPERTIES_WS));
+      }
     else {
       PropertyConfigurator.configure(Init.class.getClassLoader().getResource(PROPERTIES));
       }
@@ -86,6 +89,7 @@ public class Init {
     options.addOption("h", "help",    false, "show help");
     options.addOption("b", "browser", false, "start graphical browser (default)");
     options.addOption("c", "cli",     false, "start command line");
+    options.addOption("w", "ws",      false, "start inside Web Service");
     options.addOption("q", "quiet",   false, "minimal direct feedback");
     options.addOption(OptionBuilder.withLongOpt("source")
                                    .withDescription("source bsh file (init.bsh is also read)")
@@ -104,10 +108,19 @@ public class Init {
         System.exit(0);
         }
       if (line.hasOption("cli")) {
-        _asCLI = true;
+        _asCLI     = true;
+        _asBrowser = false;
+        _asWS      = false;
         }
       if (line.hasOption("browser")) {
+        _asCLI     = false;
         _asBrowser = true;
+        _asWS      = false;
+        }
+      if (line.hasOption("ws")) {
+        _asCLI     = false;
+        _asBrowser = false;
+        _asWS      = true;
         }
       if (line.hasOption("quiet")) {
         _quiet = true;
@@ -123,9 +136,6 @@ public class Init {
       new HelpFormatter().printHelp("java -jar AstroLabNet.exe.jar", options);
       System.exit(-1);
       }
-    if ((!_asCLI & !_asBrowser) | (_asCLI & _asBrowser)) {
-      _asBrowser = true;
-      } 
     }
     
   /** Whether the application should start as a CLI.
@@ -139,6 +149,13 @@ public class Init {
   public static boolean asBrowser() {
     return _asBrowser;
     }
+    
+  /** Whether the application should start in a web browserservice.
+    * @return Whether the application should start in a web service. */
+  public static boolean asWS() {
+    return _asWS;
+    }
+    
   /** Whether comamnd feedback should be absolutely minimal.
     * @return Whether comamnd feedback should be absolutely minimal. */
   public static boolean quiet() {
@@ -159,7 +176,9 @@ public class Init {
     
   private static boolean _asCLI = false;  
     
-  private static boolean _asBrowser = false;  
+  private static boolean _asBrowser = false; 
+  
+  private static boolean _asWS = false;
   
   private static boolean _quiet = false;
   
@@ -175,6 +194,7 @@ public class Init {
   private static String PROPERTIES              = "com/astrolabsoftware/AstroLabNet/Utils/log4j.properties";
   private static String PROPERTIES_MINIMAL      = "com/astrolabsoftware/AstroLabNet/Utils/log4j-minimal.properties";
   private static String PROPERTIES_MINIMALISTIC = "com/astrolabsoftware/AstroLabNet/Utils/log4j-minimalistic.properties";
+  private static String PROPERTIES_WS           = "com/astrolabsoftware/AstroLabNet/Utils/log4j-ws.properties";
   
     
   /** Logging . */

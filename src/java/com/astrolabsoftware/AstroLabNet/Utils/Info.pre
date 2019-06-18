@@ -13,7 +13,7 @@ public class Info {
   /** Give builder release. 
     * @return The version and build time of the package. */
   public final static String release() {
-    return _version + " [" + _build + " by " + _builder + "]";
+    return _version + " [" + _build + " by " + _builder + "] for " + _site;
     }
 
   /** Give application name.
@@ -26,6 +26,18 @@ public class Info {
     * @return The application url. */
   public final static String url() {
     return _url;
+    }
+
+  /** Give application version.
+    * @return The application version. */
+  public final static String version() {
+    return _version;
+    }
+
+  /** Give application target site.
+    * @return The application target site. */
+  public final static String site() {
+    return _site;
     }
 
   /** Give catalog HBase table name.
@@ -49,6 +61,7 @@ public class Info {
   private static final String _name     = "AstroLabNet";
   private static final String _url      = "https://astrolabsoftware.github.io";
   private static final String _version  = "@version@";
+  private static final String _site     = "@site@";
   private static final String _build    = "@TSTAMP@";
   private static final String _builder  = "@user.name@";
   private static final String _catalog  = "@catalog@";

@@ -11,7 +11,7 @@
 <html>
   <head><title>AstroLabNet JSP</title></head>
   <%
-    Init.init(new String[]{"-p", "LAL"}, false); 
+    Init.init(new String[]{"-p", "LAL", "-w"}, false); 
     %>
   <frameset cols="40%,60%">
     <frame src="CommandCenter.jsp" name="COMMAND">

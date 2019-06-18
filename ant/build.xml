@@ -10,8 +10,9 @@
 
   <property environment="env"/>
   <property file="../ant/build-global.properties"/>
-  <property file="../ant/build.properties"/>
-  <property name="site" value="Local"/>
+  <property file="../ant/build-${site}.properties"/>
+  
+  <echo>Building for site ${site}</echo>
 
   <path id="classpath.build">
     <pathelement path="${jhtools.jar}"/>
@@ -69,8 +70,10 @@
           description="Create Info class">
     <mkdir dir="../build/com/astrolabsoftware/AstroLabNet/Utils"/>
     <copy file="../src/java/com/astrolabsoftware/AstroLabNet/Utils/Info.pre"
-          tofile="../build/com/astrolabsoftware/AstroLabNet/Utils/Info.java"/>
+          tofile="../build/com/astrolabsoftware/AstroLabNet/Utils/Info.java"
+          overwrite="true"/>
     <replace file="../build/com/astrolabsoftware/AstroLabNet/Utils/Info.java" token="@version@"   value="${version}"/>
+    <replace file="../build/com/astrolabsoftware/AstroLabNet/Utils/Info.java" token="@site@"      value="${site}"/>
     <replace file="../build/com/astrolabsoftware/AstroLabNet/Utils/Info.java" token="@TSTAMP@"    value="${TSTAMP}"/>
     <replace file="../build/com/astrolabsoftware/AstroLabNet/Utils/Info.java" token="@user.name@" value="${user.name}"/>
     <replace file="../build/com/astrolabsoftware/AstroLabNet/Utils/Info.java" token="@catalog@"   value="${catalog}"/>
@@ -322,10 +325,12 @@
           depends="jar"
           description="Create WAR">
  		<copy file="../src/ws/index${site}.jsp" tofile="../build/index.jsp" overwrite="true"/>
- 		<copy todir="../build">
+ 		<copy todir="../build"
+ 		      ovewrite="true">
 			<fileset dir="../src/ws" includes="CommandCenter.jsp"/>
       </copy>
     <replace file="../build/CommandCenter.jsp" token="@VERSION@" value="${version}"/>
+    <replace file="../build/CommandCenter.jsp" token="@SITE@"    value="${site}"/>
     <replace file="../build/CommandCenter.jsp" token="@BUILD@"   value="${TSTAMP} by ${user.name}"/>
     <war destfile="../lib/AstroLabNet.war" webxml="../src/ws/web.xml">
       <fileset dir="../src/ws">
