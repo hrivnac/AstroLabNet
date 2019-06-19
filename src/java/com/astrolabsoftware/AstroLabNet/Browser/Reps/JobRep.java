@@ -46,7 +46,8 @@ public class JobRep extends ElementRep {
       log.error("No Batch is selected");
       }
     else {
-       browser().setSenderFile(file(),
+       browser().setSenderFile(place(),
+                               file(),
                                className(),
                                args(),
                                driverMemory(),
@@ -56,8 +57,14 @@ public class JobRep extends ElementRep {
       }
     }
 
+  /** Give the Job jar or py place.
+    * @return the Job jar or py place */
+  public String place() {
+    return job().place();
+    }
+
   /** Give the Job jar or py filename.
-    * @return the Job jar or py filename.. */
+    * @return the Job jar or py filename. */
   public String file() {
     return job().file();
     }

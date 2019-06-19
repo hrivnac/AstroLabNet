@@ -109,11 +109,11 @@ public class SenderRep extends ElementRep {
     String spark = server().urlSpark();
     spark = spark.replaceAll("http://", "");
     spark = spark.substring(0, spark.lastIndexOf(":"));
-    ComboBox<String> place = new ComboBox<>();
-    place.getItems().add("local:");
-    place.getItems().add("hdfs://" + spark);
-    place.getItems().add("");
-    place.getSelectionModel().select(0);    
+    _place = new ComboBox<>();
+    _place.getItems().add("local:");
+    _place.getItems().add("hdfs://" + spark);
+    _place.getItems().add("");
+    _place.getSelectionModel().select(0);    
     // File
     _file = new TextField();
     _file.setPrefColumnCount(50);
@@ -121,7 +121,7 @@ public class SenderRep extends ElementRep {
     HBox jobBox1 = new HBox(10);
     jobBox1.setSpacing(5);
     jobBox1.setAlignment(Pos.CENTER);
-    jobBox1.getChildren().addAll(load, place, _file);
+    jobBox1.getChildren().addAll(load, _place, _file);
     // ClassNameLabel
     Label classNameLabel = new Label("ClassName:");
     // ClassName
@@ -229,7 +229,8 @@ public class SenderRep extends ElementRep {
     send.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent e) {
-        int id = serverRep().livy().sendJob(place.getValue() + _file.getText(),
+        int id = serverRep().livy().sendJob(_place.getValue(),
+                                            _file.getText(),
                                             _className.getText(),
                                             _args.getText(),
                                             _driverMemory.getText(),
@@ -251,6 +252,7 @@ public class SenderRep extends ElementRep {
         dialog.setContentText("Please enter the name:");
         Optional<String> answer = dialog.showAndWait();
         answer.ifPresent(name -> browser().command().addJob(name,
+                                                            _place.getValue(),
                                                             _file.getText(),
                                                             _className.getText(),
                                                             _args.getText(),
@@ -324,25 +326,27 @@ public class SenderRep extends ElementRep {
         attrName = (Attributes.Name)it.next();
         attrValue = attributes.getValue(attrName);
         log.info("  " + attrName + " : " + attrValue);
-        //if (attrName == Attributes.Name.MAIN_CLASS) {
+        //if (attrName == Attribhttps://stackoverflow.com/questions/7498016/reusing-code-in-overloaded-constructorsutes.Name.MAIN_CLASS) {
         if (attrName.toString().trim().equals("Main-Class")) {
           _className.setText(attrValue);
           }
         }
       }
     catch (IOException e) {
-      log.error("Cannot get " + file, e);
+      log.error("Cannot gethttps://stackoverflow.com/questions/7498016/reusing-code-in-overloaded-constructors " + file, e);
       }
     }
     
   /** TBD */
-  public void fill(String file,
+  public void fill(String place,
+                   String file,
                    String className,
                    String args,
                    String driverMemory,
                    int    driverCores,
                    String executorMemory,
                    int    executorCores) {
+    //_place.setValue(place);
     _file.setText(file);
     _className.setText(className);
     _args.setText(args);
@@ -368,6 +372,8 @@ public class SenderRep extends ElementRep {
   public String toString() {
     return sender().toString();
     }
+    
+  private ComboBox<String> _place;  
     
   private TextField        _file;  
     

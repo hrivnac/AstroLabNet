@@ -86,10 +86,18 @@ function formEdgeAction(node) {
 function executeNodeAction(node) {
   switch (node.id.split(":")[0]) {
     case "Action":
+      if (document.getElementById("session") == null) {
+        alert("No Session opened for Action");
+        return "";
+        }
       return "document.getElementById('script').innerHTML = atob('" + node.cmd   + "');"
            + "document.getElementById('actionName').value = '"      + node.label + "';";
       break;
     case "Job":
+      if (document.getElementById("sender") == null) {
+        alert("No Sender opened for Job");
+        return "";
+        }
       return "document.getElementById('jarName').value        = '" + node.file           + "';"
            + "document.getElementById('className').value      = '" + node.className      + "';"
            + "document.getElementById('args').value           = '" + node.args           + "';"

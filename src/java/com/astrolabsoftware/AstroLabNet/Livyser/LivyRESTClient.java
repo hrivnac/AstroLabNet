@@ -201,6 +201,7 @@ public class LivyRESTClient {
     * <pre>
     * POST /batches {"file":*file*, "className":*classname*}
     * </pre>
+    * @param file      The jar or py place.
     * @param file      The jar or py filename.
     * @param className The <em>main</em> className
     *                  or <tt>null</tt> for py file.
@@ -212,7 +213,8 @@ public class LivyRESTClient {
     * @param tries     How many times to try.
     * @param sleep     How many <tt>s</tt> wait between tries.
     * @return          The new statement id. */
-  public int sendJob(String file,
+  public int sendJob(String place,
+                     String file,
                      String className,
                      String args,
                      String driverMemory,
@@ -221,6 +223,7 @@ public class LivyRESTClient {
                      int    executorCores,
                      int    tries,
                      int    sleep) {
+    file = place + file;
     if (className == null) {
       log.info("Sending job from '" + file + "'");
       }
@@ -462,6 +465,7 @@ public class LivyRESTClient {
     }
     
   /** Send job, try until succeeds, wait for result.
+    * @param place          The jar place.
     * @param file           The jar filename.
     * @param className      The <em>main</em> className.
     * @param args           The Job args, if any. 
@@ -470,15 +474,17 @@ public class LivyRESTClient {
     * @param executorMemory The Job executor memory or <tt>null</tt>. 
     * @param executorCores  The Job executor cores or <tt>0</tt>. 
     * @return               The result as <em>Json</em> string. */
-  public String sendJob(String file,
+  public String sendJob(String place,
+                        String file,
                         String className,
                         String args,
                         String driverMemory,
                         int    driverCores,
                         String executorMemory,
                         int    executorCores) {
-    log.info("Sending '" + className + "' in " + file + " and waiting for result");
-    int batchId = sendJob(file,
+    log.info("Sending '" + className + "' in " + place + file + " and waiting for result");
+    int batchId = sendJob(place,
+                          file,
                           className,
                           args,
                           driverMemory,
