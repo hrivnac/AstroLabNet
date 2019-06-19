@@ -2,9 +2,18 @@
 
 function postProcNode(node) {
   switch (node.id.split(":")[0]) {
+    case "/":
+      node.shape = "image";
+      node.image = "images/AstroLab.png";
+      break;
     case "Server":
       node.shape = "image";
-      node.image = "images/Livy.png";
+      if (node.label == "LAL") {
+        node.image = "images/LAL.png";
+        }
+      else {
+        node.image = "images/Local.png";
+        }
       break;
     case "Action":
       node.shape = "image";

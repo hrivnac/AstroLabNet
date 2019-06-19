@@ -44,6 +44,15 @@ public class WSCommand extends DefaultInteracter {
     Node journalNode;
     Node actionNode;
     Node jobNode;
+    Node top = new Node("/:AstroLabNet",
+                      "AstroLabNet",
+                      "AstroLabNet",
+                      "AstroLabNet",
+                      "AstroLabNet",
+                      "",
+                      " ",
+                      "0");
+    _nodes.add(top);
     for (Server server : servers()) {
       node = new Node("Server:" + server.name(),
                       "Server",
@@ -54,6 +63,15 @@ public class WSCommand extends DefaultInteracter {
                       " ",
                       "0");
       _nodes.add(node);
+      _edges.add(new Edge(top, 
+                          node,
+                          " ",
+                          " ",
+                          " ",
+                          " ",
+                          "to",
+                          " ",
+                          "0"));
       pythonSessionNode = new Node("Session:Python Session on " + server.name(),
                                    "Session",
                                    "Python Session on " + server.name(),
@@ -190,6 +208,15 @@ public class WSCommand extends DefaultInteracter {
                        "hexagon",
                        "0");
     _nodes.add(aj);
+      _edges.add(new Edge(top, 
+                          aj,
+                          " ",
+                          " ",
+                          " ",
+                          " ",
+                          "to",
+                          " ",
+                          "0"));
     for (Action action : actions()) {
       actionNode = new Node("Action:" + action.name(),
                             "Action",

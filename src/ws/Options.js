@@ -20,6 +20,12 @@ var options = {
   layout: {
     improvedLayout:true
     },
+  //layout: {
+  //  hierarchical: {
+  //    direction:"LR",
+  //    sortMethod:"directed"
+  //    }
+  //  },
   nodes: {
     shape:"dot",
     scaling: {
