@@ -16,7 +16,6 @@
 <!--%@ page errorPage="ExceptionHandler.jsp" %-->
 
 <head>
-  <script type="text/javascript" src="Cookies.js"></script>
   </head>
   
 <body bgcolor="#ddddee">
@@ -25,7 +24,6 @@
     String script    = request.getParameter("script");
     String languageS = request.getParameter("language");
     String serverS   = request.getParameter("server");
-    name = name.split(" ")[0]; // TBD: check language
     script = script.replaceAll("\\n", "").replaceAll("\\r", "\n");
     Language language = null;
     switch (languageS) {

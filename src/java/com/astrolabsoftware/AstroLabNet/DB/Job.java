@@ -17,7 +17,6 @@ public class Job extends Element {
    
   /** Create new Job.
     * @param name           The Job name.
-    * @param file           The jar or py place.
     * @param file           The jar or py filename.
     * @param className      The <em>main</em> className for jar file,
     *                       <tt>null</tt> for py file.
@@ -27,7 +26,6 @@ public class Job extends Element {
     * @param executorMemory The Job executor memory or <tt>null</tt>. 
     * @param executorCores  The Job executor cores or <tt>0</tt>. */
   public Job(String name,
-             String place,
              String file,
              String className,
              String args,
@@ -36,7 +34,6 @@ public class Job extends Element {
              String executorMemory,
              int    executorCores) {
     super(name);
-    _place = place;
     _file = file;
     _className      = className;
     if (args != null) {
@@ -60,12 +57,6 @@ public class Job extends Element {
     * @return The Job or py jar filename. */
   public String file() {
     return _file;
-    }
-
-  /** Give the Job jar or py place.
-    * @return The Job or py jar place. */
-  public String place() {
-    return _place;
     }
     
   /** Give the Job <em>main</em> className or <tt>null</tt> for py file.
@@ -117,10 +108,8 @@ public class Job extends Element {
     
   @Override
   public String toString() {
-    return name() + " (" + _className + "  from " + _place + _file + ", using " + _args + ")";
+    return name() + " (" + _className + "  from " + _file + ", using " + _args + ")";
     }
-
-  private String  _place;  
     
   private String  _file;
   

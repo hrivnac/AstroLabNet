@@ -82,10 +82,10 @@ public abstract class DefaultInteracter implements Interacter {
     
   @Override
   public void readJobs() {
-    addJob("JavaPiJob",   "", "../lib/JavaPiJob.jar",  "com.astrolabsoftware.AstroLabNet.DB.Jobs.JavaPiJob", null, null, 0, null, 0); // TBD: should be automatic
-    addJob("ScalaPiJob",  "", "../lib/ScalaPiJob.jar", "com.astrolabsoftware.AstroLabNet.DB.Jobs.ScalaPiJob", null, null, 0, null, 0); // TBD: should be automatic
-    addJob("PythonPiJob", "", "../lib/PythonPiJob.py", null, null, null, 0, null, 0); // TBD: should be automatic
-    }
+    addJob("JavaPiJob",   "localhost:/.../JavaPiJob.jar",  "com.astrolabsoftware.AstroLabNet.DB.Jobs.JavaPiJob", null, null, 0, null, 0); // TBD: should be automatic
+    addJob("ScalaPiJob",  "localhost:/.../ScalaPiJob.jar", "com.astrolabsoftware.AstroLabNet.DB.Jobs.ScalaPiJob", null, null, 0, null, 0); // TBD: should be automatic
+    addJob("PythonPiJob", "localhost:/.../PythonPiJob.py", null, null, null, 0, null, 0); // TBD: should be automatic
+    }                     
      
   @Override
   public void setupInterpreter(Interpreter interpreter) {
@@ -301,7 +301,6 @@ public abstract class DefaultInteracter implements Interacter {
           
   @Override
   public Job addJob(String name,
-                    String place,
                     String file,
                     String className,
                     String args,
@@ -309,9 +308,7 @@ public abstract class DefaultInteracter implements Interacter {
                     int    driverCores,
                     String executorMemory,
                     int    executorCores) {
-    file = FileSystems.getDefault().getPath(file).normalize().toAbsolutePath().toString();
     Job job = new Job(name,
-                      place,
                       file,
                       className,
                       args,

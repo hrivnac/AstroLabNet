@@ -105,23 +105,14 @@ public class SenderRep extends ElementRep {
     Label desc = new HeaderLabel(toString(), "Send Job to Spark");
     // Load
     Button load = new SimpleButton("JAR/PY file", Images.JAR, "Load JAR or PY file");
-    // Place
-    String spark = server().urlSpark();
-    spark = spark.replaceAll("http://", "");
-    spark = spark.substring(0, spark.lastIndexOf(":"));
-    _place = new ComboBox<>();
-    _place.getItems().add("local:");
-    _place.getItems().add("hdfs://" + spark);
-    _place.getItems().add("");
-    _place.getSelectionModel().select(0);    
     // File
     _file = new TextField();
     _file.setPrefColumnCount(50);
-    // JobBox1 = Load + Place + File
+    // JobBox1 = Load + File
     HBox jobBox1 = new HBox(10);
     jobBox1.setSpacing(5);
     jobBox1.setAlignment(Pos.CENTER);
-    jobBox1.getChildren().addAll(load, _place, _file);
+    jobBox1.getChildren().addAll(load, _file);
     // ClassNameLabel
     Label classNameLabel = new Label("ClassName:");
     // ClassName
@@ -229,8 +220,7 @@ public class SenderRep extends ElementRep {
     send.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent e) {
-        int id = serverRep().livy().sendJob(_place.getValue(),
-                                            _file.getText(),
+        int id = serverRep().livy().sendJob(_file.getText(),
                                             _className.getText(),
                                             _args.getText(),
                                             _driverMemory.getText(),
@@ -252,7 +242,6 @@ public class SenderRep extends ElementRep {
         dialog.setContentText("Please enter the name:");
         Optional<String> answer = dialog.showAndWait();
         answer.ifPresent(name -> browser().command().addJob(name,
-                                                            _place.getValue(),
                                                             _file.getText(),
                                                             _className.getText(),
                                                             _args.getText(),
@@ -338,15 +327,13 @@ public class SenderRep extends ElementRep {
     }
     
   /** TBD */
-  public void fill(String place,
-                   String file,
+  public void fill(String file,
                    String className,
                    String args,
                    String driverMemory,
                    int    driverCores,
                    String executorMemory,
                    int    executorCores) {
-    //_place.setValue(place);
     _file.setText(file);
     _className.setText(className);
     _args.setText(args);
@@ -372,8 +359,6 @@ public class SenderRep extends ElementRep {
   public String toString() {
     return sender().toString();
     }
-    
-  private ComboBox<String> _place;  
     
   private TextField        _file;  
     

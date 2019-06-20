@@ -248,7 +248,6 @@ public class WSCommand extends DefaultInteracter {
                          "ActionJob",
                          " ",
                          "0");
-      jobNode.put("place",          job.place());
       jobNode.put("file",           job.file());
       jobNode.put("className",      job.className());
       jobNode.put("args",           job.args());

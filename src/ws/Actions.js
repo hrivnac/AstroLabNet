@@ -74,7 +74,8 @@ function formNodeAction(node) {
     case "Job":
       break;
     case "Session":
-      var server = node.id.split(":")[1];
+      var server   = node.id.split(":")[1].split(" ")[3];
+      var language = node.id.split(":")[1].split(" ")[0];
       html += "<form action='Session.jsp' id='session' target='RESULT' method='POST'>";
       html += "  <table>";
       html += "    <tr>";
@@ -83,11 +84,11 @@ function formNodeAction(node) {
       html += "          </textarea>";
       html += "        </td>";
       html += "      <td valign='top'>";
-      html += "          <input type='hidden' name='server'   id='actionServer'   value='" + server + "'>";
-      html += "          <input type='hidden' name='language' id='actionLanguage' value=''>";
-      html += "          <input type='text'   name='name' id='actionName'><br/>";
-      html += "          <input type='submit' value='Execute' onclick='document.getElementById(\"feedback\").innerHTML += \"<br/>Sending Action to Session\"'><br/>";
-      html += "          <input type='button' value='Record'  onclick='setActionCookies()'>";
+      html += "        <input type='hidden' name='server'   id='actionServer'   value='" + server + "'>";
+      html += "        <input type='hidden' name='language' id='actionLanguage' value='" + language + "'>";
+      html += "        <input type='text'   name='name'     id='actionName'><br/>";
+      html += "        <input type='submit' value='Execute' onclick='document.getElementById(\"feedback\").innerHTML += \"<br/>Sending Action to Session\"'><br/>";
+      html += "        <input type='button' value='Record'  onclick='setActionCookies()'>";
       html += "        </td>";
       html += "      </tr>";
       html += "    </table>";
@@ -99,19 +100,16 @@ function formNodeAction(node) {
       html += "  <table>";
       html += "    <tr>";
       html += "      <td>";
-      html += "          <input type='hidden' name='server'   id='jobServer' value='" + server + "'>";
-      html += "          <input type='radio'  name='place'    value='local:' checked>local:";
-      html += "          <input type='radio'  name='place'    value='hdfs://SERVER'>htfs://SERVER";
-      html += "          <input type='radio'  name='place'    value=''>";
-      html += "          <input type='text'   name='jarName'  value='' size='40' id='jarName'><r/>";
-      html += "          <table>";
-      html += "          <tr><td>className:</td><td><input type='text' name='className' value='' size='40' id='className'></td></tr>";
-      html += "          <tr><td>args:</td><td><input type='text' name='args' value='' size='40' id='args'></td></tr>";
-      html += "          <tr><td>Driver Memory:</td><td><input type='text' name='driverMemory' value='' size='10' id='driverMemory'></td>";
-      html += "              <td>Driver Cores:</td><td><input type='number' name='driverCores' value='3' size='2' id='driverCores'></td></tr>";
-      html += "          <tr><td>Executor Memory:</td><td><input type='text' name='executorMemory' value='' size='10' id='executorMemory'></td>";
-      html += "              <td>Executor Cores:</td><td><input type='number' name='executorCores' value='3' size='2' id='executorCores'></td></tr>";
-      html += "          </table>";
+      html += "        <input type='hidden' name='server'   id='jobServer' value='" + server + "'>";
+      html += "        <table>";
+      html += "        <tr><td>JAR/PY file:</td><td><input type='text' name='jarName'  value='' size='60' id='jarName'></td><tr/>";
+      html += "        <tr><td>className:</td><td><input type='text' name='className' value='' size='60' id='className'></td></tr>";
+      html += "        <tr><td>args:</td><td><input type='text' name='args' value='' size='60' id='args'></td></tr>";
+      html += "        <tr><td>Driver Memory:</td><td><input type='text' name='driverMemory' value='' size='5' id='driverMemory'></td>";
+      html += "            <td>Driver Cores:</td><td><input type='number' name='driverCores' value='3' size='2' id='driverCores'></td></tr>";
+      html += "        <tr><td>Executor Memory:</td><td><input type='text' name='executorMemory' value='' size='5' id='executorMemory'></td>";
+      html += "            <td>Executor Cores:</td><td><input type='number' name='executorCores' value='3' size='2' id='executorCores'></td></tr>";
+      html += "        </table>";
       html += "        </td>";
       html += "      <td valign='top'>";
       html += "        <input type='text' name='name' id='jobName'><br/>";

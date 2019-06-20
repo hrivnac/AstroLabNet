@@ -31,8 +31,7 @@ public class LivyClient extends LivyRESTClient {
     * @param job The {@link Job} to be send.
     * @return    The result as <em>Json</em> string. */
   public String sendJob(Job job) {
-    return sendJob(job.place(),
-                   job.file(),
+    return sendJob(job.file(),
                    job.className(),
                    job.args(),
                    job.driverMemory(),

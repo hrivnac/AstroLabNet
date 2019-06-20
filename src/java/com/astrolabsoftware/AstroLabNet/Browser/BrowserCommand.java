@@ -102,7 +102,6 @@ public class BrowserCommand extends CommandLine {
     
   @Override
   public Job addJob(String name,
-                    String place,
                     String file,
                     String className,
                     String args,
@@ -111,7 +110,6 @@ public class BrowserCommand extends CommandLine {
                     String executorMemory,
                     int    executorCores) {
     Job job = super.addJob(name,
-                           place,
                            file,
                            className,
                            args,

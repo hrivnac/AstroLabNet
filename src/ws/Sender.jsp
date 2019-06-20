@@ -20,9 +20,7 @@
   
 <body bgcolor="#ddddee">
   <%  
-    String submit         = request.getParameter("submit");
     String name           = request.getParameter("name");
-    String place          = request.getParameter("place");
     String jarName        = request.getParameter("jarName");
     String className      = request.getParameter("className");
     String args           = request.getParameter("args");
@@ -31,11 +29,8 @@
     String executorMemory = request.getParameter("executorMemory");
     String executorCores  = request.getParameter("executorCores");
     String serverS        = request.getParameter("server");
-    name = name.split(" ")[0];
     Server server = wsc.server(serverS);
-    jarName = jarName.replaceAll("SERVER", server.urlSpark());
     out.println("<u>Sending "              + name + " on " + serverS + "</u><br/>");
-    out.println("JAR/PY place: "           + place                            + "<br/>");
     out.println("JAR/PY file: "            + jarName                          + "<br/>");
     out.println("class name: "             + className                        + "<br/>");
     out.println("args: "                   + args                             + "<br/>");
@@ -43,8 +38,7 @@
     out.println("executor cores/memory: "  + driverCores + "/" + driverMemory + "<br/>");
     out.println("<hr/>");
     out.flush();
-    int id = server.livy().sendJob(place,
-                                   jarName,
+    int id = server.livy().sendJob(jarName,
                                    className,
                                    args,
                                    driverMemory,

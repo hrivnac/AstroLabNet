@@ -81,7 +81,6 @@ public interface Interacter {
   
   /** Add {@link Job}.
     * @param name           The {@link Job} name
-    * @param place          The jar or py file place.
     * @param file           The jar or py filename.
     * @param className      The <em>main</em> className or <tt>null</tt> for py file.
     * @param args           The Job args, if any. 
@@ -91,7 +90,6 @@ public interface Interacter {
     * @param executorCores  The Job executor cores or <tt>0</tt>. 
     * @return               The added {@link Job}. */
   public Job addJob(String name,
-                    String place,
                     String file,
                     String className,
                     String args,

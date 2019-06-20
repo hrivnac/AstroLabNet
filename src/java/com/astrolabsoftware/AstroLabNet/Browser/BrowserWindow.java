@@ -301,8 +301,7 @@ public class BrowserWindow extends Application {
     * @param file      The jar file name to fill in the {@link BatchRep} command.
     * @param className The main className to fill in the {@link BatchRep} command. 
     * TDB */
-  public void setSenderFile(String place,
-                            String file,
+  public void setSenderFile(String file,
                             String className,
                             String args,
                             String driverMemory,
@@ -312,8 +311,7 @@ public class BrowserWindow extends Application {
     boolean done = false;
     for (Map.Entry<SenderRep, Tab> entry : _senderTabs.entrySet()) {
       if (entry.getValue().isSelected()) {
-        entry.getKey().fill(place,
-                            file,
+        entry.getKey().fill(file,
                             className,
                             args,
                             driverMemory,
