@@ -31,14 +31,20 @@ function setActionCookies() {
               "type":"Action",
               "label":name,
               "title":"Action:<br/>" + name + "<br/>" + name,
-              "group":"ActionJob",
-              "shape":" ",
               "value":0,
               "cmd":document.getElementById("script").value};              
   setCookie("Action." + name + "=" + escape(JSON.stringify(node)),  365);
   document.getElementById("feedback").innerHTML = "Recording Action " + name;
   }
   
+// Remove Action Cookie
+function rmActionCookies() {
+  var name = document.getElementById("actionName").value;
+  document.cookie = "Action." + name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+  removeNode("Action:" + name);
+  document.getElementById("feedback").innerHTML = "Removing Action " + name;
+  }
+
 // Set Job Cookie
 function setJobCookies() {
   var name = document.getElementById("jobName").value;
@@ -46,8 +52,6 @@ function setJobCookies() {
               "type":"Job",
               "label":name,
               "title":"Job:<br/>" + name + "<br/>" + name,
-              "group":"ActionJob",
-              "shape":" ",
               "value":0,              
               "file":document.getElementById("jarName").value,
               "className":document.getElementById("className").value,
@@ -59,7 +63,15 @@ function setJobCookies() {
   setCookie("Job." + name + "=" + escape(JSON.stringify(node)),  365);
   document.getElementById("feedback").innerHTML = "Recording Job " + name;
   }
-  
+ 
+// Remove Job Cookie
+function rmJobCookies() {
+  var name = document.getElementById("jobName").value;
+  document.cookie = "Job." + name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+  removeNode("Job:" + name);
+  document.getElementById("feedback").innerHTML = "Removing Job " + name;
+  }
+ 
 function formNodeAction(node) {
   var html = "";
   switch (node.id.split(":")[0]) {
@@ -68,6 +80,11 @@ function formNodeAction(node) {
       html += "<a href='" + urls[0] + "' target='RESULT'>Livy</a>&nbsp;";
       html += "<a href='" + urls[1] + "' target='RESULT'>Spark</a>&nbsp;";
       html += "<a href='" + urls[2] + "/status/cluster' target='RESULT'>HBase</a>&nbsp;";
+      break;
+    case "Group":
+      if (node.id.split(":")[1] == "Actions and Jobs") {
+        html += "<input type='button' value='Reload' onclick='loadCookies(); show(null, null)'>";
+        }
       break;
     case "Action":
       break;
@@ -88,7 +105,8 @@ function formNodeAction(node) {
       html += "        <input type='hidden' name='language' id='actionLanguage' value='" + language + "'>";
       html += "        <input type='text'   name='name'     id='actionName'><br/>";
       html += "        <input type='submit' value='Execute' onclick='document.getElementById(\"feedback\").innerHTML = \"Sending Action to Session\"'><br/>";
-      html += "        <input type='button' value='Record'  onclick='setActionCookies()'>";
+      html += "        <input type='button' value='Record'  onclick='setActionCookies()'><br/>";
+      html += "        <input type='button' value='Remove'  onclick='rmActionCookies()'>";
       html += "        </td>";
       html += "      </tr>";
       html += "    </table>";
@@ -114,7 +132,8 @@ function formNodeAction(node) {
       html += "      <td valign='top'>";
       html += "        <input type='text' name='name' id='jobName'><br/>";
       html += "        <input type='submit' value='Execute' onclick='document.getElementById(\"feedback\").innerHTML = \"Sending Job to Sender\"'><br/>";
-      html += "        <input type='button' value='Record'  onclick='setJobCookies()'>";
+      html += "        <input type='button' value='Record'  onclick='setJobCookies()'><br/>";
+      html += "        <input type='button' value='Remove'  onclick='rmJobCookies()'>";
       html += "        </td>";
       html += "      </tr>";
       html += "    </table>";

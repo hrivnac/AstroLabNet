@@ -19,10 +19,14 @@ function postProcNode(node) {
     case "Action":
       node.shape = "image";
       node.image = "images/Action.png";
+      node.group = "ActionJob";
+      node.color = " ";
       break;
     case "Job":
       node.shape = "image";
       node.image = "images/Job.png";
+      node.group = "ActionJob";
+      node.color = " ";
       break;
     case "Session":
       node.shape = "image";
