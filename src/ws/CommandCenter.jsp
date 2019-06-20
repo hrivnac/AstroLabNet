@@ -79,5 +79,9 @@
     var edgesS  = '<%=edgesS%>';
     document.getElementById("feedback").innerHTML += "<br/>Loading Servers";
     show(nodesS, edgesS);
+    document.getElementById("feedback").innerHTML += "<br/>Reading recorded Actions and Jobs";
+    loadCookies();
+    show(null, null);
+    clusterByGroups();
     </script>
   </body>

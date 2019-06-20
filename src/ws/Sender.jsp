@@ -20,6 +20,7 @@
   
 <body bgcolor="#ddddee">
   <%  
+    String submit         = request.getParameter("submit");
     String name           = request.getParameter("name");
     String place          = request.getParameter("place");
     String jarName        = request.getParameter("jarName");

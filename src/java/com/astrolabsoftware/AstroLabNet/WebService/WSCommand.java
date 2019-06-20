@@ -208,25 +208,26 @@ public class WSCommand extends DefaultInteracter {
                        "hexagon",
                        "0");
     _nodes.add(aj);
-      _edges.add(new Edge(top, 
-                          aj,
-                          " ",
-                          " ",
-                          " ",
-                          " ",
-                          "to",
-                          " ",
-                          "0"));
+    _edges.add(new Edge(top, 
+                        aj,
+                        " ",
+                        " ",
+                        " ",
+                        " ",
+                        "to",
+                        " ",
+                        "0"));
     for (Action action : actions()) {
       actionNode = new Node("Action:" + action.name(),
                             "Action",
-                            action.name() + " in " + action.language().toString(),
+                            action.name(),
                             action.name(),
                             action.toString(),
                             "ActionJob",
                             " ",
                             "0");
-      actionNode.put("cmd", Coding.encode(action.cmd()));
+      actionNode.put("cmd",      Coding.encode(action.cmd()));
+      actionNode.put("language", action.language().toString());
       _nodes.add(actionNode);
       _edges.add(new Edge(aj,
                           actionNode,

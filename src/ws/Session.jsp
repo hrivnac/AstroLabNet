@@ -16,6 +16,7 @@
 <!--%@ page errorPage="ExceptionHandler.jsp" %-->
 
 <head>
+  <script type="text/javascript" src="Cookies.js"></script>
   </head>
   
 <body bgcolor="#ddddee">
