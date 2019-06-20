@@ -36,7 +36,7 @@ function setActionCookies() {
               "value":0,
               "cmd":document.getElementById("script").value};              
   setCookie("Action." + name + "=" + escape(JSON.stringify(node)),  365);
-  document.getElementById("feedback").innerHTML += "<br/>Recording Action " + name;
+  document.getElementById("feedback").innerHTML = "Recording Action " + name;
   }
   
 // Set Job Cookie
@@ -57,7 +57,7 @@ function setJobCookies() {
               "executorMemory":document.getElementById("executorMemory").value,
               "executorCores":document.getElementById("executorCores").value};
   setCookie("Job." + name + "=" + escape(JSON.stringify(node)),  365);
-  document.getElementById("feedback").innerHTML += "<br/>Recording Job " + name;
+  document.getElementById("feedback").innerHTML = "Recording Job " + name;
   }
   
 function formNodeAction(node) {
@@ -87,7 +87,7 @@ function formNodeAction(node) {
       html += "        <input type='hidden' name='server'   id='actionServer'   value='" + server + "'>";
       html += "        <input type='hidden' name='language' id='actionLanguage' value='" + language + "'>";
       html += "        <input type='text'   name='name'     id='actionName'><br/>";
-      html += "        <input type='submit' value='Execute' onclick='document.getElementById(\"feedback\").innerHTML += \"<br/>Sending Action to Session\"'><br/>";
+      html += "        <input type='submit' value='Execute' onclick='document.getElementById(\"feedback\").innerHTML = \"Sending Action to Session\"'><br/>";
       html += "        <input type='button' value='Record'  onclick='setActionCookies()'>";
       html += "        </td>";
       html += "      </tr>";
@@ -113,7 +113,7 @@ function formNodeAction(node) {
       html += "        </td>";
       html += "      <td valign='top'>";
       html += "        <input type='text' name='name' id='jobName'><br/>";
-      html += "        <input type='submit' value='Execute' onclick='document.getElementById(\"feedback\").innerHTML += \"<br/>Sending Job to Sender\"'><br/>";
+      html += "        <input type='submit' value='Execute' onclick='document.getElementById(\"feedback\").innerHTML = \"Sending Job to Sender\"'><br/>";
       html += "        <input type='button' value='Record'  onclick='setJobCookies()'>";
       html += "        </td>";
       html += "      </tr>";

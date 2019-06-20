@@ -77,7 +77,7 @@
   <script type="text/javascript">
     var nodesS  = '<%=nodesS%>';
     var edgesS  = '<%=edgesS%>';
-    document.getElementById("feedback").innerHTML += "<br/>Loading Servers";
+    document.getElementById("feedback").innerHTML = "Loading Servers";
     show(nodesS, edgesS);
     document.getElementById("feedback").innerHTML += "<br/>Reading recorded Actions and Jobs";
     loadCookies();

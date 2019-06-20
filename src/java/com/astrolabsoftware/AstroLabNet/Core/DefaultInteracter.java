@@ -82,9 +82,9 @@ public abstract class DefaultInteracter implements Interacter {
     
   @Override
   public void readJobs() {
-    addJob("JavaPiJob",   "localhost:/.../JavaPiJob.jar",  "com.astrolabsoftware.AstroLabNet.DB.Jobs.JavaPiJob", null, null, 0, null, 0); // TBD: should be automatic
-    addJob("ScalaPiJob",  "localhost:/.../ScalaPiJob.jar", "com.astrolabsoftware.AstroLabNet.DB.Jobs.ScalaPiJob", null, null, 0, null, 0); // TBD: should be automatic
-    addJob("PythonPiJob", "localhost:/.../PythonPiJob.py", null, null, null, 0, null, 0); // TBD: should be automatic
+    addJob("JavaPiJob",   "local:/.../JavaPiJob.jar",  "com.astrolabsoftware.AstroLabNet.DB.Jobs.JavaPiJob", null, null, 0, null, 0); // TBD: should be automatic
+    addJob("ScalaPiJob",  "local:/.../ScalaPiJob.jar", "com.astrolabsoftware.AstroLabNet.DB.Jobs.ScalaPiJob", null, null, 0, null, 0); // TBD: should be automatic
+    addJob("PythonPiJob", "local:/.../PythonPiJob.py", null, null, null, 0, null, 0); // TBD: should be automatic
     }                     
      
   @Override
