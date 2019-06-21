@@ -22,6 +22,37 @@ public class Record {
   public Record(Server server) {
     _hbase = server.hbase();
     }
+    
+  /** Record entry.
+    * Runs assynchronisely.
+    * @param key     The record key, shoul be unique.
+    * @param actor   The actor be recorded.
+    * @param action  The action to be recorded.
+    * @param rc      The result code. 0 means success.
+    * @param time    The time spend by command execution, in s.
+    * @param before  The id of preceding action. May be <tt>null</tt>.
+    * @param after   The id of following action. May be <tt>null</tt>.
+    * @param result  The command result to be recorded. May be <tt>null</tt>.      
+    * @param comment The comment to be recorded. May be <tt>null</tt>. */
+  public void record(String key,
+                     String actor,
+                     String action,
+                     int    rc,
+                     long   time,
+                     String before,
+                     String after,
+                     String result,
+                     String comment) {
+    record(key,
+           actor,
+           action,
+           new Integer(rc).toString(),
+           new Long(time).toString(),
+           before,
+           after,
+           result,
+           comment);
+    }
   
   /** Record entry.
     * Runs assynchronisely.

@@ -64,6 +64,7 @@ public class TaskRep extends ElementRep {
       // then leave the thread and report results
       @Override
       public void run() {
+        long time = System.currentTimeMillis();
         String resultString;
         JSONObject result;
         double progress;
@@ -100,7 +101,8 @@ public class TaskRep extends ElementRep {
           }
         JSONObject d = data;
         log.info(status + " : " + d);
-        new Record(session().server()).record(IDFactory.newID(), "Action", "execute", "0", "0", null, null, output.toString(2), "testing"); // TBD: fill all fields
+        time = (System.currentTimeMillis() - time) / 1000;
+        new Record(session().server()).record(IDFactory.newID(), "Action", "execute", 0, time, null, null, output.toString(2), "testing"); // TBD: fill all fields
         // to synchronise threads
         Platform.runLater(new Runnable() {
           @Override

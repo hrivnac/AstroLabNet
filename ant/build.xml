@@ -165,26 +165,26 @@
   <target name="tables-backup"
           description="Backup generated Table Entries and Avro alerts">
     <copy file="../build/com/astrolabsoftware/AstroLabNet/Catalog/CatalogEntry.java"
-          tofile="../src/com/astrolabsoftware/AstroLabNet/Catalog/CatalogEntry.pre"/>          
+          tofile="../src/java/com/astrolabsoftware/AstroLabNet/Catalog/CatalogEntry.pre"/>          
     <copy file="../build/com/astrolabsoftware/AstroLabNet/Journal/JournalEntry.java"
-          tofile="../src/com/astrolabsoftware/AstroLabNet/Journal/JournalEntry.pre"/>          
+          tofile="../src/java/com/astrolabsoftware/AstroLabNet/Journal/JournalEntry.pre"/>          
     <copy file="../build/com/astrolabsoftware/AstroLabNet/Topology/TopologyEntry.java"
-          tofile="../src/com/astrolabsoftware/AstroLabNet/Topology/TopologyEntry.pre"/>          
+          tofile="../src/java/com/astrolabsoftware/AstroLabNet/Topology/TopologyEntry.pre"/>          
     <copy file="../build/ztf/alert/candidate.java"
-          tofile="../src/ztf/alert/candidate.pre"/>          
+          tofile="../src/java/ztf/alert/candidate.pre"/>          
     </target>
 
   <!-- Tables Restore =======================================================-->
   
   <target name="tables-restore"
           description="Restore backuped Table Entries and Avro alerts">
-    <copy file="../src/com/astrolabsoftware/AstroLabNet/Catalog/CatalogEntry.pre"
+    <copy file="../src/java/com/astrolabsoftware/AstroLabNet/Catalog/CatalogEntry.pre"
           tofile="../build/com/astrolabsoftware/AstroLabNet/Catalog/CatalogEntry.java"/>          
-    <copy file="../src/com/astrolabsoftware/AstroLabNet/Journal/JournalEntry.pre"
+    <copy file="../src/java/com/astrolabsoftware/AstroLabNet/Journal/JournalEntry.pre"
           tofile="../build/com/astrolabsoftware/AstroLabNet/Journal/JournalEntry.java"/>          
-    <copy file="../src/com/astrolabsoftware/AstroLabNet/Topology/TopologyEntry.pre"
+    <copy file="../src/java/com/astrolabsoftware/AstroLabNet/Topology/TopologyEntry.pre"
           tofile="../build/com/astrolabsoftware/AstroLabNet/Topology/TopologyEntry.java"/>          
-    <copy file="../src/ztf/alert/candidate.pre"
+    <copy file="../src/java/ztf/alert/candidate.pre"
           tofile="../build/ztf/alert/candidate.java"/>          
     </target>
 

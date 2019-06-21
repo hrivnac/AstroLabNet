@@ -40,6 +40,14 @@ function postProcNode(node) {
       node.shape = "image";
       node.image = "images/Source.png";
       break;
+    case "Task":
+      node.shape = "image";
+      node.image = "images/Task.png";
+      break;
+    case "Batch":
+      node.shape = "image";
+      node.image = "images/Batch.png";
+      break;
     case "Topology":
       node.shape = "image";
       node.image = "images/Topology.png";

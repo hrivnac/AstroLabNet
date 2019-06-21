@@ -64,6 +64,7 @@ public class BatchRep extends ElementRep {
       // then leave the thread and report results
       @Override
       public void run() {
+        long time = System.currentTimeMillis();
         String resultString;
         JSONObject result;
         String statex;
@@ -114,7 +115,8 @@ public class BatchRep extends ElementRep {
           fullLog += logEntry.toString() + "\n";
           }
         log.debug(fullLog);
-        new Record(sender().server()).record(IDFactory.newID(),"Job", "send", "0", "0", null, null, fullLog, "testing"); // TBD: fill all fields
+        time = (System.currentTimeMillis() - time) / 1000;
+        new Record(sender().server()).record(IDFactory.newID(), "Job", "send", 0, time, null, null, fullLog, "testing"); // TBD: fill all fields
         final String fullLog1 = fullLog; // so it can go to inner fcion
         // to synchronise threads
         Platform.runLater(new Runnable() {

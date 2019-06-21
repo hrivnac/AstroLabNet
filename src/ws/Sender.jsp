@@ -7,8 +7,11 @@
 
 <%@ page import="com.astrolabsoftware.AstroLabNet.Utils.Init" %>
 <%@ page import="com.astrolabsoftware.AstroLabNet.Utils.Info" %>
+<%@ page import="com.astrolabsoftware.AstroLabNet.Journal.Record" %>
 <%@ page import="com.astrolabsoftware.AstroLabNet.DB.Job" %>
 <%@ page import="com.astrolabsoftware.AstroLabNet.DB.Server" %>
+
+<%@ page import="com.JHTools.Utils.IDFactory" %>
 
 <%@ page import="org.json.JSONObject" %>
 <%@ page import="org.json.JSONArray" %>
@@ -38,6 +41,7 @@
     out.println("executor cores/memory: "  + driverCores + "/" + driverMemory + "<br/>");
     out.println("<hr/>");
     out.flush();
+    long time = System.currentTimeMillis();
     int id = server.livy().sendJob(jarName,
                                    className,
                                    args,
@@ -74,6 +78,8 @@
     for (Object logEntry : logArray) {
       fullLog += logEntry.toString() + "\n";
       }
+    time = (System.currentTimeMillis() - time) / 1000;
+    new Record(server).record(IDFactory.newID(), "Job", "send", 0, time, null, null, fullLog, "testing"); // TBD: fill all fields
     out.println("<pre>" + fullLog + "</pre>");
     %>
   <script type="text/javascript">

@@ -35,11 +35,11 @@ table.sortable tr.sortbottom td {
 }
 
 table.sortable tbody tr:nth-child(2n) td {
-  background: #ccffcc;
+  background: #ccddff;
 }
 
 table.sortable tbody tr:nth-child(2n+1) td {
-  background: #ffcccc;
+  background: #cceeff;
 }
 
 table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after { 

@@ -21,7 +21,6 @@ import com.JHTools.HBaser.HBaseClient;
 // JavaFX
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.MenuItem;
-import javafx.util.Pair;
 
 // Java
 import java.util.List;
@@ -99,7 +98,7 @@ public class ServerRep extends ElementRep {
     item().getChildren().clear();
     int idSession;
     SessionRep sessionRep;
-    for (Pair<Integer, Language> p : livy().getSessions()) {
+    for (Map.Entry<Integer, Language> p : livy().getSessions()) {
       idSession = p.getKey();
       sessionRep = SessionRep.create(new Session("Session",  idSession, p.getValue(), server()), browser());
       item().getChildren().add(new TreeItem<ElementRep>(sessionRep));

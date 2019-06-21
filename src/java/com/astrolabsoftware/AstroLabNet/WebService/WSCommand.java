@@ -4,6 +4,7 @@ import com.astrolabsoftware.AstroLabNet.Core.DefaultInteracter;
 import com.astrolabsoftware.AstroLabNet.DB.Server;
 import com.astrolabsoftware.AstroLabNet.DB.Action;
 import com.astrolabsoftware.AstroLabNet.DB.Job;
+import com.astrolabsoftware.AstroLabNet.Livyser.Language;
 
 // JHTools
 import com.JHTools.Utils.Coding;
@@ -14,6 +15,9 @@ import com.JHTools.Graph.Edges;
 
 // Bean Shell
 import bsh.Interpreter;
+
+// Java
+import java.util.Map;
 
 // Log4J
 import org.apache.log4j.Logger;
@@ -39,11 +43,6 @@ public class WSCommand extends DefaultInteracter {
     Node scalaSessionNode;
     Node senderNode;
     Node sourceNode;
-    Node topologyNode;
-    Node catalogNode;
-    Node journalNode;
-    Node actionNode;
-    Node jobNode;
     Node top = new Node("/:AstroLabNet",
                       "AstroLabNet",
                       "AstroLabNet",
@@ -51,8 +50,10 @@ public class WSCommand extends DefaultInteracter {
                       "AstroLabNet",
                       "",
                       " ",
-                      "0");
-    _nodes.add(top);
+                      "0",
+                      null,
+                      _nodes,
+                      null);
     for (Server server : servers()) {
       node = new Node("Server:" + server.name(),
                       "Server",
@@ -61,17 +62,10 @@ public class WSCommand extends DefaultInteracter {
                       server.urlLivy() + " " + server.urlSpark() + " " + server.urlHBase(),
                       server.name(),
                       " ",
-                      "0");
-      _nodes.add(node);
-      _edges.add(new Edge(top, 
-                          node,
-                          " ",
-                          " ",
-                          " ",
-                          " ",
-                          "to",
-                          " ",
-                          "0"));
+                      "0",
+                      top,
+                      _nodes,
+                      _edges);
       pythonSessionNode = new Node("Session:Python Session on " + server.name(),
                                    "Session",
                                    "Python Session on " + server.name(),
@@ -79,7 +73,10 @@ public class WSCommand extends DefaultInteracter {
                                    "Python",
                                    server.name(),
                                    " ",
-                                   "0");
+                                   "0",
+                                   node,
+                                   _nodes,
+                                   _edges);
       scalaSessionNode = new Node("Session:Scala Session on " + server.name(),
                                   "Session",
                                   "Scala Session on " + server.name(),
@@ -87,7 +84,10 @@ public class WSCommand extends DefaultInteracter {
                                   "Scala",
                                   server.name(),
                                   " ",
-                                  "0");
+                                  "0",
+                                  node,
+                                  _nodes,
+                                  _edges);
       senderNode = new Node("Sender:" + server.name(),
                             "Sender",
                              "Job Sender on " + server.name(),
@@ -95,7 +95,10 @@ public class WSCommand extends DefaultInteracter {
                              " ",
                              server.name(),
                              " ",
-                             "0");
+                             "0",
+                             node,
+                             _nodes,
+                             _edges);
       sourceNode = new Node("Source:" + server.name(),
                             "Source",
                             "Data Source on " + server.name(),
@@ -103,102 +106,72 @@ public class WSCommand extends DefaultInteracter {
                             " ",
                             server.name(),
                             " ",
-                            "0");
-      topologyNode = new Node("Topology:" + server.name(),
-                              "Topology",
-                              "Topology of " + server.name(),
-                              " ",
-                              " ",
-                              server.name(),
-                              " ",
-                              "0");
-      catalogNode = new Node("Catalog:" + server.name(),
-                             "Catalog",
-                             "Catalog of " + server.name(),
-                             " ",
-                             " ",
-                             server.name(),
-                             " ",
-                             "0");
-      journalNode = new Node("Journal:" + server.name(),
-                             "Journal",
-                             "Journal of " + server.name(),
-                             " ",
-                             " ",
-                             server.name(),
-                             " ",
-                             "0");
-      _nodes.add(pythonSessionNode);
-      _nodes.add(scalaSessionNode);
-      _nodes.add(senderNode);
-      _nodes.add(sourceNode);
-      _nodes.add(topologyNode);
-      _nodes.add(catalogNode);
-      _nodes.add(journalNode);
-      _edges.add(new Edge(node, 
-                          pythonSessionNode,
-                          " ",
-                          " ",
-                          " ",
-                          " ",
-                          "to",
-                          " ",
-                          "0"));
-      _edges.add(new Edge(node,
-                          scalaSessionNode,
-                          " ",
-                          " ",
-                          " ",
-                          " ",
-                          "to",
-                          " ",
-                          "0"));
-      _edges.add(new Edge(node,
-                          senderNode,
-                          " ",
-                          " ",
-                          " ",
-                          " ",
-                          "to",
-                          " ",
-                          "0"));
-      _edges.add(new Edge(node,
-                          sourceNode,
-                          " ",
-                          " ",
-                          " ",
-                          " ",
-                          "to",
-                          " ",
-                          "0"));
-      _edges.add(new Edge(node,
-                          topologyNode,
-                          " ",
-                          " ",
-                          " ",
-                          " ",
-                          "to",
-                          " ",
-                          "0"));
-      _edges.add(new Edge(node,
-                          catalogNode,
-                          " ",
-                          " ",
-                          " ",
-                          " ",
-                          "to",
-                          " ",
-                          "0"));
-      _edges.add(new Edge(node,
-                          journalNode,
-                          " ",
-                          " ",
-                          " ",
-                          " ",
-                          "to",
-                          " ",
-                          "0"));
+                            "0",
+                            node,
+                            _nodes,
+                            _edges);
+      new Node("Topology:" + server.name(),
+               "Topology",
+               "Topology of " + server.name(),
+               " ",
+               " ",
+               server.name(),
+               " ",
+               "0",
+               node,
+               _nodes,
+               _edges);
+      new Node("Catalog:" + server.name(),
+               "Catalog",
+               "Catalog of " + server.name(),
+               " ",
+               " ",
+               server.name(),
+               " ",
+               "0",
+               node,
+               _nodes,
+               _edges);
+      new Node("Journal:" + server.name(),
+               "Journal",
+               "Journal of " + server.name(),
+               " ",
+               " ",
+               server.name(),
+               " ",
+               "0",
+               node,
+               _nodes,
+               _edges);
+      for (Map.Entry<Integer, Language> p : server.livy().getSessions()) {
+        new Node("Task:" + p.getKey() + " " + p.getValue(),
+                 "Task",
+                 " ",
+                 " ",
+                 " ",
+                 server.name(),
+                 " ",
+                 "0",
+                 p.getValue() == Language.SCALA ? scalaSessionNode : pythonSessionNode,
+                 _nodes,
+                 _edges);
+        }
+      for (int idBatch : server.livy().getBatches()) {
+        new Node("Batch:" + idBatch,
+                 "Batch",
+                 " ",
+                 " ",
+                 " ",
+                 server.name(),
+                 " ",
+                 "0",
+                 senderNode,
+                 _nodes,
+                 _edges);
+        }
       }
+    Node actionNode;
+    Node jobNode;
     Node aj = new Node("Group:Actions and Jobs",
                        "Group",
                        "Actions and Jobs",
@@ -206,17 +179,10 @@ public class WSCommand extends DefaultInteracter {
                        " ",
                        "ActionJob",
                        "hexagon",
-                       "0");
-    _nodes.add(aj);
-    _edges.add(new Edge(top, 
-                        aj,
-                        " ",
-                        " ",
-                        " ",
-                        " ",
-                        "to",
-                        " ",
-                        "0"));
+                       "0",
+                       top,
+                       _nodes,
+                       _edges);
     for (Action action : actions()) {
       actionNode = new Node("Action:" + action.name(),
                             "Action",

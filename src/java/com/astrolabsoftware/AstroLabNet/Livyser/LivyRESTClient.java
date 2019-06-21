@@ -4,9 +4,6 @@ package com.astrolabsoftware.AstroLabNet.Livyser;
 import com.JHTools.Utils.SmallHttpClient;
 import com.JHTools.Utils.CommonException;
 
-// JavaFX
-import javafx.util.Pair;
-
 // org.json
 import org.json.JSONObject;
 import org.json.JSONArray;
@@ -15,6 +12,8 @@ import org.json.JSONException;
 // Java
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.AbstractMap;
 
 // Log4J
 import org.apache.log4j.Logger;
@@ -79,8 +78,8 @@ public class LivyRESTClient {
     * GET /sessions
     * </pre>
     * @return The {@link List} of {@link Pair}s of open session numbers and languages. */
-  public List<Pair<Integer, Language>> getSessions() {
-    List<Pair<Integer, Language>> ss = new ArrayList<>();
+  public List<Map.Entry<Integer, Language>> getSessions() {
+    List<Map.Entry<Integer, Language>> ss = new ArrayList<>();
     String result = "";
     try {
       result = SmallHttpClient.get(_url + "/sessions", null);
@@ -92,8 +91,8 @@ public class LivyRESTClient {
     try {
       JSONArray sessions = new JSONObject(result).getJSONArray("sessions");
       for (int i = 0; i < sessions.length(); i++) {
-        ss.add(new Pair<Integer, Language>(sessions.getJSONObject(i).getInt("id"),
-                                           Language.fromSpark(sessions.getJSONObject(i).getString("kind"))));
+        ss.add(new AbstractMap.SimpleEntry<>(sessions.getJSONObject(i).getInt("id"),
+                                             Language.fromSpark(sessions.getJSONObject(i).getString("kind"))));
         getStatements(sessions.getJSONObject(i).getInt("id"));
         }
       }
