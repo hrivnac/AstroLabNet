@@ -76,7 +76,7 @@ function formNodeAction(node) {
   var html = "";
   switch (node.id.split(":")[0]) {
     case "Server":
-      var urls = node.title.split("</br>")[2].split(" ");
+      var urls = node.title.split("<br/>")[2].split(" ");
       html += "<a href='" + urls[0] + "' target='RESULT'>Livy</a>&nbsp;";
       html += "<a href='" + urls[1] + "' target='RESULT'>Spark</a>&nbsp;";
       html += "<a href='" + urls[2] + "/status/cluster' target='RESULT'>HBase</a>&nbsp;";

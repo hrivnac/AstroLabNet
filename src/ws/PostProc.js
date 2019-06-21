@@ -12,7 +12,7 @@ function postProcNode(node) {
       if (node.label == "LAL") {
         node.image = "images/LAL.png";
         }
-      else {
+      else if (node.label == "Local"){
         node.image = "images/Local.png";
         }
       break;
@@ -51,6 +51,19 @@ function postProcNode(node) {
     case "Journal":
       node.shape = "image";
       node.image = "images/Journal.png";
+      break;
+    case "cluster":
+      var cName = node.id.split(":")[1];
+      if (cName == "LAL") {
+        node.shape = "image";
+        node.image = "images/LAL.png";
+        node.shadow = "true";
+        }
+      else if (cName == "Local") {
+        node.shape = "image";
+        node.image = "images/Local.png";
+        node.shadow = "true";
+        }
       break;
     default:
       break;     
