@@ -9,10 +9,22 @@ public class JournalEntry implements TableEntry {
 public JournalEntry() {}
 
 public JournalEntry(
-String xkey
+String xkey,
+String ccomment,
+String drc,
+String dresult,
+String dtime,
+String iaction,
+String iactor
 )
 {
 _xkey = xkey;
+_ccomment = ccomment;
+_drc = drc;
+_dresult = dresult;
+_dtime = dtime;
+_iaction = iaction;
+_iactor = iactor;
 }
 
 public void setXkey(String xkey) {_xkey = xkey;}
@@ -21,11 +33,65 @@ public String getXkey() {return _xkey;}
 
 private String _xkey = null;
 
+public void setCcomment(String ccomment) {_ccomment = ccomment;}
+
+public String getCcomment() {return _ccomment;}
+
+private String _ccomment = null;
+
+public void setDrc(String drc) {_drc = drc;}
+
+public String getDrc() {return _drc;}
+
+private String _drc = null;
+
+public void setDresult(String dresult) {_dresult = dresult;}
+
+public String getDresult() {return _dresult;}
+
+private String _dresult = null;
+
+public void setDtime(String dtime) {_dtime = dtime;}
+
+public String getDtime() {return _dtime;}
+
+private String _dtime = null;
+
+public void setIaction(String iaction) {_iaction = iaction;}
+
+public String getIaction() {return _iaction;}
+
+private String _iaction = null;
+
+public void setIactor(String iactor) {_iactor = iactor;}
+
+public String getIactor() {return _iactor;}
+
+private String _iactor = null;
+
 @Override
 public void set(String name, String value) {
 switch (name) {
 case "x:key":
 setXkey(value);
+break;
+case "c:comment":
+setCcomment(value);
+break;
+case "d:rc":
+setDrc(value);
+break;
+case "d:result":
+setDresult(value);
+break;
+case "d:time":
+setDtime(value);
+break;
+case "i:action":
+setIaction(value);
+break;
+case "i:actor":
+setIactor(value);
 break;
 default:
 log.error("Cannot show " + name + " = " + value);
@@ -35,10 +101,22 @@ log.error("Cannot show " + name + " = " + value);
 @Override
 public void reset() {
 _xkey = null;
+_ccomment = null;
+_drc = null;
+_dresult = null;
+_dtime = null;
+_iaction = null;
+_iactor = null;
 }
 
 public static String[] ENTRY_NAMES = new String[]{
-"xkey"
+"xkey",
+"ccomment",
+"drc",
+"dresult",
+"dtime",
+"iaction",
+"iactor"
 };
 
 private static Logger log = Logger.getLogger(JournalEntry.class);

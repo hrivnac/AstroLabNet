@@ -90,6 +90,20 @@ function formNodeAction(node) {
       break;
     case "Job":
       break;
+    case "Task":
+      var server   = node.label.split(" ")[2];
+      var id       = node.id.split(":")[1].split(" ")[0];
+      var language = node.id.split(":")[1].split(" ")[1];
+      html += "<a href='Task.jsp?server=" + server + "&id=" + id + "&language=" + language + "&delete=false' target='RESULT'>Show</a>&nbsp;";
+      html += "<a href='Task.jsp?server=" + server + "&id=" + id + "&language=" + language + "&delete=true'  target='RESULT'>Delete</a>";
+      break;
+    case "Batch":
+      var server = node.label.split(" ")[2];
+      var id     = node.id.split(":")[1];
+      console.log(node.id);
+      html += "<a href='Batch.jsp?server=" + server + "&id=" + id + "&delete=false' target='RESULT'>Show</a>&nbsp;";
+      html += "<a href='Batch.jsp?server=" + server + "&id=" + id + "&delete=true'  target='RESULT'>Delete</a>";
+      break;
     case "Session":
       var server   = node.id.split(":")[1].split(" ")[3];
       var language = node.id.split(":")[1].split(" ")[0];

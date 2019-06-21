@@ -153,6 +153,19 @@ public class LivyRESTClient {
       }
     return ss;
     }
+   
+  /** Delete session.
+    * DELETE /sessions/-idSession-
+    * </re>
+    * @param  idSession The existing session number. */
+  public void deleteSession(int idSession) {
+    try {
+      SmallHttpClient.delete(_url + "/sessions/" + idSession, null);
+      }
+    catch (CommonException e) {
+      CommonException.reportException("Request has failed", e, log);
+      }
+    }
      
   /** Send command to the server.
     * <pre>
@@ -367,6 +380,20 @@ public class LivyRESTClient {
       }
     else {
       return null;
+      }
+    }
+    
+  /** Delete batch.
+    * <pre>
+    * DELETE /batches/-idBatch-
+    * </pre>
+    * @param  idBatch The existing batch session number. */
+  public void deleteBatch(int idBatch) {
+    try {
+      SmallHttpClient.delete(_url + "/batches/" + idBatch, null);
+        }
+    catch (CommonException e) {
+      log.debug("Request has failed", e);
       }
     }
     

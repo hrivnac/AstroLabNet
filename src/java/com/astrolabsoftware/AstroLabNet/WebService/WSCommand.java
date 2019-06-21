@@ -146,7 +146,7 @@ public class WSCommand extends DefaultInteracter {
       for (Map.Entry<Integer, Language> p : server.livy().getSessions()) {
         new Node("Task:" + p.getKey() + " " + p.getValue(),
                  "Task",
-                 " ",
+                 "Task on " + server.name(),
                  " ",
                  " ",
                  server.name(),
@@ -159,7 +159,7 @@ public class WSCommand extends DefaultInteracter {
       for (int idBatch : server.livy().getBatches()) {
         new Node("Batch:" + idBatch,
                  "Batch",
-                 " ",
+                 "Batch on " + server.name(),
                  " ",
                  " ",
                  server.name(),
