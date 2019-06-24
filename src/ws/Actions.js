@@ -76,13 +76,13 @@ function formNodeAction(node) {
   var html = "";
   switch (node.id.split(":")[0]) {
     case "/":
-      html += "<a href='CommandCenter.jsp' target='COMMAND'>Reload</a>";
+      html += "<a class='button' href='CommandCenter.jsp' target='COMMAND'>Reload</a>";
       break;
     case "Server":
       var urls = node.title.split("<br/>")[2].split(" ");
-      html += "<a href='" + urls[0] + "' target='RESULT'>Livy</a>&nbsp;";
-      html += "<a href='" + urls[1] + "' target='RESULT'>Spark</a>&nbsp;";
-      html += "<a href='" + urls[2] + "/status/cluster' target='RESULT'>HBase</a>&nbsp;";
+      html += "<a class='button' href='" + urls[0] + "' target='RESULT'>Livy</a>&nbsp;";
+      html += "<a class='button' href='" + urls[1] + "' target='RESULT'>Spark</a>&nbsp;";
+      html += "<a class='button' href='" + urls[2] + "/status/cluster' target='RESULT'>HBase</a>&nbsp;";
       break;
     case "Group":
       if (node.id.split(":")[1] == "Actions and Jobs") {
@@ -97,15 +97,15 @@ function formNodeAction(node) {
       var server   = node.label.split(" ")[2];
       var id       = node.id.split(":")[1].split(" ")[0];
       var language = node.id.split(":")[1].split(" ")[1];
-      html += "<a href='Task.jsp?server=" + server + "&id=" + id + "&language=" + language + "&delete=false' target='RESULT'>Show</a>&nbsp;";
-      html += "<a href='Task.jsp?server=" + server + "&id=" + id + "&language=" + language + "&delete=true'  target='RESULT'>Delete</a>";
+      html += "<a class='button' href='Task.jsp?server=" + server + "&id=" + id + "&language=" + language + "&delete=false' target='RESULT'>Show</a>&nbsp;";
+      html += "<a class='button' href='Task.jsp?server=" + server + "&id=" + id + "&language=" + language + "&delete=true'  target='RESULT'>Delete</a>";
       break;
     case "Batch":
       var server = node.label.split(" ")[2];
       var id     = node.id.split(":")[1];
       console.log(node.id);
-      html += "<a href='Batch.jsp?server=" + server + "&id=" + id + "&delete=false' target='RESULT'>Show</a>&nbsp;";
-      html += "<a href='Batch.jsp?server=" + server + "&id=" + id + "&delete=true'  target='RESULT'>Delete</a>";
+      html += "<a class='button' href='Batch.jsp?server=" + server + "&id=" + id + "&delete=false' target='RESULT'>Show</a>&nbsp;";
+      html += "<a class='button' href='Batch.jsp?server=" + server + "&id=" + id + "&delete=true'  target='RESULT'>Delete</a>";
       break;
     case "Session":
       var server   = node.id.split(":")[1].split(" ")[3];
@@ -160,15 +160,15 @@ function formNodeAction(node) {
       break;
     case "Topology":
       var server = node.label.split(" ")[2];
-      html += "<a href='HBaseTable.jsp?server=" + server + "&table=topology' target='RESULT'>Show</a>";
+      html += "<a class='button' href='HBaseTable.jsp?server=" + server + "&table=topology' target='RESULT'>Show</a>";
       break;
     case "Catalog":
       var server = node.label.split(" ")[2];
-      html += "<a href='HBaseTable.jsp?server=" + server + "&table=catalog' target='RESULT'>Show</a>";
+      html += "<a class='button' href='HBaseTable.jsp?server=" + server + "&table=catalog' target='RESULT'>Show</a>";
       break;
     case "Journal":
       var server = node.label.split(" ")[2];
-      html += "<a href='HBaseTable.jsp?server=" + server + "&table=journal' target='RESULT'>Show</a>";
+      html += "<a class='button' href='HBaseTable.jsp?server=" + server + "&table=journal' target='RESULT'>Show</a>";
       break;
     default:
       break;     

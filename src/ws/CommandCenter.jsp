@@ -19,6 +19,7 @@
   <link href="vis-4.21.0/dist/vis-network.min.css" rel="stylesheet" type="text/css"/>  
   <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/start/jquery-ui.css" rel="stylesheet"  type="text/css"/>
   <link href="CommandCenter.css" rel="stylesheet"  type="text/css"/>
+  <link href="GraphView.css"     rel="stylesheet"  type="text/css"/>
   </head>
   
 <body>

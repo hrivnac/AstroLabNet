@@ -7,6 +7,7 @@
 
 <body bgcolor="#ddddff">
   <div title="command result">
-    --- command result ---
+  <h1><u>Web Service HELP:</u></h1>
+    <a href="https://hrivnac.web.cern.ch/hrivnac/Activities/Packages/AstroLabNet/WS.png"><img src="https://hrivnac.web.cern.ch/hrivnac/Activities/Packages/AstroLabNet/WS.png" width="800"></a>
     </div>
   </body>

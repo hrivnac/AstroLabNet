@@ -34,7 +34,14 @@
                                                0,
                                                0,
                                                0);
-    String html = new HBase2Table().htmlTable(json);
+    HBase2Table h2table = new HBase2Table();
+    if (table.equals("topology")) {
+      h2table.setColumns(new String[]{"name", "location", "comment"});
+      }
+    else if (table.equals("journal")) {
+      h2table.setColumns(new String[]{"actor", "action", "rc", "time", "comment", "result"});
+      }
+    String html = h2table.htmlTable(json);
     out.println(html);
     %>
   </body>
