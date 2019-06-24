@@ -25,12 +25,12 @@
   <table width="100%" height="30%" id="Table">
     <tr height="20%">
       <td bgcolor="#ddffdd" height="20%">
-        <div id="commands" title="commands">
+        <div id="commands" title="context-sensitive commands">
           <table>
             <tr>
               <td><img src="images/AstroLab.png" width="100"/></td>
-              <td><h1>AstroLabNet for @SITE@</h1>
-                  <h2>@VERSION@ [@BUILD@]</h2>
+              <td><h1><u>AstroLabNet</u> for @SITE@</h1>
+                  <h2>@VERSION@ <small>[@BUILD@]</small></h2>
                   </td>
               <td><a href="https://hrivnac.web.cern.ch/hrivnac/Activities/Packages/AstroLabNet" target="RESULT">AstroLabNet Home</a><br/>
                   <a href="https://astrolabsoftware.github.io" target="RESULT">AstroLab Sotfware Home</a></td>
@@ -48,16 +48,19 @@
       </tr>
     <tr height="10%">
       <td bgcolor="#ddffdd">
-        Customize the interactions with the <b>graph</b>.
-        <br/>
-        <input type="button" onclick="clusterByGroups()"  value="Cluster by group type">
-        <input type="button" onclick="clusterByHubsize()" value="Cluster by group size">
-        <input type="button" onclick="clusterExpand()"    value="Expand all clusters">
-        </br>
-        <input type="checkbox" name="physics"    class="physics"    onclick="switchPhysics()" value="true"  title="activate animation"                   checked>live</input>
-        <input type="checkbox" name="removeOld"  class="removeOld"                            value="false" title="activate removal of old nodes"               >remove old</input>
-        <br/>
-        filter: <input type="text" name="filter" value="" id="filter" title="show only nodes with a string in their label"/>
+        <div title="graph manipulations">
+          Customize the interactions with the <b>graph</b>.
+          <br/>
+          <input type="button" onclick="clusterByGroups()"  value="Cluster by group type">
+          <input type="button" onclick="clusterByHubsize()" value="Cluster by group size">
+          <input type="button" onclick="clusterExpand()"    value="Expand all clusters">
+          </br>
+          <input type="checkbox" name="layout"     class="layout"     onclick="switchLayout()"  value="false" title="hierarchical layout"                   checked>hierarchical</input>
+          <input type="checkbox" name="physics"    class="physics"    onclick="switchPhysics()" value="true"  title="activate animation"                    checked>live</input>
+          <input type="checkbox" name="removeOld"  class="removeOld"                            value="false" title="activate removal of old nodes"               >remove old</input>
+          <br/>
+          filter: <input type="text" name="filter" value="" id="filter" title="show only nodes with a string in their label"/>
+          </div>
         </td>
       </tr>
     </table>

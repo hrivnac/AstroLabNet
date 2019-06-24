@@ -20,12 +20,9 @@ var options = {
   layout: {
     improvedLayout:true
     },
-  //layout: {
-  //  hierarchical: {
-  //    direction:"LR",
-  //    sortMethod:"directed"
-  //    }
-  //  },
+  interaction: {
+    dragNodes:true
+    },
   nodes: {
     shape:"dot",
     scaling: {

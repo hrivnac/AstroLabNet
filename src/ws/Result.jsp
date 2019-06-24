@@ -6,5 +6,7 @@
 <!--%@ page errorPage="ExceptionHandler.jsp" %-->
 
 <body bgcolor="#ddddff">
-  --- command result ---
+  <div title="command result">
+    --- command result ---
+    </div>
   </body>
