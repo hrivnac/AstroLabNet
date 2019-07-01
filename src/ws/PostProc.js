@@ -2,7 +2,7 @@
 // ============
 
 function postProcNode(node) {
-  switch (node.id.split(":")[0]) {
+  switch (node.type) {
     case "/":
       node.shape = "image";
       node.image = "images/AstroLab.png";

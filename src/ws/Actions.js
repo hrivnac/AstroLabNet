@@ -72,15 +72,14 @@ function rmJobCookies() {
   document.getElementById("feedback").innerHTML = "Removing Job " + name;
   }
   
- 
 function formNodeAction(node) {
   var html = "";
-  switch (node.id.split(":")[0]) {
+  switch (node.type) {
     case "/":
       html += "<a class='button' href='CommandCenter.jsp' target='COMMAND'>Reload</a>";
       break;
     case "Server":
-      var urls = node.title.split("<br/>")[2].split(" ");
+      var urls = node.title.split("<br/>")[1].split(" ");
       html += "<a class='button' href='" + urls[0] + "' target='RESULT'>Livy</a>&nbsp;";
       html += "<a class='button' href='" + urls[1] + "' target='RESULT'>Spark</a>&nbsp;";
       html += "<a class='button' href='" + urls[2] + "/status/cluster' target='RESULT'>HBase</a>&nbsp;";
@@ -104,7 +103,6 @@ function formNodeAction(node) {
     case "Batch":
       var server = node.label.split(" ")[2];
       var id     = node.id.split(":")[1];
-      console.log(node.id);
       html += "<a class='button' href='Batch.jsp?server=" + server + "&id=" + id + "&delete=false' target='RESULT'>Show</a>&nbsp;";
       html += "<a class='button' href='Batch.jsp?server=" + server + "&id=" + id + "&delete=true'  target='RESULT'>Delete</a>";
       break;
@@ -160,15 +158,15 @@ function formNodeAction(node) {
     case "Source":
       break;
     case "Topology":
-      var hbase = node.title.split(" ")[2];
+      var hbase = node.title.split(" ")[4];
       html += "<a class='button' href='HBaseTable.jsp?hbase=" + hbase + "&table=astrolabnet.topology.1&columns=name,location,comment' target='RESULT'>Show</a>";
       break;
     case "Catalog":
-      var hbase = node.title.split(" ")[2];
+      var hbase = node.title.split(" ")[4];
       html += "<a class='button' href='HBaseTable.jsp?hbase=" + hbase + "&table=astrolabnet.catalog.1' target='RESULT'>Show</a>";
       break;
     case "Journal":
-      var hbase = node.title.split(" ")[2];
+      var hbase = node.title.split(" ")[4];
       html += "<form action='HBaseTable.jsp' id='hbase' target='RESULT' method='POST'>";
       html += "  <table>";
       html += "    <tr>";
@@ -220,7 +218,7 @@ function formEdgeAction(edge) {
   }
  
 function executeNodeAction(node) {
-  switch (node.id.split(":")[0]) {
+  switch (node.type) {
     case "Action":
       if (document.getElementById("session") == null) {
         alert("No Session opened for Action");
@@ -254,7 +252,7 @@ function executeEdgeAction(edge) {
   }
   
 function executeNodePostAction(node) {
-  switch (node.id.split(":")[0]) {
+  switch (node.type) {
     case "Journal":
       $(function() {
         $('#date-range-picker').daterangepicker({
