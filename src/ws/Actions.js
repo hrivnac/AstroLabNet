@@ -165,7 +165,7 @@ function formNodeAction(node) {
       break;
     case "Catalog":
       var hbase = node.title.split(" ")[2];
-      html += "<a class='button' href='HBaseTable.jsp?hbase=" + hbase + "&table=astrolabnet.catalog.1&columns=actor,action,rc,time,comment,result' target='RESULT'>Show</a>";
+      html += "<a class='button' href='HBaseTable.jsp?hbase=" + hbase + "&table=astrolabnet.catalog.1' target='RESULT'>Show</a>";
       break;
     case "Journal":
       var hbase = node.title.split(" ")[2];
@@ -204,6 +204,7 @@ function formNodeAction(node) {
       html += "  <input type='hidden' name='hbase' value='" + hbase + "'>";
       html += "  <input type='hidden' name='table' value='astrolabnet.journal.1'>";
       html += "  <input type='hidden' name='height' value='100'>";
+      html += "  <input type='hidden' name='columns' value='actor,action,rc,time,comment,result'>";
       html += "  <input type='hidden' name='filters' value='i:actor,i:action,d:result,c:comment,d:rc'>";
       html += "  </form>";            
       break;
