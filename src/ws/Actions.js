@@ -71,6 +71,7 @@ function rmJobCookies() {
   removeNode("Job:" + name);
   document.getElementById("feedback").innerHTML = "Removing Job " + name;
   }
+  
  
 function formNodeAction(node) {
   var html = "";
@@ -159,16 +160,52 @@ function formNodeAction(node) {
     case "Source":
       break;
     case "Topology":
-      var server = node.label.split(" ")[2];
-      html += "<a class='button' href='HBaseTable.jsp?server=" + server + "&table=topology' target='RESULT'>Show</a>";
+      var hbase = node.title.split(" ")[2];
+      html += "<a class='button' href='HBaseTable.jsp?hbase=" + hbase + "&table=astrolabnet.topology.1&columns=name,location,comment' target='RESULT'>Show</a>";
       break;
     case "Catalog":
-      var server = node.label.split(" ")[2];
-      html += "<a class='button' href='HBaseTable.jsp?server=" + server + "&table=catalog' target='RESULT'>Show</a>";
+      var hbase = node.title.split(" ")[2];
+      html += "<a class='button' href='HBaseTable.jsp?hbase=" + hbase + "&table=astrolabnet.catalog.1&columns=actor,action,rc,time,comment,result' target='RESULT'>Show</a>";
       break;
     case "Journal":
-      var server = node.label.split(" ")[2];
-      html += "<a class='button' href='HBaseTable.jsp?server=" + server + "&table=journal' target='RESULT'>Show</a>";
+      var hbase = node.title.split(" ")[2];
+      html += "<form action='HBaseTable.jsp' id='hbase' target='RESULT' method='POST'>";
+      html += "  <table>";
+      html += "    <tr>";
+      html += "      <td>";
+      html += "        <table>";   
+      html += "          <tr><td><b>period</b>          </td><td><input type='text' size='40' name='period' id='date-range-picker'></td></tr>";
+      html += "          <tr><td><b>action</b>          </td><td><input name='action'  type='text' size='20' value=''    ></td></tr>";
+      html += "          <tr><td><b>result</b>          </td><td><input name='result'  type='text' size='20' value=''    ></td></tr>";
+      html += "          <tr><td><b>comment</b>         </td><td><input name='comment' type='text' size='20' value=''   ></td></tr>";
+      html += "          </table>";
+      html += "        </td>";
+      html += "      <td>";
+      html += "        <table>";     
+      html += "          <tr><td><b>actor</b></td><td><input name='actor' type='radio' value='*' checked>*</td></tr>";
+      html += "          <tr><td>            </td><td><input name='actor' type='radio' value='Action'>Action</td></tr>";
+      html += "          <tr><td>            </td><td><input name='actor' type='radio' value='Job'>Job</td></tr>";
+      html += "          </table>";
+      html += "        </td>";  
+      html += "      <td>";
+      html += "        <table>  ";    
+      html += "          <tr><td><b>rc</b>    </td><td><input name='rc'     type='radio'          value='0'            >0       </td></tr>";
+      html += "          <tr><td>             </td><td><input name='rc'     type='radio'          value='-1'           >-1      </td></tr>";
+      html += "          <tr><td>             </td><td><input name='rc'     type='radio'          value='*'  checked   >*       </td></tr>";
+      html += "          </table>";
+      html += "        </td>";
+      html += "      </tr>";
+      html += "    <tr>";
+      html += "      <td><input type='submit' value='Search'></td>";
+      html += "      <td>&nbsp</td>";
+      html += "      <td>&nbsp</td></tr>";
+      html += "      </tr>";
+      html += "    </table>";
+      html += "  <input type='hidden' name='hbase' value='" + hbase + "'>";
+      html += "  <input type='hidden' name='table' value='astrolabnet.journal.1'>";
+      html += "  <input type='hidden' name='height' value='100'>";
+      html += "  <input type='hidden' name='filters' value='i:actor,i:action,d:result,c:comment,d:rc'>";
+      html += "  </form>";            
       break;
     default:
       break;     
@@ -176,11 +213,11 @@ function formNodeAction(node) {
   return html;
   }
   
-function formEdgeAction(node) {
+function formEdgeAction(edge) {
   var html = "";
   return html;
   }
-  
+ 
 function executeNodeAction(node) {
   switch (node.id.split(":")[0]) {
     case "Action":
@@ -210,5 +247,59 @@ function executeNodeAction(node) {
       return null;
       break;     
     }
+  }
+  
+function executeEdgeAction(edge) {
+  }
+  
+function executeNodePostAction(node) {
+  switch (node.id.split(":")[0]) {
+    case "Journal":
+      $(function() {
+        $('#date-range-picker').daterangepicker({
+          singleDatePicker: false,    
+          showDropdowns: true,
+          showWeekNumbers: false,
+          showISOWeekNumbers: false,
+          timePicker: true,
+          timePicker24Hour: true,
+          timePickerIncrement: 10,
+          timePickerSeconds: false,    
+          autoApply: true,
+          ranges: {
+            'Today': [moment(), moment()],
+            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+            'This Month': [moment().startOf('month'), moment().endOf('month')],
+            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            },
+          locale: {
+            format: 'DD/MM/YYYY HH:mm'
+            },
+          linkedCalendars: false,
+          autoUpdateInput: true,
+          showCustomRangeLabel: true,
+          alwaysShowCalendars: false,
+          startDate: moment().subtract(6, 'days'),
+          endDate: moment(),
+          opens: "right",
+          drops: "down"
+          },
+      function(start, end, label) {
+        console.log("A new date selection was made: " + start.format('DD/MM/YYYY HH:mm') + ' to ' + end.format('DD/MM/YYYY HH:mm'));
+        });
+      });     
+      break;
+    default:
+      return null;
+      break;     
+    }
+  }
+  
+function executeEdgePostAction(edge) {
+  }
+ 
+function expandNode(data) {
   }
   

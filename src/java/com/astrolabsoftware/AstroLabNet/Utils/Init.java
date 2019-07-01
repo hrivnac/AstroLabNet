@@ -41,7 +41,7 @@ public class Init {
   public static void init() {
     PropertyConfigurator.configure(Init.class.getClassLoader().getResource(PROPERTIES_MINIMAL));
     fixLog4J();
-    Notifier.notify("", "AstroLabNet");
+    Notifier.notify("", "AstroLabNet", Info.release());
     }
     
   /** Initialise <em>AstroLabNet</em>.
@@ -63,7 +63,7 @@ public class Init {
       PropertyConfigurator.configure(Init.class.getClassLoader().getResource(PROPERTIES));
       }
     fixLog4J();
-    Notifier.notify(Arrays.toString(args), "AstroLabNet");
+    Notifier.notify(Arrays.toString(args), "AstroLabNet", Info.release());
     }
     
   /** Modify the default Log4J setup for external packages. */
