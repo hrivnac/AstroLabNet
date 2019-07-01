@@ -280,15 +280,14 @@ function executeNodePostAction(node) {
           linkedCalendars: false,
           autoUpdateInput: true,
           showCustomRangeLabel: true,
-          alwaysShowCalendars: false,
+          alwaysShowCalendars: true,
           startDate: moment().subtract(6, 'days'),
           endDate: moment(),
           opens: "right",
           drops: "down"
           },
       function(start, end, label) {
-        console.log("A new date selection was made: " + start.format('DD/MM/YYYY HH:mm') + ' to ' + end.format('DD/MM/YYYY HH:mm'));
-        });
+         });
       });     
       break;
     default:
