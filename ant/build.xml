@@ -342,14 +342,14 @@
 	    	<include name="**/*.gif"/>
 	    	<include name="**/*.png"/>
 	    	<include name="images/*.png"/>
-        <include name="vis-4.21.0/**/*"/>
+        <!--include name="vis-4.21.0/**/*"/-->
         </fileset>
       <fileset dir="../build">
         <include name="index.jsp"/>
         <include name="CommandCenter.jsp"/>
         </fileset>
       <fileset dir="${jhtools.ws}">
-        <include name="*"/>
+        <include name="**/*"/>
         </fileset>
       <lib file="../lib/AstroLabNet-${version}.jar"/>
       <lib file="${jhtools.jar}"/>
