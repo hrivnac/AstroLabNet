@@ -206,6 +206,15 @@ public class WSCommand extends DefaultInteracter {
       jobNode.put("driverCores"   , String.valueOf(job.driverCores()));
       jobNode.put("executorMemory", job.executorMemory());
       jobNode.put("executorCores",  String.valueOf(job.executorCores()));
+      jobNode.put("numExecutors",   String.valueOf(job.numExecutors()));
+      jobNode.put("jars",           job.jars());
+      jobNode.put("pyFiles",        job.pyFiles());
+      jobNode.put("files",          job.files());
+      jobNode.put("archives",       job.archives());
+      jobNode.put("queue",          job.queue());
+      jobNode.put("name",           job.name());
+      jobNode.put("conf",           job.conf());
+      jobNode.put("proxyUser",      job.proxyUser());
       _nodes.add(jobNode);
       _edges.add(new Edge(aj,
                           jobNode,

@@ -213,17 +213,26 @@ public class LivyRESTClient {
     * <pre>
     * POST /batches {"file":*file*, "className":*classname*}
     * </pre>
-    * @param file      The jar or py filename.
-    * @param className The <em>main</em> className
-    *                  or <tt>null</tt> for py file.
+    * @param file           The jar or py filename.
+    * @param className      The <em>main</em> className
+    *                       or <tt>null</tt> for py file.
     * @param args           The Job args, if any. 
     * @param driverMemory   The Job driver memory or <tt>null</tt>. 
     * @param driverCores    The Job driver cores or <tt>0</tt>.  
     * @param executorMemory The Job executor memory or <tt>null</tt>. 
     * @param executorCores  The Job executor cores or <tt>0</tt>. 
-    * @param tries     How many times to try.
-    * @param sleep     How many <tt>s</tt> wait between tries.
-    * @return          The new statement id. */
+    * @param numExecutors   The Job executots or <tt>0</tt>.
+    * @param jars           The Job jars or <tt>null</tt>. 
+    * @param pyFiles        The Job pyFiles or <tt>null</tt>. 
+    * @param files          The Job files or <tt>null</tt>. 
+    * @param archives       The Job archives or <tt>null</tt>. 
+    * @param queue          The Job queue or <tt>null</tt>.
+    * @param name           The Job name or <tt>null</tt>.
+    * @param conf           The Job conf or <tt>null</tt>. 
+    * @param proxyUser      The Job proxyUser or <tt>null</tt>. 
+    * @param tries          How many times to try.
+    * @param sleep          How many <tt>s</tt> wait between tries.
+    * @return               The new statement id. */
   public int sendJob(String file,
                      String className,
                      String args,
@@ -231,6 +240,15 @@ public class LivyRESTClient {
                      int    driverCores,
                      String executorMemory,
                      int    executorCores,
+                     int    numExecutors,
+                     String jars,
+                     String pyFiles,
+                     String files,
+                     String archives,
+                     String queue,
+                     String name,
+                     String conf,
+                     String proxyUser,
                      int    tries,
                      int    sleep) {
     if (className == null) {
@@ -239,6 +257,53 @@ public class LivyRESTClient {
     else {
       log.info("Sending job '" + className + "' from '" + file + "'");
       }
+    String request = "{\"file\":\"" + file + "\"";
+    if (className != null) {
+      request += ", \"className\":\"" + className + "\"";
+      }
+    if (args != null) {
+      request += ", \"args\":\"" + args + "\"";
+      }
+    if (driverMemory != null) {
+      request += ", \"driverMemory\":\"" + driverMemory + "\"";
+      }
+    if (driverCores != 0) {
+      request += ", \"driverCores\":\"" + driverCores + "\"";
+      }
+    if (executorMemory != null) {
+      request += ", \"executorMemory\":\"" + executorMemory + "\"";
+      }
+    if (executorCores != 0) {
+      request += ", \"executorCores\":\"" + executorCores + "\"";
+      }
+    if (numExecutors != 0) {
+      request += ", \"numExecutors\":\"" + numExecutors + "\"";
+      }
+    if (jars != null) {
+      request += ", \"jars\":\"" + jars + "\"";
+      }
+    if (pyFiles != null) {
+      request += ", \"pyFiles\":\"" + pyFiles + "\"";
+      }
+    if (files != null) {
+      request += ", \"files\":\"" + files + "\"";
+      }
+    if (archives != null) {
+      request += ", \"archives\":\"" + archives + "\"";
+      }
+    if (queue != null) {
+      request += ", \"queue\":\"" + queue + "\"";
+      }
+    if (name != null) {
+      request += ", \"name\":\"" + name + "\"";
+      }
+    if (conf != null) {
+      request += ", \"conf\":\"" + conf + "\"";
+      }   
+    if (proxyUser != null) {
+      request += ", \"proxyUser\":\"" + proxyUser + "\"";
+      }
+    request += "\"}";
     String result = "";
     boolean success = false;
     int i = 0;
@@ -495,6 +560,15 @@ public class LivyRESTClient {
     * @param driverCores    The Job driver cores or <tt>0</tt>.  
     * @param executorMemory The Job executor memory or <tt>null</tt>. 
     * @param executorCores  The Job executor cores or <tt>0</tt>. 
+    * @param numExecutors   The Job executots or <tt>0</tt>.
+    * @param jars           The Job jars or <tt>null</tt>. 
+    * @param pyFiles        The Job pyFiles or <tt>null</tt>. 
+    * @param files          The Job files or <tt>null</tt>. 
+    * @param archives       The Job archives or <tt>null</tt>. 
+    * @param queue          The Job queue or <tt>null</tt>.
+    * @param name           The Job name or <tt>null</tt>.
+    * @param conf           The Job conf or <tt>null</tt>. 
+    * @param proxyUser      The Job proxyUser or <tt>null</tt>. 
     * @return               The result as <em>Json</em> string. */
   public String sendJob(String file,
                         String className,
@@ -502,7 +576,16 @@ public class LivyRESTClient {
                         String driverMemory,
                         int    driverCores,
                         String executorMemory,
-                        int    executorCores) {
+                        int    executorCores,
+                        int    numExecutors,
+                        String jars,
+                        String pyFiles,
+                        String files,
+                        String archives,
+                        String queue,
+                        String name,
+                        String conf,
+                        String proxyUser) {
     log.info("Sending '" + className + "' in " + file + " and waiting for result");
     int batchId = sendJob(file,
                           className,
@@ -511,6 +594,15 @@ public class LivyRESTClient {
                           driverCores,
                           executorMemory,
                           executorCores,
+                          numExecutors,
+                          jars,
+                          pyFiles,
+                          files,
+                          archives,
+                          queue,
+                          name,
+                          conf,
+                          proxyUser,
                           Integer.MAX_VALUE,
                           1);
     return waitForJobResult(batchId, Integer.MAX_VALUE, 1) + "\n\n" + 

@@ -23,7 +23,7 @@
   
 <body bgcolor="#ddddee">
   <%  
-    String name           = request.getParameter("name");
+    String jobName        = request.getParameter("jobName");
     String jarName        = request.getParameter("jarName");
     String className      = request.getParameter("className");
     String args           = request.getParameter("args");
@@ -31,14 +31,31 @@
     String driverCores    = request.getParameter("driverCores");
     String executorMemory = request.getParameter("executorMemory");
     String executorCores  = request.getParameter("executorCores");
+    String numExecutors   = request.getParameter("numExecutors");
+    String jars           = request.getParameter("jars");
+    String pyFiles        = request.getParameter("pyFiles");
+    String files          = request.getParameter("files");
+    String archives       = request.getParameter("archives");
+    String queue          = request.getParameter("queue");
+    String name           = request.getParameter("name");
+    String conf           = request.getParameter("conf");
+    String proxyUser      = request.getParameter("proxyUser");
     String serverS        = request.getParameter("server");
     Server server = wsc.server(serverS);
-    out.println("<u>Sending "              + name + " on " + serverS + "</u><br/>");
+    out.println("<u>Sending "              + jobName + " on " + serverS       + "</u><br/>");
     out.println("JAR/PY file: "            + jarName                          + "<br/>");
     out.println("class name: "             + className                        + "<br/>");
     out.println("args: "                   + args                             + "<br/>");
+    out.println("jars: "                   + jars                             + "<br/>");
+    out.println("pyFiles: "                + pyFiles                          + "<br/>");
+    out.println("files: "                  + files                            + "<br/>");
+    out.println("archives: "               + archives                         + "<br/>");
+    out.println("queue: "                  + queue                            + "<br/>");
+    out.println("conf: "                   + conf                             + "<br/>");
+    out.println("proxyUser: "              + proxyUser                        + "<br/>");
     out.println("driver cores/memory: "    + driverCores + "/" + driverMemory + "<br/>");
     out.println("executor cores/memory: "  + driverCores + "/" + driverMemory + "<br/>");
+    out.println("executors: "              + numExecutors                     + "<br/>");
     out.println("<hr/>");
     out.flush();
     long time = System.currentTimeMillis();
@@ -49,6 +66,15 @@
                                    new Integer(driverCores).intValue(),
                                    executorMemory,
                                    new Integer(executorCores).intValue(),
+                                   new Integer(numExecutors).intValue(),
+                                   jars,
+                                   pyFiles,
+                                   files,
+                                   archives,
+                                   queue,
+                                   jobName,
+                                   conf,
+                                   proxyUser,
                                    Integer.MAX_VALUE,
                                    1);    
     String resultString;

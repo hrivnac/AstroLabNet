@@ -65,17 +65,26 @@ function formNodeAction(node) {
       html += "      <td>";
       html += "        <input type='hidden' name='server'   id='jobServer' value='" + server + "'>";
       html += "        <table>";
-      html += "        <tr><td>JAR/PY file:</td><td><input type='text' name='jarName'  value='' size='60' id='jarName'></td><tr/>";
-      html += "        <tr><td>className:</td><td><input type='text' name='className' value='' size='60' id='className'></td></tr>";
-      html += "        <tr><td>args:</td><td><input type='text' name='args' value='' size='60' id='args'></td></tr>";
-      html += "        <tr><td>Driver Memory:</td><td><input type='text' name='driverMemory' value='' size='5' id='driverMemory'></td>";
-      html += "            <td>Driver Cores:</td><td><input type='number' name='driverCores' value='3' size='2' id='driverCores'></td></tr>";
-      html += "        <tr><td>Executor Memory:</td><td><input type='text' name='executorMemory' value='' size='5' id='executorMemory'></td>";
-      html += "            <td>Executor Cores:</td><td><input type='number' name='executorCores' value='3' size='2' id='executorCores'></td></tr>";
-      html += "        </table>";
+      html += "          <tr><td>JAR/PY File:    </td><td colspan='3'><input type='text'   name='jarName'        value=''  size='60' id='jarName'       ></td><tr/>";
+      html += "          <tr><td>Class Name:     </td><td colspan='3'><input type='text'   name='className'      value=''  size='60' id='className'     ></td></tr>";
+      html += "          <tr><td>Args:           </td><td colspan='3'><input type='text'   name='args'           value=''  size='60' id='args'          ></td></tr>";     
+      html += "          <tr><td>Jars:           </td><td colspan='3'><input type='text'   name='jars'           value=''  size='60' id='jars'          ></td><tr/>";
+      html += "          <tr><td>Py Files:       </td><td colspan='3'><input type='text'   name='pyFiles'        value=''  size='60' id='pyFiles'       ></td><tr/>";
+      html += "          <tr><td>Archives:       </td><td colspan='3'><input type='text'   name='archives'       value=''  size='60' id='archives'      ></td><tr/>";
+      html += "          <tr><td>Files:          </td><td colspan='3'><input type='text'   name='files'          value=''  size='60' id='files'         ></td><tr/>";
+      html += "          <tr><td>Name:           </td><td colspan='3'><input type='text'   name='name'           value=''  size='60' id='name'          ></td><tr/>";
+      html += "          <tr><td>Queue:          </td><td colspan='3'><input type='text'   name='queue'          value=''  size='60' id='queue'         ></td><tr/>";
+      html += "          <tr><td>Conf:           </td><td colspan='3'><input type='text'   name='conf'           value=''  size='60' id='conf'          ></td><tr/>";
+      html += "          <tr><td>Proxy User:     </td><td colspan='3'><input type='text'   name='proxyUser'      value=''  size='60' id='proxyUser'     ></td><tr/>";      
+      html += "          <tr><td>Driver Cores:   </td><td            ><input type='number' name='driverCores'    value='3' size='2'  id='driverCores'   ></td>";
+      html += "              <td>Driver Memory:  </td><td            ><input type='text'   name='driverMemory'   value=''  size='5'  id='driverMemory'  ></td></tr>";
+      html += "          <tr><td>Executor Cores: </td><td            ><input type='number' name='executorCores'  value='3' size='2'  id='executorCores' ></td>";
+      html += "              <td>Executor Memory:</td><td            ><input type='text'   name='executorMemory' value=''  size='5'  id='executorMemory'></td></tr>";
+      html += "          <tr><td>Executors:      </td><td colspan='3'><input type='number' name='numExecutors'   value='5' size='2'  id='numExecutors'  ></td><tr/>";
+      html += "           </table>";
       html += "        </td>";
       html += "      <td valign='top'>";
-      html += "        <input type='text' name='name' id='jobName'><br/>";
+      html += "        <input type='text' name='jobName' id='jobName'><br/>";
       html += "        <input type='submit' value='Execute' onclick='document.getElementById(\"feedback\").innerHTML = \"Sending Job to Sender\"'><br/>";
       html += "        <input type='button' value='Record'  onclick='setJobCookies()'><br/>";
       html += "        <input type='button' value='Remove'  onclick='rmJobCookies()'>";
@@ -169,7 +178,14 @@ function executeNodeAction(node) {
            + "document.getElementById('driverCores').value    = '" + node.driverCores    + "';"
            + "document.getElementById('executorMemory').value = '" + node.executorMemory + "';"
            + "document.getElementById('executorCores').value  = '" + node.executorCores  + "';"
-           + "document.getElementById('jobName').value        = '" + node.label          + "';";
+           + "document.getElementById('jars').value           = '" + node.jars           + "';"
+           + "document.getElementById('pyFiles').value        = '" + node.pyFiles        + "';"
+           + "document.getElementById('files').value          = '" + node.files          + "';"
+           + "document.getElementById('numExecutors').value   = '" + node.numExecutors   + "';"
+           + "document.getElementById('archives').value       = '" + node.archives       + "';"
+           + "document.getElementById('queue').value          = '" + node.queue          + "';"
+           + "document.getElementById('conf').value           = '" + node.conf           + "';"
+           + "document.getElementById('proxyUser').value      = '" + node.proxyUser      + "';";
       break;
     default:
       return null;

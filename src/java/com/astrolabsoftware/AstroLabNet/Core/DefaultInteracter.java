@@ -82,9 +82,9 @@ public abstract class DefaultInteracter implements Interacter {
     
   @Override
   public void readJobs() {
-    addJob("JavaPiJob",   "local:/.../JavaPiJob.jar",  "com.astrolabsoftware.AstroLabNet.DB.Jobs.JavaPiJob", null, null, 0, null, 0); // TBD: should be automatic
-    addJob("ScalaPiJob",  "local:/.../ScalaPiJob.jar", "com.astrolabsoftware.AstroLabNet.DB.Jobs.ScalaPiJob", null, null, 0, null, 0); // TBD: should be automatic
-    addJob("PythonPiJob", "local:/.../PythonPiJob.py", null, null, null, 0, null, 0); // TBD: should be automatic
+    addJob("JavaPiJob",   "local:/.../JavaPiJob.jar",  "com.astrolabsoftware.AstroLabNet.DB.Jobs.JavaPiJob",  null, null, 0, null, 0, 0, null, null, null, null, null, null, null); // TBD: should be automatic
+    addJob("ScalaPiJob",  "local:/.../ScalaPiJob.jar", "com.astrolabsoftware.AstroLabNet.DB.Jobs.ScalaPiJob", null, null, 0, null, 0, 0, null, null, null, null, null, null, null); // TBD: should be automatic
+    addJob("PythonPiJob", "local:/.../PythonPiJob.py",  null,                                                 null, null, 0, null, 0, 0, null, null, null, null, null, null, null); // TBD: should be automatic
     }                     
      
   @Override
@@ -300,22 +300,38 @@ public abstract class DefaultInteracter implements Interacter {
     }
           
   @Override
-  public Job addJob(String name,
+  public Job addJob(String jobName,
                     String file,
                     String className,
                     String args,
                     String driverMemory,
                     int    driverCores,
                     String executorMemory,
-                    int    executorCores) {
-    Job job = new Job(name,
+                    int    executorCores,
+                    int    numExecutors,
+                    String jars,
+                    String pyFiles,
+                    String files,
+                    String archives,
+                    String queue,
+                    String conf,
+                    String proxyUser) {
+    Job job = new Job(jobName,
                       file,
                       className,
                       args,
                       driverMemory,
                       driverCores,
                       executorMemory,
-                      executorCores);
+                      executorCores,
+                      numExecutors,
+                      jars,
+                      pyFiles,
+                      files,
+                      archives,
+                      queue,
+                      conf,
+                      proxyUser);
     if (!_jobs.contains(job)) {
       log.info("Adding Job: " + job);
       _jobs.add(job);

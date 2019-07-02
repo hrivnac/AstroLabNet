@@ -113,33 +113,17 @@ public class SenderRep extends ElementRep {
     jobBox1.setSpacing(5);
     jobBox1.setAlignment(Pos.CENTER);
     jobBox1.getChildren().addAll(load, _file);
-    // ClassNameLabel
-    Label classNameLabel = new Label("ClassName:");
-    // ClassName
-    _className = new TextField();
-    _className.setPrefColumnCount(50);
-    // JobBox2 = ClassNameLabel + ClassName
-    HBox jobBox2 = new HBox(10);
-    jobBox2.setSpacing(5);
-    jobBox2.setAlignment(Pos.CENTER);
-    jobBox2.getChildren().addAll(classNameLabel, _className);
-    // ArgsLabel
-    Label argsLabel = new Label("args:");
-    // Args
-    _args = new TextField();
-    _args.setPrefColumnCount(50);
-    // JobBox3 = ArgsLabel + Args
-    HBox jobBox3 = new HBox(10);
-    jobBox3.setSpacing(5);
-    jobBox3.setAlignment(Pos.CENTER);
-    jobBox3.getChildren().addAll(argsLabel, _args);
+    // JobBox2 = ClassName
+    HBox jobBox2 = jobBox("Class Name", _className);
+    // JobBox3 = Args
+    HBox jobBox3 = jobBox("Args", _args);   
     // DriverMemoryLabel
-    Label driverMemoryLabel = new Label("DriverMemory:");
+    Label driverMemoryLabel = new Label("Driver Memory:");
     // DriverMemory
     _driverMemory = new TextField();
     _driverMemory.setPrefColumnCount(10);
     // DriverCoresLabel
-    Label driverCoresLabel = new Label("DriverCores:");
+    Label driverCoresLabel = new Label("Driver Cores:");
     // DriverCores
     _driverCores = new Spinner<Integer>();
     SpinnerValueFactory<Integer> driverCoresFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 50, 3);
@@ -150,26 +134,51 @@ public class SenderRep extends ElementRep {
     jobBox4.setAlignment(Pos.CENTER);
     jobBox4.getChildren().addAll(driverMemoryLabel, _driverMemory, driverCoresLabel, _driverCores);
     // ExecutorMemoryLabel
-    Label executorMemoryLabel = new Label("ExecutorMemory:");
+    Label executorMemoryLabel = new Label("Executor Memory:");
     // ExecutorMemory
     _executorMemory = new TextField();
     _executorMemory.setPrefColumnCount(10);
     // ExecutorCoresLabel
-    Label executorCoresLabel = new Label("ExecutorCores:");
+    Label executorCoresLabel = new Label("Executor Cores:");
     // ExecutorCores
     _executorCores = new Spinner<Integer>();
     SpinnerValueFactory<Integer> executorCoresFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 50, 3);
     _executorCores.setValueFactory(executorCoresFactory);
-    // JobBox4 = ExecutorMemoryLabel + ExecutorMemory + ExecutorCoresLabel + ExecutorCores
+    // JobBox5 = ExecutorMemoryLabel + ExecutorMemory + ExecutorCoresLabel + ExecutorCores
     HBox jobBox5 = new HBox(10);
     jobBox5.setSpacing(5);
     jobBox5.setAlignment(Pos.CENTER);
-    jobBox5.getChildren().addAll(executorMemoryLabel, _executorMemory, executorCoresLabel, _executorCores);
-    // JobBox = JobBox1 + JobBox2 + JobBox3 + JobBox4 + JobBox5
+    jobBox5.getChildren().addAll(executorMemoryLabel, _executorMemory, executorCoresLabel, _executorCores);   
+    // NumExecutorsLabel
+    Label numExecutorsLabel = new Label("Executors:");
+    // NumExecutors
+    _numExecutors = new Spinner<Integer>();
+    SpinnerValueFactory<Integer> numExecutorsFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 50, 3);
+    _numExecutors.setValueFactory(numExecutorsFactory);
+    // JobBox6 = NumExecutorsLabel + NumExecutors
+    HBox jobBox6 = new HBox(10);
+    jobBox6.setSpacing(5);
+    jobBox6.setAlignment(Pos.CENTER);
+    jobBox6.getChildren().addAll(numExecutorsLabel, _numExecutors);
+    // JobBox7 = Jars
+    HBox jobBox7 = jobBox("Jars", _jars);  
+    // JobBox8 = PyFiles
+    HBox jobBox8 = jobBox("PyFiles", _pyFiles); 
+    // JobBox9 = Files
+    HBox jobBox9 = jobBox("Files", _files); 
+    // JobBox10 = Archives
+    HBox jobBox10 = jobBox("Archives", _archives);  
+    // JobBox11 = Queue
+    HBox jobBox11 = jobBox("Queue", _queue);  
+    // JobBox12 = Conf
+    HBox jobBox12 = jobBox("Conf", _conf); 
+    // JobBox13 = ProxyUser
+    HBox jobBox13 = jobBox("ProxyUser", _proxyUser);  
+    // JobBox = JobBox1-13
     VBox jobBox = new VBox(10);
     jobBox.setSpacing(5);
     jobBox.setAlignment(Pos.CENTER);
-    jobBox.getChildren().addAll(jobBox1, jobBox2, jobBox3, jobBox4, jobBox5);
+    jobBox.getChildren().addAll(jobBox1, jobBox2, jobBox3, jobBox4, jobBox5, jobBox6, jobBox7, jobBox8, jobBox9, jobBox10, jobBox11, jobBox12, jobBox13);
     // Progress
     _progress = new ProgressBar(0);
     // Send
@@ -227,6 +236,15 @@ public class SenderRep extends ElementRep {
                                             _driverCores.getValue(),
                                             _executorMemory.getText(),
                                             _executorCores.getValue(),
+                                            _numExecutors.getValue(), 
+                                            _jars.getText(),          
+                                            _pyFiles.getText(),       
+                                            _files.getText(),         
+                                            _archives.getText(),      
+                                            _queue.getText(),         
+                                            "TBD name",               
+                                            _conf.getText(),
+                                            _proxyUser.getText(),
                                             Integer.MAX_VALUE,
                                             1);
         browser().command().addBatch(serverRep().name() + "/" + id, senderRep.sender(), id);
@@ -248,7 +266,15 @@ public class SenderRep extends ElementRep {
                                                             _driverMemory.getText(),
                                                             _driverCores.getValue(),
                                                             _executorMemory.getText(),
-                                                            _executorCores.getValue()).setNew());
+                                                            _executorCores.getValue(),
+                                                            _numExecutors.getValue(),
+                                                            _jars.getText(),
+                                                            _pyFiles.getText(),
+                                                            _files.getText(),
+                                                            _archives.getText(),
+                                                            _queue.getText(),
+                                                            _conf.getText(),
+                                                            _proxyUser.getText()).setNew());
         }
       });
     // Set
@@ -333,7 +359,15 @@ public class SenderRep extends ElementRep {
                    String driverMemory,
                    int    driverCores,
                    String executorMemory,
-                   int    executorCores) {
+                   int    executorCores,                  
+                   int    numExecutors,
+                   String jars,
+                   String pyFiles,
+                   String files,
+                   String archives,
+                   String queue,
+                   String conf,
+             String proxyUser) {
     _file.setText(file);
     _className.setText(className);
     _args.setText(args);
@@ -354,17 +388,30 @@ public class SenderRep extends ElementRep {
   public Sender sender() {
     return (Sender)element();
     }
+    
+  /** TBD */
+  private HBox jobBox(String name,
+                      TextField field) {
+    HBox jobBox = new HBox(10);
+    Label label = new Label(name + ":");
+    field.setPrefColumnCount(50);
+    jobBox = new HBox(10);
+    jobBox.setSpacing(5);
+    jobBox.setAlignment(Pos.CENTER);
+    jobBox.getChildren().addAll(label, field);
+    return jobBox;
+    }
    
   @Override
   public String toString() {
     return sender().toString();
     }
     
-  private TextField        _file;  
+  private TextField        _file = new TextField();  
     
-  private TextField        _className;  
+  private TextField        _className = new TextField();  
   
-  private TextField        _args;
+  private TextField        _args = new TextField();
   
   private TextField        _driverMemory;
   
@@ -374,6 +421,22 @@ public class SenderRep extends ElementRep {
   
   private Spinner<Integer> _executorCores;
   
+  private Spinner<Integer> _numExecutors;
+  
+  private TextField        _jars = new TextField();
+                           
+  private TextField        _pyFiles = new TextField();
+                           
+  private TextField        _files = new TextField();
+                           
+  private TextField        _archives = new TextField();
+                           
+  private TextField        _queue = new TextField();
+                           
+  private TextField        _conf = new TextField();
+                           
+  private TextField        _proxyUser = new TextField();
+   
   private TextFlow         _resultRef;
   
   private ProgressBar      _progress;

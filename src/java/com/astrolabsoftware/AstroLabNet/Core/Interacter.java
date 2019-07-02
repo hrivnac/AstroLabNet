@@ -80,7 +80,7 @@ public interface Interacter {
                           Language language);
   
   /** Add {@link Job}.
-    * @param name           The {@link Job} name
+    * @param jobName        The {@link Job} name
     * @param file           The jar or py filename.
     * @param className      The <em>main</em> className or <tt>null</tt> for py file.
     * @param args           The Job args, if any. 
@@ -88,15 +88,31 @@ public interface Interacter {
     * @param driverCores    The Job driver cores or <tt>0</tt>.  
     * @param executorMemory The Job executor memory or <tt>null</tt>. 
     * @param executorCores  The Job executor cores or <tt>0</tt>. 
+    * @param numExecutors   The Job executots or <tt>0</tt>.
+    * @param jars           The Job jars or <tt>null</tt>. 
+    * @param pyFiles        The Job pyFiles or <tt>null</tt>. 
+    * @param files          The Job files or <tt>null</tt>. 
+    * @param archives       The Job archives or <tt>null</tt>. 
+    * @param queue          The Job queue or <tt>null</tt>.
+    * @param conf           The Job conf or <tt>null</tt>. 
+    * @param proxyUser      The Job proxyUser or <tt>null</tt>.
     * @return               The added {@link Job}. */
-  public Job addJob(String name,
+  public Job addJob(String jobName,
                     String file,
                     String className,
                     String args,
                     String driverMemory,
                     int    driverCores,
                     String executorMemory,
-                    int    executorCores);
+                    int    executorCores,
+                    int    numExecutors,
+                    String jars,
+                    String pyFiles,
+                    String files,
+                    String archives,
+                    String queue,
+                    String conf,
+                    String proxyUser);
   
   /** Add {@link Data}.
     * @param name The {@link Data} name

@@ -307,7 +307,15 @@ public class BrowserWindow extends Application {
                             String driverMemory,
                             int    driverCores,
                             String executorMemory,
-                            int    executorCores) {
+                            int    executorCores,
+                            int    numExecutors,
+                            String jars,
+                            String pyFiles,
+                            String files,
+                            String archives,
+                            String queue,
+                            String conf,
+                            String proxyUser) {
     boolean done = false;
     for (Map.Entry<SenderRep, Tab> entry : _senderTabs.entrySet()) {
       if (entry.getValue().isSelected()) {
@@ -317,7 +325,15 @@ public class BrowserWindow extends Application {
                             driverMemory,
                             driverCores,
                             executorMemory,
-                            executorCores);
+                            executorCores,
+                            numExecutors,
+                            jars,
+                            pyFiles,
+                            files,
+                            archives,
+                            queue,
+                            conf,
+                            proxyUser);
         done = true;
         break;
         }

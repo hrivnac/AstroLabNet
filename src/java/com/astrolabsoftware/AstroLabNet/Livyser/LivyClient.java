@@ -37,7 +37,16 @@ public class LivyClient extends LivyRESTClient {
                    job.driverMemory(),
                    job.driverCores(),
                    job.executorMemory(),
-                   job.executorCores());
+                   job.executorCores(),
+                   job.numExecutors(),
+                   job.jars(),
+                   job.pyFiles(),
+                   job.files(),
+                   job.archives(),
+                   job.queue(),
+                   job.name(),
+                   job.conf(),
+                   job.proxyUser());
     }
     
   @Override

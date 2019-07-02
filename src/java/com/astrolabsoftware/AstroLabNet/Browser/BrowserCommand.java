@@ -108,7 +108,15 @@ public class BrowserCommand extends CommandLine {
                     String driverMemory,
                     int    driverCores,
                     String executorMemory,
-                    int    executorCores) {
+                    int    executorCores,
+                    int    numExecutors,
+                    String jars,
+                    String pyFiles,
+                    String files,
+                    String archives,
+                    String queue,
+                    String conf,
+                    String proxyUser) {
     Job job = super.addJob(name,
                            file,
                            className,
@@ -116,7 +124,15 @@ public class BrowserCommand extends CommandLine {
                            driverMemory,
                            driverCores,
                            executorMemory,
-                           executorCores);
+                           executorCores,
+                           numExecutors,
+                           jars,
+                           pyFiles,
+                           files,
+                           archives,
+                           queue,
+                           conf,
+                           proxyUser);
     JobRep jobRep = new JobRep(job, _window);
     if (!_jobReps.getChildren().contains(jobRep.item())) {
       log.info("Adding JobRep: " + jobRep);

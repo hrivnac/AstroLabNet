@@ -59,26 +59,34 @@ function rmActionCookies() {
 
 // Set Job Cookie
 function setJobCookies() {
-  var name      = document.getElementById("jobName").value;
+  var jobName   = document.getElementById("jobName").value;
   var className = document.getElementById("className").value;
   var file      = document.getElementById("jarName").value;
   var args      = document.getElementById("args").value;
-  var node = {"id":"Job:" + name,
+  var node = {"id":"Job:" + jobName,
               "type":"Job",
               "group":"ActionJob",
               "color":" ",
-              "label":name,
-              "title":name + " (" + className + " from " + file + ", using " + args + ")",
+              "label":jobName,
+              "title":jobName + " (" + className + " from " + file + ")",
               "value":0,              
               "file":file,
               "className":className,
               "args":args,
+              "jars":document.getElementById("jars").value,
+              "pyFiles":document.getElementById("pyFiles").value,
+              "files":document.getElementById("files").value,
+              "archives":document.getElementById("archives").value,
+              "queue":document.getElementById("queue").value,
+              "conf":document.getElementById("conf").value,
+              "proxyUser":document.getElementById("proxyUser").value,
               "driverMemory":document.getElementById("driverMemory").value,
               "driverCores":document.getElementById("driverCores").value,
               "executorMemory":document.getElementById("executorMemory").value,
-              "executorCores":document.getElementById("executorCores").value};
-  setCookie("Job." + name + "=" + escape(JSON.stringify(node)),  365);
-  document.getElementById("feedback").innerHTML = "Recording Job " + name;
+              "executorCores":document.getElementById("executorCores").value,
+              "numExecutors":document.getElementById("numExecutors").value};
+  setCookie("Job." + jobName + "=" + escape(JSON.stringify(node)),  365);
+  document.getElementById("feedback").innerHTML = "Recording Job " + jobName;
   }
   
 // Remove Job Cookie

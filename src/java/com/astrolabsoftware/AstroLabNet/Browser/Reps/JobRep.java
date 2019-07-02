@@ -52,7 +52,15 @@ public class JobRep extends ElementRep {
                                driverMemory(),
                                driverCores(),
                                executorMemory(),
-                               executorCores());
+                               executorCores(),
+                               numExecutors(),
+                               jars(),
+                               pyFiles(),
+                               files(),
+                               archives(),
+                               queue(),
+                               conf(),
+                               proxyUser());
       }
     }
 
@@ -72,6 +80,29 @@ public class JobRep extends ElementRep {
     * @return The Job args, if any. */
    public String args() {
     return job().args();
+    }
+  /** Give the Job jars.
+    * @return The Job jars, if any. */
+  public String jars() {
+    return job().jars();
+    }
+    
+  /** Give the Job pyFiles.
+    * @return The Job pyFiles, if any. */
+  public String pyFiles() {
+    return job().pyFiles();
+    }
+    
+  /** Give the Job files.
+    * @return The Job files, if any. */
+  public String files() {
+    return job().files();
+    }
+    
+  /** Give the Job archives.
+    * @return The Job archives, if any. */
+  public String archives() {
+    return job().archives();
     }
      
   /** Give the Job driver memory.
@@ -96,6 +127,30 @@ public class JobRep extends ElementRep {
     * @return The Job executor cores, can be <tt>0</tt>. */
   public int executorCores() {
     return job().executorCores();
+    }
+     
+  /** Give the Job executors.
+    * @return The Job executors, can be <tt>0</tt>. */
+  public int numExecutors() {
+    return job().numExecutors();
+    }
+   
+  /** Give the Job queue.
+    * @return The Job queue, if any. */
+  public String queue() {
+    return job().queue();
+    }
+    
+  /** Give the Job conf.
+    * @return The Job conf, if any. */
+  public String conf() {
+    return job().conf();
+    }
+    
+  /** Give the Job proxyUser.
+    * @return The Job proxyUser, if any. */
+  public String proxyUser() {
+    return job().proxyUser();
     }
    
   /** Give the referenced {@link Job}.
