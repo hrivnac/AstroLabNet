@@ -62,6 +62,7 @@
   <div id="visnetwork" height="70%">
     --- graph network ---
     </div>
+  <script type="text/javascript" src="Cookies.js"></script>
   <script type="text/javascript" src="Actions.js"></script>
   <script type="text/javascript" src="PostProc.js"></script>
   <script type="text/javascript" src="GraphView.js"></script>

@@ -187,7 +187,6 @@ public class WSCommand extends DefaultInteracter {
                           " ",
                           " ",
                           " ",
-                          " ",
                           "to",
                           " ",
                           "0"));
@@ -210,7 +209,6 @@ public class WSCommand extends DefaultInteracter {
       _nodes.add(jobNode);
       _edges.add(new Edge(aj,
                           jobNode,
-                          " ",
                           " ",
                           " ",
                           " ",
