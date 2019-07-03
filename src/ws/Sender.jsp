@@ -131,6 +131,7 @@
     time = (System.currentTimeMillis() - time) / 1000;
     new Record(server).record(IDFactory.newID(), "Job", "send", 0, time, null, null, fullLog, "testing"); // TBD: fill all fields
     out.println("<pre>" + fullLog + "</pre>");
+    out.println("<hr/>" + time + "s spent");
     %>
   <script type="text/javascript">
     if ('<%=state%>' == "success") {

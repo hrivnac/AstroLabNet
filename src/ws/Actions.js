@@ -8,10 +8,18 @@ function formNodeAction(node) {
       html += "<a class='button' href='CommandCenter.jsp' target='COMMAND'>Reload</a>";
       break;
     case "Server":
-      var urls = node.title.split("<br/>")[1].split(" ");
-      html += "<a class='button' href='" + urls[0] + "' target='RESULT'>Livy</a>&nbsp;";
-      html += "<a class='button' href='" + urls[1] + "' target='RESULT'>Spark</a>&nbsp;";
-      html += "<a class='button' href='" + urls[2] + "/status/cluster' target='RESULT'>HBase</a>&nbsp;";
+      html += "<a class='button' href='" + node.livy  + "' target='RESULT'>Livy</a>&nbsp;";
+      html += "<a class='button' href='" + node.spark + "' target='RESULT'>Spark</a>&nbsp;";
+      html += "<a class='button' href='" + node.hbase + "/status/cluster' target='RESULT'>HBase</a>&nbsp;";
+      if (node.hadoop) {
+        html += "<a class='button' href='" + node.hadoop + "' target='RESULT'>Hadoop</a>&nbsp;";
+        }
+      if (node.sparkHistory) {
+        html += "<a class='button' href='" + node.sparkHistory + "' target='RESULT'>Spark History</a>&nbsp;";
+        }
+      if (node.ganglia) {
+        html += "<a class='button' href='" + node.ganglia + "' target='RESULT'>Ganglia</a>&nbsp;";
+        }
       break;
     case "Group":
       if (node.id.split(":")[1] == "Actions and Jobs") {

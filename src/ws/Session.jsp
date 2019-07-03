@@ -52,6 +52,7 @@
     time = (System.currentTimeMillis() - time) / 1000;
     new Record(server).record(IDFactory.newID(), "Action", "execute", 0, time, null, null, resultFormed, "testing"); // TBD: fill all fields
     out.println("<pre>" + resultFormed + "</pre>");
+    out.println("<hr/>" + time + "s spent");
     %>
   <script type="text/javascript">
     document.body.style.backgroundColor = "#ddddff";

@@ -64,6 +64,18 @@ public class WSCommand extends DefaultInteracter {
                       top,
                       _nodes,
                       _edges);
+      node.put("livy", server.urlLivy());
+      node.put("spark", server.urlSpark());
+      node.put("hbase", server.urlHBase());
+      if (server.urlSparkHistory() != null) {
+        node.put("sparkHistory", server.urlSparkHistory());
+        }
+      if (server.urlHadoop() != null) {
+        node.put("hadoop", server.urlHadoop());
+        }
+      if (server.urlGanglia() != null) {
+        node.put("ganglia", server.urlGanglia());
+        }
       pythonSessionNode = new Node("Session:Python Session on " + server.name(),
                                    "Session",
                                    "Python Session on " + server.name(),

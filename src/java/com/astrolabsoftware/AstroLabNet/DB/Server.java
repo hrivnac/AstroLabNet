@@ -75,6 +75,24 @@ public class Server extends Element {
     return _urlHBase;
     }  
     
+  /** Give Hadoop Server url.
+    * @return The Hadoop Server url. Can be <tt>null</tt>. */
+  public String urlHadoop() {
+    return _urlHadoop;
+    }  
+    
+  /** Give Spark History Server url.
+    * @return The Spark History Server url. Can be <tt>null</tt>. */
+  public String urlSparkHistory() {
+    return _urlSparkHistory;
+    }  
+    
+  /** Give Ganglia Server url.
+    * @return The Ganglia Server url. Can be <tt>null</tt>. */
+  public String urlGanglia() {
+    return _urlGanglia;
+    }  
+   
   /** Give {@link LivyClient}.
     * @return The {@link LivyClient}. */
   public LivyClient livy() {
@@ -85,6 +103,21 @@ public class Server extends Element {
     * @return The {@link HBaseClient}. */
   public HBaseClient hbase() {
     return _hbase;
+    }
+           
+  /** TBD */
+  public void setUrlHadoop(String urlHadoop) {
+    _urlHadoop = urlHadoop;
+    }
+    
+  /** TBD */
+  public void setUrlSparkHistory(String urlSparkHistory) {
+    _urlSparkHistory = urlSparkHistory;
+    }
+    
+  /** TBD */
+  public void setUrlGanglia(String urlGanglia) {
+    _urlGanglia = urlGanglia;
     }
     
   @Override
@@ -97,6 +130,12 @@ public class Server extends Element {
   private String _urlSpark;
   
   private String _urlHBase;
+  
+  private String _urlHadoop;
+  
+  private String _urlSparkHistory;
+  
+  private String _urlGanglia;
   
   private LivyClient _livy;
   

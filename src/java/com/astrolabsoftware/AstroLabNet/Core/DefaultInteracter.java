@@ -190,6 +190,9 @@ public abstract class DefaultInteracter implements Interacter {
         String spark = null;
         String livy = null;
         String hbase = null;
+        String hadoop = null;
+        String sparkHistory = null;
+        String ganglia = null;
         JSONArray result = new JSONObject(resultString).getJSONArray("Row");
         for (int i = 0; i < result.length(); i++) {
           row = result.getJSONObject(i);
@@ -198,6 +201,9 @@ public abstract class DefaultInteracter implements Interacter {
           spark = null;
           livy  = null;
           hbase = null;
+          hadoop = null;
+          sparkHistory = null;
+          ganglia = null;
           for (int j = 0; j < cell.length(); j++) {
             column = cell.getJSONObject(j);
             cname  = decode(column.getString("column"));
@@ -212,9 +218,27 @@ public abstract class DefaultInteracter implements Interacter {
               case "d:hbase":
                 hbase = cvalue;
                 break;
+              case "d:hadoop":
+                hadoop = cvalue;
+                break;
+              case "d:ganglia":
+                ganglia = cvalue;
+                break;
+              case "d:sparkHistory":
+                sparkHistory = cvalue;
+                break;
               }
             }
           Server newServer = addServer(name, livy, spark, hbase);
+          if (hadoop != null) {
+            newServer.setUrlHadoop(hadoop);
+            }
+          if (ganglia != null) {
+            newServer.setUrlGanglia(ganglia);
+            }
+          if (sparkHistory != null) {
+            newServer.setUrlSparkHistory(sparkHistory);
+            }
           if (newServer != null) {
             newServers.add(newServer);
             }

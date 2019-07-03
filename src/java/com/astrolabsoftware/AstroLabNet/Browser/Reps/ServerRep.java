@@ -153,6 +153,24 @@ public class ServerRep extends ElementRep {
     return server().urlHBase();
     }  
     
+  /** Give Hadoop Server url.
+    * @return The Hadoop Server url. Can be <tt>null</tt>. */
+  public String urlHadoop() {
+    return server().urlHadoop();
+    }  
+    
+  /** Give Spark History Server url.
+    * @return The Spark History Server url. Can be <tt>null</tt>. */
+  public String urlSparkHistory() {
+    return server().urlSparkHistory();
+    }  
+    
+  /** Give Ganglia Server url.
+    * @return The Ganglia Server url. Can be <tt>null</tt>. */
+  public String urlGanglia() {
+    return server().urlGanglia();
+    }  
+    
   /** Give Livy Server.
     * @return The Livy Server. */
   public LivyClient livy() {
