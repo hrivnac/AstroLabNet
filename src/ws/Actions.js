@@ -48,10 +48,10 @@ function formNodeAction(node) {
       html += "      <td valign='top'>";
       html += "        <input type='hidden' name='server'   id='actionServer'   value='" + server + "'>";
       html += "        <input type='hidden' name='language' id='actionLanguage' value='" + language + "'>";
-      html += "        <input type='text'   name='name'     id='actionName'><br/>";
-      html += "        <input type='submit' value='Execute' onclick='document.getElementById(\"feedback\").innerHTML = \"Sending Action to Session\"'><br/>";
-      html += "        <input type='button' value='Record'  onclick='setActionCookies()'><br/>";
-      html += "        <input type='button' value='Remove'  onclick='rmActionCookies()'>";
+      html += "        Action name: <input type='text'   name='name'     id='actionName'><br/>";
+      html += "        <input type='submit' value='Execute Action'      onclick='document.getElementById(\"feedback\").innerHTML = \"Sending Action to Session\"'><br/>";
+      html += "        <input type='button' value='Record Action Conf'  onclick='setActionCookies()'><br/>";
+      html += "        <input type='button' value='Remove Action Conf'  onclick='rmActionCookies()'>";
       html += "        </td>";
       html += "      </tr>";
       html += "    </table>";
@@ -84,10 +84,10 @@ function formNodeAction(node) {
       html += "           </table>";
       html += "        </td>";
       html += "      <td valign='top'>";
-      html += "        <input type='text' name='jobName' id='jobName'><br/>";
-      html += "        <input type='submit' value='Execute' onclick='document.getElementById(\"feedback\").innerHTML = \"Sending Job to Sender\"'><br/>";
-      html += "        <input type='button' value='Record'  onclick='setJobCookies()'><br/>";
-      html += "        <input type='button' value='Remove'  onclick='rmJobCookies()'>";
+      html += "        Job name: <input type='text' name='jobName' id='jobName'><br/>";
+      html += "        <input type='submit' value='Send Job'         onclick='document.getElementById(\"feedback\").innerHTML = \"Sending Job to Sender\"'><br/>";
+      html += "        <input type='button' value='Record Job Conf'  onclick='setJobCookies()'><br/>";
+      html += "        <input type='button' value='Remove Job Conf'  onclick='rmJobCookies()'>";
       html += "        </td>";
       html += "      </tr>";
       html += "    </table>";
@@ -139,7 +139,6 @@ function formNodeAction(node) {
       html += "    </table>";
       html += "  <input type='hidden' name='hbase' value='" + hbase + "'>";
       html += "  <input type='hidden' name='table' value='astrolabnet.journal.1'>";
-      html += "  <input type='hidden' name='height' value='100'>";
       html += "  <input type='hidden' name='columns' value='actor,action,rc,time,comment,result'>";
       html += "  <input type='hidden' name='filters' value='i:actor,i:action,d:result,c:comment,d:rc'>";
       html += "  </form>";            
