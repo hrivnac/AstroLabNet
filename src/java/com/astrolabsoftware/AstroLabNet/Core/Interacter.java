@@ -18,7 +18,7 @@ import com.astrolabsoftware.AstroLabNet.Core.Interacter;
 import bsh.Interpreter;
 
 // Java
-import java.util.List;
+import java.util.Set;
 
 /** Common interface exposed to am interactive User.
   * @opt attributes
@@ -149,36 +149,36 @@ public interface Interacter {
   public Search addSearch(String  name,
                           Source source);
   
-  /** Give {@link List} of available {@link Server}s.
-    * @return The {@link List} of available {@link Server}s. */
-  public List<Server> servers();
+  /** Give {@link Set} of available {@link Server}s.
+    * @return The {@link Set} of available {@link Server}s. */
+  public Set<Server> servers();
   
-  /** Give {@link List} of available {@link Action}s.
-    * @return The {@link List} of available {@link Action}s. */
-  public List<Action> actions();
+  /** Give {@link Set} of available {@link Action}s.
+    * @return The {@link Set} of available {@link Action}s. */
+  public Set<Action> actions();
   
-  /** Give {@link List} of available {@link Job}s.
-    * @return The {@link List} of available {@link Job}s. */
-  public List<Job> jobs();
+  /** Give {@link Set} of available {@link Job}s.
+    * @return The {@link Set} of available {@link Job}s. */
+  public Set<Job> jobs();
   
-  /** Give {@link List} of available {@link Data}s.
-    * @return The {@link List} of available {@link Data}s. */
-  public List<Data> datas();
+  /** Give {@link Set} of available {@link Data}s.
+    * @return The {@link Set} of available {@link Data}s. */
+  public Set<Data> datas();
    
-  /** Give {@link List} of available {@link Channel}s.
-    * @return The {@link List} of available {@link Channel}s. */
-  public List<Channel> channels();
+  /** Give {@link Set} of available {@link Channel}s.
+    * @return The {@link Set} of available {@link Channel}s. */
+  public Set<Channel> channels();
    
-  /** Give {@link List} of available {@link Task}s.
-    * @return The {@link List} of available {@link Task}s. */
-  public List<Task> tasks();
+  /** Give {@link Set} of available {@link Task}s.
+    * @return The {@link Set} of available {@link Task}s. */
+  public Set<Task> tasks();
    
-  /** Give {@link List} of available {@link Batch}s.
-    * @return The {@link List} of available {@link Batch}s. */
-  public List<Batch> batchs();
+  /** Give {@link Set} of available {@link Batch}s.
+    * @return The {@link Set} of available {@link Batch}s. */
+  public Set<Batch> batchs();
    
-  /** Give {@link List} of available {@link Search}s.
-    * @return The {@link List} of available {@link Search}s. */
-  public List<Search> searchs();
+  /** Give {@link Set} of available {@link Search}s.
+    * @return The {@link Set} of available {@link Search}s. */
+  public Set<Search> searchs();
 
   }

@@ -122,7 +122,17 @@ public class Server extends Element {
     
   @Override
   public String toString() {
-    return name() + " (Livy = " + _urlLivy + ", Spark = " + _urlSpark + ", HBase = " + _urlHBase + ")";
+    String s = name() + " (Livy = " + _urlLivy + ", Spark = " + _urlSpark + ", HBase = " + _urlHBase + ")";
+    if (_urlHadoop != null) {
+      s += "\n(Hadoop = " + _urlHadoop + ")";
+      }
+    if (_urlGanglia != null) {
+      s += "\n(Ganglia = " + _urlGanglia + ")";
+      }
+    if (_urlSparkHistory != null) {
+      s += "\n(SparkHistory = " + _urlSparkHistory + ")";
+      }
+    return s;
     }
     
   private String _urlLivy;

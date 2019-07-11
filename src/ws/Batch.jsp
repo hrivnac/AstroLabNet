@@ -13,6 +13,7 @@
 <%@ page import="com.astrolabsoftware.AstroLabNet.Livyser.Language" %>
 
 <%@ page import="org.json.JSONObject" %>
+<%@ page import="org.json.JSONArray" %>
 
 <!--%@ page errorPage="ExceptionHandler.jsp" %-->
 
@@ -32,9 +33,20 @@
       out.println("<u>Batch " + id + " on " + serverS + "</u><br/>");
       out.println("<hr/>");
       out.flush();
-      String resultString = server.livy().getBatchLog(new Integer(id), 10, 10);
-      String resultFormed = new JSONObject(resultString).toString(2);
-      out.println("<pre>" + resultFormed + "</pre>");
+      String resultString = server.livy().checkBatchProgress(new Integer(id), 10, 1);
+      JSONObject result = new JSONObject(resultString);
+      String appId = result.getString("appId");
+      resultString = server.livy().getBatchLog(new Integer(id), 10, 1);
+      result = new JSONObject(resultString);
+      JSONArray logArray = result.getJSONArray("log");
+      String fullLog = "";
+      for (Object logEntry : logArray) {
+        fullLog += logEntry.toString() + "\n";
+        }
+      if (server.urlSparkHistory() != null) {
+        out.println("<a href='" + server.urlSparkHistory() + "/history/" + appId + "/1/jobs' target='_blank'><b>Job History</b></a><br/>");
+        }
+      out.println("<pre>" + fullLog + "</pre>");
       }
     %>
   <script type="text/javascript">

@@ -100,11 +100,11 @@
         statex = result.getString("state");
         if (statex0 == null) {
           statex0 = statex;
-          out.println("State: " + statex + "</br>");
+          out.println("State: " + statex + "<br/>");
           out.flush();
           }
         if (!statex.equals(statex0)) {
-          out.println("State: " + statex + "</br>");
+          out.println("State: " + statex + "<br/>");
           out.flush();
           statex0 = statex;
           }
@@ -115,12 +115,13 @@
       Thread.sleep(1000); // 1s
       }
     out.println("<hr/>");
-    JSONArray logArray = result.getJSONArray("log");
+    JSONArray logArray = result.getJSONArray("log");    
     String fullLog = "";
     for (Object logEntry : logArray) {
       fullLog += logEntry.toString() + "\n";
       }
     String state = result.getString("state");
+    String appId = result.getString("appId");
     resultString = server.livy().getBatchLog(id, 10, 1);
     result = new JSONObject(resultString);
     logArray = result.getJSONArray("log");
@@ -129,7 +130,28 @@
       fullLog += logEntry.toString() + "\n";
       }
     time = (System.currentTimeMillis() - time) / 1000;
-    new Record(server).record(IDFactory.newID(), "Job", "send", 0, time, null, null, fullLog, "testing"); // TBD: fill all fields
+    String argss = "jobName = "        + jobName        + "\n"
+                 + "jarName = "        + jarName        + "\n"
+                 + "className = "      + className      + "\n"
+                 + "args = "           + args           + "\n"
+                 + "driverMemory = "   + driverMemory   + "\n"
+                 + "driverCores = "    + driverCores    + "\n"
+                 + "executorMemory = " + executorMemory + "\n"
+                 + "executorCores = "  + executorCores  + "\n"
+                 + "numExecutors = "   + numExecutors   + "\n"
+                 + "jars = "           + jars           + "\n"
+                 + "pyFiles = "        + pyFiles        + "\n"
+                 + "files = "          + files          + "\n"
+                 + "archives = "       + archives       + "\n"
+                 + "queue = "          + queue          + "\n"
+                 + "jobName = "        + jobName        + "\n"
+                 + "conf = "           + conf           + "\n"
+                 + "proxyUser = "      + proxyUser;
+    new Record(server).record(IDFactory.newID(), "Job", "send", argss, 0, time, null, null, fullLog, "from WS"); // TBD: fill all fields
+    // TBD: can do this already during run
+    if (server.urlSparkHistory() != null) {
+      out.println("<a href='" + server.urlSparkHistory() + "/history/" + appId + "/1/jobs' target='_blank'><b>Job History</b></a><br/>");
+      }
     out.println("<pre>" + fullLog + "</pre>");
     out.println("<hr/>" + time + "s spent");
     %>

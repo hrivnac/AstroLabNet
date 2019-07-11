@@ -50,7 +50,10 @@
     String resultString = server.livy().executeAction(action);
     String resultFormed = new JSONObject(resultString).toString(2);
     time = (System.currentTimeMillis() - time) / 1000;
-    new Record(server).record(IDFactory.newID(), "Action", "execute", 0, time, null, null, resultFormed, "testing"); // TBD: fill all fields
+    String args = "name = " + name + "\n"
+                + "language = " + language + "\n"
+                + "script = \n" + script;
+    new Record(server).record(IDFactory.newID(), "Action", "execute", args, 0, time, null, null, resultFormed, "from WS"); // TBD: fill all fields
     out.println("<pre>" + resultFormed + "</pre>");
     out.println("<hr/>" + time + "s spent");
     %>

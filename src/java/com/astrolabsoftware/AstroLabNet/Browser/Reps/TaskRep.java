@@ -102,7 +102,7 @@ public class TaskRep extends ElementRep {
         JSONObject d = data;
         log.info(status + " : " + d);
         time = (System.currentTimeMillis() - time) / 1000;
-        new Record(session().server()).record(IDFactory.newID(), "Action", "execute", 0, time, null, null, output.toString(2), "testing"); // TBD: fill all fields
+        new Record(session().server()).record(IDFactory.newID(), "Action", "execute", null, 0, time, null, null, output.toString(2), "from GUI"); // TBD: fill all fields
         // to synchronise threads
         Platform.runLater(new Runnable() {
           @Override

@@ -116,7 +116,7 @@ public class BatchRep extends ElementRep {
           }
         log.debug(fullLog);
         time = (System.currentTimeMillis() - time) / 1000;
-        new Record(sender().server()).record(IDFactory.newID(), "Job", "send", 0, time, null, null, fullLog, "testing"); // TBD: fill all fields
+        new Record(sender().server()).record(IDFactory.newID(), "Job", "send", null, 0, time, null, null, fullLog, "from GUI"); // TBD: fill all fields
         final String fullLog1 = fullLog; // so it can go to inner fcion
         // to synchronise threads
         Platform.runLater(new Runnable() {

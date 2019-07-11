@@ -28,6 +28,7 @@ public class Record {
     * @param key     The record key, shoul be unique.
     * @param actor   The actor be recorded.
     * @param action  The action to be recorded.
+    * @param args    The action arguments.
     * @param rc      The result code. 0 means success.
     * @param time    The time spend by command execution, in s.
     * @param before  The id of preceding action. May be <tt>null</tt>.
@@ -37,6 +38,7 @@ public class Record {
   public void record(String key,
                      String actor,
                      String action,
+                     String args,
                      int    rc,
                      long   time,
                      String before,
@@ -46,6 +48,7 @@ public class Record {
     record(key,
            actor,
            action,
+           args,
            new Integer(rc).toString(),
            new Long(time).toString(),
            before,
@@ -59,6 +62,7 @@ public class Record {
     * @param key     The record key, shoul be unique.
     * @param actor   The actor be recorded.
     * @param action  The action to be recorded.
+    * @param args    The action arguments.
     * @param rc      The result code. 0 means success.
     * @param time    The time spend by command execution, in s.
     * @param before  The id of preceding action. May be <tt>null</tt>.
@@ -68,6 +72,7 @@ public class Record {
   public void record(String key,
                      String actor,
                      String action,
+                     String args,
                      String rc,
                      String time,
                      String before,
@@ -78,8 +83,8 @@ public class Record {
       @Override
       public void run() {
         try {
-          String[] columns = new String[]{"i:actor", "i:action", "d:rc", "d:time", "d:before", "d:after", "d:result", "c:comment"};
-          String[] values  = new String[]{   actor ,    action ,    rc ,    time ,    before ,    after ,    result ,    comment };
+          String[] columns = new String[]{"i:actor", "i:action", "i:args", "d:rc", "d:time", "d:before", "d:after", "d:result", "c:comment"};
+          String[] values  = new String[]{   actor ,    action ,    args ,    rc ,    time ,    before ,    after ,    result ,    comment };
           _hbase.put("astrolabnet.journal.1", key, columns, values);
           }
         catch (Exception e) {

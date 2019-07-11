@@ -120,6 +120,7 @@ function formNodeAction(node) {
       html += "        <table>";   
       html += "          <tr><td><b>period</b>          </td><td><input type='text' size='40' name='period' id='date-range-picker'></td></tr>";
       html += "          <tr><td><b>action</b>          </td><td><input name='action'  type='text' size='20' value=''    ></td></tr>";
+      html += "          <tr><td><b>args</b>            </td><td><input name='args'    type='text' size='20' value=''    ></td></tr>";
       html += "          <tr><td><b>result</b>          </td><td><input name='result'  type='text' size='20' value=''    ></td></tr>";
       html += "          <tr><td><b>comment</b>         </td><td><input name='comment' type='text' size='20' value=''   ></td></tr>";
       html += "          </table>";
@@ -147,8 +148,8 @@ function formNodeAction(node) {
       html += "    </table>";
       html += "  <input type='hidden' name='hbase' value='" + hbase + "'>";
       html += "  <input type='hidden' name='table' value='astrolabnet.journal.1'>";
-      html += "  <input type='hidden' name='columns' value='actor,action,rc,time,comment,result'>";
-      html += "  <input type='hidden' name='filters' value='i:actor,i:action,d:result,c:comment,d:rc'>";
+      html += "  <input type='hidden' name='columns' value='actor,action,args,rc,time,comment,result'>";
+      html += "  <input type='hidden' name='filters' value='i:actor,i:action,i:args,d:result,c:comment,d:rc'>";
       html += "  </form>";            
       break;
     default:

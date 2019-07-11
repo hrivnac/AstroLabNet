@@ -31,8 +31,8 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 // Java
-import java.util.List;
-import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
 import java.util.Base64;
 import java.nio.file.FileSystems;
 
@@ -168,11 +168,11 @@ public abstract class DefaultInteracter implements Interacter {
     
   /** Get new {@link Server}s from topology table.
     * Runs recursively, stops whje n no new {@link Server} found.
-    * @param servers The {@link List} of existing {@link Server}s to scan for new {@link Server}s. */
-  public void getServersFromTopology(List<Server> servers) {
+    * @param servers The {@link Set} of existing {@link Server}s to scan for new {@link Server}s. */
+  public void getServersFromTopology(Set<Server> servers) {
     log.info("Populating Servers");
-    List<Server> knownServers = new ArrayList<>();
-    List<Server> newServers   = new ArrayList<>();
+    Set<Server> knownServers = new HashSet<>();
+    Set<Server> newServers   = new HashSet<>();
     for (Server s : servers) {
       knownServers.add(s);
       }
@@ -229,16 +229,7 @@ public abstract class DefaultInteracter implements Interacter {
                 break;
               }
             }
-          Server newServer = addServer(name, livy, spark, hbase);
-          if (hadoop != null) {
-            newServer.setUrlHadoop(hadoop);
-            }
-          if (ganglia != null) {
-            newServer.setUrlGanglia(ganglia);
-            }
-          if (sparkHistory != null) {
-            newServer.setUrlSparkHistory(sparkHistory);
-            }
+          Server newServer = addServer(name, livy, spark, hbase, hadoop, ganglia, sparkHistory);
           if (newServer != null) {
             newServers.add(newServer);
             }
@@ -246,7 +237,6 @@ public abstract class DefaultInteracter implements Interacter {
         }
       catch (Exception e) {
         log.warn("Cannot parse Topology table", e);
-
         }
       }
     if (!newServers.isEmpty()) {
@@ -284,11 +274,14 @@ public abstract class DefaultInteracter implements Interacter {
     return null;
     }
     
-  @Override
-  public Server addServer(String name,
-                          String urlLivy,
-                          String urlSpark,
-                          String urlHBase) {
+  /** TBD */
+  private Server addServer(String name,
+                           String urlLivy,
+                           String urlSpark,
+                           String urlHBase,
+                           String urlHadoop,
+                           String urlGanglia,
+                           String urlSparkHistory) {
     if (urlLivy == null) {
       log.warn("No Livy server defined for " + name);
       return null;
@@ -297,18 +290,35 @@ public abstract class DefaultInteracter implements Interacter {
       log.warn("Livy server " + name + " is unreachable: " + urlLivy);
       return null;
       }
-    for (Server server : servers()) {
-      if (name.equals(server.name())) {
-        log.warn("Server " + name + " not updated");
-        return null;
-        }
-      }
     Server server = new Server(name, urlLivy, urlSpark, urlHBase);
-    if (!_servers.contains(server)) { // TBD: refactor
+    if (urlHadoop != null) {
+      server.setUrlHadoop(urlHadoop);
+      }
+    if (urlGanglia != null) {
+      server.setUrlGanglia(urlGanglia);
+      }
+    if (urlSparkHistory != null) {
+      server.setUrlSparkHistory(urlSparkHistory);
+      }
+    if (_servers.contains(server)) {
+      log.warn("Updating Server (but not depending servers): " + server);
+      _servers.remove(server);
+      _servers.add(server);
+      return null;
+      }
+    else {
       log.info("Adding Server: " + server);
       _servers.add(server);
+      return server;
       }
-    return server;
+    }
+    
+  @Override
+  public Server addServer(String name,
+                          String urlLivy,
+                          String urlSpark,
+                          String urlHBase) {
+    return addServer(name, urlLivy, urlSpark, urlHBase, null, null, null);
     }
     
   @Override
@@ -419,42 +429,42 @@ public abstract class DefaultInteracter implements Interacter {
     }
 
   @Override
-  public List<Server> servers() {
+  public Set<Server> servers() {
     return _servers;
     }
     
   @Override
-  public List<Action> actions() {
+  public Set<Action> actions() {
     return _actions;
     }
 
   @Override
-  public List<Job> jobs() {
+  public Set<Job> jobs() {
     return _jobs;
     }
     
   @Override
-  public List<Data> datas() {
+  public Set<Data> datas() {
     return _datas;
     }
     
   @Override
-  public List<Channel> channels() {
+  public Set<Channel> channels() {
     return _channels;
     }
     
   @Override
-  public List<Task> tasks() {
+  public Set<Task> tasks() {
     return _tasks;
     }
     
   @Override
-  public List<Batch> batchs() {
+  public Set<Batch> batchs() {
     return _batchs;
     }
     
   @Override
-  public List<Search> searchs() {
+  public Set<Search> searchs() {
     return _searchs;
     }
     
@@ -478,14 +488,14 @@ public abstract class DefaultInteracter implements Interacter {
     
   private Interpreter _interpreter;
    
-  private List<Server>  _servers  = new ArrayList<>();
-  private List<Action>  _actions  = new ArrayList<>();
-  private List<Job>     _jobs     = new ArrayList<>();
-  private List<Data>    _datas    = new ArrayList<>();
-  private List<Channel> _channels = new ArrayList<>();
-  private List<Task>    _tasks    = new ArrayList<>();
-  private List<Batch>   _batchs   = new ArrayList<>();
-  private List<Search>  _searchs  = new ArrayList<>();
+  private Set<Server>  _servers  = new HashSet<>();
+  private Set<Action>  _actions  = new HashSet<>();
+  private Set<Job>     _jobs     = new HashSet<>();
+  private Set<Data>    _datas    = new HashSet<>();
+  private Set<Channel> _channels = new HashSet<>();
+  private Set<Task>    _tasks    = new HashSet<>();
+  private Set<Batch>   _batchs   = new HashSet<>();
+  private Set<Search>  _searchs  = new HashSet<>();
   
   /** Logging . */
   private static Logger log = Logger.getLogger(DefaultInteracter.class);
