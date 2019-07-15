@@ -122,7 +122,7 @@ function formNodeAction(node) {
       html += "          <tr><td><b>action</b>          </td><td><input name='action'  type='text' size='20' value=''    ></td></tr>";
       html += "          <tr><td><b>args</b>            </td><td><input name='args'    type='text' size='20' value=''    ></td></tr>";
       html += "          <tr><td><b>result</b>          </td><td><input name='result'  type='text' size='20' value=''    ></td></tr>";
-      html += "          <tr><td><b>comment</b>         </td><td><input name='comment' type='text' size='20' value=''   ></td></tr>";
+      html += "          <tr><td><b>comment</b>         </td><td><input name='comment' type='text' size='20' value=''    ></td></tr>";
       html += "          </table>";
       html += "        </td>";
       html += "      <td>";

@@ -202,7 +202,7 @@ public class WSCommand extends DefaultInteracter {
                           "to",
                           " ",
                           "0"));
-     }
+      }
     for (Job job : jobs()) {
       jobNode = new Node("Job:" + job.name(),
                          "Job",

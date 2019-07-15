@@ -35,16 +35,12 @@
       out.flush();
       String resultString = server.livy().checkBatchProgress(new Integer(id), 10, 1);
       JSONObject result = new JSONObject(resultString);
-      String appId = result.getString("appId");
       resultString = server.livy().getBatchLog(new Integer(id), 10, 1);
       result = new JSONObject(resultString);
       JSONArray logArray = result.getJSONArray("log");
       String fullLog = "";
       for (Object logEntry : logArray) {
         fullLog += logEntry.toString() + "\n";
-        }
-      if (server.urlSparkHistory() != null) {
-        out.println("<a href='" + server.urlSparkHistory() + "/history/" + appId + "/1/jobs' target='_blank'><b>Job History</b></a><br/>");
         }
       out.println("<pre>" + fullLog + "</pre>");
       }

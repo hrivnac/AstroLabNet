@@ -609,7 +609,8 @@ public class LivyRESTClient {
            getBatchLog(     batchId, Integer.MAX_VALUE, 1);
     }
     
-  /** TBD */
+  /** Give Livy server url.
+    * @return The Livy server url. */
   public String url() {
     return _url;
     }

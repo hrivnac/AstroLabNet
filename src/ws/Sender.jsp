@@ -120,8 +120,6 @@
     for (Object logEntry : logArray) {
       fullLog += logEntry.toString() + "\n";
       }
-    String state = result.getString("state");
-    String appId = result.getString("appId");
     resultString = server.livy().getBatchLog(id, 10, 1);
     result = new JSONObject(resultString);
     logArray = result.getJSONArray("log");
@@ -148,18 +146,14 @@
                  + "conf = "           + conf           + "\n"
                  + "proxyUser = "      + proxyUser;
     new Record(server).record(IDFactory.newID(), "Job", "send", argss, 0, time, null, null, fullLog, "from WS"); // TBD: fill all fields
-    // TBD: can do this already during run
-    if (server.urlSparkHistory() != null) {
-      out.println("<a href='" + server.urlSparkHistory() + "/history/" + appId + "/1/jobs' target='_blank'><b>Job History</b></a><br/>");
-      }
     out.println("<pre>" + fullLog + "</pre>");
     out.println("<hr/>" + time + "s spent");
     %>
   <script type="text/javascript">
-    if ('<%=state%>' == "success") {
+    if ('<%=statex%>' == "success") {
       document.body.style.backgroundColor = "#ddddff";
       }
-    else if ('<%=state%>' == "dead") {
+    else if ('<%=statex%>' == "dead") {
       document.body.style.backgroundColor = "#ffdddd";
       }
     </script>
