@@ -100,6 +100,10 @@ public class ServerJournalEventHandler implements EventHandler<ActionEvent> {
     Label actionLabel = new Label("Action");
     // Action
     TextField action = new TextField();
+    // ArgsLabel
+    Label argsLabel = new Label("Args");
+    // Args
+    TextField args = new TextField();
     // ResultLabel
     Label resultLabel = new Label("Result");
     // Result
@@ -108,7 +112,7 @@ public class ServerJournalEventHandler implements EventHandler<ActionEvent> {
     Label commentLabel = new Label("Comment");
     // Comment
     TextField comment = new TextField();
-    // Selection = Actors + RCs + Action + Result + Comment
+    // Selection = Actors + RCs + Action + Args + Result + Comment
     GridPane selection = new GridPane();
     selection.setHgap(10);
     selection.setVgap(10);
@@ -118,10 +122,12 @@ public class ServerJournalEventHandler implements EventHandler<ActionEvent> {
     selection.add(rc,          1, 1);
     selection.add(actionLabel, 0, 2);
     selection.add(action,      1, 2);
-    selection.add(resultLabel, 0, 3);
-    selection.add(result,      1, 3);
-    selection.add(commentLabel,0, 4);
-    selection.add(comment,     1, 4);
+    selection.add(argsLabel,   0, 3);
+    selection.add(args,        1, 3);
+    selection.add(resultLabel, 0, 4);
+    selection.add(result,      1, 4);
+    selection.add(commentLabel,0, 5);
+    selection.add(comment,     1, 5);
     // SelectionBox = Selection
     HBox selectionBox = new HBox(10);
     selectionBox.setSpacing(5);
@@ -155,7 +161,7 @@ public class ServerJournalEventHandler implements EventHandler<ActionEvent> {
     searchTable.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent e) {
-        JSONObject json = search(actor, action, result, rc, comment, start, stop);
+        JSONObject json = search(actor, action, args, result, rc, comment, start, stop);
         resultTable.getItems().clear();
         resultTable.addJSONEntry(json, JournalEntry.class);
         pane.getItems().addAll(resultTable);
@@ -165,7 +171,7 @@ public class ServerJournalEventHandler implements EventHandler<ActionEvent> {
      searchGraph.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent e) {
-        JSONObject json = search(actor, action, result, rc, comment, start, stop);
+        JSONObject json = search(actor, action, args, result, rc, comment, start, stop);
         pane.getItems().addAll(resultGraph.graphView());
         new HBase2Graph().updateGraph(json, resultGraph.graph());
         }
@@ -177,6 +183,7 @@ public class ServerJournalEventHandler implements EventHandler<ActionEvent> {
   /** TBD */
   private JSONObject search(ComboBox<String>    actor,
                             TextField           action,
+                            TextField           args,
                             TextField           result,
                             ComboBox<String>    rc,
                             TextField           comment,
@@ -186,6 +193,7 @@ public class ServerJournalEventHandler implements EventHandler<ActionEvent> {
     String actorV   = actor.getValue();
     String rcV      = rc.getValue();
     String actionV  = action.getText();
+    String argsV    = args.getText();
     String resultV  = result.getText();
     String commentV = comment.getText();
     if (!actorV.equals("*")) {
@@ -196,6 +204,9 @@ public class ServerJournalEventHandler implements EventHandler<ActionEvent> {
       }
     if (!actionV.equals("")) {
       filterMap.put("i:action", actionV + ":SubstringComparator");
+      }
+    if (!argsV.equals("")) {
+      filterMap.put("i:args", argsV + ":SubstringComparator");
       }
      if (!resultV.equals("")) {
       filterMap.put("d:result", resultV + ":SubstringComparator");

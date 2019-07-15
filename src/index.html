@@ -174,18 +174,17 @@ ${HBASE_HOME}/bin/hbase shell < ../src/ruby/fillTopology.rb
 <li>Interactive CLI (Swing component in JavaFX Application)
     unresponsive to input. Clash between JavaFX and Swing
     Threads.</li>
-<li>Unspecified search on LAL Journal fails.</li>
-<li>Journal recording doesn't store rc.</li>
+<li>BSH scripts do not allow templates. <em>(BSH limitation.)</em></li>
 </ul>
 <b><u>Inconsistencies</u></b>
 <ul>
 <li>Journal search on LAL server shown have at least one
     filter.</li>
 <li>Servers time is not synchronised - important for period searches.</li>
+<li>CLI requests are not recorded in Journal. <em>(They can be recorded by direct call to Record.)</em></li>
 </ul>
 <b><u>ToDos</u></b>
 <ul>
-<li>Treat entities and data as a graph (network).</li>
 <li>Interface to LSST Alert system.</li>
 <li>Interface to LSST Catalog and data system.</li>
 <li>Add authentication.</li>
@@ -229,7 +228,7 @@ ${HBASE_HOME}/bin/hbase shell < ../src/ruby/fillTopology.rb
     <ul>
     <li>Implementation as a Web Service.</li>
     </ul><li>
-<li><u>*.*.*</u>
+<li><u>00.05.00*</u>
     <ul>
     <li>Better graphical navigator.</li>
     <li>Generic functionality outsourced to JHTools.</li>
