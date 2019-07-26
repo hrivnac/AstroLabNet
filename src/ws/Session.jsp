@@ -37,7 +37,8 @@
         language = Language.PYTHON;
         break;
       default:
-        // TBD
+        language = Language.SCALA;
+        out.println("<em>language " + languageS + " not known/supported - using SCALA</em><br/>");
         break;
       }
     Action action = wsc.addAction(name, script, language);
